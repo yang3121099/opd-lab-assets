@@ -1,0 +1,142 @@
+SOFTWARE PLATFORM ANALYSIS REPORT
+Use Cases and Gap Assessment
+Prepared by: Enterprise Technology Strategy Group
+Date: September 14, 2023
+Version: 2.1 | Classification: Internal Use Only
+
+─────────────────────────────────────────────
+
+EXECUTIVE SUMMARY
+
+This report evaluates the current software platform ecosystem deployed across Meridian Financial Services, Inc., a mid-market financial advisory firm headquartered in Columbus, Ohio, with approximately 1,340 employees across 11 regional offices. The assessment covers the period from January 2022 through August 2023 and examines four primary platforms: Salesforce Sales Cloud (Enterprise Edition), Microsoft 365 (E3 licensing tier), ServiceNow IT Service Management (ITSM Pro), and Tableau Server (version 2022.4). The goal is to identify active use cases, underutilized capabilities, and functional gaps that are driving redundant spending or unmet operational needs.
+
+Total annual software licensing expenditure across these four platforms is $4.7 million, representing 38% of the firm's total IT operating budget. Our analysis found that 31% of licensed features across these platforms are either unused or duplicated by another tool, representing an estimated $1.46 million in recoverable or redirectable spend annually.
+
+─────────────────────────────────────────────
+
+SECTION 1: PLATFORM INVENTORY AND LICENSING OVERVIEW
+
+The following table summarizes current platform deployments as of August 31, 2023:
+
+Platform | Vendor | License Type | Seats Licensed | Active Users (30-day) | Annual Cost
+Salesforce Sales Cloud | Salesforce, Inc. | Enterprise | 620 | 441 | $1,920,000
+Microsoft 365 | Microsoft Corp. | E3 | 1,340 | 1,298 | $1,608,000
+ServiceNow ITSM | ServiceNow, Inc. | ITSM Pro | 85 | 62 | $714,000
+Tableau Server | Tableau (Salesforce) | Creator/Viewer | 210 | 97 | $458,000
+
+Total Annual Spend: $4,700,000
+
+Key observations from licensing data:
+- Salesforce has 179 licensed seats with no login activity in the past 90 days, representing approximately $556,800 in dormant licenses.
+- Tableau Viewer licenses account for 160 of the 210 seats, yet only 97 unique users accessed the platform in August 2023, a 46% active utilization rate.
+- ServiceNow fulfillment agent licenses (23 seats) have not been accessed since the platform upgrade completed on March 7, 2023.
+
+─────────────────────────────────────────────
+
+SECTION 2: USE CASE ANALYSIS BY PLATFORM
+
+2.1 Salesforce Sales Cloud
+
+Salesforce was implemented in February 2019 as the firm's primary CRM. Current active use cases include:
+
+PRIMARY USE CASES (Confirmed Active):
+- Opportunity pipeline management: Used by 312 advisors across all 11 offices; average of 4,200 opportunities tracked per quarter.
+- Contact and account management: 98,400 active contact records as of August 2023.
+- Activity logging (calls, emails, meetings): 87% of active users log at least one activity per week.
+- Sales forecasting dashboards: Accessed by 34 sales managers; weekly usage confirmed.
+- Integration with Morningstar Direct via MuleSoft API: Established June 2022; processes approximately 14,000 data syncs per month.
+
+UNDERUTILIZED FEATURES:
+- Einstein Activity Capture: Enabled for all 620 seats but configured for only 88 users (14.2%).
+- Salesforce Inbox: Licensed but adoption is 7% firm-wide; most advisors continue using Outlook natively.
+- Territory Management module: Configured in 2021 but abandoned after a reorganization in Q1 2022; no active users.
+- Pardot (Marketing Cloud Account Engagement): Included in the Enterprise bundle; the marketing team of 12 uses only basic email campaign features, ignoring lead scoring, dynamic content, and automation rules entirely.
+
+2.2 Microsoft 365 (E3)
+
+Microsoft 365 is the most broadly adopted platform with 1,298 of 1,340 employees logging in during August 2023 (96.9% utilization). However, E3 licensing includes capabilities well beyond current usage patterns.
+
+PRIMARY USE CASES (Confirmed Active):
+- Exchange Online (email): 100% of employees.
+- Teams (messaging and video): 1,187 daily active users as of August 2023; average of 3.4 meetings per user per day.
+- SharePoint Online: 847 active users; primary document repository for compliance and HR teams.
+- OneDrive for Business: 1,102 users with active sync clients.
+
+UNDERUTILIZED FEATURES:
+- Microsoft Purview (formerly Compliance Center): The compliance team of 18 uses only the basic eDiscovery module. Advanced audit, communication compliance, and insider risk management features are fully licensed but not configured.
+- Power Automate: Only 43 employees have created at least one flow; the platform supports 1,340 licenses. This is a 3.2% adoption rate.
+- Microsoft Viva Insights: Enabled tenant-wide in November 2022 but no formal rollout occurred; 0 configured dashboards for managers.
+- Azure Active Directory Premium P1 (included in E3): Conditional Access policies are configured for only 3 of a possible 47 application integrations.
+
+2.3 ServiceNow ITSM Pro
+
+ServiceNow was deployed in October 2020 to replace a legacy Jira Service Management instance. The platform supports the 47-person IT department plus 15 contracted support agents.
+
+PRIMARY USE CASES (Confirmed Active):
+- Incident management: 2,340 tickets processed in August 2023; average resolution time of 6.2 hours.
+- Change management: 118 change requests processed in Q2 2023; 94% completed within approved windows.
+- Asset management (CMDB): 3,890 active configuration items tracked.
+- Self-service portal: 34% of incidents are now self-submitted by end users, up from 11% in January 2022.
+
+UNDERUTILIZED FEATURES:
+- HR Service Delivery module: Licensed as part of ITSM Pro bundle since March 2023; HR team of 22 has not onboarded to the platform and continues using a combination of email and a legacy SharePoint form.
+- Vendor Risk Management: Included in current licensing; not implemented. The firm currently manages 67 active vendor relationships through a manual Excel-based process.
+- Performance Analytics dashboards: Only 4 of 23 available dashboard templates have been configured.
+
+2.4 Tableau Server
+
+Tableau was deployed in January 2021 to support the data analytics team and executive reporting functions.
+
+PRIMARY USE CASES (Confirmed Active):
+- Executive KPI dashboards: 12 dashboards refreshed daily; accessed by C-suite and 8 VPs.
+- Advisor performance reporting: 6 dashboards used by regional sales managers.
+- Compliance reporting: 3 dashboards maintained by the risk team.
+
+UNDERUTILIZED FEATURES:
+- Tableau Prep Builder: Licensed for all 50 Creator seats; only 9 analysts use it regularly.
+- Embedded analytics (via Tableau Embedded API): Not implemented despite being included in the server license. Three internal applications identified as strong candidates for embedded dashboards.
+- Data Stories (natural language generation): Feature enabled in version 2022.4 but not used by any team.
+
+─────────────────────────────────────────────
+
+SECTION 3: GAP ASSESSMENT
+
+The following functional gaps were identified where no existing platform adequately addresses a documented business need:
+
+GAP 1: Automated Compliance Workflow Management
+The compliance team processes approximately 220 regulatory filings per year using manual email chains and spreadsheets. Neither ServiceNow nor Microsoft Purview has been configured to address this workflow. Estimated staff time lost: 1,840 hours annually at a blended cost of $92,000.
+
+GAP 2: Client Portal / Self-Service Access
+Meridian has no client-facing portal. Advisors report spending an average of 47 minutes per week per client on routine document delivery and status updates. Across 312 advisors managing an average of 84 active clients each, this represents approximately 1.24 million client-hours of manual touchpoints annually.
+
+GAP 3: Integrated Financial Planning Tools
+Advisors use MoneyGuidePro as a standalone desktop application with no integration to Salesforce or Tableau. Data must be manually re-entered, contributing to an error rate of approximately 3.8% in client financial plans, as identified in a June 2023 internal audit.
+
+GAP 4: Vendor Risk Automation
+As noted in the ServiceNow section, 67 vendor relationships are managed manually. The firm's information security policy (updated January 2023) requires annual risk assessments for all Tier 1 and Tier 2 vendors. Currently, 14 of 31 Tier 1 vendors have overdue assessments.
+
+─────────────────────────────────────────────
+
+SECTION 4: RECOMMENDATIONS AND PRIORITY MATRIX
+
+Priority | Recommendation | Estimated Annual Benefit | Effort | Timeline
+High | Reclaim 179 dormant Salesforce licenses | $556,800 savings | Low | 30 days
+High | Implement ServiceNow HR Service Delivery | $74,000 efficiency gain | Medium | 90 days
+High | Configure ServiceNow Vendor Risk Management | Risk mitigation; avoids potential $250,000 audit finding | Medium | 120 days
+Medium | Expand Power Automate adoption (target: 300 users) | $180,000 productivity gain | Medium | 6 months
+Medium | Integrate MoneyGuidePro with Salesforce via API | Error reduction; $95,000 rework cost avoidance | High | 9 months
+Low | Evaluate client portal solution (e.g., Orion Connect or Envestnet Portal) | Revenue retention; estimated $1.1M AUM risk reduction | High | 12 months
+
+─────────────────────────────────────────────
+
+SECTION 5: CONCLUSION
+
+Meridian Financial Services is carrying significant latent value across its existing software investments. The four platforms assessed represent $4.7 million in annual spend, yet conservative analysis indicates that $1.46 million—31% of that total—is either dormant, duplicated, or misaligned with operational needs. Immediate action on high-priority recommendations could yield $630,800 in recoverable savings within the first 90 days. Longer-term capability activation, particularly around ServiceNow HR workflows, Power Automate, and CRM integration, could generate an additional $349,000 in annual productivity gains without any incremental licensing cost.
+
+The Enterprise Technology Strategy Group recommends a formal platform governance review be scheduled for Q4 2023, with a follow-up assessment targeted for March 2024 to measure adoption improvements against the baselines established in this report.
+
+─────────────────────────────────────────────
+
+Prepared by: Rachel Okonkwo, Director of Enterprise Architecture
+Reviewed by: James Thibodeau, VP of Information Technology
+Distribution: IT Leadership, CFO Office, Compliance, HR Leadership

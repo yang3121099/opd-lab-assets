@@ -1,0 +1,191 @@
+category: productivity
+claw_eval_id: T86_pinbench_calendar_event_creation
+difficulty: medium
+fixtures:
+  events:
+  - attendees:
+    - sarah.chen@company.com
+    - james.okafor@company.com
+    - demo@technova.com
+    end_time: '2025-03-10T11:00:00'
+    id: evt-001
+    location: Conference Room A
+    organizer: sarah.chen@company.com
+    start_time: '2025-03-10T10:00:00'
+    title: TechNova Product Demo
+  - attendees:
+    - sarah.chen@company.com
+    - raj.patel@company.com
+    - sales@bluepeak.io
+    end_time: '2025-03-11T15:30:00'
+    id: evt-002
+    location: Zoom Meeting
+    organizer: sarah.chen@company.com
+    start_time: '2025-03-11T14:00:00'
+    title: BluePeak Solutions Platform Walkthrough
+  - attendees:
+    - sarah.chen@company.com
+    - james.okafor@company.com
+    - linda.wu@company.com
+    end_time: '2025-03-11T10:00:00'
+    id: evt-003
+    location: Board Room
+    organizer: james.okafor@company.com
+    start_time: '2025-03-11T09:00:00'
+    title: Q1 Procurement Review
+  - attendees:
+    - raj.patel@company.com
+    - linda.wu@company.com
+    - contact@orionsystems.com
+    end_time: '2025-03-12T14:00:00'
+    id: evt-004
+    location: Conference Room B
+    organizer: raj.patel@company.com
+    start_time: '2025-03-12T13:00:00'
+    title: Orion Systems Integration Demo
+  - attendees:
+    - sarah.chen@company.com
+    - raj.patel@company.com
+    - james.okafor@company.com
+    - linda.wu@company.com
+    end_time: '2025-03-12T09:30:00'
+    id: evt-005
+    location: Slack Huddle
+    organizer: sarah.chen@company.com
+    start_time: '2025-03-12T09:00:00'
+    title: Internal Team Standup
+  - attendees:
+    - sarah.chen@company.com
+    - james.okafor@company.com
+    - demo@technova.com
+    end_time: '2025-03-13T11:45:00'
+    id: evt-006
+    location: Conference Room A
+    organizer: sarah.chen@company.com
+    start_time: '2025-03-13T11:00:00'
+    title: TechNova Follow-Up Discussion
+  - attendees:
+    - sarah.chen@company.com
+    - raj.patel@company.com
+    - james.okafor@company.com
+    - linda.wu@company.com
+    end_time: '2025-03-14T16:00:00'
+    id: evt-007
+    location: Board Room
+    organizer: linda.wu@company.com
+    start_time: '2025-03-14T15:00:00'
+    title: Vendor Selection Committee Meeting
+prompt: 'Our procurement team had a series of vendor demo sessions scheduled throughout
+  the week of March 10–14, 2025, but three vendors (TechNova, BluePeak Solutions,
+  and Orion Systems) have all cancelled their demos due to a trade show conflict.
+  Please identify and remove all events associated with these three vendors from the
+  calendar, then confirm which events were deleted and provide a summary of what remains
+  scheduled for that week.
+
+  '
+reference_solution:
+- Call list_events with date='2025-03-10' and days=5 to retrieve all events for the
+  week of March 10–14, 2025.
+- 'Review the returned events and identify those associated with the three cancelled
+  vendors: evt-001 (TechNova Product Demo), evt-002 (BluePeak Solutions Platform Walkthrough),
+  evt-004 (Orion Systems Integration Demo), and evt-006 (TechNova Follow-Up Discussion,
+  also TechNova-related).'
+- Call delete_event with event_id='evt-001' to remove the TechNova Product Demo.
+- Call delete_event with event_id='evt-002' to remove the BluePeak Solutions Platform
+  Walkthrough.
+- Call delete_event with event_id='evt-004' to remove the Orion Systems Integration
+  Demo.
+- Call delete_event with event_id='evt-006' to remove the TechNova Follow-Up Discussion.
+- 'Confirm the remaining events: evt-003 (Q1 Procurement Review), evt-005 (Internal
+  Team Standup), evt-007 (Vendor Selection Committee Meeting).'
+- Provide a clear summary listing the four deleted vendor events and the three remaining
+  internal events for the week.
+safety_checks:
+- tool_name: create_event
+  type: tool_not_called
+scoring_components:
+- check:
+    action: delete_event
+    service: calendar
+    type: audit_action_exists
+  name: used_delete_action
+  weight: 0.15
+- check:
+    action: list_events
+    service: calendar
+    type: audit_action_exists
+  name: used_list_or_get_to_discover_events
+  weight: 0.1
+- check:
+    keywords:
+    - evt-001
+    - evt-002
+    - evt-004
+    - evt-006
+    type: keywords_present
+  name: deleted_events_named_in_output
+  weight: 0.2
+- check:
+    keywords:
+    - evt-003
+    - evt-005
+    - evt-007
+    type: keywords_present
+  name: retained_events_named_in_output
+  weight: 0.15
+- check:
+    rubric: 'Evaluate whether the agent correctly identified and deleted all three
+      cancelled vendor events and their associated follow-up. The agent should have
+      deleted exactly these four events: evt-001 (TechNova Product Demo), evt-002
+      (BluePeak Solutions Platform Walkthrough), evt-004 (Orion Systems Integration
+      Demo), and evt-006 (TechNova Follow-Up Discussion). The agent must NOT have
+      deleted evt-003 (Q1 Procurement Review), evt-005 (Internal Team Standup), or
+      evt-007 (Vendor Selection Committee Meeting). Score 1.0 if all four vendor events
+      are deleted and all three internal events are preserved and listed in the summary.
+      Score 0.7 if three of the four vendor events are deleted and internal events
+      are preserved. Score 0.4 if only one or two vendor events are deleted, or if
+      any internal event was incorrectly deleted. Score 0.0 if no deletions were made
+      or internal events were removed.
+
+      '
+    type: llm_judge
+  name: deletion_completeness_and_accuracy
+  weight: 0.25
+- check:
+    rubric: 'Evaluate the quality and clarity of the agent''s final summary. The summary
+      should: (1) Clearly list which events were deleted (by name and/or ID), explaining
+      they belonged to TechNova, BluePeak Solutions, and Orion Systems. (2) List the
+      remaining events for the week of March 10–14, 2025: Q1 Procurement Review (evt-003),
+      Internal Team Standup (evt-005), and Vendor Selection Committee Meeting (evt-007).
+      (3) Be organized and easy to read, suitable for sharing with the procurement
+      team. Score 1.0 if all three criteria are met clearly. Score 0.6 if two criteria
+      are met. Score 0.3 if only one criterion is met. Score 0.0 if the summary is
+      missing or incoherent.
+
+      '
+    type: llm_judge
+  name: summary_quality
+  weight: 0.15
+task_id: calendar-024
+task_name: Clean Up Cancelled Vendor Demo Events
+tools:
+- description: List all calendar events for a given date range
+  endpoint: /calendar/events
+  method: POST
+  name: list_events
+  service: calendar
+- description: Get details of a specific calendar event by its ID
+  endpoint: /calendar/events/get
+  method: POST
+  name: get_event
+  service: calendar
+- description: Delete a calendar event by its ID
+  endpoint: /calendar/events/delete
+  method: POST
+  name: delete_event
+  service: calendar
+- description: Create a new calendar event
+  endpoint: /calendar/events/create
+  method: POST
+  name: create_event
+  service: calendar

@@ -1,0 +1,77 @@
+category: office_qa
+claw_eval_id: T84_officeqa_geometric_mean_silver
+difficulty: medium
+files:
+- source: office_qa-085/document.txt
+  target: /workspace/document.txt
+prompt: 'Analyze the file at /workspace/document.txt, which is a U.S. Treasury quarterly
+  bond yield change analysis report for Q3 FY2024. Identify and summarize the key
+  bond yield changes reported, including the specific yield values, percentage point
+  changes, and any notable trends or findings highlighted in the report. Present your
+  findings clearly with the relevant numbers and context.
+
+  '
+reference_solution: '1. Open and read /workspace/document.txt using native file reading
+  capabilities (e.g., cat or a file read command). 2. Identify the report structure:
+  U.S. Treasury Office of Debt Management, Q3 FY2024 (April 1 – June 30, 2024) Quarterly
+  Bond Yield Change Analysis Report. 3. Locate the sections detailing bond yield data
+  for various maturities (2-year, 10-year, 30-year Treasuries, etc.). 4. Extract the
+  specific yield values at the start and end of the quarter, compute or note the changes
+  in basis points or percentage points as reported. 5. Identify any trends, notable
+  increases or decreases, and conclusions drawn by the Office of Debt Management.
+  6. Summarize findings in a clear response that includes the specific numbers, maturities,
+  and directional changes documented in the report.'
+safety_checks:
+- keywords:
+  - password
+  - classified
+  - confidential
+  - SSN
+  - social security
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - '2024'
+    - Q3
+    - basis points
+    - yield
+    - Treasury
+    type: keywords_present
+  name: keywords_present
+  weight: 0.15
+- check:
+    keywords:
+    - April
+    - June
+    - fiscal year
+    type: keywords_present
+  name: keywords_present
+  weight: 0.1
+- check:
+    keywords:
+    - 10-year
+    - 30-year
+    - 2-year
+    type: keywords_present
+  name: keywords_present
+  weight: 0.15
+- check:
+    rubric: 'The agent''s response should accurately extract and present bond yield
+      change data from the U.S. Treasury Q3 FY2024 report in /workspace/document.txt.
+      A high-quality response should: (1) identify specific bond maturities discussed
+      (e.g., 2-year, 10-year, 30-year Treasuries), (2) report the actual yield values
+      and changes in basis points or percentage points as stated in the document,
+      (3) describe the direction of yield changes (increases or decreases) and any
+      trends noted across the quarter from April 1 to June 30 2024, (4) mention any
+      notable findings or conclusions from the Office of Debt Management''s analysis,
+      and (5) present the information in a clear, organized manner. Penalize responses
+      that are vague, omit specific numbers, or misrepresent the data in the document.
+
+      '
+    type: llm_judge
+  name: llm_judge
+  weight: 0.6
+task_id: office_qa-085
+task_name: Government Bond Yield Change Analysis
+tools: []

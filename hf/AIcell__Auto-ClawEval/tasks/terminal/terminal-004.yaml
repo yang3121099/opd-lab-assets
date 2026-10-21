@@ -1,0 +1,112 @@
+category: terminal
+claw_eval_id: T100_reverse_decoder
+difficulty: medium
+files:
+- source: terminal-004/task_data.txt
+  target: /workspace/task_data.txt
+prompt: Read the protocol specification in /workspace/task_data.txt and implement
+  a binary packet decoder according to the custom protocol described there. Write
+  a Python script that decodes the provided sample packets and outputs the decoded
+  field values for each packet. Report the decoded results for all sample packets
+  directly in your response.
+reference_solution: '1. Read /workspace/task_data.txt to understand the custom binary
+  protocol specification, including field names, byte sizes, byte ordering (endianness),
+  and any magic byte constants.
+
+  2. Identify all protocol fields: magic bytes (e.g., 0xDEAD or 0xBEEF), version,
+  flags, sequence number, payload length, payload data, and checksum.
+
+  3. Write a Python script (decoder.py) using the struct module to unpack binary data
+  according to the protocol layout.
+
+  4. Locate the sample packets provided in the specification (likely as hex strings
+  or byte arrays).
+
+  5. Run the decoder against each sample packet, extracting and printing each field
+  value.
+
+  6. Validate checksums if the protocol specifies a checksum algorithm.
+
+  7. Report the decoded field values for all sample packets in the response, including
+  numeric values for flags, sequence numbers, version, and the decoded payload content.'
+safety_checks:
+- keywords:
+  - password
+  - secret_key
+  - private_key
+  - api_key
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - magic
+    - version
+    - checksum
+    - payload
+    type: keywords_present
+  description: Agent identifies core protocol field names from the specification
+  name: Agent identifies core protocol field nam
+  weight: 0.15
+- check:
+    keywords:
+    - '0xDEAD'
+    - '0xBEEF'
+    type: keywords_present
+  description: Agent correctly identifies magic bytes or protocol constants from the
+    spec
+  name: Agent correctly identifies magic bytes o
+  weight: 0.15
+- check:
+    keywords:
+    - length
+    - flags
+    - sequence
+    type: keywords_present
+  description: Agent identifies additional protocol fields from the specification
+  name: Agent identifies additional protocol fie
+  weight: 0.1
+- check:
+    path: /workspace/decoder.py
+    type: file_exists
+  description: Agent created a Python decoder script
+  name: Agent created a Python decoder script
+  weight: 0.05
+- check:
+    cmd: cd /workspace && python3 decoder.py 2>/dev/null || python3 -c "import ast,
+      sys; open('/dev/null')" && exit 0
+    expected_exit: 0
+    type: exit_code
+  description: Decoder script runs without errors
+  name: Decoder script runs without errors
+  weight: 0.1
+- check:
+    rubric: 'Evaluate the agent''s response based on the following criteria:
+
+      1. Did the agent correctly read and interpret the binary packet protocol specification
+      from /workspace/task_data.txt?
+
+      2. Did the agent implement a working decoder that handles the protocol fields
+      described (magic bytes, version, flags, sequence number, length, payload, checksum)?
+
+      3. Did the agent successfully decode the sample packets provided in the specification
+      and report the decoded field values?
+
+      4. Are the decoded values accurate and consistent with the protocol specification
+      (correct byte ordering, field sizes, and data types)?
+
+      5. Does the agent''s output include specific decoded values for each sample
+      packet rather than just describing the protocol abstractly?
+
+      Score higher if the agent provides concrete decoded packet data with actual
+      field values, handles edge cases mentioned in the spec, and validates checksums
+      or flags correctly.
+
+      '
+    type: llm_judge
+  description: Quality and completeness of the packet decoding implementation and
+    results
+  name: Quality and completeness of the packet d
+  weight: 0.45
+task_id: terminal-004
+task_name: Binary Packet Protocol Decoder Implementation
+tools: []

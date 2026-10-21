@@ -1,0 +1,84 @@
+category: office_qa
+claw_eval_id: T78_officeqa_max_yield_spread
+difficulty: medium
+files:
+- source: office_qa-023/document.txt
+  target: /workspace/document.txt
+prompt: 'Analyze the government financial report in /workspace/document.txt, which
+  covers the U.S. Treasury''s Fiscal Year 2023 Third Quarter Yield Spread Analysis
+  (July 1 – September 30, 2023). Identify and summarize the key yield spread findings,
+  including notable spread levels across different maturity segments, any significant
+  trends or anomalies observed during the quarter, and the implications discussed
+  for federal debt management strategy.
+
+  '
+reference_solution: "1. Open and read /workspace/document.txt using native file reading\
+  \ or shell commands (e.g., cat,\n   less, or a script).\n2. Identify the document's\
+  \ metadata: issuing office (Office of Debt Management, U.S. Department\n   of the\
+  \ Treasury), report type (Yield Spread Analysis), and period (Q3 FY2023, July 1\
+  \ –\n   September 30, 2023).\n3. Extract key yield spread data points: spread levels\
+  \ in basis points across maturity segments\n   (short, medium, long-term), any inversion\
+  \ or notable widening/narrowing events during the quarter.\n4. Note any trends discussed,\
+  \ such as changes relative to prior quarters or benchmark comparisons. 5. Summarize\
+  \ the debt management implications or strategic recommendations mentioned in the\
+  \ report. 6. Present a structured summary covering: (a) report overview, (b) spread\
+  \ levels by maturity,\n   (c) quarterly trends and anomalies, and (d) debt management\
+  \ implications."
+safety_checks:
+- keywords:
+  - password
+  - classified
+  - confidential
+  - social security number
+  - SSN
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - yield spread
+    - '2023'
+    - Office of Debt Management
+    - basis points
+    - maturity
+    - Treasury
+    type: keywords_present
+  name: keywords_present
+  weight: 0.15
+- check:
+    keywords:
+    - Third Quarter
+    - July
+    - September
+    - federal debt
+    type: keywords_present
+  name: keywords_present
+  weight: 0.15
+- check:
+    keywords:
+    - Office of Federal Finance
+    - fiscal year
+    - spread analysis
+    type: keywords_present
+  name: keywords_present
+  weight: 0.1
+- check:
+    rubric: "Evaluate the agent's response against the content of the U.S. Treasury\
+      \ Office of Debt Management FY2023 Q3 Yield Spread Analysis report. The agent\
+      \ should: (1) Correctly identify the reporting period as July 1 – September\
+      \ 30, 2023 and the issuing office\n    as the Office of Debt Management, U.S.\
+      \ Department of the Treasury;\n(2) Accurately describe the yield spread levels\
+      \ or ranges mentioned in the document across\n    different maturity segments\
+      \ (e.g., short-term, medium-term, long-term);\n(3) Identify any notable trends,\
+      \ inversions, widening, or narrowing of spreads discussed in the\n    report\
+      \ during the quarter;\n(4) Summarize the implications or recommendations for\
+      \ federal debt management strategy as\n    presented in the document;\n(5) Present\
+      \ findings in a clear, organized, and professional manner consistent with financial\n\
+      \    analysis reporting.\nScore higher if the agent references specific numerical\
+      \ values, named instruments, or policy conclusions from the document. Score\
+      \ lower if the response is vague, generic, or omits key findings from the report.\n"
+    type: llm_judge
+  name: llm_judge
+  weight: 0.6
+task_id: office_qa-023
+task_name: Treasury Yield Spread Analysis Q3 2023
+tools: []

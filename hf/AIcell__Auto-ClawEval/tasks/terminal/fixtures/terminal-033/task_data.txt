@@ -1,0 +1,104 @@
+```python
+#!/usr/bin/env python3
+"""
+XSS Filter Testing with HTML Sanitization
+Terminal Task: Security Testing Module
+"""
+
+import re
+import html
+import json
+from typing import Optional
+
+
+# ============================================================
+# HTML SANITIZER IMPLEMENTATION (with intentional bugs to fix)
+# ============================================================
+
+class HTMLSanitizer:
+    """
+    A basic HTML sanitizer that attempts to prevent XSS attacks.
+    This implementation has several bugs - your job is to find and fix them.
+    """
+    
+    ALLOWED_TAGS = {
+        'p', 'br', 'strong', 'em', 'u', 'ol', 'ul', 'li',
+        'h1', 'h2', 'h3', 'blockquote', 'code', 'pre'
+    }
+    
+    ALLOWED_ATTRIBUTES = {
+        'a': ['href', 'title'],
+        'img': ['src', 'alt', 'width', 'height'],
+        'p': ['class'],
+        'div': ['class', 'id'],
+    }
+    
+    DANGEROUS_PROTOCOLS = ['javascript:', 'vbscript:', 'data:', 'file://']
+    
+    def __init__(self):
+        self.errors = []
+    
+    def sanitize(self, input_html: str) -> str:
+        """Main sanitization pipeline."""
+        if not input_html:
+            return ""
+        
+        result = input_html
+        result = self._strip_dangerous_tags(result)
+        result = self._sanitize_attributes(result)
+        result = self._encode_remaining_entities(result)
+        return result
+    
+    def _strip_dangerous_tags(self, html_input: str) -> str:
+        """Remove script, style, and other dangerous tags."""
+        
+        # BUG 1: This pattern doesn't handle uppercase or mixed case tags
+        # e.g., <SCRIPT>, <Script>, <sCrIpT> will bypass this filter
+        dangerous_tags = ['script', 'style', 'iframe', 'object', 'embed', 
+                         'form', 'input', 'button', 'link', 'meta']
+        
+        for tag in dangerous_tags:
+            # Only removes lowercase - NEEDS FIX
+            pattern = f'<{tag}[^>]*>.*?</{tag}>'
+            html_input = re.sub(pattern, '', html_input, flags=re.DOTALL)
+            # Also remove self-closing versions
+            pattern_self = f'<{tag}[^>]*/>'
+            html_input = re.sub(pattern_self, '', html_input)
+        
+        return html_input
+    
+    def _sanitize_attributes(self, html_input: str) -> str:
+        """Remove dangerous event handlers and attributes."""
+        
+        # BUG 2: This only removes 'on' prefixed attributes in lowercase
+        # onload=, ONLOAD=, OnLoad= etc. can bypass this
+        event_pattern = r'\s+on\w+\s*=\s*["\'][^"\']*["\']'
+        html_input = re.sub(event_pattern, '', html_input)
+        
+        # BUG 3: Doesn't handle javascript: in href/src attributes
+        # <a href="javascript:alert(1)"> will still work
+        return html_input
+    
+    def _encode_remaining_entities(self, html_input: str) -> str:
+        """Encode any remaining special characters."""
+        # BUG 4: This encodes EVERYTHING including our allowed tags
+        # This method should only encode content outside of allowed tags
+        return html_input  # Currently does nothing - NEEDS IMPLEMENTATION
+
+
+# ============================================================
+# TEST CASES
+# ============================================================
+
+class XSSTestSuite:
+    """
+    Comprehensive XSS test cases for validating HTML sanitization.
+    Each test case includes the payload, expected behavior, and category.
+    """
+    
+    def __init__(self, sanitizer: HTMLSanitizer):
+        self.sanitizer = sanitizer
+        self.results = []
+    
+    def run_all_tests(self):
+        """Execute all XSS

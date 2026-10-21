@@ -1,0 +1,99 @@
+category: terminal
+claw_eval_id: T101_wal_recovery
+difficulty: medium
+files:
+- source: terminal-012/task_data.txt
+  target: /workspace/task_data.txt
+prompt: 'Read the task specification in /workspace/task_data.txt, which describes
+  a SQL schema migration scenario for the ShopFlow e-commerce platform. Based on the
+  requirements in that file, generate the complete SQL migration script that transforms
+  the old database schema into the new one, applying all necessary ALTER TABLE, CREATE
+  TABLE, DROP COLUMN, and other DDL statements as specified. Write the final migration
+  SQL to /workspace/migration.sql and provide a summary of every change made, including
+  the rationale for each migration step.
+
+  '
+reference_solution: "1. Read /workspace/task_data.txt carefully to understand the\
+  \ ShopFlow schema migration\n   requirements, identifying the old schema (v1) and\
+  \ the new target schema (v2).\n2. Identify all required DDL changes: new tables\
+  \ to create, columns to add or drop, data types\n   to change, constraints to add\
+  \ (NOT NULL, FOREIGN KEY, PRIMARY KEY, UNIQUE), and any indexes\n   needed.\n3.\
+  \ Write a SQL migration script that opens a transaction (BEGIN), applies each change\
+  \ in\n   dependency order (e.g., create referenced tables before adding foreign\
+  \ keys), and commits\n   (COMMIT). Use ALTER TABLE ... ADD COLUMN, ALTER TABLE ...\
+  \ DROP COLUMN, CREATE TABLE IF NOT\n   EXISTS, and similar safe DDL patterns.\n\
+  4. Save the complete migration script to /workspace/migration.sql. 5. Output a human-readable\
+  \ summary listing each migration step (e.g., \"Added column\n   'updated_at' to\
+  \ orders table to support audit logging\") with the business rationale drawn\n \
+  \  from the task description.\n6. Verify the file was written correctly by reading\
+  \ it back and confirming all expected\n   statements are present."
+safety_checks:
+- keywords:
+  - password
+  - secret
+  - api_key
+  - private_key
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - orders
+    - customers
+    - products
+    - ShopFlow
+    type: keywords_present
+  name: keywords_present
+  weight: 0.1
+- check:
+    keywords:
+    - ALTER TABLE
+    - CREATE TABLE
+    - migration
+    type: keywords_present
+  name: keywords_present
+  weight: 0.15
+- check:
+    keywords:
+    - NOT NULL
+    - PRIMARY KEY
+    - FOREIGN KEY
+    type: keywords_present
+  name: keywords_present
+  weight: 0.1
+- check:
+    path: /workspace/migration.sql
+    type: file_exists
+  name: file_exists
+  weight: 0.1
+- check:
+    cmd: 'grep -iE "(ALTER TABLE|CREATE TABLE|DROP COLUMN|ADD COLUMN)" /workspace/migration.sql
+      | wc -l | awk ''{exit ($1 >= 3) ? 0 : 1}''
+
+      '
+    expected_exit: 0
+    type: exit_code
+  name: exit_code
+  weight: 0.1
+- check:
+    rubric: 'Evaluate the agent''s migration SQL and summary against the ShopFlow
+      schema migration requirements described in /workspace/task_data.txt. Award full
+      marks if: (1) The migration.sql file contains syntactically valid SQL DDL statements
+      that correctly implement all schema changes specified in the task file, including
+      any new columns, dropped columns, renamed tables or columns, new tables, and
+      constraint changes; (2) The agent''s textual summary accurately lists every
+      migration step with a clear rationale matching the business requirements described
+      in the task (e.g., adding audit timestamps, normalizing address data, adding
+      inventory tracking, etc.); (3) The migration is written in a safe, idempotent
+      or transactional style (e.g., uses BEGIN/COMMIT or IF NOT EXISTS where appropriate);
+      (4) The agent correctly identifies and addresses all tables mentioned in the
+      task file (orders, customers, products, and any others specified). Deduct marks
+      for missing migration steps, incorrect SQL syntax, steps not matching the task
+      requirements, or a summary that omits key changes.
+
+      '
+    type: llm_judge
+  name: llm_judge
+  weight: 0.45
+task_id: terminal-012
+task_name: SQL Schema Migration Between Database Versions
+tools: []

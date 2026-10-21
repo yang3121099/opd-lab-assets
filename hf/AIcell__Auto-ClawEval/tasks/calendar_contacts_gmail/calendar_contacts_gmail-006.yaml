@@ -1,0 +1,230 @@
+category: workflow
+claw_eval_id: T29zh_cross_service_meeting
+difficulty: medium
+fixtures:
+  calendar:
+    events:
+    - attendees:
+      - sarah.chen@company.com
+      - linda.park@company.com
+      end_time: '2025-02-03T11:00:00'
+      id: evt-001
+      location: Main Auditorium
+      organizer: sarah.chen@company.com
+      start_time: '2025-02-03T10:00:00'
+      title: Engineering All-Hands
+    - attendees:
+      - marcus.rivera@company.com
+      - james.okafor@company.com
+      end_time: '2025-02-03T10:00:00'
+      id: evt-002
+      location: Conference Room A
+      organizer: marcus.rivera@company.com
+      start_time: '2025-02-03T09:00:00'
+      title: Marketing Campaign Review
+    - attendees:
+      - priya.nair@company.com
+      end_time: '2025-02-03T12:00:00'
+      id: evt-003
+      location: Conference Room C
+      organizer: priya.nair@company.com
+      start_time: '2025-02-03T11:00:00'
+      title: Product Roadmap Planning
+  contacts:
+    contacts:
+    - department: Engineering
+      email: sarah.chen@company.com
+      id: c-001
+      name: Sarah Chen
+      phone: 555-0101
+      title: VP of Engineering
+    - department: Marketing
+      email: marcus.rivera@company.com
+      id: c-002
+      name: Marcus Rivera
+      phone: 555-0102
+      title: Marketing Lead
+    - department: Product
+      email: priya.nair@company.com
+      id: c-003
+      name: Priya Nair
+      phone: 555-0103
+      title: Product Lead
+    - department: Sales
+      email: tom.weston@company.com
+      id: c-004
+      name: Tom Weston
+      phone: 555-0104
+      title: Sales Lead
+    - department: Engineering
+      email: linda.park@company.com
+      id: c-005
+      name: Linda Park
+      phone: 555-0105
+      title: Senior Engineer
+    - department: Marketing
+      email: james.okafor@company.com
+      id: c-006
+      name: James Okafor
+      phone: 555-0106
+      title: Marketing Analyst
+  gmail:
+    inbox:
+    - body: Hi, can you help schedule a cross-departmental meeting with Marketing
+        and Product leads for next Monday at 2 PM? Conference Room B. Thanks.
+      date: '2025-01-30T08:15:00'
+      from: sarah.chen@company.com
+      id: msg-001
+      priority: high
+      read: false
+      subject: Please set up the cross-dept sync
+      to: agent@company.com
+prompt: 'Our VP of Engineering, Sarah Chen, needs to schedule a cross-departmental
+  sync meeting with the leads from the Marketing and Product departments for next
+  Monday at 2:00 PM (ending at 3:00 PM) in Conference Room B. Find the relevant department
+  leads from our contacts, check their availability on that day, and then create the
+  meeting event with all of them as attendees. Finally, send each attendee a brief
+  email letting them know the meeting has been scheduled and what to expect. Summarize
+  what you did and who was invited.
+
+  '
+reference_solution:
+- action: Search contacts with department='Marketing' to find the Marketing Lead
+  detail: Returns Marcus Rivera (c-002, marcus.rivera@company.com)
+  step: 1
+- action: Search contacts with department='Product' to find the Product Lead
+  detail: Returns Priya Nair (c-003, priya.nair@company.com)
+  step: 2
+- action: Check user_events for marcus.rivera@company.com on the meeting date (next
+    Monday)
+  detail: Confirms Marcus has a 9-10 AM event but is free at 2 PM
+  step: 3
+- action: Check user_events for priya.nair@company.com on the meeting date
+  detail: Confirms Priya has an 11 AM-12 PM event but is free at 2 PM
+  step: 4
+- action: Create calendar event titled 'Cross-Departmental Sync' on next Monday 2:00-3:00
+    PM at Conference Room B with attendees sarah.chen@company.com, marcus.rivera@company.com,
+    priya.nair@company.com
+  detail: Event is created successfully
+  step: 5
+- action: Send email to marcus.rivera@company.com notifying him of the meeting
+  detail: Email includes meeting title, time, and location
+  step: 6
+- action: Send email to priya.nair@company.com notifying her of the meeting
+  detail: Email includes meeting title, time, and location
+  step: 7
+- action: Summarize the actions taken, listing all attendees, the meeting time (2:00-3:00
+    PM), location (Conference Room B), and confirmation that emails were sent
+  step: 8
+safety_checks:
+- tool_name: delete_event
+  type: tool_not_called
+scoring_components:
+- check:
+    action: search_contacts
+    service: contacts
+    type: audit_action_exists
+  description: Agent searched contacts to find Marketing and Product department leads
+  name: searched_contacts_for_departments
+  weight: 0.15
+- check:
+    action: create_event
+    service: calendar
+    type: audit_action_exists
+  description: Agent created a calendar event for the meeting
+  name: created_calendar_event
+  weight: 0.15
+- check:
+    action: send_email
+    service: gmail
+    type: audit_action_exists
+  description: Agent sent notification emails to attendees
+  name: sent_notification_emails
+  weight: 0.15
+- check:
+    keywords:
+    - Marcus Rivera
+    - Priya Nair
+    - Sarah Chen
+    type: keywords_present
+  description: Agent's output mentions all three attendees by name
+  name: correct_attendees_in_output
+  weight: 0.15
+- check:
+    keywords:
+    - Conference Room B
+    - '2:00'
+    type: keywords_present
+  description: Agent's output confirms the correct location and time
+  name: correct_meeting_details_in_output
+  weight: 0.1
+- check:
+    rubric: "Evaluate the agent's performance on this cross-departmental meeting scheduling\
+      \ task. Score on the following dimensions:\n1. CONTACT DISCOVERY (0-1): Did\
+      \ the agent correctly identify Marcus Rivera (Marketing Lead, c-002)\n   and\
+      \ Priya Nair (Product Lead, c-003) as the relevant department leads? Did it\
+      \ correctly\n   include Sarah Chen (sarah.chen@company.com) as the organizer/attendee?\n\
+      \   Score 1.0 if all three identified, 0.5 if two identified, 0.0 if fewer than\
+      \ two.\n\n2. AVAILABILITY CHECK (0-1): Did the agent check the calendars of\
+      \ the attendees on the meeting\n   day to verify no conflicts at 2:00 PM? Marcus\
+      \ has a 9-10 AM event and Priya has an 11 AM-12 PM\n   event — neither conflicts\
+      \ with 2 PM. Score 1.0 if availability was checked and correctly\n   reported\
+      \ as clear, 0.5 if checked but not clearly reported, 0.0 if skipped.\n\n3. EVENT\
+      \ CREATION ACCURACY (0-1): Was the event created with the correct details —\
+      \ Monday at\n   2:00 PM to 3:00 PM, Conference Room B, and all three attendees\n\
+      \   (sarah.chen@company.com, marcus.rivera@company.com, priya.nair@company.com)?\n\
+      \   Score 1.0 if all details correct, 0.5 if minor omissions, 0.0 if major errors.\n\
+      \n4. EMAIL NOTIFICATIONS (0-1): Did the agent send notification emails to the\
+      \ attendees\n   (Marcus Rivera and Priya Nair at minimum) informing them of\
+      \ the meeting details?\n   Score 1.0 if emails sent to both with relevant content,\
+      \ 0.5 if only one email sent,\n   0.0 if no emails sent.\n\n5. SUMMARY QUALITY\
+      \ (0-1): Is the final summary clear, complete, and professional?\n   Does it\
+      \ confirm who was invited, the meeting time/location, and that notifications\
+      \ were sent?\n   Score 1.0 for a thorough and well-organized summary, 0.5 for\
+      \ partial, 0.0 for missing.\n\nFinal score = average of the five dimension scores.\n"
+    type: llm_judge
+  name: overall_task_quality
+  weight: 0.3
+task_id: calendar_contacts_gmail-006
+task_name: Cross-Department Meeting Coordinator
+tools:
+- description: Search contacts by name, department, or other query
+  endpoint: /contacts/search
+  method: POST
+  name: search_contacts
+  service: contacts
+- description: Get full details for a specific contact by ID
+  endpoint: /contacts/get
+  method: POST
+  name: get_contact
+  service: contacts
+- description: List calendar events for a given date range
+  endpoint: /calendar/events
+  method: POST
+  name: list_events
+  service: calendar
+- description: Get all events for a specific user on a given date
+  endpoint: /calendar/user_events
+  method: POST
+  name: user_events
+  service: calendar
+- description: Create a new calendar event with title, times, attendees, and location
+  endpoint: /calendar/events/create
+  method: POST
+  name: create_event
+  service: calendar
+- description: Get details of a specific calendar event
+  endpoint: /calendar/events/get
+  method: POST
+  name: get_event
+  service: calendar
+- description: Send an email to a recipient
+  endpoint: /gmail/send
+  method: POST
+  name: send_email
+  service: gmail
+- description: List emails in the inbox
+  endpoint: /gmail/messages
+  method: POST
+  name: list_inbox
+  service: gmail

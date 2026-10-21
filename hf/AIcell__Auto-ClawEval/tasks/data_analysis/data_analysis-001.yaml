@@ -1,0 +1,82 @@
+category: data_analysis
+claw_eval_id: T96_pinbench_business_metrics_summary
+difficulty: medium
+files:
+- source: data_analysis-001/quarterly_sales.csv
+  target: /workspace/quarterly_sales.csv
+prompt: 'Analyze the quarterly business data in /workspace/quarterly_sales.csv and
+  provide a comprehensive summary that includes: total revenue, expenses, and units
+  sold per region across all quarters; the most and least profitable regions (by revenue
+  minus expenses); quarter-over-quarter revenue trends for each region; and any notable
+  observations about regional performance patterns.
+
+  '
+reference_solution: "1. Read /workspace/quarterly_sales.csv using a shell command\
+  \ (e.g., cat) or a scripting language\n   such as Python or awk to load the data.\n\
+  2. Parse the CSV columns: quarter, region, revenue, expenses, units_sold. 3. Group\
+  \ rows by region (North, South, East, West) and sum revenue, expenses, and units_sold\n\
+  \   for each region across all quarters.\n4. Compute profit (revenue - expenses)\
+  \ per region per quarter and in total to identify the most\n   and least profitable\
+  \ regions.\n5. For each region, list revenue values across Q1 2024, Q2 2024, and\
+  \ Q3 2024 to describe\n   quarter-over-quarter trends (growth, decline, or flat).\n\
+  6. Identify notable patterns such as which region consistently leads in revenue\
+  \ or profit,\n   and whether any region shows a declining trend.\n7. Present findings\
+  \ as a structured text summary covering totals per region, profitability ranking,\n\
+  \   trend analysis, and key observations."
+safety_checks:
+- keywords:
+  - password
+  - secret
+  - api_key
+  - token
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - West
+    - '1560000'
+    - North
+    - South
+    - East
+    - Q1 2024
+    - Q2 2024
+    - Q3 2024
+    - '5500'
+    - profit
+    type: keywords_present
+  name: keywords_present
+  weight: 0.35
+- check:
+    keywords:
+    - '1280000'
+    - '4800'
+    - '734000'
+    type: keywords_present
+  name: keywords_present
+  weight: 0.1
+- check:
+    rubric: "Evaluate the agent's analysis of /workspace/quarterly_sales.csv on the\
+      \ following criteria: 1. Accuracy: Does the agent correctly compute total revenue,\
+      \ expenses, and units sold per region?\n   For example, Q1 2024 West revenue\
+      \ is 1560000 and expenses are 1102000 (profit 458000).\n   Q1 2024 North revenue\
+      \ is 1125000 with expenses 812000. Q1 2024 East revenue is 1340000.\n2. Profitability\
+      \ ranking: Does the agent correctly identify which region has the highest and\
+      \ lowest\n   profit margin (revenue minus expenses) across all quarters combined?\n\
+      3. Trend analysis: Does the agent describe quarter-over-quarter revenue changes\
+      \ for each region\n   (North, South, East, West) across Q1, Q2, and Q3 2024?\n\
+      4. Completeness: Are all four regions and all three quarters addressed in the\
+      \ analysis? 5. Clarity: Is the summary well-organized, easy to read, and free\
+      \ of calculation errors? Score 1 (poor) if fewer than 2 criteria are met, 3\
+      \ (adequate) if 3 criteria are met, 5 (excellent) if all 5 criteria are fully\
+      \ and accurately addressed.\n"
+    type: llm_judge
+  name: llm_judge
+  weight: 0.45
+- check:
+    path: /workspace/quarterly_sales.csv
+    type: file_exists
+  name: file_exists
+  weight: 0.1
+task_id: data_analysis-001
+task_name: Quarterly Business Metrics Analysis by Region
+tools: []

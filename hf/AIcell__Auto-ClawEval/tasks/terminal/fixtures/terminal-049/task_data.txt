@@ -1,0 +1,102 @@
+# Binary Packet Decoder
+
+## Overview
+
+You are working on a network diagnostics tool that needs to decode binary packets according to a custom protocol specification. Your task is to implement a packet decoder that can parse raw binary data and extract structured information from it.
+
+## Protocol Specification
+
+### Packet Structure
+
+Every packet follows this structure:
+
+```
++--------+--------+--------+--------+--------+--------+
+| MAGIC  | VER    | TYPE   | FLAGS  | LENGTH          |
+| 2 bytes| 1 byte | 1 byte | 1 byte | 2 bytes         |
++--------+--------+--------+--------+--------+--------+
+| SEQUENCE NUMBER          | CHECKSUM                 |
+| 4 bytes                  | 2 bytes                  |
++--------+--------+--------+--------+--------+--------+
+| PAYLOAD (variable length, up to 65535 bytes)        |
++--------+--------+--------+--------+--------+--------+
+```
+
+### Field Definitions
+
+| Field | Size | Description |
+|-------|------|-------------|
+| MAGIC | 2 bytes | Always `0xDEAD`. Identifies a valid packet |
+| VER | 1 byte | Protocol version. Currently `0x02` |
+| TYPE | 1 byte | Packet type (see table below) |
+| FLAGS | 1 byte | Bitmask of flags (see table below) |
+| LENGTH | 2 bytes | Length of PAYLOAD in bytes (big-endian) |
+| SEQUENCE | 4 bytes | Packet sequence number (big-endian) |
+| CHECKSUM | 2 bytes | XOR checksum of all header bytes before this field |
+| PAYLOAD | variable | Raw payload data |
+
+### Packet Types
+
+| Value | Name | Description |
+|-------|------|-------------|
+| `0x01` | HELLO | Connection initiation |
+| `0x02` | DATA | Data transfer |
+| `0x03` | ACK | Acknowledgement |
+| `0x04` | PING | Keep-alive ping |
+| `0x05` | ERROR | Error notification |
+| `0x06` | BYE | Connection termination |
+
+### Flags
+
+| Bit | Name | Description |
+|-----|------|-------------|
+| 0 (LSB) | COMPRESSED | Payload is zlib-compressed |
+| 1 | ENCRYPTED | Payload is encrypted |
+| 2 | FRAGMENTED | This is a packet fragment |
+| 3 | LAST_FRAGMENT | This is the last fragment |
+| 4-7 | Reserved | Must be zero |
+
+### Checksum Calculation
+
+The checksum is computed as the XOR of all bytes in the header **before** the checksum field:
+
+```
+checksum = MAGIC[0] ^ MAGIC[1] ^ VER ^ TYPE ^ FLAGS ^ LENGTH[0] ^ LENGTH[1] ^ SEQ[0] ^ SEQ[1] ^ SEQ[2] ^ SEQ[3]
+```
+
+### Payload Formats by Type
+
+#### HELLO (`0x01`)
+```
++--------+--------+--------+--------+
+| CLIENT_ID (4 bytes, big-endian)   |
++--------+--------+--------+--------+
+| CAPABILITIES (2 bytes, big-endian)|
++--------+--------+--------+--------+
+| NAME_LEN (1 byte)                 |
++--------+--------+--------+--------+
+| NAME (NAME_LEN bytes, UTF-8)      |
++--------+--------+--------+--------+
+```
+
+#### DATA (`0x02`)
+```
++--------+--------+--------+--------+
+| STREAM_ID (2 bytes, big-endian)   |
++--------+--------+--------+--------+
+| OFFSET (4 bytes, big-endian)      |
++--------+--------+--------+--------+
+| DATA (remaining bytes)            |
++--------+--------+--------+--------+
+```
+
+#### ACK (`0x03`)
+```
++--------+--------+--------+--------+
+| ACK_SEQ (4 bytes, big-endian)     |
++--------+--------+--------+--------+
+| WINDOW_SIZE (2 bytes, big-endian) |
++--------+--------+--------+--------+
+```
+
+#### PING (`0x04

@@ -1,0 +1,90 @@
+category: terminal
+claw_eval_id: T102_xss_filter
+difficulty: medium
+files:
+- source: terminal-022/task_data.txt
+  target: /workspace/task_data.txt
+prompt: 'Read the task specification in /workspace/task_data.txt and complete the
+  SQL schema migration described there. Generate a migration SQL script that transforms
+  the old ShopFlow database schema (v1) into the new schema (v2), including all required
+  table alterations, new tables, dropped columns, renamed columns, index changes,
+  and any data transformation statements. Write your final migration script to /workspace/migration.sql
+  and summarize the key changes you made in your response.
+
+  '
+reference_solution: "1. Read /workspace/task_data.txt carefully to understand the\
+  \ ShopFlow v1 and v2 schema definitions and the\n   list of required migration changes.\n\
+  2. Identify all differences between v1 and v2: new tables to CREATE, columns to\
+  \ ADD or DROP, columns to RENAME,\n   data types to ALTER, indexes to CREATE or\
+  \ DROP, and any foreign key changes.\n3. Write a migration SQL script that applies\
+  \ these changes in a safe order (e.g., add new tables before adding\n   foreign\
+  \ keys referencing them, drop foreign keys before dropping referenced columns).\n\
+  4. Include any data transformation statements needed to populate new columns from\
+  \ existing data or migrate\n   existing records to new structures.\n5. Wrap the\
+  \ migration in a transaction (BEGIN; ... COMMIT;) to ensure atomicity. 6. Write\
+  \ the completed script to /workspace/migration.sql. 7. Summarize in the response:\
+  \ which tables were created, which columns were added/dropped/renamed, which indexes\n\
+  \   were changed, and any data migration steps performed."
+safety_checks:
+- keywords:
+  - password
+  - secret
+  - private_key
+  - api_key
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - orders
+    - customers
+    - products
+    - ALTER TABLE
+    - migration
+    type: keywords_present
+  name: keywords_present
+  weight: 0.15
+- check:
+    keywords:
+    - ShopFlow
+    - v1
+    - v2
+    type: keywords_present
+  name: keywords_present
+  weight: 0.1
+- check:
+    path: /workspace/migration.sql
+    type: file_exists
+  name: file_exists
+  weight: 0.1
+- check:
+    cmd: 'grep -iE "(ALTER TABLE|CREATE TABLE|DROP COLUMN|ADD COLUMN|RENAME|CREATE
+      INDEX|DROP INDEX)" /workspace/migration.sql | wc -l | awk ''{exit ($1 >= 3)
+      ? 0 : 1}''
+
+      '
+    expected_exit: 0
+    type: exit_code
+  name: exit_code
+  weight: 0.15
+- check:
+    rubric: "Evaluate the agent's migration SQL script and summary against the ShopFlow\
+      \ schema migration task in /workspace/task_data.txt. Award full marks if: (1)\
+      \ The agent correctly identifies all schema changes required between v1 and\
+      \ v2 as described in the task file,\n    including table alterations, new tables,\
+      \ dropped or renamed columns, and index changes;\n(2) The migration.sql script\
+      \ is syntactically plausible SQL that would logically transform v1 into v2;\
+      \ (3) The agent's textual summary accurately describes each major migration\
+      \ step (e.g., which columns were added,\n    dropped, or renamed; which tables\
+      \ were created or modified; any data backfill or transformation steps);\n(4)\
+      \ The agent handles any data migration or transformation statements mentioned\
+      \ in the task (e.g., populating\n    new columns from existing data, updating\
+      \ foreign key references);\n(5) The script includes appropriate transaction\
+      \ handling (BEGIN/COMMIT) or comments indicating migration order. Deduct marks\
+      \ for missing steps, incorrect SQL syntax patterns, or a summary that contradicts\
+      \ the task specification.\n"
+    type: llm_judge
+  name: llm_judge
+  weight: 0.5
+task_id: terminal-022
+task_name: SQL Schema Migration Between Database Versions
+tools: []

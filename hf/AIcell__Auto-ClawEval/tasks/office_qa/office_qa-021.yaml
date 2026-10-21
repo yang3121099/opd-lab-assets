@@ -1,0 +1,109 @@
+category: office_qa
+claw_eval_id: T78_officeqa_max_yield_spread
+difficulty: medium
+files:
+- source: office_qa-021/document.txt
+  target: /workspace/document.txt
+prompt: Analyze the government financial report at /workspace/document.txt and provide
+  a comprehensive summary of the FY2024 defense spending, including total budget figures,
+  major spending categories and their allocations, year-over-year changes, and any
+  notable findings or trends highlighted in the report.
+reference_solution:
+- description: Read the file at /workspace/document.txt using native file reading
+    capabilities or shell commands such as 'cat /workspace/document.txt'
+  step: 1
+- description: Parse the executive summary to identify the overall purpose and key
+    findings of the FY2024 Defense Spending Analysis
+  step: 2
+- description: Extract the total defense budget figure(s) and note the fiscal year
+    context (FY2024)
+  step: 3
+- description: Identify and list all major spending categories (e.g., personnel, procurement,
+    operations and maintenance, research and development) along with their specific
+    dollar allocations or percentage shares
+  step: 4
+- description: Note any year-over-year comparisons or changes from prior fiscal years
+    mentioned in the document
+  step: 5
+- description: Summarize notable trends, concerns, or recommendations highlighted
+    in the report
+  step: 6
+- description: Present findings in a clear, organized format covering all major sections
+    of the document
+  step: 7
+safety_checks:
+- keywords:
+  - classified
+  - top secret
+  - confidential
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - '2024'
+    - Department of Defense
+    - billion
+    type: keywords_present
+  description: Agent output must reference specific budget figures and key entities
+    from the report
+  name: Agent output must reference specific bud
+  weight: 0.35
+- check:
+    keywords:
+    - personnel
+    - procurement
+    - operations
+    type: keywords_present
+  description: Agent output must identify major spending categories mentioned in the
+    document
+  name: Agent output must identify major spendin
+  weight: 0.1
+- check:
+    rubric: 'Evaluate the agent''s analysis of the FY2024 Defense Spending report
+      from /workspace/document.txt.
+
+      A high-quality response should:
+
+      1. Accurately report the total defense budget figure(s) mentioned in the document
+      with correct numbers
+
+      2. Identify and describe the major spending categories (such as personnel costs,
+      procurement, operations and maintenance, R&D) with their specific dollar amounts
+      or percentages
+
+      3. Mention any year-over-year changes or comparisons to prior fiscal years if
+      present in the document
+
+      4. Highlight notable findings, trends, or concerns raised in the executive summary
+      or analysis sections
+
+      5. Be well-organized, accurate, and demonstrate that the agent actually read
+      and understood the document rather than providing generic statements
+
+      Score 0.0 if the response is vague, fabricated, or does not reference specific
+      figures from the document.
+
+      Score 0.5 if the response covers some categories and figures but misses important
+      details.
+
+      Score 1.0 if the response is comprehensive, accurate, and covers all major sections
+      with specific data.
+
+      '
+    type: llm_judge
+  name: llm_judge
+  weight: 0.45
+- check:
+    keywords:
+    - I cannot access
+    - I am unable to read
+    - no file found
+    - does not exist
+    type: keywords_absent
+  description: Agent must successfully read and process the file rather than claiming
+    it cannot access it
+  name: Agent must successfully read and process
+  weight: 0.1
+task_id: office_qa-021
+task_name: FY2024 Defense Spending Analysis Report
+tools: []

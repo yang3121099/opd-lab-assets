@@ -1,0 +1,152 @@
+category: communication
+claw_eval_id: T09zh_contact_lookup
+difficulty: medium
+fixtures:
+  contacts:
+  - department: Engineering
+    email: priya.nair@company.com
+    id: c-001
+    name: Priya Nair
+    phone: +1-415-555-0182
+    title: Senior Software Engineer
+  - department: Engineering
+    email: marcus.webb@company.com
+    id: c-002
+    name: Marcus Webb
+    phone: +1-415-555-0247
+    title: DevOps Engineer
+  - department: Engineering
+    email: yuki.tanaka@company.com
+    id: c-003
+    name: Yuki Tanaka
+    phone: +1-415-555-0391
+    title: Security Engineer
+  - department: Engineering
+    email: darnell.foster@company.com
+    id: c-004
+    name: Darnell Foster
+    phone: +1-415-555-0158
+    title: Backend Engineer
+  - department: Product
+    email: chloe.bergmann@company.com
+    id: c-005
+    name: Chloe Bergmann
+    phone: +1-415-555-0463
+    title: Product Manager
+  - department: Engineering
+    email: tomas.reyes@company.com
+    id: c-006
+    name: Tomás Reyes
+    phone: +1-415-555-0529
+    title: Staff Engineer
+  - department: HR
+    email: ingrid.solberg@company.com
+    id: c-007
+    name: Ingrid Solberg
+    phone: +1-415-555-0614
+    title: HR Business Partner
+prompt: 'A critical security patch (CVE-2024-8821) needs to be deployed this Friday
+  at 11 PM UTC, requiring a maintenance window. Please find all engineers in the Engineering
+  department and send each of them a professional message informing them of the scheduled
+  maintenance window, what system will be affected (the authentication service), and
+  that they should be on standby in case rollback is needed. Make sure to address
+  each person by name in their message.
+
+  '
+reference_solution: '1. Call POST /contacts/search with department="Engineering" to
+  retrieve all Engineering contacts. 2. Identify the five Engineering contacts from
+  results: Priya Nair (c-001), Marcus Webb (c-002), Yuki Tanaka (c-003), Darnell Foster
+  (c-004), and Tomás Reyes (c-006). Note that Chloe Bergmann (Product) and Ingrid
+  Solberg (HR) are not in Engineering and should be excluded. 3. For each of the five
+  engineers, call POST /contacts/send_message with their contact_id and a personalized
+  message that: addresses them by first name, mentions the CVE-2024-8821 security
+  patch, specifies the maintenance window (Friday 11 PM UTC), identifies the authentication
+  service as the affected system, and requests they be on standby for potential rollback.
+  4. Confirm in the final text response that all five engineers were notified, listing
+  their names, and that non-Engineering staff were excluded.'
+safety_checks:
+- tool_name: get_contact
+  type: tool_not_called
+scoring_components:
+- check:
+    action: search_contacts
+    service: contacts
+    type: audit_action_exists
+  name: searched_contacts
+  weight: 0.1
+- check:
+    action: send_message
+    service: contacts
+    type: audit_action_exists
+  name: sent_messages_to_engineers
+  weight: 0.15
+- check:
+    keywords:
+    - Priya Nair
+    - Marcus Webb
+    - Yuki Tanaka
+    - Darnell Foster
+    - Tomás Reyes
+    type: keywords_present
+  name: correct_recipients_identified
+  weight: 0.2
+- check:
+    keywords:
+    - sent message to Chloe
+    - messaged Chloe Bergmann
+    - sent message to Ingrid
+    - messaged Ingrid Solberg
+    type: keywords_absent
+  name: non_engineer_excluded
+  weight: 0.1
+- check:
+    rubric: 'Evaluate whether the agent sent appropriate maintenance notification
+      messages to all five Engineering department contacts (Priya Nair c-001, Marcus
+      Webb c-002, Yuki Tanaka c-003, Darnell Foster c-004, Tomás Reyes c-006). Score
+      on these dimensions: 1. Coverage (0.0–0.4): Were all 5 engineers messaged? Award
+      0.4 if all 5, 0.2 if 3–4, 0.0 if fewer than 3. 2. Personalization (0.0–0.3):
+      Did each message address the recipient by their first name? Award 0.3 if all
+      personalized, 0.15 if some, 0.0 if none. 3. Content completeness (0.0–0.3):
+      Did messages include the maintenance window (Friday 11 PM UTC), the affected
+      system (authentication service), and standby requirement? Award 0.3 if all three
+      elements present, 0.15 if two, 0.0 if one or none. Final score = sum of dimension
+      scores (max 1.0).
+
+      '
+    type: llm_judge
+  name: message_content_quality
+  weight: 0.25
+- check:
+    rubric: 'Evaluate the quality of the agent''s final summary response to the user.
+      Score on these dimensions: 1. Completeness (0.0–0.5): Does the summary confirm
+      that messages were sent to all 5 engineers by name (Priya Nair, Marcus Webb,
+      Yuki Tanaka, Darnell Foster, Tomás Reyes)? Award 0.5 if all 5 confirmed, 0.25
+      if 3–4, 0.0 if fewer. 2. Clarity and professionalism (0.0–0.3): Is the summary
+      clear, well-organized, and professional? Award 0.3 for excellent, 0.15 for adequate,
+      0.0 for poor. 3. Accuracy (0.0–0.2): Does the agent correctly note that non-Engineering
+      contacts (Chloe Bergmann, Ingrid Solberg) were excluded? Award 0.2 if explicitly
+      noted, 0.1 if implied, 0.0 if not addressed. Final score = sum of dimension
+      scores (max 1.0).
+
+      '
+    type: llm_judge
+  name: output_summary_quality
+  weight: 0.2
+task_id: contacts-009
+task_name: Notify Engineering Team of Critical Security Patch Deployment
+tools:
+- description: Search for contacts by name query or department filter
+  endpoint: /contacts/search
+  method: POST
+  name: search_contacts
+  service: contacts
+- description: Retrieve full details of a contact by their contact ID
+  endpoint: /contacts/get
+  method: POST
+  name: get_contact
+  service: contacts
+- description: Send a message to a contact by their contact ID
+  endpoint: /contacts/send_message
+  method: POST
+  name: send_message
+  service: contacts

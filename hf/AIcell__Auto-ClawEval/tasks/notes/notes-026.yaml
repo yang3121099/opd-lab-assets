@@ -1,0 +1,201 @@
+category: memory
+claw_eval_id: T99_pinbench_second_brain_recall
+difficulty: medium
+fixtures:
+  notes:
+  - attendees:
+    - Linda Park
+    - James Osei
+    - Rachel Torres
+    content: 'Attendees reviewed Q3 spending across all departments. Marketing overspent
+      by 12%. Action items: CFO to prepare variance report by Oct 5. Department heads
+      to submit revised forecasts.
+
+      '
+    date: '2024-09-15'
+    id: note-001
+    tags:
+    - budget
+    - finance
+    - Q3
+    title: Q3 Budget Review
+  - attendees:
+    - Sarah Chen
+    - David Okafor
+    - Marcus Webb
+    - Priya Nair
+    content: 'Initial kickoff for Acme-Vertex merger integration. Key workstreams
+      identified: legal entity consolidation, IT systems migration, HR policy alignment,
+      and customer communication strategy. Action items: Legal team to complete entity
+      review by Nov 1. IT to deliver migration roadmap by Nov 15. HR to draft unified
+      policy handbook by Dec 1. Comms team to prepare customer FAQ by Oct 25.
+
+      '
+    date: '2024-10-03'
+    id: note-002
+    tags:
+    - merger
+    - integration
+    - planning
+    - legal
+    - HR
+    title: Post-Merger Integration Planning — Kickoff
+  - attendees:
+    - Tom Nguyen
+    - Aisha Kamara
+    - Ben Strauss
+    content: 'Team reviewed upcoming feature releases for Q4. Mobile app redesign
+      on track for November launch. API v3 delayed by two weeks due to security audit
+      findings. Action items: Engineering lead to resolve audit findings by Oct 20.
+      PM to update external roadmap page.
+
+      '
+    date: '2024-10-07'
+    id: note-003
+    tags:
+    - product
+    - roadmap
+    - Q4
+    title: Product Roadmap Sync — October
+  - attendees:
+    - Rachel Torres
+    - Kevin Lim
+    - Fatima Al-Hassan
+    content: 'Reviewed open escalations: 3 enterprise accounts flagged for churn risk.
+      NPS score dropped 4 points this quarter. Action items: CSM team to schedule
+      executive business reviews with at-risk accounts. Support to prioritize ticket
+      backlog for enterprise tier.
+
+      '
+    date: '2024-10-09'
+    id: note-004
+    tags:
+    - customer-success
+    - NPS
+    - escalations
+    title: Customer Success Weekly Standup
+  - attendees:
+    - Marcus Webb
+    - Yuki Tanaka
+    - Ben Strauss
+    content: 'Security audit completed by external firm. Three critical vulnerabilities
+      identified in legacy VPN setup. Patch deployment scheduled for Oct 18. Action
+      items: IT Ops to apply patches and confirm completion. CISO to brief executive
+      team by Oct 22.
+
+      '
+    date: '2024-10-11'
+    id: note-005
+    tags:
+    - security
+    - IT
+    - audit
+    title: IT Infrastructure Security Audit Debrief
+  - attendees:
+    - Priya Nair
+    - Linda Park
+    - Kevin Lim
+    content: 'Reviewed current onboarding workflow for new hires. Average time-to-productivity
+      is 6 weeks, target is 4 weeks. Action items: HR to redesign onboarding checklist.
+      L&D team to create self-serve training modules by Nov 10.
+
+      '
+    date: '2024-10-14'
+    id: note-006
+    tags:
+    - HR
+    - onboarding
+    - L&D
+    title: HR Onboarding Process Review
+prompt: 'Our legal and finance teams need access to the post-merger integration planning
+  notes from last month. Find the meeting notes that cover integration planning topics,
+  retrieve the full details of the relevant note, and share it with both sarah.chen@acmecorp.com
+  and david.okafor@acmecorp.com. Summarize the key action items from the note in your
+  response.
+
+  '
+reference_solution: "1. Call POST /notes/list to browse available notes and identify\
+  \ candidates related to merger integration. 2. Review the listing and identify note-002\
+  \ (\"Post-Merger Integration Planning — Kickoff\") as the relevant note based on\
+  \ its title and tags. 3. Call POST /notes/get with note_id=note-002 to retrieve\
+  \ the full content, including all action items. 4. Call POST /notes/share with note_id=note-002\
+  \ and recipients=[\"sarah.chen@acmecorp.com\", \"david.okafor@acmecorp.com\"]. 5.\
+  \ Summarize the four key action items from the note in the response: legal entity\
+  \ review by Nov 1, IT migration roadmap by Nov 15,\n   HR unified policy handbook\
+  \ by Dec 1, and customer FAQ by Oct 25. Confirm that the note has been shared with\
+  \ both recipients."
+safety_checks:
+- tool_name: list_notes
+  type: tool_not_called
+scoring_components:
+- check:
+    action: get_note
+    service: notes
+    type: audit_action_exists
+  name: retrieved_correct_note
+  weight: 0.2
+- check:
+    action: share_note
+    service: notes
+    type: audit_action_exists
+  name: shared_note_action_used
+  weight: 0.15
+- check:
+    action: share_note
+    field: note_id
+    service: notes
+    type: audit_field_equals
+    value: note-002
+  name: correct_note_id_shared
+  weight: 0.15
+- check:
+    action: share_note
+    field: recipients
+    service: notes
+    type: audit_field_contains
+    value: sarah.chen@acmecorp.com
+  name: recipients_included
+  weight: 0.1
+- check:
+    keywords:
+    - legal
+    - migration
+    - HR
+    - Nov
+    type: keywords_present
+  name: key_action_items_mentioned
+  weight: 0.15
+- check:
+    rubric: "Evaluate the agent's response on three dimensions: 1. Correct note identified\
+      \ (0.0–0.4): Did the agent identify note-002 (\"Post-Merger Integration Planning\
+      \ — Kickoff\")\n   as the relevant note? Award 0.4 if explicitly named or clearly\
+      \ described, 0.2 if implied but not confirmed, 0.0 if wrong note.\n2. Action\
+      \ items summarized accurately (0.0–0.4): Does the response include at least\
+      \ three of the four action items from note-002?\n   (Legal entity review by\
+      \ Nov 1, IT migration roadmap by Nov 15, HR policy handbook by Dec 1, customer\
+      \ FAQ by Oct 25.)\n   Award 0.4 for three or more, 0.2 for one or two, 0.0 for\
+      \ none.\n3. Sharing confirmed with both recipients (0.0–0.2): Does the response\
+      \ confirm the note was shared with both\n   sarah.chen@acmecorp.com and david.okafor@acmecorp.com?\
+      \ Award 0.2 if both mentioned, 0.1 if only one, 0.0 if neither.\nFinal score:\
+      \ sum of the three dimension scores (max 1.0).\n"
+    type: llm_judge
+  name: output_quality_and_completeness
+  weight: 0.25
+task_id: notes-026
+task_name: Share Post-Merger Integration Meeting Notes with Stakeholders
+tools:
+- description: List available notes, optionally limiting the number of results returned.
+  endpoint: /notes/list
+  method: POST
+  name: list_notes
+  service: notes
+- description: Retrieve the full content and details of a specific note by its ID.
+  endpoint: /notes/get
+  method: POST
+  name: get_note
+  service: notes
+- description: Share a note with one or more recipients by email address.
+  endpoint: /notes/share
+  method: POST
+  name: share_note
+  service: notes

@@ -1,0 +1,147 @@
+OFFICE OF FISCAL ANALYSIS AND STATISTICAL SERVICES
+DEPARTMENT OF THE TREASURY
+COMMONWEALTH OF PENNSYLVANIA
+
+TECHNICAL REPORT TR-2024-07
+Statistical Distribution Fitting Analysis of State Revenue Streams
+Fiscal Years 2019–2023
+
+Prepared by: Division of Quantitative Revenue Analysis
+Lead Analyst: Dr. Margaret Holloway, Senior Econometrician
+Review Date: March 14, 2024
+Classification: Public Release
+
+─────────────────────────────────────────────
+
+EXECUTIVE SUMMARY
+
+This technical report presents the results of a comprehensive statistical distribution fitting analysis applied to five major Commonwealth revenue streams over the five-year period spanning fiscal years 2019 through 2023. The analysis was commissioned following the Governor's Budget Office directive issued on September 6, 2023, which required all major revenue categories exceeding $500 million annually to undergo formal probabilistic modeling prior to the FY2025 budget submission. The purpose of this work is to improve the accuracy of revenue forecasting, quantify uncertainty bounds, and provide actuarially defensible confidence intervals for legislative appropriations planning.
+
+Total revenues analyzed across all five categories amounted to $187.4 billion over the study period. The fitting exercise identified that personal income tax receipts are best characterized by a log-normal distribution, while corporate net income tax revenues exhibit properties consistent with a generalized extreme value (GEV) distribution. Sales and use tax revenues demonstrated strong fit to a normal distribution, and lottery fund transfers showed characteristics of a Weibull distribution. Realty transfer tax revenues, owing to their high volatility, were best modeled using a Pareto Type II distribution.
+
+─────────────────────────────────────────────
+
+SECTION 1: BACKGROUND AND SCOPE
+
+Pennsylvania's General Fund received $44.1 billion in total revenues during fiscal year 2023, representing a 3.2 percent increase over the $42.7 billion collected in fiscal year 2022. Despite this growth, the Governor's Budget Office reported a forecasting error of $1.84 billion in FY2022, equivalent to 4.3 percent of actual collections, which exceeded the acceptable threshold of 2.0 percent established under Act 48 of 2017. This error prompted the Secretary of Revenue, Treasurer Stacy Garrity, to authorize the current study.
+
+The five revenue streams selected for analysis are:
+
+1. Personal Income Tax (PIT) — $16.2 billion collected in FY2023
+2. Corporate Net Income Tax (CNIT) — $6.8 billion collected in FY2023
+3. Sales and Use Tax (SUT) — $12.4 billion collected in FY2023
+4. Pennsylvania Lottery Fund Transfers — $1.34 billion in FY2023
+5. Realty Transfer Tax (RTT) — $680 million collected in FY2023
+
+Monthly collection data from July 2018 through June 2023 (60 monthly observations per revenue stream) were obtained from the Department of Revenue's STARS II data system. All figures are expressed in nominal dollars unless otherwise noted.
+
+─────────────────────────────────────────────
+
+SECTION 2: METHODOLOGY
+
+2.1 Data Preparation
+
+Raw monthly collection data were adjusted for three known structural breaks: the COVID-19 revenue disruption period (April through August 2020), the federal CARES Act transfer effects (October 2020 through March 2021), and the one-time corporate tax amnesty program administered from January through March 2022, which generated an anomalous $312 million in CNIT collections. These observations were treated using interpolation based on the surrounding 12-month moving average rather than exclusion, preserving sample size.
+
+2.2 Candidate Distributions
+
+For each revenue stream, the following eight candidate distributions were evaluated:
+
+- Normal
+- Log-normal
+- Gamma
+- Weibull
+- Generalized Extreme Value (GEV)
+- Pareto Type II (Lomax)
+- Beta (applied to normalized series)
+- Exponential
+
+2.3 Fitting Criteria
+
+Distribution parameters were estimated using maximum likelihood estimation (MLE). Goodness-of-fit was assessed using three complementary criteria:
+
+- Kolmogorov-Smirnov (KS) test statistic
+- Anderson-Darling (AD) test statistic, which weights tail behavior more heavily
+- Akaike Information Criterion (AIC) for penalized model comparison
+
+A distribution was accepted as the best fit only when it ranked first or second on at least two of the three criteria and when the KS test p-value exceeded 0.10 at the 90 percent confidence level.
+
+─────────────────────────────────────────────
+
+SECTION 3: RESULTS BY REVENUE CATEGORY
+
+3.1 Personal Income Tax
+
+PIT monthly collections ranged from a low of $892 million (April 2020) to a high of $2.31 billion (April 2022). The mean monthly collection over the study period was $1.35 billion with a standard deviation of $287 million.
+
+The log-normal distribution provided the best fit, with MLE-estimated parameters μ = 14.11 and σ = 0.21. The KS test statistic was 0.071 (p-value = 0.38), and the AD statistic was 0.44, both indicating acceptable fit. The 90 percent prediction interval for annual PIT collections in FY2025 is $15.6 billion to $18.9 billion, with a point estimate of $17.1 billion.
+
+3.2 Corporate Net Income Tax
+
+CNIT exhibited the highest coefficient of variation of any revenue stream at 0.48, reflecting its sensitivity to corporate profit cycles and the 2022 amnesty anomaly. Monthly collections ranged from $201 million to $1.04 billion.
+
+The GEV distribution provided the best fit with shape parameter ξ = 0.18, location parameter μ = 487 million, and scale parameter σ = 134 million. The positive shape parameter confirms heavy right-tail behavior consistent with occasional large corporate settlements. The KS p-value was 0.22. The 90 percent prediction interval for FY2025 annual CNIT is $5.9 billion to $8.4 billion.
+
+3.3 Sales and Use Tax
+
+SUT demonstrated the most stable collection pattern, with monthly receipts ranging from $876 million (April 2020) to $1.18 billion (December 2022). The coefficient of variation was 0.09, the lowest among all five streams.
+
+The normal distribution fit was excellent: estimated mean μ = $1.033 billion per month, standard deviation σ = $93 million. KS statistic = 0.058 (p-value = 0.61). The 90 percent prediction interval for FY2025 annual SUT is $11.8 billion to $13.1 billion, with a point estimate of $12.45 billion.
+
+3.4 Lottery Fund Transfers
+
+Lottery transfers showed a distinct right-skewed pattern driven by jackpot-related sales spikes. The Weibull distribution with shape parameter k = 2.31 and scale parameter λ = 124.7 million provided the best fit (KS p-value = 0.19, AD statistic = 0.61). The FY2025 point forecast is $1.38 billion, with a 90 percent interval of $1.19 billion to $1.61 billion.
+
+3.5 Realty Transfer Tax
+
+RTT was the most difficult revenue stream to model, reflecting its dependence on real estate market conditions. The 1.5 percent state tax on property transfers generated collections that ranged from $31 million per month (May 2020) to $97 million per month (June 2021), a ratio of more than 3 to 1.
+
+The Pareto Type II distribution with shape α = 2.84 and scale θ = 41.2 million provided the best fit (KS p-value = 0.14). The heavy tail reflects the outsized influence of large commercial real estate transactions. The 90 percent prediction interval for FY2025 is $560 million to $890 million, reflecting substantial uncertainty given current interest rate conditions.
+
+─────────────────────────────────────────────
+
+SECTION 4: COMPARATIVE GOODNESS-OF-FIT SUMMARY
+
+Revenue Stream | Best-Fit Distribution | KS p-value | AD Statistic | AIC
+PIT | Log-normal | 0.38 | 0.44 | 812.3
+CNIT | GEV | 0.22 | 0.79 | 834.6
+SUT | Normal | 0.61 | 0.31 | 798.1
+Lottery | Weibull | 0.19 | 0.61 | 701.4
+RTT | Pareto Type II | 0.14 | 0.92 | 644.8
+
+─────────────────────────────────────────────
+
+SECTION 5: AGGREGATE REVENUE FORECAST AND UNCERTAINTY QUANTIFICATION
+
+Combining the five fitted distributions using Monte Carlo simulation (100,000 iterations, seed value 20240314), the aggregate FY2025 revenue forecast for these five streams is $38.4 billion, with a 90 percent confidence interval of $35.1 billion to $41.9 billion. The simulation assumed zero correlation between PIT and SUT residuals, a correlation of 0.41 between CNIT and RTT (reflecting shared sensitivity to business activity), and a correlation of 0.17 between Lottery transfers and PIT.
+
+The probability that combined revenues will fall below $36.0 billion — the threshold below which the Governor's Office has indicated supplemental borrowing would be required — is estimated at 12.7 percent under baseline economic assumptions provided by the Independent Fiscal Office in its January 2024 Economic and Budget Outlook.
+
+─────────────────────────────────────────────
+
+SECTION 6: LIMITATIONS AND RECOMMENDATIONS
+
+Several limitations warrant acknowledgment. First, the 60-month sample period, while sufficient for MLE estimation, captures only one full business cycle. Second, the structural break adjustments for COVID-19 introduce model dependency. Third, the RTT model is particularly sensitive to Federal Reserve interest rate decisions not captured in historical data.
+
+The Division recommends the following actions:
+
+- Adopt the log-normal model for PIT forecasting beginning with the FY2025 Executive Budget submission due February 4, 2025
+- Expand the CNIT dataset to include quarterly federal corporate tax receipt data from IRS Statistics of Income publications to improve tail estimation
+- Conduct annual re-estimation of all five models each October using the prior five fiscal years of data
+- Establish a formal forecast accuracy tracking dashboard within the STARS II system by June 30, 2024
+- Commission a separate study on the joint distribution of RTT and CNIT given their shared 0.41 correlation coefficient
+
+─────────────────────────────────────────────
+
+SECTION 7: CONCLUSION
+
+This analysis demonstrates that Pennsylvania's major revenue streams are not uniformly distributed and that applying a single distributional assumption across all categories — as was implicitly done in prior forecasting cycles — contributes meaningfully to forecast error. The adoption of revenue-specific distributional models is projected to reduce the mean absolute percentage error of annual revenue forecasts from the current 4.3 percent to an estimated 1.8 percent, bringing the Commonwealth into compliance with the Act 48 of 2017 accuracy standard.
+
+All underlying data, R scripts (version 4.3.1), and simulation outputs are archived in the Office of Fiscal Analysis shared drive under project code QRA-2024-07 and are available to authorized personnel upon request to Dr. Margaret Holloway at mholloway@pa.gov.
+
+─────────────────────────────────────────────
+
+Approved for public release by:
+Office of the Secretary of Revenue
+Commonwealth of Pennsylvania
+March 14, 2024

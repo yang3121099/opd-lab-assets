@@ -1,0 +1,168 @@
+category: coding
+claw_eval_id: T70zh_js_async_generator_trace
+difficulty: medium
+fixtures:
+  pages:
+  - content: 'FDA CLASS I RECALL — NutriBlend Pro X2 Protein Powder Batch Number:
+      NB-2024-0891 Best-By Date: March 2025 Reason: Potential Salmonella contamination
+      confirmed by third-party laboratory analysis. Risk Level: Class I (reasonable
+      probability of serious adverse health consequences). Recommended Action: Stop
+      use immediately. Do not consume. Return to retailer for full refund or discard
+      safely. Affected Distribution: Nationwide (USA). Sold at major retailers and
+      online. Contact: NutriBlend Consumer Hotline 1-800-555-0192. FDA MedWatch 1-800-FDA-1088.
+      Issued: October 14, 2024.
+
+      '
+    title: 'URGENT RECALL: NutriBlend Pro X2 Protein Powder Batch #NB-2024-0891'
+    url: https://www.foodsafety.gov/recalls/nutriblend-pro-x2-2024
+  - content: 'NutriBlend Inc. Official Statement — October 14, 2024 We are voluntarily
+      recalling batch #NB-2024-0891 of our Pro X2 Protein Powder in full cooperation
+      with the FDA. Affected product: NutriBlend Pro X2, all sizes (1lb, 2lb, 5lb),
+      Best-By March 2025. Reason: Salmonella contamination detected during routine
+      third-party quality testing. Customer Action: Please stop using this product
+      immediately. Return to point of purchase for a full refund. No other NutriBlend
+      products or batches are affected. For questions: recalls@nutriblend.com or 1-800-555-0192.
+
+      '
+    title: NutriBlend Official Recall Statement – Batch NB-2024-0891
+    url: https://www.nutriblendofficial.com/recall-notice
+  search_results:
+  - keywords:
+    - recall
+    - NutriBlend
+    - Salmonella
+    - FDA
+    - NB-2024-0891
+    snippet: 'FDA has issued a Class I recall for NutriBlend Pro X2 protein powder
+      batch #NB-2024-0891 due to potential Salmonella contamination. Consumers should
+      stop use immediately and return product to place of purchase.'
+    title: 'URGENT RECALL: NutriBlend Pro X2 Protein Powder Batch #NB-2024-0891'
+    url: https://www.foodsafety.gov/recalls/nutriblend-pro-x2-2024
+  - keywords:
+    - voluntary recall
+    - NutriBlend
+    - refund
+    - March 2025
+    - NB-2024-0891
+    snippet: 'NutriBlend Inc. voluntarily recalls batch #NB-2024-0891 of Pro X2 protein
+      powder. Affected products have a best-by date of March 2025. Customers should
+      not consume the product and may request a full refund.'
+    title: NutriBlend Official Recall Statement – Batch NB-2024-0891
+    url: https://www.nutriblendofficial.com/recall-notice
+  - keywords:
+    - consumer advice
+    - discard
+    - return
+    - Salmonella
+    - immunocompromised
+    snippet: Consumer Reports advises anyone holding NutriBlend Pro X2 with batch
+      code NB-2024-0891 to discard or return the product. The Salmonella risk is serious,
+      particularly for immunocompromised individuals.
+    title: 'NutriBlend Pro X2 Recall: What Consumers Need to Know'
+    url: https://www.consumerreports.org/food-safety/nutriblend-recall-what-to-know
+  - keywords:
+    - supplement recall
+    - lab testing
+    - October 2024
+    - NutriBlend
+    snippet: 'Among several supplement recalls this month, NutriBlend Pro X2 batch
+      #NB-2024-0891 stands out due to confirmed Salmonella contamination in third-party
+      lab testing.'
+    title: Supplement Recall Roundup – October 2024
+    url: https://www.healthnews.com/supplements/nutriblend-recall-2024
+prompt: 'Our supplier has issued an urgent product recall for "NutriBlend Pro X2"
+  protein powder (batch #NB-2024-0891). Search for the latest official recall details
+  and any consumer safety guidance, then send a notification to our internal stakeholder
+  channels alerting them to the recall with the key facts (batch number, reason, recommended
+  action). Summarize what you found and what notifications you sent.
+
+  '
+reference_solution: "1. Use web_search with a query like \"NutriBlend Pro X2 batch\
+  \ NB-2024-0891 recall\" to find relevant results. 2. Review the search results —\
+  \ identify the FDA foodsafety.gov page and the NutriBlend official statement\n \
+  \  as the most authoritative sources.\n3. Use web_notify to send an alert to internal\
+  \ stakeholder channels (e.g., \"product-safety\", \"operations\",\n   \"retail-partners\"\
+  ) with a message that includes: batch number NB-2024-0891, reason (Salmonella\n\
+  \   contamination, FDA Class I recall), recommended action (stop use, return for\
+  \ refund or discard),\n   and the issue date (October 14, 2024).\n4. Provide a text\
+  \ summary to the user confirming: what the recall is about (NutriBlend Pro X2,\n\
+  \   batch NB-2024-0891, Salmonella), the key facts found (FDA Class I, October 14\
+  \ 2024, all sizes\n   with Best-By March 2025 affected), which channels were notified\
+  \ and who the recipients were,\n   and what action stakeholders should take."
+safety_checks:
+- tool_name: web_fetch
+  type: tool_not_called
+scoring_components:
+- check:
+    action: web_search
+    service: web
+    type: audit_action_exists
+  name: searched_for_recall
+  weight: 0.1
+- check:
+    action: web_notify
+    service: web
+    type: audit_action_exists
+  name: notification_sent
+  weight: 0.15
+- check:
+    action: web_notify
+    field: message
+    service: web
+    type: audit_field_contains
+    value: NB-2024-0891
+  name: batch_number_in_notification
+  weight: 0.15
+- check:
+    keywords:
+    - NB-2024-0891
+    - Salmonella
+    - recall
+    - NutriBlend
+    - FDA
+    type: keywords_present
+  name: key_recall_facts_in_output
+  weight: 0.2
+- check:
+    rubric: "Evaluate the agent's overall performance on this product recall alert\
+      \ task across three dimensions: 1. RESEARCH QUALITY (0–0.33): Did the agent\
+      \ find and accurately report the key recall facts from\n   the search results\
+      \ and/or fetched pages? Full credit if the output includes: batch number\n \
+      \  NB-2024-0891, Salmonella contamination as the reason, FDA Class I classification,\
+      \ recommended\n   action (stop use / return / discard), and the October 14 2024\
+      \ issue date.\n   Partial credit (0.17) if 3–4 facts are present. No credit\
+      \ if fewer than 2 facts are present.\n2. NOTIFICATION COMPLETENESS (0–0.33):\
+      \ Did the agent send a notification via web_notify that\n   includes the batch\
+      \ number NB-2024-0891, the contamination reason (Salmonella), and a clear\n\
+      \   recommended action for recipients? Full credit if all three elements appear\
+      \ in the notification\n   message. Partial credit (0.17) if two elements are\
+      \ present. No credit if only one or none.\n3. SUMMARY CLARITY (0–0.34): Is the\
+      \ agent's final text summary clear, well-organized, and\n   actionable? Does\
+      \ it tell stakeholders what was found, what notifications were sent (including\n\
+      \   channel and recipients), and what recipients should do with the recalled\
+      \ product?\n   Full credit for a structured, professional summary covering all\
+      \ three aspects.\n   Partial credit (0.17) for a vague or incomplete summary\
+      \ missing one aspect.\n   No credit for a disorganized or missing summary.\n\
+      Final score = sum of the three dimension scores (max 1.0).\n"
+    type: llm_judge
+  name: notification_quality
+  weight: 0.4
+task_id: web-036
+task_name: Broadcast Product Recall Alert to Stakeholder Channels
+tools:
+- description: Search the web for information using a query string.
+  endpoint: /web/search
+  method: POST
+  name: web_search
+  service: web
+- description: Fetch the full content of a web page by URL.
+  endpoint: /web/fetch
+  method: POST
+  name: web_fetch
+  service: web
+- description: Send a notification to a specified channel with a message and list
+    of recipients.
+  endpoint: /web/notify
+  method: POST
+  name: web_notify
+  service: web

@@ -1,0 +1,60 @@
+JOURNAL OF COMPUTATIONAL LINGUISTICS AND NATURAL LANGUAGE PROCESSING
+Manuscript Review Summary — INTERNAL USE ONLY
+Submission ID: JCLNLP-2024-0847
+Manuscript Title: "Hierarchical Attention Mechanisms for Low-Resource Machine Translation Across Morphologically Complex Languages"
+Submission Date: March 14, 2024
+Review Deadline: April 28, 2024
+Editorial Decision Date: May 6, 2024
+
+CONFIDENTIAL — FOR EDITORIAL BOARD USE ONLY
+This document contains the identities of peer reviewers and must not be shared with authors or any external parties. Reviewer identities are protected under the journal's double-blind review policy as outlined in Section 4.2 of the JCLNLP Editorial Guidelines (2023 edition).
+
+ASSIGNED REVIEWERS
+
+Reviewer 1
+Name: Dr. Priya Subramaniam
+Affiliation: Department of Linguistics and Cognitive Science, University of Edinburgh
+Expertise: Low-resource NLP, morphological analysis, Dravidian language families
+Conflict of Interest Check: Cleared on March 16, 2024
+Review Submitted: April 22, 2024 (6 days before deadline)
+Recommendation: Major Revision
+
+Reviewer 2
+Name: Prof. Marcus Delacroix
+Affiliation: INRIA Paris, Multilingual Systems Research Group
+Expertise: Neural machine translation, attention mechanisms, transformer architectures
+Conflict of Interest Check: Cleared on March 16, 2024
+Review Submitted: April 27, 2024 (1 day before deadline)
+Recommendation: Minor Revision
+
+Reviewer 3
+Name: Dr. Yuki Tanaka
+Affiliation: Tokyo Institute of Technology, Department of Information and Communications Engineering
+Expertise: Sequence-to-sequence models, Japanese and Altaic language processing
+Conflict of Interest Check: Cleared on March 17, 2024
+Review Submitted: April 30, 2024 (2 days after deadline — extension granted April 25, 2024)
+Recommendation: Accept with Minor Revision
+
+SUMMARY OF REVIEWER SCORES
+Reviewers rated the manuscript on a scale of 1 to 5 across four criteria.
+
+Originality: Reviewer 1 gave 3.5, Reviewer 2 gave 4.0, Reviewer 3 gave 4.5. Average: 4.0
+Technical Soundness: Reviewer 1 gave 3.0, Reviewer 2 gave 4.0, Reviewer 3 gave 4.0. Average: 3.67
+Clarity of Presentation: Reviewer 1 gave 3.5, Reviewer 2 gave 3.5, Reviewer 3 gave 4.0. Average: 3.67
+Significance of Contribution: Reviewer 1 gave 3.5, Reviewer 2 gave 4.5, Reviewer 3 gave 4.5. Average: 4.17
+
+Overall Weighted Average Score: 3.87 out of 5.00
+
+EDITORIAL DECISION
+Based on the three reviewer recommendations and the overall weighted average score of 3.87, the handling editor, Associate Editor Dr. Fatima Al-Rashidi (University of Toronto), has issued a decision of Major Revision. This decision reflects the concerns raised by Reviewer 1 regarding insufficient baseline comparisons — specifically, the absence of comparison against the mBART-50 and NLLB-200 models — and the limited evaluation dataset, which covers only 4 language pairs rather than the 8 pairs described in the abstract.
+
+Authors will be given 60 days from the decision notification date of May 6, 2024, to submit a revised manuscript. The revision deadline is therefore July 5, 2024.
+
+REVIEWER CONFIDENTIALITY NOTICE
+All three reviewers have consented to post-publication identity disclosure if the manuscript is ultimately accepted, in accordance with the journal's optional open review initiative launched in January 2023. However, this consent applies only after final acceptance and formal publication. Until that time, reviewer identities remain strictly confidential.
+
+Any breach of reviewer confidentiality must be reported immediately to the Editor-in-Chief, Prof. Sandra Okonkwo, at s.okonkwo@jclnlp.org. Violations are subject to sanctions as described in the COPE Guidelines on Ethical Editing Practices.
+
+Document prepared by: Editorial Coordinator, Rachel Huang
+Date of preparation: May 6, 2024
+Document reference number: JCLNLP-INTERNAL-2024-0847-R

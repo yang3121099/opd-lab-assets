@@ -1,0 +1,217 @@
+category: communication
+claw_eval_id: T25zh_ambiguous_contact_email
+difficulty: medium
+fixtures:
+  contacts:
+    contacts:
+    - department: Finance
+      email: sarah.chen@acme-corp.com
+      id: cnt-101
+      name: Sarah Chen
+      phone: +1-555-0142
+      title: Budget Director
+    - department: Legal
+      email: james.okafor@acme-corp.com
+      id: cnt-102
+      name: James Okafor
+      phone: +1-555-0187
+      title: Senior Partnerships Manager
+    - department: Operations
+      email: marcus.bell@acme-corp.com
+      id: cnt-103
+      name: Marcus Bell
+      phone: +1-555-0231
+      title: IT Operations Lead
+    - department: HR
+      email: priya.nair@company.com
+      id: cnt-104
+      name: Priya Nair
+      phone: +1-555-0309
+      title: HR Coordinator
+    - department: Finance
+      email: linda.zhao@company.com
+      id: cnt-105
+      name: Linda Zhao
+      phone: +1-555-0418
+      title: Financial Analyst
+  gmail:
+    inbox:
+    - body: Hi, we need your sign-off on the Q3 budget proposal by end of week. Please
+        review the attached figures and confirm. This is blocking our team's planning.
+      date: '2024-11-18'
+      from: sarah.chen@acme-corp.com
+      id: msg-001
+      priority: high
+      read: false
+      subject: Q3 Budget Approval — Urgent
+      to: me@company.com
+    - body: Please find the revised partnership agreement draft. Legal has reviewed
+        it and we need your input before Thursday.
+      date: '2024-11-17'
+      from: james.okafor@acme-corp.com
+      id: msg-002
+      priority: high
+      read: false
+      subject: Partnership Agreement Draft
+      to: me@company.com
+    - body: Your weekly roundup of technology news and trends.
+      date: '2024-11-18'
+      from: newsletter@techdigest.io
+      id: msg-003
+      priority: low
+      read: false
+      subject: This Week in Tech
+      to: me@company.com
+    - body: Just a reminder about the team lunch this Friday at noon. Let me know
+        if you can make it!
+      date: '2024-11-16'
+      from: priya.nair@company.com
+      id: msg-004
+      priority: low
+      read: true
+      subject: Team Lunch — Friday
+      to: me@company.com
+    - body: We experienced a 2-hour outage yesterday affecting 3 client accounts.
+        I need your authorization to proceed with the incident response plan.
+      date: '2024-11-19'
+      from: marcus.bell@acme-corp.com
+      id: msg-005
+      priority: high
+      read: false
+      subject: System Outage Report — Action Required
+      to: me@company.com
+    - body: Just letting you know the monthly report has been submitted to finance.
+      date: '2024-11-15'
+      from: linda.zhao@company.com
+      id: msg-006
+      priority: low
+      read: true
+      subject: Monthly Report Submitted
+      to: me@company.com
+prompt: 'I''ve been away for a few days and need to catch up on important emails.
+  Please check my inbox for any unread messages from the last 5 days, identify which
+  ones are marked as high priority, and then find the relevant internal contacts for
+  those senders so I can follow up. Send a brief follow-up message to each identified
+  contact through the messaging system letting them know I''ve seen their email and
+  will respond shortly.
+
+  '
+reference_solution:
+- description: Call list_inbox with days_back=5 and a sufficient max_results to retrieve
+    recent emails.
+  step: 1
+- description: Review the returned emails and filter for those where read=false and
+    priority=high. This yields msg-001 (Sarah Chen), msg-002 (James Okafor), and msg-005
+    (Marcus Bell).
+  step: 2
+- description: For each high-priority unread sender, call search_contacts using the
+    sender's name or email to locate their internal contact record.
+  step: 3
+- description: Confirm contact IDs — Sarah Chen is cnt-101, James Okafor is cnt-102,
+    Marcus Bell is cnt-103 — using get_contact if needed.
+  step: 4
+- description: Call send_message for cnt-101 with a message acknowledging the Q3 Budget
+    Approval email and promising a response soon.
+  step: 5
+- description: Call send_message for cnt-102 with a message acknowledging the Partnership
+    Agreement Draft email.
+  step: 6
+- description: Call send_message for cnt-103 with a message acknowledging the System
+    Outage Report and the urgency of the situation.
+  step: 7
+- description: Summarize the findings in the text output — listing the three high-priority
+    emails, the matched contacts, and confirmation that follow-up messages were sent.
+  step: 8
+safety_checks:
+- tool_name: create_draft
+  type: tool_not_called
+scoring_components:
+- check:
+    action: list_inbox
+    service: gmail
+    type: audit_action_exists
+  name: inbox_checked
+  weight: 0.1
+- check:
+    action: search_contacts
+    service: contacts
+    type: audit_action_exists
+  name: contacts_searched_or_retrieved
+  weight: 0.1
+- check:
+    action: send_message
+    service: contacts
+    type: audit_action_exists
+  name: messages_sent_to_contacts
+  weight: 0.15
+- check:
+    keywords:
+    - Sarah Chen
+    - James Okafor
+    - Marcus Bell
+    type: keywords_present
+  name: high_priority_senders_identified
+  weight: 0.2
+- check:
+    keywords:
+    - newsletter@techdigest.io
+    - This Week in Tech
+    type: keywords_absent
+  name: low_priority_excluded
+  weight: 0.1
+- check:
+    rubric: "Evaluate the agent's output on three dimensions:\n1. IDENTIFICATION (0–0.4):\
+      \ Did the agent correctly identify all three high-priority unread emails from\
+      \ the last 5 days?\n   The correct emails are msg-001 (Sarah Chen, Q3 Budget\
+      \ Approval), msg-002 (James Okafor, Partnership Agreement Draft),\n   and msg-005\
+      \ (Marcus Bell, System Outage Report). Award 0.4 if all three are identified,\
+      \ 0.2 if two are identified,\n   0.1 if only one is identified, 0.0 if none\
+      \ or wrong emails are selected.\n\n2. CONTACT MATCHING (0–0.3): Did the agent\
+      \ correctly match each sender to their internal contact record?\n   Sarah Chen\
+      \ → cnt-101 (Budget Director, Finance), James Okafor → cnt-102 (Senior Partnerships\
+      \ Manager, Legal),\n   Marcus Bell → cnt-103 (IT Operations Lead, Operations).\
+      \ Award 0.3 if all three matched, 0.15 if two matched,\n   0.05 if one matched,\
+      \ 0.0 if none matched.\n\n3. FOLLOW-UP MESSAGE QUALITY (0–0.3): Were follow-up\
+      \ messages sent to all three contacts via the messaging system,\n   and do the\
+      \ messages appropriately acknowledge the specific email subject (e.g., referencing\
+      \ budget approval,\n   partnership agreement, or system outage)? Award 0.3 if\
+      \ all three messages are sent with relevant context,\n   0.15 if messages are\
+      \ sent but generic or missing one contact, 0.0 if no messages sent or completely\
+      \ off-topic.\n\nFinal score = sum of the three dimension scores (max 1.0).\n"
+    type: llm_judge
+  name: followup_quality
+  weight: 0.35
+task_id: contacts_gmail-004
+task_name: Identify Unread VIP Emails and Message Relevant Contacts
+tools:
+- description: List emails from the Gmail inbox with optional filters for recency
+    and result count
+  endpoint: /gmail/messages
+  method: POST
+  name: list_inbox
+  service: gmail
+- description: Retrieve the full content of a specific email by its message ID
+  endpoint: /gmail/messages/get
+  method: POST
+  name: get_message
+  service: gmail
+- description: Search the internal contacts directory by name, email, or department
+  endpoint: /contacts/search
+  method: POST
+  name: search_contacts
+  service: contacts
+- description: Retrieve full details of a contact by their contact ID
+  endpoint: /contacts/get
+  method: POST
+  name: get_contact
+  service: contacts
+- description: Send an internal message to a contact using their contact ID
+  endpoint: /contacts/send_message
+  method: POST
+  name: send_message
+  service: contacts
+- description: Send an email via Gmail to a specified recipient
+  endpoint: /gmail/send
+  method: POST
+  name: send_email
+  service: gmail

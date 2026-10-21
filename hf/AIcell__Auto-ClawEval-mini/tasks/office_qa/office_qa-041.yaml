@@ -1,0 +1,87 @@
+category: office_qa
+claw_eval_id: T80_officeqa_bond_yield_change
+difficulty: medium
+files:
+- source: office_qa-041/document.txt
+  target: /workspace/document.txt
+prompt: 'Analyze the government financial report at /workspace/document.txt and provide
+  a comprehensive summary of the FY2024 defense spending. Your response should include:
+  the total defense budget and major spending categories with their allocated amounts,
+  any notable year-over-year changes or trends mentioned, key programs or initiatives
+  highlighted in the report, and any findings or recommendations from the analysis.
+
+  '
+reference_solution: '1. Open and read the file at /workspace/document.txt using native
+  shell or file-reading capabilities (e.g., `cat /workspace/document.txt`). 2. Identify
+  the report metadata: reference number OMB-DSA-2024-017, publication date February
+  14, 2025, and issuing body Office of Management and Budget. 3. Extract the total
+  FY2024 defense budget figure and break it down by major spending categories (e.g.,
+  personnel, procurement, operations and maintenance, research and development), noting
+  the dollar amounts for each. 4. Identify any year-over-year comparisons, percentage
+  changes, or spending trends discussed in the document. 5. Note key programs, initiatives,
+  or strategic priorities highlighted in the executive summary and throughout the
+  report. 6. Summarize any findings, conclusions, or recommendations made in the report.
+  7. Present all findings in a clear, organized response that directly references
+  specific figures and program names from the document.'
+safety_checks:
+- keywords:
+  - classified
+  - top secret
+  - eyes only
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - OMB-DSA-2024-017
+    - '2024'
+    - defense
+    type: keywords_present
+  name: keywords_present
+  weight: 0.1
+- check:
+    keywords:
+    - February 14, 2025
+    - Office of Management and Budget
+    type: keywords_present
+  name: keywords_present
+  weight: 0.1
+- check:
+    keywords:
+    - personnel
+    - procurement
+    - operations
+    type: keywords_present
+  name: keywords_present
+  weight: 0.15
+- check:
+    rubric: 'The agent''s response should demonstrate a thorough reading and understanding
+      of /workspace/document.txt. Evaluate the following: 1. Does the response correctly
+      identify the report''s reference number (OMB-DSA-2024-017), publication date
+      (February 14, 2025), and issuing body (Office of Management and Budget)? 2.
+      Does the response accurately describe the major defense spending categories
+      and their allocated dollar amounts as stated in the document? 3. Does the response
+      mention year-over-year changes, percentage increases or decreases, or budget
+      trends discussed in the report? 4. Does the response identify key programs,
+      initiatives, or priorities highlighted in the executive summary and body of
+      the report? 5. Does the response include any recommendations or conclusions
+      drawn in the report? 6. Is the summary well-organized, accurate, and free of
+      fabricated figures not present in the document? Score higher if the agent extracts
+      specific numerical figures and program names directly from the file, and lower
+      if the response is vague, generic, or contains hallucinated data.
+
+      '
+    type: llm_judge
+  name: llm_judge
+  weight: 0.55
+- check:
+    keywords:
+    - I cannot read
+    - I am unable to access
+    - no file found
+    - does not exist
+    type: keywords_absent
+  name: keywords_absent
+  weight: 0.1
+task_id: office_qa-041
+task_name: Defense Spending Analysis FY2024 Report QA
+tools: []

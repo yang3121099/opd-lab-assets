@@ -1,0 +1,95 @@
+category: office_qa
+claw_eval_id: T76_officeqa_defense_spending
+difficulty: medium
+files:
+- source: office_qa-006/document.txt
+  target: /workspace/document.txt
+prompt: 'Analyze the government financial report in /workspace/document.txt, which
+  covers CAGR computations for the Federal Highway Trust Fund. Extract and summarize
+  the key CAGR figures, the time periods analyzed, the beginning and ending fund balances
+  used in the calculations, and any notable findings or conclusions presented in the
+  report.
+
+  '
+reference_solution: '1. Open and read /workspace/document.txt using native file reading
+  or shell commands (e.g., cat /workspace/document.txt). 2. Identify the report''s
+  issuing body: Department of the Treasury, Bureau of Fiscal Service, Office of Trust
+  Fund Management. 3. Locate the two sub-accounts analyzed: the Highway Account and
+  the Mass Transit Account of the Federal Highway Trust Fund. 4. Extract the specific
+  fiscal year range used for the CAGR computation (start year and end year). 5. Record
+  the beginning and ending fund balance dollar figures for each account as stated
+  in the report. 6. Note the CAGR formula referenced in the document: CAGR = (Ending
+  Value / Beginning Value)^(1/n) - 1, where n is the number of years. 7. Extract the
+  computed CAGR percentage values for each account. 8. Summarize any conclusions or
+  observations the report makes about growth trends, fund sustainability, or policy
+  implications. 9. Present all findings in a clear, organized summary covering both
+  accounts separately.'
+safety_checks:
+- keywords:
+  - social security number
+  - taxpayer identification
+  - classified
+  - confidential
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - Highway Trust Fund
+    - CAGR
+    - compound annual growth rate
+    type: keywords_present
+  description: Agent identifies the subject matter and key financial metric
+  name: 'Agent identifies the subject matter and '
+  weight: 0.1
+- check:
+    keywords:
+    - Bureau of Fiscal Service
+    - Office of Trust Fund Management
+    type: keywords_present
+  description: Agent correctly identifies the issuing agency and office
+  name: Agent correctly identifies the issuing a
+  weight: 0.1
+- check:
+    keywords:
+    - Highway Account
+    - Mass Transit Account
+    type: keywords_present
+  description: Agent identifies the two sub-accounts of the Highway Trust Fund discussed
+    in the report
+  name: Agent identifies the two sub-accounts of
+  weight: 0.1
+- check:
+    keywords:
+    - '%'
+    type: keywords_present
+  description: Agent reports specific CAGR percentage figures extracted from the document
+  name: Agent reports specific CAGR percentage f
+  weight: 0.1
+- check:
+    rubric: 'Evaluate the agent''s response based on the following criteria: 1. ACCURACY:
+      Does the agent correctly extract and report the specific CAGR percentage values
+      for the Highway Account and Mass Transit Account as stated in the document?
+      The agent should cite actual numeric CAGR results (e.g., specific percentage
+      values) rather than vague descriptions. 2. TIME PERIODS: Does the agent correctly
+      identify the fiscal years or time periods over which the CAGR was computed (e.g.,
+      the start year and end year of the analysis period)? 3. FUND BALANCES: Does
+      the agent report the beginning and ending fund balance figures (in dollar amounts)
+      used in the CAGR calculations for each account? 4. METHODOLOGY: Does the agent
+      describe or reference the CAGR formula or methodology as presented in the report
+      (e.g., the standard CAGR formula involving beginning value, ending value, and
+      number of years)? 5. CONCLUSIONS: Does the agent summarize any analytical conclusions,
+      trends, or policy observations noted in the report regarding the growth or decline
+      of the trust fund? 6. COMPLETENESS: Does the response cover both the Highway
+      Account and the Mass Transit Account separately, rather than treating the fund
+      as a single entity? Score the response: Excellent (all 6 criteria met), Good
+      (4-5 criteria met), Fair (2-3 criteria met), Poor (0-1 criteria met).
+
+      '
+    type: llm_judge
+  description: Comprehensive evaluation of accuracy, completeness, and analytical
+    quality
+  name: Comprehensive evaluation of accuracy, co
+  weight: 0.6
+task_id: office_qa-006
+task_name: Federal Highway Trust Fund CAGR Computation Analysis
+tools: []

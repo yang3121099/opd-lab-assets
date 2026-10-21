@@ -1,0 +1,89 @@
+```yaml
+id: sql-schema-migration
+title: SQL Schema Migration Between Database Versions
+description: |
+  You are working as a database engineer at a growing e-commerce company.
+  The production database is running an older schema (v1) and needs to be
+  migrated to a new schema (v2) that supports new business requirements.
+
+  Your task is to write and execute SQL migration scripts that transform
+  the existing database schema and data to the new structure without data loss.
+
+type: terminal
+difficulty: hard
+time_limit: 3600
+
+environment:
+  image: postgres:15
+  setup_commands:
+    - |
+      psql -U postgres -c "CREATE DATABASE ecommerce_v1;"
+    - |
+      psql -U postgres -d ecommerce_v1 << 'EOF'
+
+      -- ============================================================
+      -- V1 SCHEMA: Legacy e-commerce database
+      -- ============================================================
+
+      CREATE TABLE users (
+          id SERIAL PRIMARY KEY,
+          full_name VARCHAR(200) NOT NULL,
+          email VARCHAR(255) UNIQUE NOT NULL,
+          phone VARCHAR(20),
+          address TEXT,
+          created_at TIMESTAMP DEFAULT NOW(),
+          is_active BOOLEAN DEFAULT TRUE
+      );
+
+      CREATE TABLE products (
+          id SERIAL PRIMARY KEY,
+          name VARCHAR(300) NOT NULL,
+          description TEXT,
+          price DECIMAL(10,2) NOT NULL,
+          stock_quantity INTEGER DEFAULT 0,
+          category VARCHAR(100),
+          sku VARCHAR(50) UNIQUE,
+          created_at TIMESTAMP DEFAULT NOW()
+      );
+
+      CREATE TABLE orders (
+          id SERIAL PRIMARY KEY,
+          user_id INTEGER REFERENCES users(id),
+          order_date TIMESTAMP DEFAULT NOW(),
+          total_amount DECIMAL(10,2),
+          status VARCHAR(50) DEFAULT 'pending',
+          shipping_address TEXT,
+          payment_method VARCHAR(50),
+          notes TEXT
+      );
+
+      CREATE TABLE order_items (
+          id SERIAL PRIMARY KEY,
+          order_id INTEGER REFERENCES orders(id),
+          product_id INTEGER REFERENCES products(id),
+          quantity INTEGER NOT NULL,
+          unit_price DECIMAL(10,2) NOT NULL,
+          discount DECIMAL(5,2) DEFAULT 0
+      );
+
+      CREATE TABLE reviews (
+          id SERIAL PRIMARY KEY,
+          user_id INTEGER REFERENCES users(id),
+          product_id INTEGER REFERENCES products(id),
+          rating INTEGER CHECK (rating >= 1 AND rating <= 5),
+          comment TEXT,
+          created_at TIMESTAMP DEFAULT NOW()
+      );
+
+      -- ============================================================
+      -- V1 TEST DATA
+      -- ============================================================
+
+      INSERT INTO users (full_name, email, phone, address, created_at, is_active) VALUES
+          ('Alice Johnson', 'alice.johnson@email.com', '+1-555-0101', '123 Main St, Springfield, IL 62701', '2022-01-15 09:23:11', TRUE),
+          ('Bob Martinez', 'bob.martinez@email.com', '+1-555-0102', '456 Oak Ave, Chicago, IL 60601', '2022-02-20 14:45:33', TRUE),
+          ('Carol White', 'carol.white@email.com', '+1-555-0103', '789 Pine Rd, Naperville, IL 60540', '2022-03-10 11:12:55', TRUE),
+          ('David Chen', 'david.chen@email.com', '+1-555-0104', '321 Elm St, Evanston, IL 60201', '2022-04-05 16:30:22', TRUE),
+          ('Emma Davis', 'emma.davis@email.com', '+1-555-0105', '654 Maple Dr, Rockford, IL 61101', '2022-05-18 08:55:44', FALSE),
+          ('Frank Wilson', 'frank.wilson@email.com', '+1-555-0106', '987 Cedar Ln, Peoria, IL 61602', '2022-06-22 13:20:15', TRUE),
+          ('Grace Lee', 'grace.lee@email.com', '+1-555-0107', '147 Birch Blvd, Aurora, IL 60505', '2022-

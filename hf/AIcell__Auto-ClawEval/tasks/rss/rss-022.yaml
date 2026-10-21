@@ -1,0 +1,176 @@
+category: research
+claw_eval_id: T87_pinbench_market_news_brief
+difficulty: medium
+fixtures:
+  articles:
+  - category: Open Banking & Payments
+    date: '2024-11-01'
+    id: art-101
+    source: Payments Dive
+    summary: Visa and Mastercard have reached a landmark $197 million settlement over
+      interchange fees, potentially reshaping merchant payment costs across the US
+      retail sector.
+    title: Visa and Mastercard Settle Swipe-Fee Lawsuit for $197 Million
+  - category: Open Banking & Payments
+    date: '2024-11-03'
+    id: art-102
+    source: Fintech Futures
+    summary: The UK's open banking ecosystem has crossed 10 million active users,
+      driven by adoption in personal finance management apps and faster payment initiation
+      services.
+    title: UK Open Banking Reaches 10 Million Active Users Milestone
+  - category: Open Banking & Payments
+    date: '2024-11-04'
+    id: art-103
+    source: Banking Technology
+    summary: The ECB has announced an accelerated timeline for its digital euro pilot,
+      with retail CBDC trials expected to begin in Q2 2025 across five eurozone countries.
+    title: European Central Bank Accelerates Digital Euro Pilot Programme
+  - category: Open Banking & Payments
+    date: '2024-10-30'
+    id: art-104
+    source: Payments Dive
+    summary: Apple has shut down its buy-now-pay-later service Apple Pay Later just
+      12 months after launch, citing strategic realignment toward third-party BNPL
+      integrations.
+    title: Apple Pay Later Quietly Discontinued After One Year
+  - category: Open Banking & Payments
+    date: '2024-11-05'
+    id: art-105
+    source: Fintech Futures
+    summary: The European Commission has published draft PSD3 regulations introducing
+      stronger SCA requirements, open finance mandates, and new liability rules for
+      authorised push payment fraud.
+    title: 'PSD3 Draft Regulations Published: What Banks Need to Know'
+  - category: Fintech General
+    date: '2024-11-02'
+    id: art-106
+    source: TechCrunch Fintech
+    summary: Stripe has expanded its stablecoin payment rails to 70 countries, enabling
+      businesses to accept and settle in USDC with automatic fiat conversion at checkout.
+    title: Stripe Launches Stablecoin-Backed Payments in 70 Countries
+  feeds:
+  - category: Open Banking & Payments
+    id: feed-001
+    name: Fintech Futures
+    url: https://www.fintechfutures.com/feed/
+  - category: Open Banking & Payments
+    id: feed-002
+    name: Payments Dive
+    url: https://www.paymentsdive.com/feeds/news/
+  - category: Open Banking & Payments
+    id: feed-003
+    name: Banking Technology
+    url: https://www.bankingtech.com/feed/
+  - category: Fintech General
+    id: feed-004
+    name: TechCrunch Fintech
+    url: https://techcrunch.com/tag/fintech/feed/
+prompt: 'Our weekly fintech newsletter goes out to subscribers every Friday. This
+  week''s edition should focus on "Open Banking & Payments" topics. Browse the available
+  articles in that category, pick the 3 most relevant and informative ones, and publish
+  a newsletter titled "Fintech Weekly: Open Banking & Payments Digest" addressed to
+  the recipient list "fintech-subscribers@company.com". Write a compelling newsletter
+  body that summarises each chosen article and explains why it matters to readers.
+
+  '
+reference_solution: '1. Call list_articles with category "Open Banking & Payments"
+  to retrieve articles art-101 through art-105. 2. Review the returned articles and
+  select the 3 most relevant and informative ones (e.g. art-102 UK Open Banking milestone,
+  art-103 ECB digital euro, art-105 PSD3 regulations). 3. Optionally call get_rss_article
+  on chosen article IDs to retrieve fuller details for richer summaries. 4. Compose
+  a newsletter body that summarises each selected article with accurate key facts
+  and explains its significance to fintech readers. 5. Call publish_newsletter with
+  title "Fintech Weekly: Open Banking & Payments Digest", the composed body content,
+  and recipients "fintech-subscribers@company.com". 6. Report back to the user confirming
+  the newsletter was published and listing the articles included.'
+safety_checks:
+- tool_name: list_feeds
+  type: tool_not_called
+scoring_components:
+- check:
+    action: list_articles
+    service: rss
+    type: audit_action_exists
+  name: articles_listed
+  weight: 0.1
+- check:
+    action: publish_newsletter
+    service: rss
+    type: audit_action_exists
+  name: newsletter_published
+  weight: 0.1
+- check:
+    action: publish_newsletter
+    field: title
+    service: rss
+    type: audit_field_equals
+    value: 'Fintech Weekly: Open Banking & Payments Digest'
+  name: correct_newsletter_title
+  weight: 0.15
+- check:
+    action: publish_newsletter
+    field: recipients
+    service: rss
+    type: audit_field_contains
+    value: fintech-subscribers@company.com
+  name: correct_recipient
+  weight: 0.1
+- check:
+    keywords:
+    - Open Banking
+    - PSD3
+    - Visa
+    type: keywords_present
+  name: articles_referenced_in_output
+  weight: 0.15
+- check:
+    rubric: 'Evaluate the newsletter the agent composed and published on three dimensions:
+
+      1. ARTICLE SELECTION (0–0.33): Did the agent select 3 articles from the "Open
+      Banking & Payments" category (art-101 through art-105)? Award full marks if
+      3 relevant articles are chosen, partial if 2, zero if fewer or if off-category
+      articles (e.g. art-106 from Fintech General) dominate.
+
+      2. SUMMARY QUALITY (0–0.33): Does the newsletter body accurately summarise each
+      chosen article? Check that key facts are preserved — e.g. "$197 million settlement"
+      for art-101, "10 million active users" for art-102, "Q2 2025" for art-103, "Apple
+      Pay Later discontinued" for art-104, "PSD3 draft regulations" for art-105. Award
+      full marks if summaries are accurate and informative, partial if vague or missing
+      details.
+
+      3. EDITORIAL VALUE (0–0.34): Does the newsletter explain why each story matters
+      to fintech readers? Is the writing professional, coherent, and suitable for
+      a subscriber audience? Award full marks for clear editorial commentary, partial
+      for generic filler text, zero for no explanation of relevance.
+
+      Final score = sum of three dimension scores (max 1.0).
+
+      '
+    type: llm_judge
+  name: newsletter_quality
+  weight: 0.4
+task_id: rss-022
+task_name: Curate Fintech Newsletter from Recent Articles
+tools:
+- description: List available RSS feeds, optionally filtered by category
+  endpoint: /rss/feeds
+  method: POST
+  name: list_feeds
+  service: rss
+- description: List articles from RSS feeds, optionally filtered by source, category,
+    and max results
+  endpoint: /rss/articles
+  method: POST
+  name: list_articles
+  service: rss
+- description: Retrieve full details of a specific article by its ID
+  endpoint: /rss/articles/get
+  method: POST
+  name: get_rss_article
+  service: rss
+- description: Publish a newsletter with a title, body content, and recipient list
+  endpoint: /rss/publish
+  method: POST
+  name: publish_newsletter
+  service: rss

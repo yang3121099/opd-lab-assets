@@ -1,0 +1,20 @@
+name: Berkeley Function Calling Leaderboard
+description: >
+  BFCL evaluates Large Language Models on function calling (tool use) across
+  diverse scenarios including single function, parallel function, multiple
+  function, REST API, multi-turn conversations, and live API execution.
+  It contains 4,000+ samples spanning Python, Java, JavaScript, SQL, and REST
+  APIs, with both AST-matching and execution-based scoring.
+  The benchmark covers three major releases (v1, v2 live, v3 multi-turn)
+  with increasing complexity from simple function calls to multi-step
+  agentic interactions.
+evaluation_framework: nemo-evaluator
+
+tasks:
+  - id: bfclv3
+    config: default
+    split: test
+
+  - id: bfclv2
+    config: default
+    split: test

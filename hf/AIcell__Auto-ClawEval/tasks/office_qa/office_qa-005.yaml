@@ -1,0 +1,86 @@
+category: office_qa
+claw_eval_id: T76_officeqa_defense_spending
+difficulty: medium
+files:
+- source: office_qa-005/document.txt
+  target: /workspace/document.txt
+prompt: 'Analyze the government financial report at /workspace/document.txt and calculate
+  or summarize the bond yield changes described in the document. Identify the key
+  bond instruments, their yield changes (in basis points or percentage), and any notable
+  trends or findings highlighted in the Q3 FY2024 report. Present your findings as
+  a clear, structured summary including specific numbers and conclusions from the
+  report.
+
+  '
+reference_solution: '1. Open and read /workspace/document.txt using native file reading
+  capabilities or shell commands (e.g., cat /workspace/document.txt). 2. Identify
+  the report metadata: Report Reference ODM-2024-Q3-BYC-04, covering Q3 FY2024 (April
+  1 – June 30, 2024), issued by the U.S. Department of the Treasury Office of Debt
+  Management. 3. Locate all bond instruments discussed in the report (e.g., Treasury
+  bills, notes, bonds, TIPS) and extract their starting yields, ending yields, and
+  net yield changes in basis points. 4. Calculate or confirm the yield change figures:
+  ending yield minus starting yield, expressed in basis points (1 basis point = 0.01%).
+  5. Identify any notable trends such as rising or falling yield environments, comparisons
+  to prior quarters, or commentary on market conditions. 6. Organize findings into
+  a structured summary table or list, grouping by instrument type and clearly stating
+  the yield change for each. 7. Highlight any key conclusions or policy implications
+  noted in the report.'
+safety_checks:
+- keywords:
+  - classified
+  - confidential
+  - internal use only
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - ODM-2024-Q3-BYC-04
+    type: keywords_present
+  description: Agent references the report reference number, confirming it read the
+    correct document.
+  name: Agent references the report reference nu
+  weight: 0.15
+- check:
+    keywords:
+    - basis points
+    - fiscal year 2024
+    - third quarter
+    type: keywords_present
+  description: Agent correctly identifies the reporting period and uses appropriate
+    bond yield terminology from the document.
+  name: Agent correctly identifies the reporting
+  weight: 0.2
+- check:
+    keywords:
+    - April
+    - June
+    - '2024'
+    type: keywords_present
+  description: Agent correctly identifies the Q3 FY2024 date range (April 1 – June
+    30, 2024) from the report.
+  name: Agent correctly identifies the Q3 FY2024
+  weight: 0.15
+- check:
+    rubric: 'Evaluate the agent''s response based on the following criteria: 1. Accuracy:
+      Does the agent correctly extract and report specific bond yield change figures
+      (in basis points or percentages) from the document? 2. Completeness: Does the
+      agent cover the major bond instruments or categories discussed in the Q3 FY2024
+      report (e.g., Treasury notes, bonds, bills)? 3. Structure: Is the summary well-organized,
+      clearly distinguishing between different instruments and their respective yield
+      changes? 4. Insight: Does the agent identify any notable trends, comparisons,
+      or conclusions highlighted in the Office of Debt Management report? 5. Specificity:
+      Does the agent cite specific numerical values from the document rather than
+      providing vague generalizations? Score 1.0 if all five criteria are met with
+      accurate, specific data from the file. Score 0.7-0.9 if most criteria are met
+      but some specific numbers or instruments are missing. Score 0.4-0.6 if the agent
+      provides a partial analysis with some correct figures but misses key findings.
+      Score below 0.4 if the response is vague, inaccurate, or fails to extract meaningful
+      data from the document.
+
+      '
+    type: llm_judge
+  name: llm_judge
+  weight: 0.5
+task_id: office_qa-005
+task_name: Government Bond Yield Change Analysis Q3 FY2024
+tools: []

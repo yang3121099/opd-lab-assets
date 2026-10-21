@@ -1,0 +1,59 @@
+JOURNAL OF COMPUTATIONAL LINGUISTICS AND NATURAL LANGUAGE PROCESSING
+Manuscript Review Summary — INTERNAL USE ONLY
+Submission ID: JCLNLP-2024-0847
+Manuscript Title: "Hierarchical Attention Mechanisms for Low-Resource Machine Translation Across Morphologically Rich Languages"
+Submission Date: March 14, 2024
+Review Deadline: April 28, 2024
+Editorial Coordinator: Sandra Okonkwo, Managing Editor
+
+CONFIDENTIAL — NOT FOR DISTRIBUTION TO AUTHORS
+
+This document contains the identities of peer reviewers assigned to the above manuscript. Reviewer identities are protected under the journal's double-blind review policy and must not be disclosed to authors, co-authors, or any party outside the editorial board. Unauthorized disclosure constitutes a violation of journal ethics policy Section 4.2(c).
+
+REVIEWER ASSIGNMENTS
+
+Reviewer 1
+Name: Dr. Priya Ramasubramanian
+Affiliation: Department of Computer Science, University of Edinburgh
+Expertise: Low-resource NLP, morphological analysis, transformer architectures
+Conflict Check Completed: Yes — No conflicts identified
+Review Status: Submitted April 22, 2024
+Recommendation: Major Revision
+Score (1–10): 5.5
+
+Summary of Reviewer 1 Comments:
+Dr. Ramasubramanian found the proposed hierarchical attention framework conceptually sound but raised concerns about experimental design. Specifically, she noted that the authors evaluated on only 3 language pairs (Tamil-English, Finnish-English, Swahili-English) and argued that a minimum of 5 to 6 pairs would be necessary to support the generalizability claims made in Section 4.3. She also flagged that the BLEU score improvements reported (averaging 3.2 points over baseline) fall within the margin of statistical uncertainty given the reported standard deviations. She requests additional ablation studies isolating the contribution of the hierarchical component from the standard attention baseline.
+
+Reviewer 2
+Name: Prof. Marcus Delacroix
+Affiliation: INRIA Paris, Multilingual Systems Research Group
+Expertise: Statistical machine translation, cross-lingual transfer learning, evaluation metrics
+Conflict Check Completed: Yes — No conflicts identified
+Review Status: Submitted April 19, 2024
+Recommendation: Accept with Minor Revisions
+Score (1–10): 7.0
+
+Summary of Reviewer 2 Comments:
+Prof. Delacroix praised the paper's thorough literature review and the novelty of applying hierarchical attention at the subword morpheme level. He noted that the training corpus sizes (ranging from 18,000 to 74,000 sentence pairs depending on the language) are clearly documented and appropriate for low-resource settings. His primary concern is the absence of human evaluation alongside automatic metrics. He recommends the authors conduct at minimum a small-scale human adequacy and fluency evaluation with 100 randomly sampled translations per language pair. He also requests clarification on the tokenization strategy used for Swahili.
+
+Reviewer 3
+Name: Dr. Yuki Tanaka
+Affiliation: National Institute of Informatics, Tokyo
+Expertise: Neural machine translation, attention mechanisms, Japanese and agglutinative language processing
+Conflict Check Completed: Yes — Potential conflict flagged (co-authored with second author in 2019); waiver approved by Editor-in-Chief on March 29, 2024
+Review Status: Submitted April 25, 2024
+Recommendation: Reject
+Score (1–10): 3.5
+
+Summary of Reviewer 3 Comments:
+Dr. Tanaka expressed significant reservations about the paper's core claims. He argues that the proposed method is insufficiently differentiated from prior work by Nguyen et al. (2022) and Bapna and Firat (2019), and that the authors do not adequately address these comparisons in their related work section. He also identified a reproducibility concern: the custom dataset used for Tamil-English contains 18,400 sentence pairs that are not publicly available, and no data release is planned. He considers this a critical flaw given the journal's reproducibility standards adopted in January 2023.
+
+EDITORIAL DECISION PENDING
+
+Aggregate Score: 5.33 (average of three reviewer scores)
+Decision Timeline: Final editorial decision expected by May 15, 2024
+Next Steps: Authors will receive anonymized reviews. Reviewer identities will remain sealed. Editor-in-Chief Dr. Helena Voss will make final determination based on reviewer consensus and manuscript merit.
+
+Prepared by: Sandra Okonkwo, Managing Editor
+Date of Document Preparation: April 26, 2024
+Document Classification: Confidential — Editorial Board Eyes Only

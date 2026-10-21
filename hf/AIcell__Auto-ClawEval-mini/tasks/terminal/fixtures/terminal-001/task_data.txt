@@ -1,0 +1,115 @@
+```yaml
+id: sqlite-wal-recovery
+title: SQLite Database Recovery from WAL Journal
+description: |
+  A production SQLite database used by a web application has become corrupted
+  after an unexpected system crash. The main database file exists but appears
+  to be in an inconsistent state. A WAL (Write-Ahead Log) journal file is
+  present alongside the database, containing committed transactions that were
+  not yet checkpointed into the main database file.
+
+  Your task is to recover the database, merge the WAL journal, verify data
+  integrity, and restore the application to a working state.
+
+type: terminal
+difficulty: intermediate
+time_limit: 45
+
+environment:
+  image: ubuntu:22.04
+  packages:
+    - sqlite3
+    - python3
+    - python3-pip
+    - xxd
+    - file
+    - hexdump
+
+setup_script: |
+  #!/bin/bash
+  set -e
+
+  mkdir -p /opt/webapp/data
+  mkdir -p /opt/webapp/backups
+  mkdir -p /opt/webapp/logs
+  mkdir -p /var/log/webapp
+
+  # Create the initial database with schema and data
+  python3 << 'PYEOF'
+  import sqlite3
+  import os
+  import struct
+  import shutil
+
+  db_path = '/opt/webapp/data/production.db'
+
+  conn = sqlite3.connect(db_path)
+  conn.execute("PRAGMA journal_mode=WAL")
+  conn.execute("PRAGMA page_size=4096")
+  conn.execute("PRAGMA synchronous=NORMAL")
+
+  conn.executescript("""
+      CREATE TABLE IF NOT EXISTS users (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          username TEXT NOT NULL UNIQUE,
+          email TEXT NOT NULL UNIQUE,
+          password_hash TEXT NOT NULL,
+          created_at TEXT DEFAULT (datetime('now')),
+          last_login TEXT,
+          is_active INTEGER DEFAULT 1,
+          role TEXT DEFAULT 'user'
+      );
+
+      CREATE TABLE IF NOT EXISTS products (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          sku TEXT NOT NULL UNIQUE,
+          name TEXT NOT NULL,
+          description TEXT,
+          price REAL NOT NULL,
+          stock_quantity INTEGER DEFAULT 0,
+          category TEXT,
+          created_at TEXT DEFAULT (datetime('now')),
+          updated_at TEXT DEFAULT (datetime('now'))
+      );
+
+      CREATE TABLE IF NOT EXISTS orders (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          user_id INTEGER NOT NULL,
+          status TEXT DEFAULT 'pending',
+          total_amount REAL NOT NULL,
+          shipping_address TEXT,
+          created_at TEXT DEFAULT (datetime('now')),
+          updated_at TEXT DEFAULT (datetime('now')),
+          FOREIGN KEY (user_id) REFERENCES users(id)
+      );
+
+      CREATE TABLE IF NOT EXISTS order_items (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          order_id INTEGER NOT NULL,
+          product_id INTEGER NOT NULL,
+          quantity INTEGER NOT NULL,
+          unit_price REAL NOT NULL,
+          FOREIGN KEY (order_id) REFERENCES orders(id),
+          FOREIGN KEY (product_id) REFERENCES products(id)
+      );
+
+      CREATE TABLE IF NOT EXISTS audit_log (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          table_name TEXT NOT NULL,
+          operation TEXT NOT NULL,
+          record_id INTEGER,
+          changed_by TEXT,
+          changed_at TEXT DEFAULT (datetime('now')),
+          old_values TEXT,
+          new_values TEXT
+      );
+
+      CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
+      CREATE INDEX IF NOT EXISTS idx_orders_user_id ON orders(user_id);
+      CREATE INDEX IF NOT EXISTS idx_order_items_order_id ON order_items(order_id);
+      CREATE INDEX IF NOT EXISTS idx_products_sku ON products(sku);
+  """)
+
+  users = [
+      ('alice_johnson', 'alice@techcorp.com', 'sha256:a1b2c3d4e5f6789012345678901234567890abcd', '2024-01-15 09:23:11', '2024-11-28 14:32:05', 1, 'admin'),
+      ('bob_smith', 'bob@techc

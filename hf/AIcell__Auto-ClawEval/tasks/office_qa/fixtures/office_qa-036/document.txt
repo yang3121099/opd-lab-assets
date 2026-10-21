@@ -1,0 +1,166 @@
+UNITED STATES DEPARTMENT OF THE TREASURY
+Office of Fiscal Analysis and Trust Fund Management
+
+FEDERAL HIGHWAY TRUST FUND
+COMPOUND ANNUAL GROWTH RATE ANALYSIS
+Fiscal Years 2014 Through 2024
+
+Report Reference: OFA-HTF-2024-0047
+Publication Date: November 14, 2024
+Prepared by: Division of Transportation Finance, Bureau of Fiscal Operations
+
+---
+
+EXECUTIVE SUMMARY
+
+This report presents a comprehensive compound annual growth rate (CAGR) analysis of the Federal Highway Trust Fund (HTF) for the ten-year period spanning fiscal year 2014 through fiscal year 2024. The analysis encompasses total fund receipts, expenditure obligations, investment income, and net balance positions. The Highway Trust Fund, established under 23 U.S.C. § 9503, serves as the primary federal mechanism for financing surface transportation infrastructure across the United States. This document is intended for use by congressional budget staff, the Office of Management and Budget, and state transportation finance officers.
+
+The analysis finds that total HTF receipts demonstrated a compound annual growth rate of 3.7 percent over the ten-year study period, while expenditure obligations grew at a CAGR of 5.2 percent, creating a structural funding gap that has required seven general fund transfers totaling $272.4 billion since fiscal year 2008.
+
+---
+
+SECTION 1: FUND BACKGROUND AND LEGAL AUTHORITY
+
+The Federal Highway Trust Fund was created by the Highway Revenue Act of 1956 and is funded primarily through federal excise taxes on motor fuels, truck and trailer sales, heavy vehicle use taxes, and tire taxes. The fund is divided into two accounts: the Highway Account and the Mass Transit Account.
+
+As of September 30, 2024, the combined balance of both accounts stood at $47.3 billion, reflecting a $14.1 billion general fund transfer authorized under the Infrastructure Investment and Jobs Act of 2021 (Public Law 117-58). The federal gasoline tax rate of 18.4 cents per gallon and the diesel tax rate of 24.4 cents per gallon have remained unchanged since October 1, 1993, a factor that significantly constrains organic revenue growth.
+
+---
+
+SECTION 2: METHODOLOGY
+
+The CAGR calculations in this report follow the standard formula:
+
+CAGR = (Ending Value / Beginning Value) ^ (1 / Number of Years) - 1
+
+All dollar figures are presented in nominal terms unless otherwise noted. Inflation-adjusted figures use the Bureau of Economic Analysis GDP Price Deflator, with fiscal year 2014 as the base year. Data sources include:
+
+- Monthly Treasury Statement (MTS) publications, October 2014 through September 2024
+- IRS Statistics of Income data for excise tax collections
+- Federal Highway Administration (FHWA) Financial Management Information System records
+- Congressional Budget Office baseline projections (August 2024 update)
+
+Fiscal years run from October 1 through September 30. All figures have been audited by the Government Accountability Office under engagement number GAO-25-106847.
+
+---
+
+SECTION 3: REVENUE ANALYSIS
+
+3.1 Total Receipts by Source
+
+The following table presents total Highway Trust Fund receipts for selected fiscal years within the study period, broken down by revenue category.
+
+HIGHWAY TRUST FUND RECEIPTS (in billions of dollars)
+
+Revenue Source | FY 2014 | FY 2019 | FY 2024 | 10-Yr CAGR
+
+Motor Fuel Taxes | 34.1 | 36.8 | 41.2 | 1.9%
+Truck/Trailer Sales Tax | 4.3 | 5.1 | 6.7 | 4.5%
+Heavy Vehicle Use Tax | 1.4 | 1.5 | 1.7 | 2.0%
+Tire Tax | 0.6 | 0.7 | 0.8 | 2.9%
+Investment Income | 0.3 | 0.8 | 2.1 | 21.4%
+General Fund Transfers | 10.8 | 0.0 | 14.1 | N/A
+TOTAL RECEIPTS | 51.5 | 44.9 | 66.6 | 2.6%
+
+Note: The FY 2019 total reflects the absence of a general fund transfer in that year. Excluding general fund transfers, organic receipts grew from $40.7 billion in FY 2014 to $52.5 billion in FY 2024, representing a CAGR of 2.6 percent.
+
+3.2 Motor Fuel Tax Performance
+
+Motor fuel tax receipts, which constitute the largest single revenue source, grew from $34.1 billion in fiscal year 2014 to $41.2 billion in fiscal year 2024, a CAGR of 1.9 percent. This modest growth reflects two competing dynamics: increased vehicle miles traveled (VMT), which rose from 3.025 trillion miles in calendar year 2014 to 3.261 trillion miles in calendar year 2023, offset by improving fuel economy standards under the Corporate Average Fuel Economy (CAFE) program. The average fuel economy of new passenger vehicles sold in the United States increased from 25.3 miles per gallon in model year 2014 to 29.0 miles per gallon in model year 2023, reducing per-mile tax revenue by an estimated $0.0026 per mile over the study period.
+
+3.3 Investment Income Growth
+
+The most dramatic CAGR figure in the revenue analysis belongs to investment income, which grew from $0.3 billion in fiscal year 2014 to $2.1 billion in fiscal year 2024, representing a CAGR of 21.4 percent. This growth is attributable primarily to rising interest rates on Treasury securities held by the fund. The weighted average interest rate on HTF investments increased from 1.8 percent in fiscal year 2014 to 4.9 percent in fiscal year 2024, reflecting the Federal Reserve's rate-tightening cycle that began in March 2022.
+
+---
+
+SECTION 4: EXPENDITURE ANALYSIS
+
+4.1 Obligations by Program Category
+
+Total HTF expenditure obligations grew from $50.3 billion in fiscal year 2014 to $83.1 billion in fiscal year 2024, a CAGR of 5.2 percent. This growth substantially outpaced organic revenue growth of 2.6 percent, illustrating the structural imbalance that has characterized the fund since fiscal year 2001.
+
+HIGHWAY TRUST FUND OBLIGATIONS (in billions of dollars)
+
+Program Category | FY 2014 | FY 2019 | FY 2024 | 10-Yr CAGR
+
+Federal-Aid Highway Program | 40.3 | 46.2 | 62.4 | 4.5%
+Federal Transit Administration | 8.6 | 10.1 | 16.3 | 6.6%
+Highway Safety Programs | 0.9 | 1.1 | 2.1 | 8.8%
+Motor Carrier Safety | 0.5 | 0.6 | 1.1 | 8.2%
+Administrative Expenses | 0.0 | 0.1 | 0.1 | 7.0%
+Rescissions/Adjustments | -0.0 | -0.1 | 1.1 | N/A
+TOTAL OBLIGATIONS | 50.3 | 58.0 | 83.1 | 5.2%
+
+4.2 Federal-Aid Highway Program
+
+The Federal-Aid Highway Program, administered by the Federal Highway Administration under the authority of the Infrastructure Investment and Jobs Act of 2021, represents the largest expenditure category. Obligations under this program grew from $40.3 billion in fiscal year 2014 to $62.4 billion in fiscal year 2024. The IIJA authorized $273.0 billion for the Federal-Aid Highway Program over fiscal years 2022 through 2026, representing a 38 percent increase over the comparable authorization level under the Fixing America's Surface Transportation (FAST) Act of 2015.
+
+4.3 Highway Safety Program Growth
+
+Highway safety programs demonstrated the highest expenditure CAGR at 8.8 percent, growing from $0.9 billion in fiscal year 2014 to $2.1 billion in fiscal year 2024. This growth reflects expanded funding for the Highway Safety Improvement Program (HSIP) and new programs established under the IIJA, including the Safe Streets and Roads for All program, which received $1.0 billion in total authorization.
+
+---
+
+SECTION 5: NET BALANCE POSITION AND SOLVENCY ANALYSIS
+
+5.1 Historical Balance Trajectory
+
+The net balance of the Highway Trust Fund fluctuated significantly over the study period, driven by the timing of general fund transfers and expenditure obligation rates.
+
+HIGHWAY TRUST FUND NET BALANCE (in billions of dollars)
+
+Fiscal Year | Beginning Balance | Receipts | Outlays | Ending Balance
+
+FY 2014 | 15.3 | 51.5 | 50.3 | 16.5
+FY 2016 | 18.2 | 42.1 | 52.6 | 7.7
+FY 2018 | 22.4 | 44.3 | 55.1 | 11.6
+FY 2020 | 14.8 | 38.9 | 51.2 | 2.5
+FY 2022 | 17.6 | 58.3 | 61.4 | 14.5
+FY 2024 | 44.8 | 66.6 | 64.1 | 47.3
+
+The ending balance of $47.3 billion as of September 30, 2024, represents the highest nominal balance in the fund's history, attributable to the $14.1 billion general fund transfer received in fiscal year 2024 and elevated investment income.
+
+5.2 Solvency Projections
+
+Without additional legislative action, the Congressional Budget Office projects that the Highway Account will be unable to meet its obligations beginning in fiscal year 2028, based on the August 2024 baseline. The Mass Transit Account is projected to face a similar shortfall in fiscal year 2029. These projections assume no change to current tax rates and continuation of IIJA spending authority through fiscal year 2026.
+
+---
+
+SECTION 6: INFLATION-ADJUSTED CAGR ANALYSIS
+
+When adjusted for inflation using the GDP Price Deflator (FY 2014 = 100.0, FY 2024 = 127.3), the real CAGR figures present a more sobering picture:
+
+- Real organic receipts CAGR: -0.2 percent (nominal 2.6 percent)
+- Real total obligations CAGR: 2.0 percent (nominal 5.2 percent)
+- Real motor fuel tax receipts CAGR: -0.8 percent (nominal 1.9 percent)
+
+In real terms, motor fuel tax revenues have declined modestly over the ten-year period, underscoring the erosion of the fund's primary revenue source in purchasing power terms.
+
+---
+
+SECTION 7: CONCLUSIONS AND POLICY IMPLICATIONS
+
+The CAGR analysis presented in this report confirms three principal findings:
+
+First, the structural revenue gap between organic HTF receipts (2.6 percent nominal CAGR) and expenditure obligations (5.2 percent nominal CAGR) is not self-correcting under current law and will require legislative intervention prior to fiscal year 2028.
+
+Second, the fixed federal motor fuel tax rate of 18.4 cents per gallon for gasoline, unchanged since 1993, has resulted in a real revenue decline of 0.8 percent per year when adjusted for inflation, representing a cumulative purchasing power loss of approximately $8.2 billion in fiscal year 2024 terms relative to a hypothetical inflation-indexed rate.
+
+Third, the seven general fund transfers made between fiscal year 2008 and fiscal year 2024, totaling $272.4 billion, have masked the severity of the structural imbalance and created a dependency that is inconsistent with the user-fee financing model that underpins the fund's legal and policy rationale.
+
+The Office of Fiscal Analysis recommends that the Department of the Treasury transmit this report to the House Committee on Transportation and Infrastructure and the Senate Committee on Environment and Public Works no later than December 1, 2024, in accordance with 31 U.S.C. § 331(d).
+
+---
+
+Prepared by:
+Margaret L. Thornton, Director, Division of Transportation Finance
+Bureau of Fiscal Operations, Office of Fiscal Analysis
+United States Department of the Treasury
+Washington, D.C. 20220
+
+Reviewed and approved by:
+James R. Calloway, Deputy Assistant Secretary for Fiscal Operations
+Date of approval: November 12, 2024
+
+Document control: This report is approved for public release. Distribution is unlimited.

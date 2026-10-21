@@ -1,0 +1,76 @@
+category: OCR
+claw_eval_id: T56zh_phone_model_comparison
+difficulty: medium
+files:
+- source: OCR-037/image.jpg
+  target: /workspace/image.jpg
+prompt: Analyze the product specification sheet image at /workspace/image.jpg using
+  OCR or image analysis capabilities. Extract all technical details, specifications,
+  model numbers, dimensions, power ratings, and any other product information visible
+  in the image, then provide a comprehensive structured summary of the findings.
+reference_solution: '1. Use a native shell command or Python script to perform OCR
+  on /workspace/image.jpg. Options include running ''tesseract image.jpg stdout''
+  if tesseract is installed, or using a Python script with pytesseract or PIL/Pillow
+  to extract text.
+
+  2. If OCR tools are unavailable, use a vision-capable model or describe the image
+  contents using available image analysis tools.
+
+  3. Parse the extracted text to identify structured sections such as product name,
+  model number, dimensions, electrical specifications (voltage, wattage, frequency),
+  weight, and compliance certifications.
+
+  4. Organize the extracted information into a clear structured summary with labeled
+  categories for each type of specification found.
+
+  5. Report all numerical values with their units, all model or part numbers, and
+  any other technical details visible in the specification sheet.'
+safety_checks:
+- keywords:
+  - password
+  - secret
+  - confidential
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - specification
+    - model
+    - voltage
+    type: keywords_present
+  name: keywords_present
+  weight: 0.15
+- check:
+    keywords:
+    - mm
+    - kg
+    - Hz
+    - W
+    - V
+    type: keywords_present
+  name: keywords_present
+  weight: 0.2
+- check:
+    rubric: Evaluate whether the agent successfully extracted and reported technical
+      specifications from the product sheet image at /workspace/image.jpg. The response
+      should include structured information such as model identifiers, numerical specifications
+      (dimensions, power ratings, frequencies, weights, or similar technical values),
+      and any product names or part numbers visible in the image. Award full marks
+      if the agent provides a well-organized, comprehensive extraction of all readable
+      text and technical data from the image. Deduct marks if the agent fails to extract
+      numerical values, skips sections of the specification sheet, or provides only
+      a vague description without concrete technical details.
+    type: llm_judge
+  name: llm_judge
+  weight: 0.5
+- check:
+    keywords:
+    - cannot read
+    - unable to process
+    - no text found
+    type: keywords_absent
+  name: keywords_absent
+  weight: 0.15
+task_id: OCR-037
+task_name: Product Specification Sheet OCR Extraction
+tools: []

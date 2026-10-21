@@ -1,0 +1,130 @@
+OFFICE OF FISCAL ANALYSIS AND STATISTICAL SERVICES
+DEPARTMENT OF THE TREASURY — COMMONWEALTH OF PENNSYLVANIA
+
+TECHNICAL MEMORANDUM TM-2024-07
+Statistical Distribution Fitting Analysis of Revenue Streams and Expenditure Patterns
+Fiscal Year 2023–2024
+
+Prepared by: Division of Quantitative Methods
+Lead Analyst: Dr. Margaret Holloway, Senior Econometrician
+Date of Issue: September 12, 2024
+Classification: Public Release
+
+---
+
+EXECUTIVE SUMMARY
+
+This technical memorandum presents the results of a comprehensive statistical distribution fitting analysis conducted on Pennsylvania's major revenue and expenditure streams for fiscal year 2023–2024 (July 1, 2023 through June 30, 2024). The analysis was undertaken to improve the accuracy of short-term revenue forecasting models, enhance budget reserve calculations, and support actuarial assessments for the Public School Employees' Retirement System (PSERS) and the State Employees' Retirement System (SERS). A total of 14 distinct financial data series were analyzed using maximum likelihood estimation (MLE) and the Kolmogorov-Smirnov (K-S) goodness-of-fit test at a significance level of α = 0.05.
+
+---
+
+1. INTRODUCTION AND PURPOSE
+
+Pennsylvania's General Fund collected $42.8 billion in total revenues during FY 2023–2024, representing a 3.1 percent increase over the $41.5 billion collected in FY 2022–2023. Expenditures totaled $44.2 billion, producing a structural deficit of approximately $1.4 billion that was offset through the use of $900 million in Rainy Day Fund reserves and $500 million in one-time federal Medicaid reimbursements.
+
+Accurate probabilistic modeling of these revenue and expenditure flows is essential for maintaining fiscal stability. The Bureau of Budget and Analysis, in coordination with the Independent Fiscal Office (IFO), commissioned this study following the revenue forecast miss of $1.17 billion recorded in FY 2021–2022, when actual Personal Income Tax (PIT) receipts fell 8.4 percent below the point estimate forecast.
+
+---
+
+2. DATA AND METHODOLOGY
+
+2.1 Data Sources
+
+Monthly revenue and expenditure data were drawn from the Commonwealth's Integrated Enterprise System (IES) for the period January 2010 through June 2024, yielding 174 monthly observations per series. Data were adjusted for seasonality using the U.S. Census Bureau's X-13ARIMA-SEATS procedure. Inflation adjustments applied the Bureau of Labor Statistics CPI-U index (base year 2010 = 100; June 2024 index value: 163.7).
+
+2.2 Candidate Distributions
+
+For each data series, the following candidate distributions were evaluated:
+- Normal
+- Log-normal
+- Gamma
+- Weibull
+- Beta (for proportional series)
+- Generalized Extreme Value (GEV)
+- Negative Binomial (for count-based series)
+
+2.3 Fitting Procedure
+
+Parameters were estimated via MLE using the fitdistrplus package (version 1.1-11) in R 4.3.2. Goodness-of-fit was assessed using three criteria: the Kolmogorov-Smirnov statistic (D), the Akaike Information Criterion (AIC), and the Bayesian Information Criterion (BIC). Visual diagnostics included Q-Q plots, P-P plots, and empirical cumulative distribution function overlays.
+
+---
+
+3. RESULTS BY REVENUE CATEGORY
+
+3.1 Personal Income Tax (PIT)
+
+PIT is Pennsylvania's largest single revenue source, generating $16.3 billion in FY 2023–2024, or 38.1 percent of total General Fund revenues. Monthly PIT receipts (seasonally adjusted) were best fit by a log-normal distribution with parameters μ = 13.847 and σ = 0.214. The K-S statistic was D = 0.062, with a corresponding p-value of 0.487, indicating failure to reject the null hypothesis of log-normal fit. The AIC for the log-normal model was 2,341.6, compared to 2,389.2 for the normal distribution, confirming superior fit.
+
+The 95th percentile of the fitted distribution corresponds to monthly receipts of $1.71 billion, while the 5th percentile corresponds to $1.09 billion, yielding a 95 percent confidence interval width of $620 million per month.
+
+3.2 Sales and Use Tax (SUT)
+
+SUT revenues totaled $12.1 billion in FY 2023–2024, a 2.7 percent increase from $11.78 billion in the prior year. Monthly SUT receipts were best described by a gamma distribution with shape parameter α = 18.43 and rate parameter β = 0.0183. The K-S statistic was D = 0.051 (p = 0.621). The gamma distribution outperformed the log-normal (AIC difference: 14.3 points) and the normal distribution (AIC difference: 31.7 points).
+
+3.3 Corporate Net Income Tax (CNIT)
+
+CNIT is the most volatile major revenue source. Collections totaled $5.2 billion in FY 2023–2024, down 11.9 percent from the record $5.9 billion collected in FY 2022–2023, reflecting the phase-down of the corporate net income tax rate from 9.99 percent to 8.99 percent effective January 1, 2023, as enacted under Act 53 of 2022. Monthly CNIT receipts were best fit by a Generalized Extreme Value distribution with location parameter μ = 398.4 million, scale parameter σ = 112.7 million, and shape parameter ξ = 0.31. The positive shape parameter confirms heavy-tailed behavior consistent with occasional large estimated payment settlements. The K-S statistic was D = 0.078 (p = 0.312).
+
+3.4 Lottery Fund Transfers
+
+Net transfers from the Pennsylvania Lottery to the Department of Aging totaled $1.38 billion in FY 2023–2024. Monthly transfer amounts were best fit by a normal distribution (μ = $114.9 million, σ = $9.3 million; K-S D = 0.044, p = 0.791), reflecting the relative stability of lottery operations.
+
+---
+
+4. RESULTS BY EXPENDITURE CATEGORY
+
+4.1 Medical Assistance (Medicaid)
+
+Medical Assistance expenditures totaled $18.6 billion in FY 2023–2024, representing 42.1 percent of total General Fund spending and a 4.8 percent increase over the prior year's $17.75 billion. Monthly expenditures were best fit by a log-normal distribution with μ = 14.312 and σ = 0.089. The narrow sigma value reflects the relative predictability of Medicaid spending, driven by enrollment levels of approximately 3.4 million beneficiaries as of June 2024.
+
+4.2 K-12 Education Subsidies
+
+Basic Education Funding (BEF) disbursements totaled $7.85 billion in FY 2023–2024, an increase of $567 million (7.8 percent) over FY 2022–2023, reflecting the first year of implementation of the adequacy supplement formula established under Act 55 of 2023. Monthly BEF payments were best fit by a bimodal mixture of two normal distributions (component 1: μ₁ = $580 million, σ₁ = $22 million, weight = 0.75; component 2: μ₂ = $720 million, σ₂ = $31 million, weight = 0.25), capturing the pattern of larger disbursements in September and January corresponding to school district fiscal cycles.
+
+4.3 Debt Service
+
+General obligation debt service payments totaled $1.92 billion in FY 2023–2024. Because these payments are contractually fixed, monthly amounts follow a near-deterministic schedule. The empirical coefficient of variation was 0.031, and a normal distribution with μ = $160.1 million and σ = $4.9 million provided adequate fit (K-S D = 0.038, p = 0.883).
+
+---
+
+5. SUMMARY TABLE: BEST-FIT DISTRIBUTIONS
+
+Revenue/Expenditure Series | FY 2023-24 Total | Best-Fit Distribution | K-S Statistic | p-value
+Personal Income Tax | $16.3 billion | Log-normal | 0.062 | 0.487
+Sales and Use Tax | $12.1 billion | Gamma | 0.051 | 0.621
+Corporate Net Income Tax | $5.2 billion | GEV | 0.078 | 0.312
+Lottery Fund Transfers | $1.38 billion | Normal | 0.044 | 0.791
+Medical Assistance | $18.6 billion | Log-normal | 0.057 | 0.534
+K-12 Education (BEF) | $7.85 billion | Normal Mixture | 0.049 | 0.658
+Debt Service | $1.92 billion | Normal | 0.038 | 0.883
+
+---
+
+6. IMPLICATIONS FOR RESERVE POLICY
+
+Using the fitted distributions, the Division of Quantitative Methods calculated Value-at-Risk (VaR) estimates for the General Fund at the 95th and 99th percentile levels. The 99th percentile annual revenue shortfall relative to the point forecast is estimated at $2.84 billion, while the 95th percentile shortfall is $1.63 billion.
+
+Pennsylvania's Rainy Day Fund balance stood at $1.83 billion as of June 30, 2024, equivalent to approximately 4.1 percent of annual General Fund revenues. The Government Finance Officers Association (GFOA) recommends a minimum reserve of 5 to 15 percent of annual revenues. Based on the 95th percentile VaR estimate of $1.63 billion, the current reserve is marginally adequate; however, the 99th percentile estimate of $2.84 billion suggests the fund should be increased to approximately $2.5 billion to provide a statistically robust buffer.
+
+---
+
+7. LIMITATIONS AND FUTURE WORK
+
+Several limitations should be noted. First, the 174-month sample period includes the COVID-19 fiscal shock of FY 2019–2020 and FY 2020–2021, during which PIT revenues declined by $2.1 billion and then recovered by $3.4 billion in a single fiscal year. These observations exert disproportionate influence on tail estimates. Sensitivity analyses excluding these years produced GEV shape parameters approximately 18 percent smaller for PIT, suggesting somewhat thinner tails under normal economic conditions.
+
+Second, the analysis treats revenue series as independent. Copula-based modeling of joint revenue behavior, particularly the correlation between PIT and SUT (Pearson r = 0.74 over the sample period), is planned for TM-2025-02, scheduled for release in March 2025.
+
+Third, the CNIT series is subject to structural change following the legislatively mandated rate reductions under Act 53 of 2022, which will reduce the rate to 4.99 percent by 2031. Recursive parameter estimation will be required as additional post-reform observations accumulate.
+
+---
+
+8. CONCLUSIONS
+
+This analysis demonstrates that Pennsylvania's major revenue streams are best characterized by right-skewed distributions (log-normal and gamma for PIT and SUT) and heavy-tailed distributions (GEV for CNIT), while expenditure streams tend toward greater regularity. These findings support the adoption of probabilistic rather than point-estimate forecasting for budget planning purposes. The Division recommends that the Governor's Budget Office incorporate the fitted distributions into its FY 2025–2026 budget preparation process, with formal implementation targeted for the preliminary budget submission due January 21, 2025.
+
+---
+
+Approved for release:
+James R. Whitfield, Deputy Secretary for Budget
+Commonwealth of Pennsylvania, Office of the Budget
+September 12, 2024

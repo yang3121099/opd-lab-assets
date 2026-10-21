@@ -1,0 +1,112 @@
+OFFICE OF DEBT MANAGEMENT
+U.S. DEPARTMENT OF THE TREASURY
+FISCAL YEAR 2024 QUARTERLY YIELD SPREAD ANALYSIS
+Third Quarter Report | July 1 – September 30, 2024
+
+Prepared by the Office of Federal Finance
+Released: October 18, 2024
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EXECUTIVE SUMMARY
+
+This report presents the Treasury's quarterly analysis of yield spreads across the federal debt portfolio for the period ending September 30, 2024. The analysis encompasses approximately $27.4 trillion in outstanding marketable debt and evaluates spread dynamics between Treasury securities and benchmark instruments, including the federal funds rate, SOFR (Secured Overnight Financing Rate), and investment-grade corporate indices. During Q3 FY2024, the 2-year/10-year Treasury spread narrowed by 31 basis points relative to the prior quarter, moving from negative 52 basis points to negative 21 basis points, signaling continued but moderating inversion of the yield curve. The Federal Reserve's decision on September 18, 2024 to reduce the federal funds rate by 50 basis points to a target range of 4.75–5.00 percent materially influenced spread behavior across all maturities analyzed in this report.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 1: MACROECONOMIC CONTEXT AND RATE ENVIRONMENT
+
+The third quarter of fiscal year 2024 was defined by a pivotal shift in Federal Reserve monetary policy. Following 23 months of restrictive policy that had pushed the federal funds rate to a peak range of 5.25–5.50 percent, the Federal Open Market Committee voted 11-to-1 on September 18, 2024 to implement a 50-basis-point reduction, the first rate cut since March 2020. Governor Michelle Bowman cast the sole dissenting vote, preferring a 25-basis-point reduction.
+
+Consumer Price Index data released during the quarter showed headline inflation declining to 2.5 percent year-over-year in August 2024, down from 3.0 percent in June 2024. Core PCE, the Fed's preferred inflation measure, registered 2.6 percent in July 2024. These figures provided the policy space necessary for the rate reduction and directly impacted short-duration Treasury yields, which fell more sharply than long-duration yields during the quarter.
+
+The 3-month Treasury bill yield declined from 5.38 percent on July 1, 2024 to 4.62 percent on September 30, 2024, a reduction of 76 basis points over the quarter. The 10-year Treasury note yield moved from 4.36 percent to 3.78 percent over the same period, a decline of 58 basis points. The asymmetric decline in short versus long yields drove the narrowing of the 2-year/10-year inversion documented in this report.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 2: TREASURY YIELD CURVE ANALYSIS
+
+2.1 Key Benchmark Yields — Quarter Comparison
+
+Maturity | Yield (July 1, 2024) | Yield (Sept 30, 2024) | Change (bps)
+3-Month | 5.38% | 4.62% | -76
+6-Month | 5.32% | 4.55% | -77
+1-Year | 5.10% | 4.29% | -81
+2-Year | 4.75% | 3.64% | -111
+5-Year | 4.36% | 3.57% | -79
+10-Year | 4.36% | 3.78% | -58
+20-Year | 4.62% | 4.18% | -44
+30-Year | 4.51% | 4.12% | -39
+
+The 2-year note experienced the most dramatic yield decline of any maturity, falling 111 basis points over the quarter. This movement reflects market repricing of the anticipated path of the federal funds rate following the September cut and forward guidance from Fed Chair Jerome Powell indicating additional reductions were likely in 2024 and 2025.
+
+2.2 Spread Dynamics
+
+The 2-year/10-year spread, the most widely monitored recession indicator, began Q3 FY2024 at negative 39 basis points and reached a quarterly trough of negative 52 basis points on July 17, 2024, before recovering to negative 21 basis points by September 30, 2024. This represents the least inverted reading since January 2023, when the spread stood at negative 18 basis points.
+
+The 3-month/10-year spread, which the Federal Reserve Bank of New York uses in its recession probability model, moved from negative 102 basis points on July 1, 2024 to negative 84 basis points on September 30, 2024. The New York Fed's model, updated through August 2024 data, placed the 12-month recession probability at 55.8 percent, down from 61.4 percent in the prior quarter.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 3: TREASURY-CORPORATE SPREAD ANALYSIS
+
+3.1 Investment-Grade Spreads
+
+Option-adjusted spreads (OAS) on the Bloomberg U.S. Corporate Investment Grade Index widened modestly during Q3 FY2024, moving from 93 basis points on July 1, 2024 to 107 basis points on September 30, 2024. This 14-basis-point widening occurred against a backdrop of equity market volatility in early August, when the VIX index briefly spiked to 65.7 on August 5, 2024, its highest reading since March 2020.
+
+The widening in corporate spreads was concentrated in BBB-rated issuers, where OAS expanded from 128 basis points to 149 basis points over the quarter. Single-A rated corporate spreads widened by only 9 basis points, from 74 to 83 basis points, reflecting continued investor preference for higher-quality credits.
+
+3.2 High-Yield Spreads
+
+The Bloomberg U.S. Corporate High Yield Index OAS widened from 308 basis points on July 1, 2024 to 351 basis points on September 30, 2024, a 43-basis-point increase. The peak spread during the quarter reached 413 basis points on August 5, 2024, coinciding with the equity market disruption triggered by the Bank of Japan's unexpected rate increase to 0.25 percent on July 31, 2024 and the subsequent unwinding of yen carry trades.
+
+Despite the widening, high-yield spreads remained well below the 10-year historical average of approximately 450 basis points, suggesting credit markets did not price in significant default risk during the period.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 4: TREASURY ISSUANCE AND FINANCING COSTS
+
+4.1 Quarterly Issuance Summary
+
+The Treasury issued $2.86 trillion in gross marketable debt during Q3 FY2024, compared to $2.71 trillion in Q3 FY2023, an increase of 5.5 percent year-over-year. Net new borrowing, after accounting for maturing securities, totaled $382 billion for the quarter.
+
+Weighted average interest rate on new issuance declined from 5.21 percent in Q2 FY2024 to 4.87 percent in Q3 FY2024, reflecting the rate environment shift. However, the weighted average interest rate on total outstanding debt continued to rise, reaching 3.32 percent as of September 30, 2024, up from 2.97 percent one year earlier. This increase reflects the ongoing rollover of legacy low-rate debt issued between 2020 and 2022 into current higher-rate instruments.
+
+Annual interest expense on the federal debt reached $1.158 trillion on an annualized basis as of September 30, 2024, representing 4.1 percent of projected GDP and exceeding defense discretionary spending of $886 billion for FY2024.
+
+4.2 TIPS Breakeven Inflation Rates
+
+Treasury Inflation-Protected Securities (TIPS) breakeven rates, which represent market-implied inflation expectations, declined modestly during the quarter:
+
+- 5-Year TIPS Breakeven: 2.14% (July 1) → 2.03% (September 30)
+- 10-Year TIPS Breakeven: 2.28% (July 1) → 2.17% (September 30)
+- 30-Year TIPS Breakeven: 2.31% (July 1) → 2.22% (September 30)
+
+The decline in breakeven rates indicates that markets interpreted the Fed's rate cut as consistent with achieving the 2 percent inflation target rather than as premature easing that might reignite price pressures.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 5: INTERNATIONAL COMPARISONS
+
+Yield spreads between U.S. Treasuries and comparable sovereign instruments shifted during Q3 FY2024. The U.S.-Germany 10-year spread narrowed from 196 basis points on July 1, 2024 to 171 basis points on September 30, 2024, as U.S. yields fell more rapidly than German Bund yields. The European Central Bank had cut its deposit facility rate by 25 basis points to 3.50 percent on September 12, 2024, its second cut of the year.
+
+The U.S.-Japan 10-year spread compressed dramatically from 374 basis points to 318 basis points, driven by the Bank of Japan's rate increase and the subsequent yen appreciation of approximately 12 percent against the dollar between July 10 and September 30, 2024.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 6: OUTLOOK AND RISK FACTORS
+
+The Office of Debt Management projects that the 2-year/10-year spread will return to positive territory by Q1 FY2025, assuming the Federal Reserve implements two additional 25-basis-point reductions at its November and December 2024 meetings, consistent with median projections from the September 2024 Summary of Economic Projections (the "dot plot"). Under this baseline scenario, the 2-year yield is projected to decline to approximately 3.25–3.40 percent by December 31, 2024.
+
+Key risk factors that could alter this trajectory include:
+
+- Reacceleration of inflation above 3.0 percent, which could pause the Fed's easing cycle
+- Deterioration in labor market conditions beyond the August 2024 unemployment rate of 4.2 percent
+- Geopolitical disruptions affecting energy prices or global capital flows
+- Fiscal pressures from the FY2025 budget process, including the expiration of provisions from the Tax Cuts and Jobs Act of 2017 scheduled for December 31, 2025
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+This report was prepared under the direction of Joshua Frost, Assistant Secretary for Financial Markets, U.S. Department of the Treasury. Data sources include the Federal Reserve H.15 Statistical Release, Bloomberg Terminal data, the Bureau of Labor Statistics, and the Bureau of Economic Analysis. All yield figures represent end-of-day closing values unless otherwise noted.
+
+For questions regarding this report, contact the Office of Federal Finance at (202) 622-2960.

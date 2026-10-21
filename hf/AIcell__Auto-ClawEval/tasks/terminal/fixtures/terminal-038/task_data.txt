@@ -1,0 +1,109 @@
+```python
+#!/usr/bin/env python3
+"""
+XSS Filter Testing with HTML Sanitization
+Terminal Task: Test and validate XSS prevention mechanisms
+"""
+
+import re
+import html
+import json
+import unittest
+from typing import Optional
+
+
+# ============================================================
+# HTML SANITIZER IMPLEMENTATION
+# ============================================================
+
+class HTMLSanitizer:
+    """
+    A basic HTML sanitizer that attempts to prevent XSS attacks.
+    This implementation has intentional vulnerabilities for testing purposes.
+    """
+
+    ALLOWED_TAGS = {'p', 'br', 'strong', 'em', 'ul', 'ol', 'li', 'a', 'img', 'div', 'span'}
+    ALLOWED_ATTRIBUTES = {
+        'a': {'href', 'title'},
+        'img': {'src', 'alt', 'width', 'height'},
+        'div': {'class', 'id'},
+        'span': {'class'},
+    }
+
+    def __init__(self, strict_mode: bool = False):
+        self.strict_mode = strict_mode
+        self.blocked_patterns = [
+            r'javascript:',
+            r'vbscript:',
+            r'on\w+\s*=',
+            r'<script',
+            r'</script>',
+        ]
+
+    def sanitize(self, input_html: str) -> str:
+        """
+        Sanitize HTML input to prevent XSS.
+        WARNING: This is a simplified implementation for educational purposes.
+        """
+        if not input_html:
+            return ""
+
+        # Step 1: Remove null bytes
+        sanitized = input_html.replace('\x00', '')
+
+        # Step 2: Block obvious script tags (case-insensitive)
+        sanitized = re.sub(r'<script[^>]*>.*?</script>', '', sanitized,
+                          flags=re.IGNORECASE | re.DOTALL)
+
+        # Step 3: Remove event handlers (incomplete - educational example)
+        sanitized = re.sub(r'\bon\w+\s*=\s*["\'][^"\']*["\']', '', sanitized,
+                          flags=re.IGNORECASE)
+
+        # Step 4: Block javascript: protocol (incomplete filter)
+        sanitized = re.sub(r'javascript\s*:', 'blocked:', sanitized,
+                          flags=re.IGNORECASE)
+
+        # Step 5: If strict mode, escape all HTML
+        if self.strict_mode:
+            sanitized = html.escape(sanitized)
+
+        return sanitized
+
+    def is_safe_url(self, url: str) -> bool:
+        """Check if a URL is safe (no javascript: or data: protocols)."""
+        if not url:
+            return False
+        url_lower = url.lower().strip()
+        dangerous_protocols = ['javascript:', 'vbscript:', 'data:', 'file:']
+        return not any(url_lower.startswith(proto) for proto in dangerous_protocols)
+
+    def sanitize_attribute(self, tag: str, attr: str, value: str) -> Optional[str]:
+        """Sanitize a specific HTML attribute value."""
+        if attr in ('href', 'src', 'action'):
+            if not self.is_safe_url(value):
+                return None
+        if attr.lower().startswith('on'):
+            return None
+        return html.escape(value, quote=True)
+
+
+# ============================================================
+# XSS TEST PAYLOADS
+# ============================================================
+
+XSS_TEST_PAYLOADS = {
+    "basic_script": {
+        "payload": "<script>alert('XSS')</script>",
+        "description": "Basic script tag injection",
+        "expected_blocked": True,
+    },
+    "img_onerror": {
+        "payload": "<img src=x onerror=alert('XSS')>",
+        "description": "Image tag with onerror event handler",
+        "expected_blocked": True,
+    },
+    "javascript_href": {
+        "payload": "<a href=\"javascript:alert('XSS')\">Click me</a>",
+        "description": "JavaScript protocol in href attribute",
+        "expected_blocked": True,
+    

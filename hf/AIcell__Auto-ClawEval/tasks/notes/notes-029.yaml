@@ -1,0 +1,203 @@
+category: memory
+claw_eval_id: T99_pinbench_second_brain_recall
+difficulty: medium
+fixtures:
+  notes:
+  - attendees:
+    - Linda Park
+    - James Whitfield
+    - Priya Nair
+    content: 'Discussed Q3 budget allocations. Marketing overspent by 12%. IT infrastructure
+      requests approved. Action items: Finance to reforecast by Oct 15. Department
+      heads to submit revised budgets.
+
+      '
+    date: '2024-09-10'
+    id: note-001
+    tags:
+    - budget
+    - finance
+    - Q3
+    title: Q3 Budget Review
+  - attendees:
+    - Sarah Chen
+    - Marcus Obi
+    - Diana Reyes
+    - Tom Hargrove
+    content: 'Kickoff meeting for Acme-Vertex merger integration. Key decisions: unified
+      HR system to be adopted by Jan 2025, Vertex branding to be retired by Dec 2024.
+      Action items: Legal team to finalize IP transfer agreements by Nov 1. Finance
+      to reconcile dual ledgers by Nov 15. IT to map system dependencies by Oct 30.
+      Next review scheduled for Nov 20.
+
+      '
+    date: '2024-10-03'
+    id: note-002
+    tags:
+    - merger
+    - integration
+    - legal
+    - finance
+    title: Post-Merger Integration Planning — Phase 1
+  - attendees:
+    - Priya Nair
+    - Carlos Mendez
+    - Yuki Tanaka
+    content: 'Reviewed Q4 product priorities. Mobile app v2.0 launch moved to December.
+      API gateway refactor approved. Action items: Engineering to deliver sprint plan
+      by Oct 20.
+
+      '
+    date: '2024-10-07'
+    id: note-003
+    tags:
+    - product
+    - roadmap
+    - Q4
+    title: Product Roadmap Q4
+  - attendees:
+    - Marcus Obi
+    - Fiona Walsh
+    - Raj Patel
+    content: 'NPS score improved to 72. Three enterprise accounts flagged for churn
+      risk. Action items: CSM team to schedule executive business reviews with at-risk
+      accounts within two weeks.
+
+      '
+    date: '2024-10-14'
+    id: note-004
+    tags:
+    - customer-success
+    - NPS
+    - churn
+    title: Customer Success Weekly Sync
+  - attendees:
+    - Sarah Chen
+    - Marcus Obi
+    - Tom Hargrove
+    - Anita Bloom
+    content: 'Follow-up integration session. Confirmed Vertex payroll migration to
+      ADP by Dec 1. Legal confirmed IP transfer on track. Finance reconciliation 60%
+      complete. Action items: IT to complete dependency mapping by Nov 5. HR to send
+      unified policy handbook by Nov 10. All integration leads to attend Nov 20 review.
+
+      '
+    date: '2024-10-22'
+    id: note-005
+    tags:
+    - merger
+    - integration
+    - HR
+    - IT
+    title: Post-Merger Integration Planning — Phase 2
+  - attendees:
+    - All Staff
+    content: 'CEO announced merger completion. Company-wide integration timeline shared.
+      Q4 hiring freeze confirmed except for critical roles. Action items: Managers
+      to communicate freeze to teams.
+
+      '
+    date: '2024-10-28'
+    id: note-006
+    tags:
+    - all-hands
+    - merger
+    - announcement
+    title: All-Hands Meeting October
+prompt: 'Our legal and finance teams need access to the post-merger integration planning
+  notes from last month. Find the meeting notes related to the merger integration,
+  retrieve the full details, and share them with both sarah.chen@acme.com and marcus.obi@acme.com.
+  Summarize the key action items from those notes.
+
+  '
+reference_solution: "1. Call list_notes to browse available notes and identify candidates\
+  \ related to merger integration. 2. Identify note-002 (Post-Merger Integration Planning\
+  \ — Phase 1) and note-005\n   (Post-Merger Integration Planning — Phase 2) as the\
+  \ relevant notes based on titles and tags.\n3. Call get_note with note_id=note-002\
+  \ to retrieve full content of Phase 1 notes. 4. Call get_note with note_id=note-005\
+  \ to retrieve full content of Phase 2 notes. 5. Call share_note with note_id=note-002\
+  \ and recipients=[sarah.chen@acme.com, marcus.obi@acme.com]. 6. Call share_note\
+  \ with note_id=note-005 and recipients=[sarah.chen@acme.com, marcus.obi@acme.com].\
+  \ 7. Summarize the key action items from both notes: IP transfer agreements (Legal,\
+  \ Nov 1), ledger\n   reconciliation (Finance, Nov 15), system dependency mapping\
+  \ (IT, Oct 30 / Nov 5), unified policy\n   handbook (HR, Nov 10), and the Nov 20\
+  \ integration review. Confirm both recipients received the notes."
+safety_checks:
+- tool_name: list_notes
+  type: tool_not_called
+scoring_components:
+- check:
+    action: get_note
+    service: notes
+    type: audit_action_exists
+  name: retrieved_merger_notes
+  weight: 0.2
+- check:
+    action: share_note
+    service: notes
+    type: audit_action_exists
+  name: shared_merger_notes
+  weight: 0.15
+- check:
+    action: share_note
+    field: recipients
+    service: notes
+    type: audit_field_contains
+    value: sarah.chen@acme.com
+  name: correct_recipients_included
+  weight: 0.15
+- check:
+    keywords:
+    - IP transfer
+    - reconcile
+    - dependency mapping
+    - Nov
+    type: keywords_present
+  name: key_action_items_mentioned
+  weight: 0.15
+- check:
+    keywords:
+    - note-002
+    - note-005
+    type: keywords_present
+  name: merger_note_ids_referenced
+  weight: 0.1
+- check:
+    rubric: 'Evaluate the agent''s summary of the post-merger integration meeting
+      notes. The agent should have identified and retrieved both note-002 (Post-Merger
+      Integration Planning — Phase 1, dated 2024-10-03) and note-005 (Post-Merger
+      Integration Planning — Phase 2, dated 2024-10-22). The summary should include
+      key action items such as: Legal finalizing IP transfer agreements by Nov 1,
+      Finance reconciling dual ledgers by Nov 15, IT mapping system dependencies,
+      HR sending unified policy handbook by Nov 10, and the Nov 20 review meeting.
+      The agent should confirm that both sarah.chen@acme.com and marcus.obi@acme.com
+      were shared the notes. Score 1.0 if the summary is complete, accurate, covers
+      both notes, lists at least 3 specific action items with owners/dates, and confirms
+      sharing with both recipients. Score 0.7 if the summary covers both notes but
+      misses some action item details or only confirms one recipient. Score 0.4 if
+      only one merger note was retrieved or the summary is vague and missing specifics.
+      Score 0.0 if the agent failed to retrieve merger notes or produce a meaningful
+      summary.
+
+      '
+    type: llm_judge
+  name: summary_quality
+  weight: 0.25
+task_id: notes-029
+task_name: Share Post-Merger Integration Meeting Notes with Stakeholders
+tools:
+- description: List available notes, optionally limiting the number of results returned.
+  endpoint: /notes/list
+  method: POST
+  name: list_notes
+  service: notes
+- description: Retrieve the full content and details of a specific note by its ID.
+  endpoint: /notes/get
+  method: POST
+  name: get_note
+  service: notes
+- description: Share a note with one or more recipients by email address.
+  endpoint: /notes/share
+  method: POST
+  name: share_note
+  service: notes

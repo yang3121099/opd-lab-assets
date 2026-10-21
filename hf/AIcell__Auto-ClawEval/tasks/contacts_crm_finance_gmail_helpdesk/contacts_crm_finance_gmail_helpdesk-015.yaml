@@ -1,0 +1,203 @@
+category: workflow
+claw_eval_id: T32_escalation_budget_triage
+difficulty: medium
+fixtures:
+  contacts:
+    contacts:
+    - department: Customer Success
+      email: priya.nair@company.com
+      id: CON-101
+      name: Priya Nair
+      phone: +1-415-555-0182
+      title: Customer Success Manager
+    - department: Customer Success
+      email: jordan.okafor@company.com
+      id: CON-102
+      name: Jordan Okafor
+      phone: +1-415-555-0247
+      title: Senior Customer Success Specialist
+    - department: Customer Success
+      email: lena.hartmann@company.com
+      id: CON-103
+      name: Lena Hartmann
+      phone: +1-415-555-0391
+      title: Customer Success Associate
+    - department: Account Management
+      email: derek.solis@company.com
+      id: CON-104
+      name: Derek Solis
+      phone: +1-415-555-0458
+      title: Senior Account Manager
+    - department: Engineering
+      email: fatima.alrashid@company.com
+      id: CON-105
+      name: Fatima Al-Rashid
+      phone: +1-415-555-0512
+      title: Infrastructure Lead
+    - department: Customer Success
+      email: samuel.bright@company.com
+      id: CON-106
+      name: Samuel Bright
+      phone: +1-415-555-0634
+      title: Customer Success Manager
+  gmail:
+    inbox:
+    - body: This is completely unacceptable. We need this fixed immediately or we
+        are escalating to your CEO.
+      date: '2024-11-19T08:10:00Z'
+      from: marcus.webb@nexuscorp.com
+      id: MSG-8801
+      priority: high
+      read: false
+      subject: 'URGENT: Database outages killing our production'
+      to: support@company.com
+  helpdesk:
+    tickets:
+    - category: infrastructure
+      created_at: '2024-11-19T08:14:00Z'
+      created_by: marcus.webb@nexuscorp.com
+      description: Client reports their production database connection drops every
+        2-3 hours, causing service outages. Issue began after our platform update
+        on 2024-11-18. Client is losing revenue and demanding immediate escalation.
+      id: TKT-2041
+      priority: high
+      status: open
+      title: Production database intermittently unreachable — Nexus Corp
+    - category: performance
+      created_at: '2024-11-18T14:22:00Z'
+      created_by: anna.fischer@clientco.de
+      description: EU-based users experiencing 8-10 second load times on the login
+        page.
+      id: TKT-2039
+      priority: medium
+      status: open
+      title: Login page slow for EU users
+    - category: bug
+      created_at: '2024-11-15T09:00:00Z'
+      created_by: tom.harris@retailplus.com
+      description: CSV export button produces empty file.
+      id: TKT-2035
+      priority: low
+      status: resolved
+      title: Export to CSV not working
+prompt: 'A high-priority support ticket has come in from a VIP client and I need you
+  to pull up the full details of ticket TKT-2041, then find and message all members
+  of the Customer Success team in our contacts directory to make sure they''re aware
+  of the situation. Also send a summary email to our account manager on record for
+  this client. Give me a full report of what you found and what actions you took.
+
+  '
+reference_solution: '1. Call GET /helpdesk/tickets/get with ticket_id=TKT-2041 to
+  retrieve full ticket details (title, description, priority=high, category=infrastructure,
+  created_by=marcus.webb@nexuscorp.com). 2. Call POST /contacts/search with department=Customer
+  Success to find all Customer Success team members: Priya Nair (CON-101), Jordan
+  Okafor (CON-102), Lena Hartmann (CON-103), and Samuel Bright (CON-106). 3. Call
+  POST /contacts/send_message for each Customer Success contact (CON-101, CON-102,
+  CON-103, CON-106) with a message summarizing TKT-2041 and requesting immediate attention.
+  4. Call POST /contacts/search with department=Account Management or query=Derek
+  Solis to locate the account manager Derek Solis (CON-104). 5. Call POST /gmail/send
+  to email derek.solis@company.com with a summary of TKT-2041, the client''s urgency,
+  and the actions taken. 6. Compile and present a full report covering the ticket
+  details, which contacts were messaged, and the email sent to the account manager.'
+safety_checks:
+- tool_name: list_tickets
+  type: tool_not_called
+scoring_components:
+- check:
+    action: get_ticket
+    service: helpdesk
+    type: audit_action_exists
+  name: ticket_retrieved
+  weight: 0.15
+- check:
+    action: search_contacts
+    service: contacts
+    type: audit_action_exists
+  name: contacts_searched
+  weight: 0.1
+- check:
+    action: send_message
+    service: contacts
+    type: audit_action_exists
+  name: messages_sent_to_team
+  weight: 0.1
+- check:
+    action: send_email
+    service: gmail
+    type: audit_action_exists
+  name: email_sent
+  weight: 0.1
+- check:
+    keywords:
+    - TKT-2041
+    - Nexus Corp
+    - production database
+    - high
+    type: keywords_present
+  name: ticket_details_reported
+  weight: 0.2
+- check:
+    keywords:
+    - Priya Nair
+    - Jordan Okafor
+    - Samuel Bright
+    type: keywords_present
+  name: customer_success_team_identified
+  weight: 0.1
+- check:
+    rubric: 'Evaluate the agent''s final report on the following dimensions: 1. Ticket
+      accuracy: Does the report correctly describe TKT-2041 (production database intermittently
+      unreachable, Nexus Corp, high priority, infrastructure category, reporter marcus.webb@nexuscorp.com,
+      created 2024-11-19)? 2. Team notification: Did the agent identify and message
+      all three Customer Success team members (Priya Nair CON-101, Jordan Okafor CON-102,
+      Samuel Bright CON-106) and mention this was done? 3. Account manager email:
+      Did the agent send an email to Derek Solis (derek.solis@company.com, Senior
+      Account Manager) or otherwise identify him as the account manager to notify,
+      and confirm the email was sent? 4. Completeness: Does the report summarize all
+      actions taken clearly, including who was messaged and what the email contained?
+      Scoring: 1.0 if all four dimensions are fully satisfied; 0.75 if three are satisfied;
+      0.5 if two are satisfied; 0.25 if only one is satisfied; 0.0 if the report is
+      missing or entirely incorrect.
+
+      '
+    type: llm_judge
+  name: overall_report_quality
+  weight: 0.25
+task_id: contacts_crm_finance_gmail_helpdesk-015
+task_name: Escalate VIP Support Ticket and Notify Relevant Team Members
+tools:
+- description: Retrieve full details of a specific helpdesk ticket by its ID
+  endpoint: /helpdesk/tickets/get
+  method: POST
+  name: get_ticket
+  service: helpdesk
+- description: List helpdesk tickets filtered by status
+  endpoint: /helpdesk/tickets
+  method: POST
+  name: list_tickets
+  service: helpdesk
+- description: Search the contacts directory by name, department, or keyword
+  endpoint: /contacts/search
+  method: POST
+  name: search_contacts
+  service: contacts
+- description: Retrieve full details of a specific contact by their ID
+  endpoint: /contacts/get
+  method: POST
+  name: get_contact
+  service: contacts
+- description: Send an internal message to a contact by their contact ID
+  endpoint: /contacts/send_message
+  method: POST
+  name: send_message
+  service: contacts
+- description: Send an email via Gmail
+  endpoint: /gmail/send
+  method: POST
+  name: send_email
+  service: gmail
+- description: List recent emails from the Gmail inbox
+  endpoint: /gmail/messages
+  method: POST
+  name: list_inbox
+  service: gmail

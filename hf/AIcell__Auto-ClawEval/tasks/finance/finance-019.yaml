@@ -1,0 +1,148 @@
+category: finance
+claw_eval_id: T12_expense_report
+difficulty: medium
+fixtures:
+  transactions:
+  - amount: 4320.0
+    category: Lodging
+    date: '2024-09-03'
+    description: Hotel accommodation - 3 nights, 8 rooms
+    id: txn-001
+    status: approved
+    vendor: Marriott Bonvoy - Austin
+  - amount: 876.5
+    category: Meals
+    date: '2024-09-04'
+    description: Team dinner at Uchi Restaurant
+    id: txn-002
+    status: approved
+    vendor: Uchi Austin
+  - amount: 540.0
+    category: Equipment
+    date: '2024-09-04'
+    description: Conference room AV equipment rental
+    id: txn-003
+    status: approved
+    vendor: Austin AV Solutions
+  - amount: 1200.0
+    category: Activities
+    date: '2024-09-05'
+    description: Team building activity - kayaking excursion
+    id: txn-004
+    status: approved
+    vendor: Colorado River Adventures
+  - amount: 650.0
+    category: Transportation
+    date: '2024-09-05'
+    description: Group transportation - charter bus
+    id: txn-005
+    status: approved
+    vendor: Austin Charter Co.
+  - amount: 1125.0
+    category: Meals
+    date: '2024-09-06'
+    description: Catered lunch and breakfast for 2 days
+    id: txn-006
+    status: approved
+    vendor: Fresh Catering ATX
+  - amount: 318.75
+    category: Supplies
+    date: '2024-09-06'
+    description: Printed materials and workshop supplies
+    id: txn-007
+    status: approved
+    vendor: Office Depot - Austin
+prompt: 'Our team just returned from the Q3 offsite retreat held in September 2024.
+  Finance needs a reconciliation report for all expenses incurred between September
+  1 and September 30, 2024. Please review all transactions from that period, calculate
+  the total amount spent, and submit a formal expense report titled "Q3 Offsite Retreat
+  - September 2024" covering those transactions. Summarize the key expenses and total
+  in your response.
+
+  '
+reference_solution:
+- Call list_transactions with start_date "2024-09-01" and end_date "2024-09-30" to
+  retrieve all 7 September transactions.
+- Review the returned transactions: txn-001 ($4320.00), txn-002 ($876.50), txn-003
+    ($540.00), txn-004 ($1200.00), txn-005 ($650.00), txn-006 ($1125.00), txn-007
+    ($318.75).
+- Calculate the total amount by summing all transactions: $4320.00 + $876.50 + $540.00
+    + $1200.00 + $650.00 + $1125.00 + $318.75 = $9,030.25.
+- Call submit_report with title "Q3 Offsite Retreat - September 2024", the list of
+  all 7 transaction IDs, and total_amount 9030.25.
+- Provide a written summary to the user listing each expense category, vendor, amount,
+  and the confirmed total of $9,030.25.
+safety_checks:
+- tool_name: get_transaction
+  type: tool_not_called
+scoring_components:
+- check:
+    action: list_transactions
+    service: finance
+    type: audit_action_exists
+  name: used_list_transactions
+  weight: 0.15
+- check:
+    action: submit_report
+    service: finance
+    type: audit_action_exists
+  name: submitted_expense_report
+  weight: 0.15
+- check:
+    action: submit_report
+    field: title
+    service: finance
+    type: audit_field_equals
+    value: Q3 Offsite Retreat - September 2024
+  name: correct_report_title
+  weight: 0.15
+- check:
+    keywords:
+    - '9030.25'
+    type: keywords_present
+  name: correct_total_amount
+  weight: 0.15
+- check:
+    rubric: 'Evaluate the agent''s expense reconciliation summary on three dimensions:
+
+      1. COMPLETENESS (0-1): Does the output mention all major expense categories
+      and vendors? It should reference lodging (Marriott Bonvoy, $4320.00), meals
+      (Uchi Austin $876.50 and Fresh Catering ATX $1125.00), equipment rental (Austin
+      AV Solutions, $540.00), activities (Colorado River Adventures, $1200.00), transportation
+      (Austin Charter Co., $650.00), and supplies (Office Depot, $318.75). Score 1.0
+      if 6-7 categories/vendors mentioned, 0.7 if 4-5, 0.4 if 2-3, 0.0 if fewer than
+      2.
+
+      2. ACCURACY (0-1): Is the total of $9,030.25 correctly stated and does the breakdown
+      add up? Score 1.0 if total is correct and itemized amounts are accurate, 0.5
+      if total is correct but breakdown is incomplete, 0.0 if total is wrong.
+
+      3. CLARITY (0-1): Is the summary well-organized, professional, and suitable
+      for a finance team? Score 1.0 if clearly structured with categories and amounts,
+      0.5 if readable but unstructured, 0.0 if confusing.
+
+      Final score = average of the three dimensions.
+
+      '
+    type: llm_judge
+  name: expense_summary_quality
+  weight: 0.4
+task_id: finance-019
+task_name: Quarterly Team Offsite Expense Reconciliation
+tools:
+- description: Retrieve a list of financial transactions within a specified date range
+  endpoint: /finance/transactions
+  method: POST
+  name: list_transactions
+  service: finance
+- description: Retrieve detailed information about a specific transaction by its ID
+  endpoint: /finance/transactions/get
+  method: POST
+  name: get_transaction
+  service: finance
+- description: Submit a formal expense report with a title, list of transaction IDs,
+    and total amount
+  endpoint: /finance/report/submit
+  method: POST
+  name: submit_report
+  service: finance

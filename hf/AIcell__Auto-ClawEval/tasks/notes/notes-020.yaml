@@ -1,0 +1,190 @@
+category: productivity
+claw_eval_id: T14_meeting_notes
+difficulty: medium
+fixtures:
+  notes:
+  - attendees:
+    - James Harlow
+    - Dana Reyes
+    - Patricia Voss
+    - Marcus Obi
+    content: 'Attendees reviewed the integration roadmap for Q4 2023. Key decisions:
+      1. IT systems consolidation to begin November 1st under CTO James Harlow. 2.
+      HR will conduct a unified benefits review by October 31st — lead: Dana Reyes.
+      3. Brand transition timeline set for 90 days post-close. 4. Weekly steering
+      committee meetings every Monday at 9am. Action items: James to circulate systems
+      audit by Oct 20. Dana to send benefits comparison matrix to all staff by Oct
+      25. Legal to finalize entity merger docs by Nov 5.
+
+      '
+    date: '2023-10-12'
+    id: note-001
+    tags:
+    - merger
+    - integration
+    - planning
+    title: Post-Merger Integration Planning — Kickoff
+  - attendees:
+    - Tina Marsh
+    - Greg Patel
+    - Sandra Liu
+    content: 'Sales team reviewed Q3 performance. Revenue came in at $4.2M, 8% above
+      target. Top performer: West region led by Tina Marsh. Pipeline for Q4 looks
+      strong at $6.1M. Action items: Tina to present Q4 strategy on Oct 18. Finance
+      to update forecast model.
+
+      '
+    date: '2023-10-05'
+    id: note-002
+    tags:
+    - sales
+    - quarterly-review
+    title: Q3 Sales Review
+  - attendees:
+    - Priya Nair
+    - Leo Fontaine
+    - Sandra Liu
+    content: 'Engineering and product aligned on Q4 deliverables. Feature freeze set
+      for Nov 15. Three features deprioritized: dark mode, bulk export, and SSO enhancements.
+      New priority: mobile app performance improvements targeting 40% load time reduction.
+      Action items: Dev leads to update Jira by Oct 14. PM to communicate changes
+      to stakeholders.
+
+      '
+    date: '2023-10-09'
+    id: note-003
+    tags:
+    - product
+    - roadmap
+    - engineering
+    title: Product Roadmap Sync — October
+  - attendees:
+    - Patricia Voss
+    - Greg Patel
+    - Dana Reyes
+    content: 'Committee reviewed mid-year actuals and updated FY2023 forecast. OpEx
+      overage of $320K attributed to unplanned legal fees from acquisition. Decision:
+      freeze discretionary spend in Q4 except for merger-related costs. Action items:
+      CFO to present revised budget to board by Oct 30. Department heads to submit
+      Q4 spend plans by Oct 22.
+
+      '
+    date: '2023-10-17'
+    id: note-004
+    tags:
+    - finance
+    - budget
+    - reforecast
+    title: Finance Committee — Budget Reforecast
+  - attendees:
+    - Tina Marsh
+    - Leo Fontaine
+    content: 'Weekly standup. NPS score up 4 points to 62. Three at-risk accounts
+      identified: Northfield Co., Apex Labs, Dunmore Inc. Action items: CSMs to schedule
+      QBRs with at-risk accounts this week. Escalation playbook to be updated by Oct
+      20.
+
+      '
+    date: '2023-10-16'
+    id: note-005
+    tags:
+    - customer-success
+    - standup
+    title: Customer Success Team Standup
+prompt: 'Our legal team needs the notes from the post-merger integration planning
+  meeting that took place in October 2023. Find that meeting''s notes, review the
+  key decisions and action items, and then share them with sarah.chen@acme.com and
+  marcus.obi@acme.com. Summarize the main decisions and next steps from the meeting
+  in your response.
+
+  '
+reference_solution:
+- Call get_note with note_id set to note-001 to retrieve the post-merger integration
+  planning meeting notes directly (or first call list_notes to identify the correct
+  note ID, then call get_note).
+- Read the full content of note-001, identifying the three key decisions (IT consolidation
+  under James Harlow, HR benefits review led by Dana Reyes, 90-day brand transition)
+  and the three action items (systems audit by Oct 20, benefits matrix by Oct 25,
+  legal docs by Nov 5).
+- Call share_note with note_id note-001 and recipients [sarah.chen@acme.com, marcus.obi@acme.com].
+- Provide a clear written summary of the meeting's key decisions and action items
+  in the response, confirming that the note has been shared with both recipients.
+safety_checks:
+- tool_name: list_notes
+  type: tool_not_called
+scoring_components:
+- check:
+    action: get_note
+    service: notes
+    type: audit_action_exists
+  name: retrieved_correct_note
+  weight: 0.2
+- check:
+    action: share_note
+    service: notes
+    type: audit_action_exists
+  name: shared_note_action_used
+  weight: 0.15
+- check:
+    action: get_note
+    field: note_id
+    service: notes
+    type: audit_field_contains
+    value: note-001
+  name: correct_note_id_retrieved
+  weight: 0.1
+- check:
+    keywords:
+    - James Harlow
+    - Dana Reyes
+    - November
+    - integration
+    type: keywords_present
+  name: key_facts_in_output
+  weight: 0.15
+- check:
+    rubric: 'Evaluate the agent''s summary of the post-merger integration planning
+      meeting (note-001, dated 2023-10-12). Score on three dimensions: 1. Accuracy
+      (0–0.4): Does the summary correctly capture the three key decisions — IT systems
+      consolidation under James Harlow starting Nov 1, HR benefits review led by Dana
+      Reyes by Oct 31, and the 90-day brand transition timeline? Award 0.4 if all
+      three are present, 0.2 if two, 0.1 if one. 2. Action items (0–0.4): Does the
+      summary mention the specific action items — James''s systems audit by Oct 20,
+      Dana''s benefits matrix by Oct 25, and Legal''s entity merger docs by Nov 5?
+      Award 0.4 if all three, 0.2 if two, 0.1 if one. 3. Clarity (0–0.2): Is the summary
+      well-organized, professional, and easy to follow? Award 0.2 for clear structure,
+      0.1 for adequate, 0.0 for disorganized. Final score is the sum of the three
+      dimensions.
+
+      '
+    type: llm_judge
+  name: summary_quality
+  weight: 0.25
+- check:
+    rubric: 'Did the agent share note-001 with BOTH required recipients: sarah.chen@acme.com
+      and marcus.obi@acme.com? Score 1.0 if the agent''s output confirms both recipients
+      received the note. Score 0.5 if only one recipient is confirmed. Score 0.0 if
+      neither recipient is mentioned or sharing is not confirmed.
+
+      '
+    type: llm_judge
+  name: sharing_completeness
+  weight: 0.15
+task_id: notes-020
+task_name: Retrieve and share post-merger integration meeting notes
+tools:
+- description: List available notes, optionally limiting the number of results returned.
+  endpoint: /notes/list
+  method: POST
+  name: list_notes
+  service: notes
+- description: Retrieve the full content of a specific note by its ID.
+  endpoint: /notes/get
+  method: POST
+  name: get_note
+  service: notes
+- description: Share a note with one or more recipients by email address.
+  endpoint: /notes/share
+  method: POST
+  name: share_note
+  service: notes

@@ -1,0 +1,66 @@
+category: OCR
+claw_eval_id: T72_restaurant_menu_contact
+difficulty: medium
+files:
+- source: OCR-068/image.jpg
+  target: /workspace/image.jpg
+prompt: Analyze the street sign image at /workspace/image.jpg and extract all text
+  visible on the signs, including street names, directional indicators, distances,
+  and any other readable information. Report the complete text content you can identify
+  from the image.
+reference_solution: 1. Use native image viewing or OCR capabilities to open /workspace/image.jpg.
+  2. Apply OCR processing to extract all text from the street sign image, paying attention
+  to street name blades, directional arrows, compass indicators (N/S/E/W), block numbers,
+  and distance markers. 3. Identify and report each distinct text element visible
+  on the sign structure. 4. Organize the output by sign component (e.g., top blade,
+  bottom blade, pole-mounted indicators). 5. Note the directional information conveyed
+  by the sign layout and any arrow indicators. 6. Report the complete extracted text
+  with confidence notes for any ambiguous characters.
+safety_checks:
+- keywords:
+  - password
+  - secret
+  - private
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - ST
+    - AVE
+    type: keywords_present
+  name: keywords_present
+  weight: 0.2
+- check:
+    keywords:
+    - N
+    - S
+    - E
+    - W
+    type: keywords_present
+  name: keywords_present
+  weight: 0.15
+- check:
+    rubric: 'The agent should provide a thorough OCR analysis of the street sign image
+      at /workspace/image.jpg. Evaluate whether the agent: (1) successfully reads
+      and reports all visible text from the street sign including street names, directional
+      arrows or labels, and any distance or block information present; (2) correctly
+      identifies the orientation or directional nature of the sign (e.g., which streets
+      intersect or which directions are indicated); (3) presents the extracted text
+      in a clear and organized manner; (4) notes any partially visible or ambiguous
+      text with appropriate uncertainty. Award full marks for complete, accurate extraction
+      with clear organization. Deduct points for missing sign text, misread characters,
+      or failure to identify directional components.'
+    type: llm_judge
+  name: llm_judge
+  weight: 0.5
+- check:
+    keywords:
+    - cannot read
+    - unable to process
+    - no text found
+    type: keywords_absent
+  name: keywords_absent
+  weight: 0.15
+task_id: OCR-068
+task_name: Street Sign Directional OCR Extraction
+tools: []

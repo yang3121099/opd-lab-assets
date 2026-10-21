@@ -1,0 +1,144 @@
+SPARSE MIXTURE-OF-EXPERTS TRANSFORMERS WITH DYNAMIC ROUTING FOR LONG-CONTEXT REASONING
+
+Submitted to NeurIPS 2024 | Received March 14, 2024 | Accepted August 22, 2024
+
+Authors: Yuki Tanaka¹, Priya Mehrotra², Aleksandr Volkov¹, Chen Wei³, Fatima Al-Rashid²
+¹ Institute for Advanced Computation, Tokyo University of Technology
+² DeepMind Research, London
+³ Tsinghua University, Department of Computer Science
+
+ABSTRACT
+
+We present DRMOE (Dynamic Routing Mixture-of-Experts), a transformer-based architecture that achieves state-of-the-art performance on long-context reasoning benchmarks while reducing active parameter utilization by 61.3% compared to dense baseline models of equivalent total capacity. DRMOE employs a learned token-level routing mechanism that dynamically assigns input tokens to specialized expert subnetworks, enabling efficient computation across contexts up to 128,000 tokens. On the SCROLLS benchmark suite, DRMOE-47B achieves an average score of 74.8, surpassing GPT-4-Turbo (72.1) and Mixtral-8x22B (68.4) while using 38% fewer FLOPs per forward pass. We release model weights and training code at github.com/tanaka-lab/drmoe.
+
+1. INTRODUCTION
+
+The scaling of large language models has produced remarkable capabilities, yet dense transformer architectures impose computational costs that grow quadratically with sequence length and linearly with parameter count. Mixture-of-Experts (MoE) architectures address parameter efficiency by activating only a subset of model parameters for any given input, but prior implementations suffer from load imbalance, expert collapse, and degraded performance on tasks requiring sustained multi-step reasoning across long documents.
+
+This paper introduces three primary contributions:
+
+- A dynamic routing algorithm (DynRoute-v2) that conditions expert selection on both token identity and positional context within the sequence
+- A novel auxiliary loss term, the Coherence Regularization Loss (CRL), that penalizes routing inconsistency across semantically related token spans
+- Empirical demonstration that DRMOE-47B achieves 74.8 average SCROLLS score with a peak memory footprint of 94 GB across 8 H100 GPUs during inference
+
+2. RELATED WORK
+
+Standard MoE implementations, including the Switch Transformer (Fedus et al., 2022) and GLaM (Du et al., 2022), route tokens independently using a top-k gating function applied to a learned router matrix. Mixtral-8x7B (Mistral AI, January 2024) demonstrated that MoE models can match dense model quality at reduced inference cost, activating 2 of 8 experts per token. However, Mixtral's routing is stateless with respect to sequence position, which we show in Section 5.2 leads to a 14.7% performance degradation on tasks requiring cross-paragraph coreference resolution.
+
+ST-MoE (Zoph et al., 2022) introduced router z-loss to improve training stability, reducing expert collapse events from 23 per 100K training steps to fewer than 3. We adopt z-loss in our training objective and extend it with CRL.
+
+3. MODEL ARCHITECTURE
+
+3.1 Overall Structure
+
+DRMOE-47B contains 64 transformer layers. Layers 1 through 16 and 49 through 64 are dense feed-forward layers, retaining full parameter activation for positional encoding and output projection tasks. Layers 17 through 48 (32 layers) employ the MoE feed-forward replacement with 16 experts per layer, of which 3 are activated per token per layer.
+
+Total parameter count: 47.3 billion
+Active parameters per forward pass: 12.8 billion (27.1% of total)
+Expert hidden dimension: 8,192
+Attention heads: 64 (grouped-query attention with 8 key-value heads)
+Context window: 128,000 tokens (trained with RoPE scaling factor 8.0)
+
+3.2 DynRoute-v2 Routing Mechanism
+
+Standard top-k routing computes expert scores as:
+
+g(x) = Softmax(W_r · x)
+
+where x is the token embedding and W_r is the router weight matrix. DynRoute-v2 augments this with a positional context vector p derived from a lightweight 2-layer MLP applied to the token's relative position encoding:
+
+g(x, p) = Softmax(W_r · x + α · W_p · p)
+
+where α = 0.23 is a learned scalar initialized to 0.1 and annealed during training. This modification increases router parameter count by only 0.4% while improving routing consistency across long sequences.
+
+3.3 Coherence Regularization Loss
+
+CRL penalizes cases where semantically similar tokens (measured by cosine similarity > 0.85 in embedding space) are routed to entirely disjoint expert sets. Formally:
+
+L_CRL = λ · Σ_{(i,j): sim(x_i, x_j) > 0.85} max(0, 1 - |E_i ∩ E_j| / k)
+
+where E_i is the set of experts selected for token i, k = 3 is the top-k value, and λ = 0.01. Adding CRL reduced routing entropy variance from 1.84 to 0.97 nats across validation sequences.
+
+4. TRAINING DETAILS
+
+DRMOE-47B was trained on a corpus of 2.4 trillion tokens assembled from the following sources:
+
+Source                          Tokens (B)    Percentage
+Common Crawl (filtered)         1,440         60.0%
+GitHub code repositories        360           15.0%
+ArXiv papers (pre-2024)         120           5.0%
+Books3 corpus                   96            4.0%
+Wikipedia (multilingual)        84            3.5%
+PubMed abstracts                72            3.0%
+StackExchange                   60            2.5%
+Curated instruction data        168           7.0%
+
+Training was conducted on 512 NVIDIA H100 SXM5 80GB GPUs across 64 nodes connected via 400 Gb/s InfiniBand HDR fabric. Total training duration was 47 days, from October 3 to November 19, 2023. Peak training throughput reached 312 teraFLOP/s per GPU, achieving 41.3% model FLOPs utilization (MFU).
+
+Optimizer: AdamW with β₁ = 0.9, β₂ = 0.95, ε = 1e-8
+Learning rate: Peak 3e-4, cosine decay to 3e-5
+Batch size: 4,096 sequences of 4,096 tokens (global batch = 16.7M tokens)
+Gradient clipping: 1.0
+Weight decay: 0.1
+Training loss at convergence: 1.73 nats
+
+5. EXPERIMENTAL RESULTS
+
+5.1 SCROLLS Benchmark
+
+SCROLLS evaluates long-document understanding across seven tasks: SummScreenFD, QMSum, QASPER, NarrativeQA, QuALITY, ContractNLI, and GovReport.
+
+Model               Params(B)  Active(B)  SCROLLS Avg  FLOPs/token
+DRMOE-47B           47.3       12.8       74.8          2.1e12
+GPT-4-Turbo         ~1,800     ~1,800     72.1          N/A
+Mixtral-8x22B       141        39         68.4          3.4e12
+Llama-3-70B         70         70         65.7          5.8e12
+Claude-3-Sonnet     ~70        ~70        71.3          N/A
+Mistral-7B          7.3        7.3        54.2          0.6e12
+
+On the QuALITY multiple-choice subset, DRMOE-47B achieves 81.4% accuracy, compared to 79.2% for GPT-4-Turbo and 71.8% for Mixtral-8x22B.
+
+5.2 Ablation Studies
+
+We conducted ablations on a 7B-parameter version of DRMOE trained for 200B tokens to isolate the contribution of each architectural component.
+
+Component Removed          SCROLLS Avg    Δ vs Full Model
+Full DRMOE-7B              61.3           —
+Remove CRL                 59.1           -2.2
+Remove positional context  58.7           -2.6
+Use top-2 instead of top-3 57.4           -3.9
+Dense layers only (7B)     56.8           -4.5
+Standard top-k routing     54.6           -6.7
+
+The positional context augmentation in DynRoute-v2 contributes a 2.6-point improvement, confirming our hypothesis that stateless routing degrades long-context coherence.
+
+5.3 Expert Utilization
+
+Analysis of expert activation patterns across 10,000 validation sequences reveals that 14 of 16 experts per layer receive at least 3% of tokens on average, indicating healthy load distribution. The two least-utilized experts per layer receive 1.8% and 2.1% of tokens respectively, compared to 0.3% in baseline top-k routing without z-loss. Maximum expert load imbalance (ratio of most-loaded to least-loaded expert) is 4.2x, versus 11.7x for Mixtral-8x7B as measured on the same validation set.
+
+6. INFERENCE EFFICIENCY
+
+On a single 8×H100 node, DRMOE-47B generates tokens at 47.3 tokens per second for batch size 1 at 32K context length, compared to 31.8 tokens/second for a dense 13B model with equivalent active parameter count. At 128K context length, throughput decreases to 18.6 tokens per second due to attention memory bandwidth constraints.
+
+Quantized to INT8 using GPTQ (4-bit weights, 8-bit activations), DRMOE-47B fits within 52 GB of GPU memory with less than 1.1% perplexity degradation on Pile validation data (perplexity increases from 6.84 to 6.92).
+
+7. LIMITATIONS AND FUTURE WORK
+
+DRMOE-47B underperforms on tasks requiring precise numerical reasoning, scoring 58.3% on MATH-500 compared to GPT-4-Turbo's 72.6%. We attribute this to insufficient representation of mathematical content in training data (5% combined STEM sources). Future work will explore expert specialization explicitly seeded for mathematical reasoning and code execution.
+
+The CRL loss introduces a 7.3% training throughput overhead due to pairwise similarity computation. We are investigating approximate nearest-neighbor methods to reduce this cost.
+
+8. CONCLUSION
+
+DRMOE-47B demonstrates that dynamic, position-aware routing in mixture-of-experts architectures substantially improves long-context reasoning performance. Achieving 74.8 on SCROLLS with only 12.8 billion active parameters per forward pass, DRMOE-47B establishes a new efficiency frontier for long-context language modeling. Model weights, training code, and evaluation scripts are publicly available.
+
+ACKNOWLEDGMENTS
+
+The authors thank the Tokyo University of Technology HPC Center for computing allocation TUT-2023-0847 and DeepMind infrastructure team for cluster support. This work was partially funded by JSPS Grant-in-Aid 23H01432 and the UK Research and Innovation grant EP/Y012345/1.
+
+REFERENCES
+
+Du, N. et al. (2022). GLaM: Efficient Scaling of Language Models with Mixture-of-Experts. ICML 2022.
+Fedus, W. et al. (2022). Switch Transformers: Scaling to Trillion Parameter Models. JMLR 23(1).
+Mistral AI (2024). Mixtral of Experts. arXiv:2401.04088.
+Zoph, B. et al. (2022). ST-MoE: Designing Stable and Transferable Sparse Expert Models. arXiv:2202.08906.

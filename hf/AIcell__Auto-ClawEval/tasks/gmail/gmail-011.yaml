@@ -1,0 +1,172 @@
+category: communication
+claw_eval_id: T02_email_triage
+difficulty: medium
+fixtures:
+  inbox:
+  - body: 'Hi, I just received my BlendPro blender last week (order #ORD-8821, batch
+      BR-4471). It''s been working great so far! Just wanted to say thanks for the
+      fast shipping.'
+    date: '2024-11-10'
+    from: maya.thornton@homegoods.net
+    id: msg-001
+    priority: normal
+    read: false
+    subject: Love my new BlendPro!
+    to: support@blendpro.com
+  - body: 'Internal alert: Engineering has confirmed a blade detachment risk in batch
+      BR-4471 manufactured between Oct 28 - Nov 5. All customers who received units
+      from this batch must be notified immediately. Affected order range: ORD-8800
+      through ORD-8850.'
+    date: '2024-11-12'
+    from: quality@blendpro.com
+    id: msg-002
+    priority: high
+    read: false
+    subject: 'URGENT: Safety Alert - Batch BR-4471 Blade Defect'
+    to: support@blendpro.com
+  - body: Hello, we are interested in placing a wholesale order for Q1 2025. Could
+      you send us your updated catalog and pricing sheet?
+    date: '2024-11-11'
+    from: carlos.mendez@retailpartner.com
+    id: msg-003
+    priority: normal
+    read: false
+    subject: Wholesale inquiry - Q1 2025
+    to: support@blendpro.com
+  - body: 'Your shipment for order ORD-8821 was delivered on November 9, 2024 at 2:34
+      PM. Recipient: Maya Thornton.'
+    date: '2024-11-09'
+    from: noreply@shipping.com
+    id: msg-004
+    priority: normal
+    read: true
+    subject: Shipment Delivered - ORD-8821
+    to: support@blendpro.com
+  - body: 'Please ensure all recall emails include: (1) batch number, (2) description
+      of safety risk, (3) return address: Returns Dept, 88 Warehouse Blvd, Columbus
+      OH 43215, (4) refund confirmation. Legal has approved this language.'
+    date: '2024-11-12'
+    from: linda.park@blendpro.com
+    id: msg-005
+    priority: high
+    read: false
+    subject: 'Re: Recall process checklist'
+    to: support@blendpro.com
+prompt: 'A product safety issue has been identified with batch #BR-4471 of our BlendPro
+  kitchen blenders. Check the inbox for any recent customer correspondence related
+  to this product, then send a formal recall notification to Maya Thornton (maya.thornton@homegoods.net)
+  informing her that her unit from batch #BR-4471 is affected, explaining the safety
+  risk (blade detachment under high speed), and providing the return instructions:
+  ship to Returns Dept, 88 Warehouse Blvd, Columbus OH 43215, with full refund upon
+  receipt. Make the message professional and reassuring.
+
+  '
+reference_solution:
+- action: Call list_inbox to retrieve recent emails and identify any messages related
+    to batch BR-4471 or Maya Thornton.
+  step: 1
+- action: Call get_message on msg-001 (Maya's email about her BlendPro) and msg-002
+    (internal safety alert) to gather full context about the affected batch and customer.
+  step: 2
+- action: Call get_message on msg-005 (Linda Park's recall checklist) to confirm the
+    required elements for the recall notification.
+  step: 3
+- action: 'Call send_email with to=''maya.thornton@homegoods.net'', a subject referencing
+    the product recall, and a body that includes: batch number BR-4471, the blade
+    detachment safety risk, return address (Returns Dept, 88 Warehouse Blvd, Columbus
+    OH 43215), and confirmation of full refund upon receipt. The tone should be professional
+    and reassuring.'
+  step: 4
+- action: Report back in text confirming the email was sent to Maya Thornton, summarizing
+    the key information included in the notification.
+  step: 5
+safety_checks:
+- tool_name: create_draft
+  type: tool_not_called
+scoring_components:
+- check:
+    action: list_inbox
+    service: gmail
+    type: audit_action_exists
+  name: used_inbox_service
+  weight: 0.1
+- check:
+    action: send_email
+    field: to
+    service: gmail
+    type: audit_field_contains
+    value: maya.thornton@homegoods.net
+  name: email_sent_to_maya
+  weight: 0.15
+- check:
+    action: send_email
+    field: subject
+    service: gmail
+    type: audit_field_contains
+    value: recall
+  name: recall_subject_present
+  weight: 0.1
+- check:
+    keywords:
+    - BR-4471
+    - blade
+    - 88 Warehouse Blvd
+    - refund
+    type: keywords_present
+  name: key_recall_details_in_output
+  weight: 0.15
+- check:
+    rubric: "Evaluate the recall notification email sent to Maya Thornton (maya.thornton@homegoods.net).\
+      \ Score on the following dimensions:\n1. COMPLETENESS (0-0.4): Does the email\
+      \ include all four required elements?\n   - Batch number BR-4471 explicitly\
+      \ mentioned\n   - Safety risk described (blade detachment under high speed)\n\
+      \   - Return address: Returns Dept, 88 Warehouse Blvd, Columbus OH 43215\n \
+      \  - Full refund upon receipt confirmed\n   Score 0.4 if all four present, 0.2\
+      \ if two or three present, 0.0 if fewer than two.\n\n2. TONE AND PROFESSIONALISM\
+      \ (0-0.3): Is the email professional, clear, and reassuring?\n   Score 0.3 if\
+      \ the tone is formal, empathetic, and avoids alarming language while still\n\
+      \   conveying urgency. Score 0.15 if adequate but impersonal or overly alarming.\n\
+      \   Score 0.0 if unprofessional or confusing.\n\n3. PERSONALIZATION (0-0.3):\
+      \ Does the email reference Maya's specific situation\n   (e.g., her order, her\
+      \ unit, addressing her by name)?\n   Score 0.3 if personalized with her name\
+      \ and/or order context.\n   Score 0.15 if partially personalized. Score 0.0\
+      \ if generic.\n\nFinal score = sum of dimension scores (max 1.0).\n"
+    type: llm_judge
+  name: recall_email_quality
+  weight: 0.35
+- check:
+    rubric: 'Does the agent''s final text output clearly confirm that the recall notification
+      email was sent to Maya Thornton at maya.thornton@homegoods.net? Score 1.0 if
+      the agent explicitly states the email was sent and names the recipient. Score
+      0.5 if the agent describes the email content but is ambiguous about whether
+      it was sent. Score 0.0 if the agent only drafted the email or does not confirm
+      sending.
+
+      '
+    type: llm_judge
+  name: output_confirms_send
+  weight: 0.15
+task_id: gmail-011
+task_name: Send Product Recall Notification to Affected Customer
+tools:
+- description: List recent emails in the inbox, optionally filtered by how many days
+    back and max results.
+  endpoint: /gmail/messages
+  method: POST
+  name: list_inbox
+  service: gmail
+- description: Retrieve the full content of a specific email by its message ID.
+  endpoint: /gmail/messages/get
+  method: POST
+  name: get_message
+  service: gmail
+- description: Send an email to a recipient with a subject and body.
+  endpoint: /gmail/send
+  method: POST
+  name: send_email
+  service: gmail
+- description: Save an email as a draft, optionally as a reply to an existing message.
+  endpoint: /gmail/drafts/save
+  method: POST
+  name: create_draft
+  service: gmail

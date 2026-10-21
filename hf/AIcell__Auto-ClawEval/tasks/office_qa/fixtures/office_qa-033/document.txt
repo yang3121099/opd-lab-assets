@@ -1,0 +1,136 @@
+OFFICE OF DEBT MANAGEMENT
+U.S. DEPARTMENT OF THE TREASURY
+FISCAL YEAR 2024 QUARTERLY YIELD SPREAD ANALYSIS
+Third Quarter Report | July 1 – September 30, 2024
+
+Prepared by the Office of Federal Finance
+Released: October 22, 2024
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EXECUTIVE SUMMARY
+
+This report presents the Office of Debt Management's quarterly analysis of yield spreads across U.S. Treasury securities, agency debt, and selected municipal benchmarks for the period ending September 30, 2024. The analysis is intended to inform Congressional budget committees, the Federal Financing Bank, and senior Treasury officials regarding current borrowing cost dynamics, market risk signals, and the composition of outstanding federal debt obligations.
+
+During Q3 FY2024, the 2-year/10-year Treasury yield spread narrowed from negative 47 basis points at the start of the quarter to negative 12 basis points by September 30, 2024, representing a significant flattening of the inversion that has persisted since July 2022. The 3-month/10-year spread, a metric closely monitored by the Federal Reserve Bank of New York for recession probability modeling, stood at negative 91 basis points as of September 30, 2024, compared to negative 138 basis points recorded on December 31, 2023.
+
+Total marketable debt outstanding as of September 30, 2024 reached $27.4 trillion, with Treasury bills comprising $6.1 trillion (22.3 percent), Treasury notes comprising $14.2 trillion (51.8 percent), Treasury bonds comprising $4.6 trillion (16.8 percent), and Treasury Inflation-Protected Securities (TIPS) comprising $2.0 trillion (7.3 percent). Floating Rate Notes accounted for the remaining $0.5 trillion (1.8 percent).
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 1: YIELD CURVE OVERVIEW AND BENCHMARK RATES
+
+As of the close of business on September 30, 2024, benchmark Treasury yields were as follows:
+
+Maturity          Yield (%)     Change from June 30, 2024 (bps)
+3-Month           5.02          -18
+6-Month           4.87          -24
+1-Year            4.61          -31
+2-Year            3.64          -52
+3-Year            3.58          -49
+5-Year            3.56          -44
+7-Year            3.67          -39
+10-Year           3.76          -35
+20-Year           4.12          -28
+30-Year           4.09          -26
+
+The data above reflects a broad-based decline in yields across the curve during Q3 FY2024, driven primarily by the Federal Open Market Committee's decision on September 18, 2024 to reduce the federal funds target rate by 50 basis points to a range of 4.75 to 5.00 percent — the first rate reduction since March 2020. This action, announced by Federal Reserve Chair Jerome Powell, materially influenced short-end yields while longer-dated securities experienced more modest adjustments, consistent with market expectations that had been priced in over the preceding six weeks.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 2: SPREAD ANALYSIS — KEY METRICS
+
+2.1 Intra-Treasury Spreads
+
+The following table documents key spread relationships monitored by the Office of Debt Management:
+
+Spread Pair              Sep 30, 2024    Jun 30, 2024    Sep 30, 2023    Change (Q3, bps)
+2Y/10Y                   +12             -47             -49             +59
+3M/10Y                   -91             -152            -101            +61
+5Y/30Y                   +53             +38             +42             +15
+2Y/30Y                   +45             -21             -38             +66
+10Y/30Y                  +33             +28             +31             +5
+
+The most notable development during Q3 FY2024 was the rapid steepening of the 2-year/10-year spread, which moved 59 basis points in a single quarter. This represents the largest single-quarter improvement in this spread since Q2 2020, when pandemic-era monetary easing produced a 74-basis-point steepening. The 2Y/10Y spread briefly turned positive on September 5, 2024, for the first time since July 5, 2022, before settling at positive 12 basis points at quarter end.
+
+2.2 Agency Spread Analysis
+
+Federal agency and government-sponsored enterprise (GSE) debt spreads relative to comparable Treasury maturities are presented below as of September 30, 2024:
+
+Issuer                   Maturity    Yield (%)    Spread to Treasury (bps)
+Fannie Mae (FNMA)        5-Year      3.98         +42
+Freddie Mac (FHLMC)      5-Year      3.97         +41
+Federal Home Loan Banks  5-Year      3.89         +33
+Ginnie Mae (GNMA)        10-Year     4.14         +38
+Tennessee Valley Auth.   10-Year     4.22         +46
+Export-Import Bank       7-Year      4.08         +41
+
+Agency spreads widened modestly during Q3 FY2024, with the Federal Home Loan Banks 5-year spread increasing from 28 basis points on June 30, 2024 to 33 basis points on September 30, 2024. This widening is attributed to increased issuance volume by the Federal Home Loan Bank system, which raised $284 billion in consolidated obligations during Q3 FY2024, a 12.4 percent increase from the $252.7 billion issued in Q3 FY2023.
+
+2.3 TIPS Breakeven Inflation Rates
+
+Breakeven inflation rates, derived from the spread between nominal Treasury yields and TIPS yields of comparable maturity, are a critical input for Treasury's debt issuance strategy:
+
+Maturity    Nominal Yield (%)    TIPS Yield (%)    Breakeven Rate (%)
+5-Year      3.56                 1.74              1.82
+10-Year     3.76                 1.88              1.88
+30-Year     4.09                 2.11              1.98
+
+The 10-year breakeven inflation rate of 1.88 percent as of September 30, 2024 represents a decline from 2.33 percent recorded on September 30, 2023, suggesting that market participants have modestly reduced their long-run inflation expectations over the past twelve months. This decline is consistent with the Bureau of Labor Statistics' reported Consumer Price Index reading of 2.4 percent for September 2024, down from 3.7 percent in September 2023.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 3: BORROWING COST IMPLICATIONS
+
+3.1 Weighted Average Interest Rate on Marketable Debt
+
+The weighted average interest rate on all outstanding marketable Treasury securities stood at 3.32 percent as of September 30, 2024, compared to 2.98 percent on September 30, 2023, and 1.61 percent on September 30, 2021. This 34-basis-point year-over-year increase reflects the continued rollover of low-coupon debt issued during the 2020–2021 period into higher-rate instruments.
+
+The Congressional Budget Office projects that net interest costs for FY2024 will total $892 billion, representing 3.1 percent of GDP and exceeding defense discretionary spending of $849 billion for the first time in the post-World War II era. This projection is based on the CBO's August 2024 Budget and Economic Outlook update.
+
+3.2 Rollover Risk Assessment
+
+Of the $27.4 trillion in outstanding marketable debt, approximately $8.9 trillion (32.5 percent) is scheduled to mature within the next twelve months. This concentration of near-term maturities reflects the Treasury's increased reliance on bill financing during FY2022 and FY2023. The Office of Debt Management has initiated a gradual extension of the weighted average maturity of the portfolio, which stood at 70.2 months as of September 30, 2024, compared to 68.4 months on March 31, 2024.
+
+3.3 Auction Performance
+
+Treasury auctions conducted during Q3 FY2024 demonstrated continued strong demand from primary dealers, direct bidders, and indirect bidders. The bid-to-cover ratio for the 10-year Treasury note auction conducted on August 7, 2024 was 2.67, above the trailing twelve-month average of 2.51. The August 7 auction settled $42 billion in 10-year notes at a high yield of 3.960 percent, with indirect bidders — a proxy for foreign central bank and institutional demand — taking 67.3 percent of the awarded amount.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 4: INTERNATIONAL SPREAD COMPARISONS
+
+The following table presents 10-year sovereign yield spreads relative to U.S. Treasuries as of September 30, 2024:
+
+Country              10-Year Yield (%)    Spread to U.S. (bps)
+Germany              2.12                 -164
+United Kingdom       4.00                 +24
+Japan                0.85                 -291
+Canada               3.14                 -62
+Australia            4.18                 +42
+France               2.97                 -79
+Italy                3.51                 -25
+
+The U.S.-Germany spread of negative 164 basis points reflects persistent divergence between Federal Reserve and European Central Bank policy trajectories. The ECB, under President Christine Lagarde, reduced its deposit facility rate by 25 basis points in June 2024 and again in September 2024, bringing it to 3.50 percent, while the Fed's September cut moved in the same direction but from a higher starting point.
+
+Japan's 10-year yield of 0.85 percent, while historically elevated relative to the Bank of Japan's near-zero rate policy of prior years, still produces a spread of negative 291 basis points relative to U.S. Treasuries, maintaining significant carry trade incentives that continue to support foreign demand for U.S. government securities.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 5: OUTLOOK AND POLICY CONSIDERATIONS
+
+The Office of Debt Management anticipates continued yield curve normalization through Q4 FY2024 and into FY2025, contingent on the Federal Reserve executing additional rate reductions consistent with the median FOMC projection of 4.25 to 4.50 percent by year-end 2024 as expressed in the September 2024 Summary of Economic Projections. A fully uninverted yield curve, defined as a positive 2Y/10Y spread exceeding 25 basis points, is projected by the Office to occur by February 2025 under the baseline scenario.
+
+Key risks to this outlook include:
+
+- Renewed inflationary pressures that could delay or reverse Fed easing, particularly if energy prices rebound materially from the September 2024 West Texas Intermediate crude price of $68.17 per barrel.
+- Fiscal deterioration beyond the CBO's projected FY2024 deficit of $1.897 trillion, which could pressure long-end yields through increased supply.
+- Geopolitical disruptions affecting foreign demand for Treasury securities, noting that foreign holders collectively owned $8.3 trillion in Treasury securities as of July 2024, representing 30.3 percent of total outstanding marketable debt.
+
+The Office of Debt Management will continue to monitor these dynamics and will present updated analysis in the Q4 FY2024 report, scheduled for release on January 21, 2025.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Prepared by: Office of Federal Finance, Debt Management Division
+Contact: Joshua Frost, Assistant Secretary for Financial Markets
+U.S. Department of the Treasury, 1500 Pennsylvania Avenue NW, Washington, D.C. 20220

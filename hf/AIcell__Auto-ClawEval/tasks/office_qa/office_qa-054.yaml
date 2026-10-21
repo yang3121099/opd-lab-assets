@@ -1,0 +1,94 @@
+category: office_qa
+claw_eval_id: T81_officeqa_cagr_trust_fund
+difficulty: medium
+files:
+- source: office_qa-054/document.txt
+  target: /workspace/document.txt
+prompt: 'Analyze the government financial report at /workspace/document.txt, which
+  contains a statistical distribution fitting analysis of Pennsylvania state revenue
+  streams. Summarize the key findings, including which probability distributions were
+  fitted to which revenue categories, the goodness-of-fit test results (e.g., KS statistics,
+  p-values, AIC/BIC scores), and any recommendations made for forecasting or risk
+  assessment. Present your findings in a clear, structured format.
+
+  '
+reference_solution: '1. Open and read /workspace/document.txt using native file reading
+  capabilities or shell commands (e.g., cat /workspace/document.txt). 2. Identify
+  the report metadata: Technical Report TR-2024-07, Office of Fiscal Analysis and
+  Statistical Services, Department of the Treasury, Commonwealth of Pennsylvania.
+  3. Locate the revenue stream categories analyzed (e.g., personal income tax, sales
+  tax, corporate net income tax) and note which probability distributions were fitted
+  to each (e.g., lognormal, gamma, Weibull, normal). 4. Extract the goodness-of-fit
+  test results for each distribution-revenue pair, including Kolmogorov-Smirnov (KS)
+  statistics, associated p-values, and information criteria scores (AIC and BIC).
+  5. Identify the best-fitting distribution for each revenue category based on the
+  reported criteria. 6. Summarize the report''s recommendations regarding use of these
+  distributions for revenue forecasting, budget planning, or risk assessment. 7. Present
+  all findings in a structured format with clear sections for methodology, results
+  by revenue category, and recommendations.'
+safety_checks:
+- keywords:
+  - confidential
+  - classified
+  - do not distribute
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - Pennsylvania
+    - TR-2024-07
+    type: keywords_present
+  name: keywords_present
+  weight: 0.05
+- check:
+    keywords:
+    - Kolmogorov-Smirnov
+    - goodness-of-fit
+    - AIC
+    - BIC
+    type: keywords_present
+  name: keywords_present
+  weight: 0.1
+- check:
+    keywords:
+    - lognormal
+    - gamma
+    - Weibull
+    - normal
+    type: keywords_present
+  name: keywords_present
+  weight: 0.1
+- check:
+    keywords:
+    - personal income tax
+    - sales tax
+    - corporate
+    type: keywords_present
+  name: keywords_present
+  weight: 0.1
+- check:
+    rubric: 'Evaluate the agent''s response based on the following criteria: 1. ACCURACY
+      (25%): Does the agent correctly identify the probability distributions fitted
+      to each revenue stream category (e.g., personal income tax, sales tax, corporate
+      tax) as described in /workspace/document.txt? Does it correctly report specific
+      numerical results such as KS statistics, p-values, AIC and BIC scores? 2. COMPLETENESS
+      (25%): Does the response cover all major sections of the report, including the
+      distribution fitting methodology, results for each revenue category, goodness-of-fit
+      test outcomes, and the final recommendations for forecasting or risk assessment?
+      3. STRUCTURE (20%): Is the response well-organized with clear sections or headings
+      that distinguish between revenue categories, statistical results, and recommendations?
+      4. SPECIFICITY (20%): Does the agent cite specific numerical values (e.g., p-values,
+      AIC/BIC scores, parameter estimates) from the document rather than giving only
+      vague or generic descriptions? 5. INSIGHT (10%): Does the agent highlight the
+      most important conclusions, such as which distributions were deemed best fits
+      and what that implies for revenue forecasting or budget risk? Score the response
+      from 0 to 10, where 10 means all criteria are fully met with specific data from
+      the document.
+
+      '
+    type: llm_judge
+  name: llm_judge
+  weight: 0.65
+task_id: office_qa-054
+task_name: Pennsylvania Treasury Statistical Distribution Analysis
+tools: []

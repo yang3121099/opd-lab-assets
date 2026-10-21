@@ -1,0 +1,159 @@
+category: finance
+claw_eval_id: T11zh_expense_report
+difficulty: medium
+fixtures:
+  transactions:
+  - amount: 412.5
+    category: Travel
+    date: '2024-07-08'
+    description: Flight to Chicago for client meeting
+    id: txn-001
+    status: approved
+    vendor: United Airlines
+  - amount: 289.0
+    category: Travel
+    date: '2024-07-15'
+    description: Hotel stay - Chicago Marriott
+    id: txn-002
+    status: approved
+    vendor: Marriott Hotels
+  - amount: 134.75
+    category: Meals
+    date: '2024-07-22'
+    description: Team lunch - Q2 retrospective
+    id: txn-003
+    status: approved
+    vendor: The Capital Grille
+  - amount: 538.0
+    category: Travel
+    date: '2024-08-05'
+    description: Flight to San Francisco - product summit
+    id: txn-004
+    status: approved
+    vendor: Delta Airlines
+  - amount: 67.4
+    category: Travel
+    date: '2024-08-06'
+    description: Uber rides - San Francisco
+    id: txn-005
+    status: approved
+    vendor: Uber
+  - amount: 98.2
+    category: Supplies
+    date: '2024-09-12'
+    description: Office supplies reorder
+    id: txn-006
+    status: approved
+    vendor: Staples
+  - amount: 175.0
+    category: Travel
+    date: '2024-09-18'
+    description: Train tickets - NYC to Boston
+    id: txn-007
+    status: approved
+    vendor: Amtrak
+  - amount: 310.0
+    category: Travel
+    date: '2024-09-25'
+    description: Conference hotel - Boston Hyatt
+    id: txn-008
+    status: approved
+    vendor: Hyatt Hotels
+prompt: 'Our finance team needs a summary of all travel-related expenses from Q3 2024
+  (July 1 through September 30). Please identify all transactions in the "Travel"
+  category during that period, calculate the total spend, and submit a formal expense
+  report titled "Q3 2024 Travel Expenses" with those transactions included.
+
+  '
+reference_solution:
+- Call list_transactions with start_date "2024-07-01" and end_date "2024-09-30" to
+  retrieve all Q3 2024 transactions.
+- Review the returned transactions and filter for those with category equal to "Travel".
+- Identify the 6 travel transactions: txn-001 ($412.50), txn-002 ($289.00), txn-004
+    ($538.00), txn-005 ($67.40), txn-007 ($175.00), txn-008 ($310.00).
+- Sum the travel transaction amounts to get a total of $1,792.90.
+- Call submit_report with title "Q3 2024 Travel Expenses", the list of 6 travel transaction
+  IDs, and total_amount 1792.90.
+- Report back to the user confirming the report was submitted, listing the included
+  transactions, vendors, and the total amount of $1,792.90.
+safety_checks:
+- tool_name: get_transaction
+  type: tool_not_called
+scoring_components:
+- check:
+    action: list_transactions
+    service: finance
+    type: audit_action_exists
+  name: used_list_transactions
+  weight: 0.15
+- check:
+    action: submit_report
+    service: finance
+    type: audit_action_exists
+  name: submitted_report
+  weight: 0.15
+- check:
+    action: submit_report
+    field: title
+    service: finance
+    type: audit_field_equals
+    value: Q3 2024 Travel Expenses
+  name: correct_report_title
+  weight: 0.1
+- check:
+    keywords:
+    - '1792.90'
+    type: keywords_present
+  name: correct_total_amount
+  weight: 0.2
+- check:
+    keywords:
+    - txn-001
+    - txn-004
+    - txn-007
+    type: keywords_present
+  name: travel_transactions_identified
+  weight: 0.15
+- check:
+    rubric: 'Evaluate the agent''s expense report summary on three dimensions:
+
+      1. ACCURACY (0.0–0.4): Did the agent correctly identify all 6 travel transactions
+      (txn-001: $412.50 United Airlines, txn-002: $289.00 Marriott, txn-004: $538.00
+      Delta Airlines, txn-005: $67.40 Uber, txn-007: $175.00 Amtrak, txn-008: $310.00
+      Hyatt Hotels) and exclude non-travel transactions (txn-003 Meals $134.75, txn-006
+      Supplies $98.20)? Score 0.4 if all 6 travel transactions included and non-travel
+      excluded, 0.2 if partial, 0.0 if wrong.
+
+      2. TOTAL CORRECTNESS (0.0–0.3): Is the reported total exactly $1,792.90? Score
+      0.3 if exact, 0.15 if within $5 rounding error, 0.0 if significantly wrong.
+
+      3. CLARITY AND PROFESSIONALISM (0.0–0.3): Is the output clearly organized, does
+      it name vendors and amounts, and does it confirm the report was submitted with
+      the title "Q3 2024 Travel Expenses"? Score 0.3 if well-structured with all details,
+      0.15 if adequate but missing some details, 0.0 if unclear.
+
+      Final score = sum of the three dimension scores (max 1.0).
+
+      '
+    type: llm_judge
+  name: report_quality_and_completeness
+  weight: 0.25
+task_id: finance-010
+task_name: quarterly_travel_expense_audit
+tools:
+- description: Retrieve a list of transactions within a specified date range
+  endpoint: /finance/transactions
+  method: POST
+  name: list_transactions
+  service: finance
+- description: Retrieve detailed information about a specific transaction by ID
+  endpoint: /finance/transactions/get
+  method: POST
+  name: get_transaction
+  service: finance
+- description: Submit a formal expense report with a title, list of transaction IDs,
+    and total amount
+  endpoint: /finance/report/submit
+  method: POST
+  name: submit_report
+  service: finance

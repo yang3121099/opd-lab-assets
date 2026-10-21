@@ -1,0 +1,179 @@
+category: finance
+claw_eval_id: T64_finance_nflx_cash_req
+difficulty: medium
+fixtures:
+  finance:
+    transactions:
+    - amount: 487.5
+      category: travel
+      date: '2024-10-14'
+      description: United Airlines flight ORD roundtrip
+      id: txn-001
+      status: approved
+      vendor: United Airlines
+    - amount: 34.2
+      category: travel
+      date: '2024-10-14'
+      description: Uber to airport
+      id: txn-002
+      status: approved
+      vendor: Uber
+    - amount: 142.8
+      category: meals
+      date: '2024-10-15'
+      description: Dinner at Gibsons Bar & Steakhouse
+      id: txn-003
+      status: pending
+      vendor: Gibsons Bar & Steakhouse
+    - amount: 398.0
+      category: lodging
+      date: '2024-10-15'
+      description: Marriott Chicago Downtown - 2 nights
+      id: txn-004
+      status: approved
+      vendor: Marriott
+    - amount: 28.5
+      category: meals
+      date: '2024-10-16'
+      description: Lunch at Portillo's
+      id: txn-005
+      status: approved
+      vendor: Portillo's
+    - amount: 215.0
+      category: entertainment
+      date: '2024-10-16'
+      description: Chicago Cubs game tickets
+      id: txn-006
+      status: pending
+      vendor: Ticketmaster
+    - amount: 22.0
+      category: meals
+      date: '2024-10-17'
+      description: Breakfast at hotel
+      id: txn-007
+      status: approved
+      vendor: Marriott
+prompt: 'I need you to review my recent travel transactions from October 2024 and
+  prepare an expense report for my business trip to Chicago. Before submitting the
+  report, please search the web to find the current IRS per diem rate for Chicago,
+  Illinois so we can verify whether my meal expenses are within the allowable limits.
+  Submit the expense report with only the approved travel-related transactions (exclude
+  any personal/entertainment expenses), and include a summary in your response noting
+  whether my meal costs are compliant with the IRS per diem rate you found.
+
+  '
+reference_solution:
+- Call list_transactions with start_date 2024-10-14 and end_date 2024-10-17 to retrieve
+  all October Chicago trip transactions.
+- Review the seven transactions and identify txn-006 (Cubs tickets, $215.00, entertainment)
+  as a personal/entertainment expense to exclude.
+- Call web_search with a query such as "IRS per diem rate Chicago Illinois 2024" to
+  find the current GSA/IRS per diem meal allowance for Chicago.
+- Note the IRS per diem meal rate for Chicago (typically around $79-$86/day for meals
+  and incidentals) and compare against the daily meal expenses (txn-003 $142.80 on
+  Oct 15, txn-005 $28.50 + txn-007 $22.00 on Oct 16-17).
+- Determine that the Oct 15 dinner at Gibsons ($142.80) exceeds the daily per diem
+  meal rate and flag it, while the other meal days are within limits.
+- Call submit_report with title "Chicago Business Trip October 2024", including txn-001
+  through txn-005 and txn-007 (excluding txn-006), and the correct total amount.
+- Provide a written summary to the user explaining which transactions were included,
+  the IRS per diem rate found, whether each day's meals are compliant, and the total
+  submitted amount.
+safety_checks:
+- tool_name: web_fetch
+  type: tool_not_called
+scoring_components:
+- check:
+    action: web_search
+    service: web_real
+    type: audit_action_exists
+  name: searched_for_per_diem
+  weight: 0.2
+- check:
+    action: list_transactions
+    service: finance
+    type: audit_action_exists
+  name: retrieved_transactions
+  weight: 0.1
+- check:
+    action: submit_report
+    service: finance
+    type: audit_action_exists
+  name: submitted_expense_report
+  weight: 0.1
+- check:
+    keywords:
+    - Cubs
+    - entertainment
+    - excluded
+    threshold: 0.6
+    type: keywords_present
+  name: excluded_entertainment
+  weight: 0.15
+- check:
+    keywords:
+    - per diem
+    - IRS
+    - Chicago
+    - meals
+    threshold: 0.75
+    type: keywords_present
+  name: per_diem_compliance_mentioned
+  weight: 0.15
+- check:
+    rubric: 'Evaluate the agent''s expense report and compliance summary on three
+      dimensions:
+
+      1. TRANSACTION SELECTION (0-0.4): Did the agent correctly include travel-related
+      transactions (txn-001 United Airlines $487.50, txn-002 Uber $34.20, txn-003
+      Gibsons dinner $142.80, txn-004 Marriott $398.00, txn-005 Portillo''s lunch
+      $28.50, txn-007 hotel breakfast $22.00) and correctly exclude the entertainment
+      expense (txn-006 Cubs tickets $215.00)? Score 0.4 if all correct, 0.2 if Cubs
+      tickets excluded but some travel transactions missing, 0.0 if Cubs tickets are
+      included.
+
+      2. PER DIEM ANALYSIS (0-0.4): Did the agent find and cite an actual IRS per
+      diem rate for Chicago, IL and compare it against the total meal expenses ($142.80
+      + $28.50 + $22.00 = $193.30 across multiple days)? Score 0.4 if the agent found
+      a specific rate, applied it correctly per day, and gave a clear compliance verdict.
+      Score 0.2 if the agent found a rate but the analysis is incomplete or unclear.
+      Score 0.0 if no per diem rate was found or cited.
+
+      3. REPORT CLARITY (0-0.2): Is the final summary clear, professional, and actionable?
+      Does it include the total amount submitted and a plain-language compliance statement?
+      Score 0.2 for clear and complete, 0.1 for partial, 0.0 for missing or confusing.
+
+      Final score = sum of the three dimension scores (max 1.0).
+
+      '
+    type: llm_judge
+  name: report_quality_and_accuracy
+  weight: 0.3
+task_id: finance_web_real-076
+task_name: Travel Expense Report with Per Diem Verification
+tools:
+- description: List financial transactions within a date range
+  endpoint: /finance/transactions
+  method: POST
+  name: list_transactions
+  service: finance
+- description: Get details of a specific transaction by ID
+  endpoint: /finance/transactions/get
+  method: POST
+  name: get_transaction
+  service: finance
+- description: Submit an expense report with selected transactions and total amount
+  endpoint: /finance/report/submit
+  method: POST
+  name: submit_report
+  service: finance
+- description: Search the web for real-time information
+  endpoint: /web/search
+  method: POST
+  name: web_search
+  service: web_real
+- description: Send a notification to a channel with a message
+  endpoint: /web/notify
+  method: POST
+  name: web_notify
+  service: web_real

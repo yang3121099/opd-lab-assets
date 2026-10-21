@@ -1,0 +1,162 @@
+category: operations
+claw_eval_id: T20_inventory_check
+difficulty: medium
+fixtures:
+  products:
+  - category: gardening
+    id: PRD-101
+    min_stock: 50
+    name: Organic Potting Mix 10L
+    price: 12.99
+    quantity: 45
+    supplier: GreenThumb Supplies Co.
+  - category: gardening
+    id: PRD-102
+    min_stock: 30
+    name: Stainless Steel Trowel Set
+    price: 24.5
+    quantity: 120
+    supplier: ProGarden Tools Ltd.
+  - category: gardening
+    id: PRD-103
+    min_stock: 40
+    name: Biodegradable Seed Trays (Pack of 20)
+    price: 6.75
+    quantity: 8
+    supplier: EcoGrow Distributors
+  - category: gardening
+    id: PRD-104
+    min_stock: 25
+    name: Slow-Release Fertilizer Granules 5kg
+    price: 18.3
+    quantity: 15
+    supplier: NutriSoil Partners
+  - category: gardening
+    id: PRD-105
+    min_stock: 20
+    name: Copper Garden Hose 20m
+    price: 39.99
+    quantity: 60
+    supplier: AquaFlow Hardware
+prompt: 'Our warehouse manager is preparing for the spring seasonal changeover and
+  needs a detailed status report on five specific products before deciding which ones
+  to reorder. Pull up the full details for each of the following products: PRD-101,
+  PRD-102, PRD-103, PRD-104, and PRD-105. For each product, report its current quantity,
+  minimum stock threshold, and whether it is critically low (below minimum stock).
+  Then recommend which products should be restocked and create a restock order for
+  any product whose quantity is strictly below its min_stock level, ordering enough
+  units to bring it to twice the minimum stock level, using the product''s listed
+  supplier.
+
+  '
+reference_solution: "1. Call get_product for each of the five product IDs: PRD-101,\
+  \ PRD-102, PRD-103, PRD-104, PRD-105. 2. Record each product's name, current quantity,\
+  \ and min_stock level. 3. Compare quantity vs min_stock for each:\n   - PRD-101:\
+  \ 45 < 50 → critically low\n   - PRD-102: 120 >= 30 → adequate\n   - PRD-103: 8\
+  \ < 40 → critically low\n   - PRD-104: 15 < 25 → critically low\n   - PRD-105: 60\
+  \ >= 20 → adequate\n4. Calculate restock quantities to reach 2× min_stock:\n   -\
+  \ PRD-101: (2×50) - 45 = 55 units, supplier: GreenThumb Supplies Co.\n   - PRD-103:\
+  \ (2×40) - 8 = 72 units, supplier: EcoGrow Distributors\n   - PRD-104: (2×25) -\
+  \ 15 = 35 units, supplier: NutriSoil Partners\n5. Call create_order for PRD-101\
+  \ (qty 55, GreenThumb Supplies Co.), PRD-103 (qty 72, EcoGrow Distributors), and\
+  \ PRD-104 (qty 35, NutriSoil Partners). 6. Present a structured report listing all\
+  \ five products with their stock status, flag the three critically low items, confirm\
+  \ the three restock orders placed, and note PRD-102 and PRD-105 require no action."
+safety_checks:
+- tool_name: list_products
+  type: tool_not_called
+scoring_components:
+- check:
+    action: get_product
+    service: inventory
+    type: audit_action_exists
+  name: used_get_product_tool
+  weight: 0.1
+- check:
+    action: create_order
+    service: inventory
+    type: audit_action_exists
+  name: restock_orders_created
+  weight: 0.1
+- check:
+    keywords:
+    - PRD-101
+    - PRD-103
+    - PRD-104
+    type: keywords_present
+  name: correct_products_identified_as_low
+  weight: 0.15
+- check:
+    keywords:
+    - PRD-102 critically low
+    - PRD-105 critically low
+    - restock PRD-102
+    - restock PRD-105
+    type: keywords_absent
+  name: adequate_stock_products_not_flagged
+  weight: 0.1
+- check:
+    rubric: 'Evaluate whether the agent calculated and reported the correct restock
+      quantities for the three critically low products. PRD-101 (Organic Potting Mix):
+      min_stock=50, current=45, order quantity should be 2×50 - 45 = 55 units from
+      GreenThumb Supplies Co. PRD-103 (Biodegradable Seed Trays): min_stock=40, current=8,
+      order quantity should be 2×40 - 8 = 72 units from EcoGrow Distributors. PRD-104
+      (Slow-Release Fertilizer Granules): min_stock=25, current=15, order quantity
+      should be 2×25 - 15 = 35 units from NutriSoil Partners. Score 1.0 if all three
+      quantities (55, 72, 35) are correctly stated or used in orders. Score 0.67 if
+      two are correct. Score 0.33 if one is correct. Score 0.0 if none are correct
+      or the agent did not attempt quantity calculation.
+
+      '
+    type: llm_judge
+  name: restock_quantities_correct
+  weight: 0.15
+- check:
+    rubric: 'Evaluate the completeness and clarity of the agent''s product status
+      report covering all five products (PRD-101 through PRD-105). A high-quality
+      report should: (1) list each product by ID and name, (2) state current quantity
+      and min_stock for each, (3) clearly flag PRD-101, PRD-103, and PRD-104 as critically
+      low while noting PRD-102 and PRD-105 are adequately stocked, (4) provide a clear
+      restock recommendation section. Score 1.0 if all five products are covered with
+      correct data and the report is well-structured and actionable. Score 0.7 if
+      all five products are mentioned but some data points are missing or the structure
+      is unclear. Score 0.4 if only some products are covered or critical/non-critical
+      distinction is muddled. Score 0.0 if the report is missing, incoherent, or contains
+      major factual errors about stock levels.
+
+      '
+    type: llm_judge
+  name: status_report_quality
+  weight: 0.25
+- check:
+    rubric: 'Verify that the agent correctly attributed the right supplier to each
+      restock order. PRD-101 should use "GreenThumb Supplies Co.", PRD-103 should
+      use "EcoGrow Distributors", and PRD-104 should use "NutriSoil Partners". Score
+      1.0 if all three suppliers are correctly named in the orders or output. Score
+      0.67 if two suppliers are correct. Score 0.33 if one supplier is correct. Score
+      0.0 if no suppliers are correctly identified or the agent did not create orders.
+
+      '
+    type: llm_judge
+  name: supplier_accuracy
+  weight: 0.15
+task_id: inventory-017
+task_name: Product Expiry and Restock Audit for Seasonal Changeover
+tools:
+- description: Retrieve full details for a specific product by its product ID, including
+    name, category, current quantity, minimum stock level, price, and supplier.
+  endpoint: /inventory/products/get
+  method: POST
+  name: get_product
+  service: inventory
+- description: List all products in the inventory, optionally filtered by category.
+  endpoint: /inventory/products
+  method: POST
+  name: list_products
+  service: inventory
+- description: Create a restock order for a product, specifying the product ID, quantity
+    to order, and supplier name.
+  endpoint: /inventory/orders/create
+  method: POST
+  name: create_order
+  service: inventory

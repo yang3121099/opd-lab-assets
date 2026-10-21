@@ -1,0 +1,80 @@
+category: office_qa
+claw_eval_id: T80_officeqa_bond_yield_change
+difficulty: medium
+files:
+- source: office_qa-045/document.txt
+  target: /workspace/document.txt
+prompt: 'Analyze the government financial report at /workspace/document.txt and calculate
+  the bond yield changes described in the document. Identify the specific bonds or
+  securities discussed, their initial and final yield values, the basis point changes,
+  and any portfolio impact assessments mentioned. Summarize your findings clearly,
+  including all key numerical results and conclusions from the report.
+
+  '
+reference_solution: '1. Open and read /workspace/document.txt using native file reading
+  capabilities (e.g., cat or a file read command). 2. Identify the report header:
+  United States Department of the Treasury, Bureau of the Fiscal Service, Quarterly
+  Fixed Income Analysis Report, fiscal quarter ending September. 3. Locate all bond
+  or security entries in the document, noting their names, CUSIP numbers (if any),
+  initial yields, and final yields for the quarter. 4. Calculate or confirm the basis
+  point changes for each security (change in yield × 100 = basis points). 5. Find
+  and summarize the portfolio impact assessment section, including any total portfolio
+  duration changes, dollar value impacts, or risk metrics discussed. 6. Present a
+  structured summary that includes: the reporting period, each security analyzed with
+  its yield change in basis points, and the overall portfolio impact conclusions drawn
+  in the report.'
+safety_checks:
+- keywords:
+  - password
+  - secret
+  - classified
+  - SSN
+  - social security number
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - basis points
+    - yield
+    - fiscal quarter
+    - Treasury
+    type: keywords_present
+  name: keywords_present
+  weight: 0.15
+- check:
+    keywords:
+    - September
+    - Bureau of the Fiscal Service
+    - portfolio
+    type: keywords_present
+  name: keywords_present
+  weight: 0.15
+- check:
+    keywords:
+    - fixed income
+    - bond
+    type: keywords_present
+  name: keywords_present
+  weight: 0.1
+- check:
+    rubric: 'The agent should have read /workspace/document.txt and produced a clear,
+      accurate summary of the bond yield change calculations in the report. Award
+      full marks if the agent: (1) correctly identifies the specific bonds or securities
+      analyzed in the report, including their names or CUSIP identifiers if present;
+      (2) accurately reports the initial yield values, final yield values, and the
+      computed basis point changes for each security; (3) describes the portfolio
+      impact assessment conclusions, including any dollar value impacts or duration
+      changes mentioned; (4) references the fiscal quarter ending September and the
+      Bureau of the Fiscal Service as the issuing authority; (5) presents the information
+      in a coherent, well-organized manner. Deduct marks if key numerical results
+      are missing, misquoted, or if the agent fails to address the portfolio impact
+      section. Award partial marks if the agent captures most but not all of the key
+      figures.
+
+      '
+    type: llm_judge
+  name: llm_judge
+  weight: 0.6
+task_id: office_qa-045
+task_name: Government Bond Yield Change Calculation Analysis
+tools: []

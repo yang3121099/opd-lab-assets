@@ -1,0 +1,156 @@
+UNITED STATES DEPARTMENT OF THE TREASURY
+Office of Fiscal Service — Trust Fund Management Division
+
+ANNUAL FINANCIAL PERFORMANCE REPORT
+Federal Highway Trust Fund: Compound Annual Growth Rate Analysis
+Fiscal Years 2014 Through 2024
+
+Report Reference Number: TFM-HTF-2024-0047
+Publication Date: November 14, 2024
+Prepared by: Division of Trust Fund Accounting and Analysis
+Authorized by: Deputy Assistant Secretary for Fiscal Operations, Margaret L. Thornton
+
+---
+
+EXECUTIVE SUMMARY
+
+This report presents a comprehensive compound annual growth rate (CAGR) analysis of the Federal Highway Trust Fund (HTF) for the ten-year period spanning fiscal year 2014 through fiscal year 2024. The analysis encompasses both the Highway Account and the Mass Transit Account, examining revenue inflows, expenditure patterns, and net balance trajectories. The findings are intended to inform congressional budget deliberations, support actuarial assessments, and provide transparency to the American public regarding the long-term fiscal health of one of the federal government's most critical infrastructure financing mechanisms.
+
+The Highway Trust Fund recorded a total balance of $52.3 billion as of September 30, 2024, compared to $15.4 billion on September 30, 2014. This represents a ten-year CAGR of 12.97 percent, driven primarily by legislative transfers authorized under the Infrastructure Investment and Jobs Act of 2021 (Public Law 117-58) and sustained growth in motor fuel excise tax receipts.
+
+---
+
+SECTION 1: BACKGROUND AND FUND STRUCTURE
+
+The Federal Highway Trust Fund was established under the Highway Revenue Act of 1956 and is funded primarily through excise taxes on motor fuels, truck and trailer sales, heavy vehicle use taxes, and tire taxes. The Fund is divided into two accounts:
+
+1. The Highway Account, which finances federal-aid highway programs administered by the Federal Highway Administration (FHWA).
+2. The Mass Transit Account, which finances transit capital and operating assistance programs administered by the Federal Transit Administration (FTA).
+
+As of fiscal year 2024, the federal excise tax on gasoline stands at 18.4 cents per gallon, a rate that has remained unchanged since 1993. Diesel fuel is taxed at 24.4 cents per gallon. These rates form the primary organic revenue base for the Fund, though their purchasing power has eroded substantially due to inflation and improvements in vehicle fuel efficiency.
+
+---
+
+SECTION 2: METHODOLOGY FOR CAGR COMPUTATION
+
+The compound annual growth rate was calculated using the standard financial formula:
+
+CAGR = [(Ending Value / Beginning Value) ^ (1 / Number of Years)] - 1
+
+For the primary ten-year analysis:
+- Beginning Value (FY2014 closing balance): $15,400,000,000
+- Ending Value (FY2024 closing balance): $52,300,000,000
+- Number of Years: 10
+
+CAGR = [($52,300,000,000 / $15,400,000,000) ^ (1/10)] - 1
+CAGR = [3.3961] ^ (0.10) - 1
+CAGR = 1.1297 - 1
+CAGR = 0.1297, or 12.97 percent
+
+Separate CAGR computations were performed for the Highway Account and Mass Transit Account individually, as well as for revenue receipts and disbursements independently. All figures are presented in nominal dollars unless otherwise noted. Inflation-adjusted (real) CAGR figures using the Bureau of Economic Analysis GDP deflator are provided in Section 4.
+
+---
+
+SECTION 3: ANNUAL BALANCE DATA — FISCAL YEARS 2014 TO 2024
+
+The following table presents the closing balances for the Highway Trust Fund, disaggregated by account, for each fiscal year in the analysis period. All figures are in millions of dollars.
+
+Fiscal Year | Highway Account | Mass Transit Account | Total HTF Balance
+FY2014      | $10,840         | $4,560               | $15,400
+FY2015      | $11,220         | $4,780               | $16,000
+FY2016      | $13,450         | $5,210               | $18,660
+FY2017      | $14,890         | $5,640               | $20,530
+FY2018      | $16,340         | $6,020               | $22,360
+FY2019      | $17,780         | $6,490               | $24,270
+FY2020      | $15,920         | $5,870               | $21,790
+FY2021      | $22,640         | $7,980               | $30,620
+FY2022      | $34,110         | $10,230              | $44,340
+FY2023      | $41,560         | $11,870              | $53,430
+FY2024      | $39,480         | $12,820              | $52,300
+
+Note: The decline in FY2020 reflects reduced fuel tax receipts during the COVID-19 pandemic, when vehicle miles traveled fell by approximately 13.2 percent nationally. The significant increases in FY2021 and FY2022 reflect general fund transfers of $118 billion authorized under the Infrastructure Investment and Jobs Act.
+
+---
+
+SECTION 4: REVENUE AND DISBURSEMENT CAGR ANALYSIS
+
+4.1 Revenue Receipts
+
+Total revenue deposited into the Highway Trust Fund in FY2014 was $39.7 billion. By FY2024, total receipts reached $53.1 billion, yielding a ten-year revenue CAGR of 2.95 percent. This modest growth rate reflects the static nature of the per-gallon excise tax rates and the gradual improvement in average vehicle fuel economy from 24.1 miles per gallon in 2014 to 28.6 miles per gallon in 2024, as reported by the Environmental Protection Agency.
+
+Organic tax receipts (excluding general fund transfers) grew from $39.7 billion in FY2014 to $46.8 billion in FY2024, a CAGR of 1.65 percent. This figure underscores the structural revenue challenge facing the Fund as electric vehicle adoption accelerates and fuel efficiency standards tighten.
+
+4.2 Disbursements
+
+Total disbursements from the Highway Trust Fund in FY2014 were $50.1 billion. By FY2024, disbursements reached $57.4 billion, representing a CAGR of 1.37 percent. The slower growth in disbursements relative to the balance increase reflects the infusion of general fund transfers that have temporarily stabilized the Fund's solvency position.
+
+4.3 Inflation-Adjusted CAGR
+
+Using the GDP deflator, with FY2014 as the base year (index = 100) and FY2024 index at 128.4, the real CAGR of the total HTF balance is calculated as follows:
+
+Real FY2024 Balance = $52,300 million / 1.284 = $40,732 million
+Real CAGR = [($40,732 / $15,400) ^ (1/10)] - 1 = 10.22 percent
+
+The real CAGR of 10.22 percent still reflects substantial growth, attributable almost entirely to the legislative transfers rather than organic revenue performance.
+
+---
+
+SECTION 5: ACCOUNT-LEVEL CAGR COMPARISON
+
+Highway Account:
+- FY2014 Balance: $10,840 million
+- FY2024 Balance: $39,480 million
+- Ten-Year CAGR: 13.80 percent
+
+Mass Transit Account:
+- FY2014 Balance: $4,560 million
+- FY2024 Balance: $12,820 million
+- Ten-Year CAGR: 10.90 percent
+
+The Highway Account outpaced the Mass Transit Account in CAGR terms by 290 basis points over the ten-year period. This differential reflects the proportional allocation of Infrastructure Investment and Jobs Act transfers, which directed approximately 80 percent of HTF-related transfers to the Highway Account and 20 percent to the Mass Transit Account, consistent with the historical funding split established under the Safe, Accountable, Flexible, Efficient Transportation Equity Act of 2005.
+
+---
+
+SECTION 6: FIVE-YEAR SUB-PERIOD ANALYSIS
+
+To assess whether growth was consistent across the decade or concentrated in specific periods, the ten-year window was divided into two five-year sub-periods.
+
+Sub-Period 1: FY2014 to FY2019
+- Beginning Balance: $15,400 million
+- Ending Balance: $24,270 million
+- Five-Year CAGR: 9.51 percent
+
+Sub-Period 2: FY2019 to FY2024
+- Beginning Balance: $24,270 million
+- Ending Balance: $52,300 million
+- Five-Year CAGR: 16.59 percent
+
+The acceleration in the second sub-period is directly attributable to the $118 billion in general fund transfers authorized beginning in FY2022. Without these transfers, the Congressional Budget Office projects the Fund would have reached insolvency by the fourth quarter of FY2022, based on the CBO's July 2021 baseline projections published in report number 57218.
+
+---
+
+SECTION 7: FORWARD PROJECTIONS AND SUSTAINABILITY ASSESSMENT
+
+The Office of Management and Budget projects that organic HTF revenues will grow at a CAGR of approximately 0.8 percent annually through FY2030, reflecting continued improvements in fuel economy and early-stage electric vehicle market penetration. The current authorization under the Infrastructure Investment and Jobs Act expires on September 30, 2026.
+
+Without additional legislative action, the Fund's balance is projected to decline from $52.3 billion in FY2024 to approximately $18.7 billion by FY2030, representing a negative CAGR of -16.4 percent over that six-year period. The Highway Account is projected to reach a zero balance by the second quarter of FY2028 under this scenario.
+
+The Division of Trust Fund Accounting and Analysis recommends that Congress consider indexing the motor fuel excise tax to inflation or transitioning to a vehicle miles traveled fee structure to restore long-term organic revenue sustainability.
+
+---
+
+SECTION 8: DATA SOURCES AND CERTIFICATION
+
+All balance figures are drawn from the Monthly Treasury Statement of Receipts and Outlays of the United States Government, published by the Bureau of the Fiscal Service. Revenue and disbursement data are sourced from the FHWA's Highway Statistics Series, Table FE-9, and the FTA's National Transit Database annual reports. Inflation adjustment factors are derived from the Bureau of Economic Analysis National Income and Product Accounts, Table 1.1.9.
+
+This report has been reviewed and certified for accuracy by:
+
+Chief Accountant, Trust Fund Division: Robert A. Kessler, CPA
+Date of Certification: November 8, 2024
+
+Director, Office of Fiscal Analysis: Sandra M. Okafor
+Date of Approval: November 12, 2024
+
+---
+
+For questions regarding this report, contact the Trust Fund Management Division at (202) 874-6950 or trustfund.analysis@fiscal.treasury.gov. This document is available to the public under the Freedom of Information Act and is posted on the Bureau of the Fiscal Service website at fiscal.treasury.gov/reports.

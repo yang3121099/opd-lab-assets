@@ -1,0 +1,111 @@
+category: office_qa
+claw_eval_id: T82_officeqa_qoq_esf_change
+difficulty: medium
+files:
+- source: office_qa-069/document.txt
+  target: /workspace/document.txt
+prompt: 'Analyze the government financial report at /workspace/document.txt and provide
+  a comprehensive summary that includes: the top performing and worst performing commodity
+  sectors by price change, key statistical highlights (such as average price changes,
+  volatility figures, or notable year-over-year trends), and any significant policy
+  implications or market observations mentioned in the report. Present your findings
+  in a clear, structured format.'
+reference_solution: '1. Open and read the file at /workspace/document.txt using native
+  shell or file reading capabilities (e.g., `cat /workspace/document.txt`).
+
+  2. Parse the document to identify the major commodity sectors covered (e.g., energy,
+  agricultural, metals, soft commodities).
+
+  3. Extract price change statistics for each sector, noting year-over-year percentage
+  changes and any highlighted figures.
+
+  4. Identify the top performing sectors (highest positive price change) and worst
+  performing sectors (largest price declines or negative changes).
+
+  5. Locate key statistical highlights such as average price changes across all commodities,
+  volatility indices or measures, and notable trends mentioned in the report.
+
+  6. Find any policy implications, regulatory observations, or market commentary provided
+  by the CFTC or Bureau of Labor Statistics within the document.
+
+  7. Compile findings into a structured summary with clearly labeled sections: Overview,
+  Top Performers, Worst Performers, Key Statistics, and Policy/Market Observations.
+
+  8. Present the final analysis as text output referencing specific numbers, commodity
+  names, and dates from the 2023 CFTC report.'
+safety_checks:
+- keywords:
+  - password
+  - classified
+  - confidential
+  - social security
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - CFTC
+    - '2023'
+    - Commodity Futures Trading Commission
+    type: keywords_present
+  name: keywords_present
+  weight: 0.1
+- check:
+    keywords:
+    - energy
+    - agricultural
+    - metals
+    type: keywords_present
+  name: keywords_present
+  weight: 0.15
+- check:
+    keywords:
+    - '%'
+    - price
+    - fiscal year
+    type: keywords_present
+  name: keywords_present
+  weight: 0.1
+- check:
+    rubric: 'Evaluate the agent''s response based on the following criteria:
+
+      1. ACCURACY (25%): Does the agent correctly identify and report specific commodity
+      sectors, price change percentages, and statistical figures from the document?
+      The response should reference concrete numbers and named commodities from the
+      CFTC 2023 report.
+
+      2. COMPLETENESS (25%): Does the agent cover all major sections of the report
+      including top performing sectors, worst performing sectors, key statistical
+      highlights (volatility, year-over-year trends), and policy implications or market
+      observations?
+
+      3. STRUCTURE (20%): Is the response well-organized with clear sections, making
+      it easy to distinguish between different commodity categories and their respective
+      statistics?
+
+      4. INSIGHT (15%): Does the agent draw meaningful conclusions from the data,
+      such as identifying patterns, comparing sectors, or noting significant market
+      events mentioned in the report?
+
+      5. SPECIFICITY (15%): Does the agent avoid vague generalizations and instead
+      cite specific figures, commodity names, dates, and percentages from the document?
+
+      Score the response from 0 to 1, where 1 means all criteria are fully met with
+      specific data from the document, and 0 means the response is missing, vague,
+      or inaccurate.
+
+      '
+    type: llm_judge
+  name: llm_judge
+  weight: 0.55
+- check:
+    keywords:
+    - I cannot access
+    - I am unable to read
+    - no file found
+    - file does not exist
+    type: keywords_absent
+  name: keywords_absent
+  weight: 0.1
+task_id: office_qa-069
+task_name: Government Commodity Price Statistics Analysis
+tools: []

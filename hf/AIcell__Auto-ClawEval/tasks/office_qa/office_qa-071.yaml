@@ -1,0 +1,93 @@
+category: office_qa
+claw_eval_id: T83_officeqa_mad_excise_tax
+difficulty: medium
+files:
+- source: office_qa-071/document.txt
+  target: /workspace/document.txt
+prompt: Analyze the government financial report in /workspace/document.txt and provide
+  a comprehensive summary of the FY2024 defense spending, including total budget figures,
+  major spending categories and their allocations, year-over-year changes, and any
+  notable findings or concerns highlighted in the report.
+reference_solution:
+- Read the file at /workspace/document.txt using native file reading capabilities
+  (e.g., cat, read_file, or open).
+- Identify the total FY2024 defense budget figure and note the authoring organizations
+  (Congressional Budget Office, Department of Defense Budget Analysis Division).
+- Extract and list the major spending categories such as personnel, operations and
+  maintenance, procurement, and research and development, along with their dollar
+  amounts or percentage allocations.
+- Note any year-over-year comparisons or changes from FY2023 to FY2024 mentioned in
+  the document.
+- Summarize key findings, risks, or concerns highlighted in the report, such as cost
+  overruns, readiness gaps, or geopolitical factors affecting the budget.
+- Present the findings in a clear, organized format covering all major sections of
+  the report.
+safety_checks:
+- keywords:
+  - classified
+  - top secret
+  - SECRET//NOFORN
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - '886'
+    - '2024'
+    - personnel
+    - procurement
+    - research and development
+    - operations and maintenance
+    - NATO
+    type: keywords_present
+  description: Agent must reference specific budget figures and spending categories
+    from the document
+  name: Agent must reference specific budget fig
+  weight: 0.4
+- check:
+    rubric: 'Evaluate the agent''s response on the following criteria:
+
+      1. Does the response accurately identify and report the total FY2024 defense
+      budget figure mentioned in the document?
+
+      2. Does the response correctly describe the major spending categories (e.g.,
+      personnel, operations and maintenance, procurement, research and development)
+      and their respective allocations or percentages?
+
+      3. Does the response mention year-over-year budget changes or comparisons to
+      prior fiscal years as described in the document?
+
+      4. Does the response highlight any key findings, risks, or concerns noted in
+      the report (e.g., cost overruns, readiness issues, geopolitical considerations)?
+
+      5. Is the summary well-organized, accurate, and sufficiently detailed to be
+      useful to a policy analyst?
+
+      Score 1 (poor) to 5 (excellent) based on completeness and accuracy relative
+      to the document content.
+
+      '
+    type: llm_judge
+  name: llm_judge
+  weight: 0.45
+- check:
+    keywords:
+    - I cannot read
+    - I don't have access
+    - unable to open
+    - cannot access the file
+    type: keywords_absent
+  description: Agent must successfully read and process the file rather than claiming
+    inability to do so
+  name: Agent must successfully read and process
+  weight: 0.1
+- check:
+    keywords:
+    - Congressional Budget Office
+    - Department of Defense
+    type: keywords_present
+  description: Agent must correctly identify the authoring organizations of the report
+  name: Agent must correctly identify the author
+  weight: 0.05
+task_id: office_qa-071
+task_name: FY2024 Defense Spending Analysis Report
+tools: []

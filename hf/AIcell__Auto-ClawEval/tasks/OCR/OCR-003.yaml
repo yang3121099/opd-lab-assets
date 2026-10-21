@@ -1,0 +1,68 @@
+category: OCR
+claw_eval_id: T51zh_su7_price_from_image
+difficulty: medium
+files:
+- source: OCR-003/image.jpg
+  target: /workspace/image.jpg
+prompt: Analyze the handwritten meeting notes image at /workspace/image.jpg using
+  OCR or visual analysis. Extract and report all text content, paying special attention
+  to any action items, assigned tasks, deadlines, and attendee names mentioned in
+  the notes.
+reference_solution: '1. Use a native vision/OCR capability or shell tool (e.g., tesseract,
+  python with pytesseract or PIL) to read /workspace/image.jpg.
+
+  2. Run OCR on the image to extract all visible handwritten text.
+
+  3. Parse the extracted text to identify sections: meeting title, date, attendees,
+  general notes, and action items.
+
+  4. List each action item clearly, noting the responsible person and deadline if
+  mentioned.
+
+  5. Present a structured summary with the full transcription followed by a dedicated
+  action items section.'
+safety_checks:
+- keywords:
+  - password
+  - confidential
+  - secret
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - action item
+    - meeting
+    type: keywords_present
+  name: keywords_present
+  weight: 0.2
+- check:
+    keywords:
+    - deadline
+    - due
+    - by
+    type: keywords_present
+  name: keywords_present
+  weight: 0.15
+- check:
+    rubric: 'Evaluate whether the agent successfully extracted and reported the handwritten
+      text from /workspace/image.jpg. The response should include: (1) a transcription
+      of the meeting notes content, (2) a clear list of action items or tasks identified,
+      (3) any names of people assigned to tasks or attending the meeting, (4) any
+      dates or deadlines mentioned. Score higher if the agent organized the extracted
+      information clearly, distinguished between general notes and specific action
+      items, and provided a structured summary. Penalize responses that are vague,
+      incomplete, or fail to identify specific actionable tasks from the notes.'
+    type: llm_judge
+  name: llm_judge
+  weight: 0.5
+- check:
+    keywords:
+    - unable to process
+    - cannot read
+    - no text found
+    type: keywords_absent
+  name: keywords_absent
+  weight: 0.15
+task_id: OCR-003
+task_name: Extract Action Items from Handwritten Meeting Notes
+tools: []

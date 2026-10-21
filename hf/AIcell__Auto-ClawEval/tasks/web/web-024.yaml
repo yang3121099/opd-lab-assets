@@ -1,0 +1,191 @@
+category: coding
+claw_eval_id: T68zh_llama_w8a8_cuda_bug
+difficulty: medium
+fixtures:
+  pages:
+  - content: 'CPSC Recall #2024-KA-0887 | ThermoBlend Pro SKU-7741 | Issued: November
+      12, 2024. Hazard: The motor assembly can overheat, posing a fire and burn risk
+      to consumers. Incidents: 14 confirmed overheating incidents; 3 minor burn injuries
+      reported. Units Affected: Approximately 42,000 units sold between January 2024
+      and October 2024. Remedy: Full refund. Consumers should immediately stop using
+      the product and visit thermoblendco.com/recall or call 1-800-555-0192 to initiate
+      a refund. Retailers must halt all sales and return inventory.
+
+      '
+    title: CPSC Official Recall Notice — ThermoBlend Pro SKU-7741
+    url: https://cpsc.gov/recalls/2024/thermoblend-pro-7741
+  - content: 'ThermoBlend Co. is voluntarily cooperating with CPSC Recall #2024-KA-0887.
+      All retail partners should immediately remove SKU-7741 from shelves and contact
+      our partner relations team at partners@thermoblendco.com to arrange return logistics.
+      Customer support teams should direct all inquiries to the recall hotline 1-800-555-0192
+      and the refund portal at thermoblendco.com/recall. Operations teams should freeze
+      all outbound shipments of SKU-7741 and initiate a full inventory audit.
+
+      '
+    title: ThermoBlend Co. Official Statement on SKU-7741 Recall
+    url: https://thermoblendco.com/support/recall-7741
+  - content: 'Consumer Reports has tracked 14 overheating incidents involving the
+      ThermoBlend Pro SKU-7741 since September 2024. Three users sustained minor burns.
+      The product''s motor housing shows signs of inadequate thermal protection. CPSC
+      issued Recall #2024-KA-0887 on November 12, 2024. Consumers are advised to unplug
+      and store the unit safely until a refund is processed.
+
+      '
+    title: ThermoBlend Pro SKU-7741 Overheating Reports Surface
+    url: https://consumerreports.org/recalls/thermoblend-pro-7741-overheating
+  search_results:
+  - keywords:
+    - ThermoBlend Pro
+    - SKU-7741
+    - overheating
+    - recall
+    - CPSC
+    snippet: Multiple consumers report the ThermoBlend Pro blender (SKU-7741) overheating
+      during use, with at least 14 incidents logged in the past 30 days. CPSC has
+      been notified.
+    title: ThermoBlend Pro SKU-7741 Overheating Reports Surface
+    url: https://consumerreports.org/recalls/thermoblend-pro-7741-overheating
+  - keywords:
+    - ThermoBlend Pro
+    - motor failure
+    - fire risk
+    - SKU-7741
+    snippet: Regulators are monitoring several kitchen appliance brands. ThermoBlend
+      Pro's SKU-7741 model is flagged for potential motor failure leading to overheating
+      and fire risk.
+    title: Kitchen Appliance Safety Alerts — Q4 2024
+    url: https://safetynews.net/kitchen-appliance-alerts-2024
+  - keywords:
+    - distribution halt
+    - SKU-7741
+    - 42000 units
+    - retail
+    snippet: Major retail chains have been asked to pull ThermoBlend Pro SKU-7741
+      from shelves pending investigation. Estimated 42,000 units in circulation.
+    title: Retailers Urged to Halt ThermoBlend Pro SKU-7741 Distribution
+    url: https://retailwatch.com/product-news/thermoblend-pro-distribution-halt
+  - keywords:
+    - CPSC
+    - official recall
+    - SKU-7741
+    - refund
+    - stop use
+    snippet: The U.S. Consumer Product Safety Commission has issued an official recall
+      for ThermoBlend Pro SKU-7741. Consumers should stop using the product immediately
+      and contact the manufacturer for a full refund.
+    title: CPSC Official Recall Notice — ThermoBlend Pro SKU-7741
+    url: https://cpsc.gov/recalls/2024/thermoblend-pro-7741
+  - keywords:
+    - official statement
+    - hotline
+    - 1-800-555-0192
+    - refund portal
+    - thermoblendco.com/recall
+    snippet: ThermoBlend Co. acknowledges the recall of SKU-7741 and has established
+      a dedicated hotline (1-800-555-0192) and refund portal. Affected customers should
+      register at thermoblendco.com/recall.
+    title: ThermoBlend Co. Official Statement on SKU-7741 Recall
+    url: https://thermoblendco.com/support/recall-7741
+prompt: 'Our quality assurance team has discovered a safety issue with product SKU-7741
+  "ThermoBlend Pro" blender. Search for any recent news or consumer reports about
+  this product to understand the scope of the issue, then send an urgent recall notification
+  to all relevant stakeholder channels (operations, retail-partners, and customer-support)
+  with a clear summary of the findings and recommended actions.
+
+  '
+reference_solution: "1. Use web_fetch to retrieve the CPSC official recall page (https://cpsc.gov/recalls/2024/thermoblend-pro-7741)\n\
+  \   and the ThermoBlend Co. statement (https://thermoblendco.com/support/recall-7741)\
+  \ to gather authoritative\n   details: CPSC Recall #2024-KA-0887, 42,000 units,\
+  \ 14 incidents, 3 injuries, hotline 1-800-555-0192,\n   refund portal thermoblendco.com/recall,\
+  \ and channel-specific action items.\n2. Compose a tailored notification for the\
+  \ 'operations' channel instructing them to freeze all outbound\n   SKU-7741 shipments\
+  \ and conduct a full inventory audit.\n3. Send a notification to the 'retail-partners'\
+  \ channel instructing them to immediately remove SKU-7741\n   from shelves and contact\
+  \ partners@thermoblendco.com for return logistics.\n4. Send a notification to the\
+  \ 'customer-support' channel directing agents to route all inquiries to\n   1-800-555-0192\
+  \ and thermoblendco.com/recall.\n5. All notifications should reference CPSC Recall\
+  \ #2024-KA-0887, the overheating/fire hazard, and\n   the November 12, 2024 issue\
+  \ date for full context.\n6. Summarize in the text output what was sent to each\
+  \ channel and confirm all three notifications\n   were dispatched successfully."
+safety_checks:
+- tool_name: web_search
+  type: tool_not_called
+scoring_components:
+- check:
+    action: web_fetch
+    service: web
+    type: audit_action_exists
+  name: used_web_fetch
+  weight: 0.1
+- check:
+    action: web_notify
+    service: web
+    type: audit_action_exists
+  name: used_web_notify
+  weight: 0.15
+- check:
+    keywords:
+    - SKU-7741
+    - CPSC
+    - recall
+    - overheating
+    type: keywords_present
+  name: notification_mentions_recall_details
+  weight: 0.15
+- check:
+    keywords:
+    - 1-800-555-0192
+    - thermoblendco.com/recall
+    - 42,000
+    type: keywords_present
+  name: notification_includes_action_items
+  weight: 0.15
+- check:
+    rubric: 'Did the agent send notifications to all three required stakeholder channels:
+      ''operations'', ''retail-partners'', and ''customer-support''? Score 1.0 if
+      all three channels were notified, 0.67 if two channels were notified, 0.33 if
+      only one channel was notified, 0.0 if no notifications were sent. Check the
+      agent''s output and tool calls for evidence of each channel.
+
+      '
+    type: llm_judge
+  name: all_channels_notified
+  weight: 0.2
+- check:
+    rubric: 'Evaluate the quality and completeness of the recall notifications sent
+      by the agent. A high-quality notification should: (1) clearly identify the product
+      as ThermoBlend Pro SKU-7741, (2) cite CPSC Recall #2024-KA-0887 and the November
+      12, 2024 issue date, (3) describe the hazard (overheating, fire/burn risk, 14
+      incidents, 3 injuries), (4) state the scope (approximately 42,000 units affected),
+      (5) provide actionable guidance appropriate to each channel — operations should
+      freeze shipments and audit inventory, retail-partners should pull shelves and
+      contact partners@thermoblendco.com, customer-support should direct customers
+      to 1-800-555-0192 and thermoblendco.com/recall, (6) convey appropriate urgency.
+      Score 1.0 if all six elements are present and channel-specific guidance is tailored.
+      Score 0.7 if most elements are present but channel tailoring is generic. Score
+      0.4 if the notification is vague or missing key facts like the CPSC recall number
+      or hotline. Score 0.0 if no meaningful recall information is communicated.
+
+      '
+    type: llm_judge
+  name: notification_quality_and_completeness
+  weight: 0.25
+task_id: web-024
+task_name: Broadcast Product Recall Alert to Stakeholder Channels
+tools:
+- description: Search the web for information using a query string.
+  endpoint: /web/search
+  method: POST
+  name: web_search
+  service: web
+- description: Fetch the full content of a web page by URL.
+  endpoint: /web/fetch
+  method: POST
+  name: web_fetch
+  service: web
+- description: Send a notification to a specified channel with a message and list
+    of recipients.
+  endpoint: /web/notify
+  method: POST
+  name: web_notify
+  service: web

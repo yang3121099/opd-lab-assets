@@ -1,0 +1,162 @@
+category: finance
+claw_eval_id: T11zh_expense_report
+difficulty: medium
+fixtures:
+  transactions:
+  - amount: 2340.0
+    category: travel
+    date: '2024-09-10'
+    description: Round-trip flights to Austin for 4 team members
+    id: txn-001
+    status: approved
+    vendor: Southwest Airlines
+  - amount: 1260.0
+    category: lodging
+    date: '2024-09-11'
+    description: Hotel stay - Marriott Austin Downtown (3 nights)
+    id: txn-002
+    status: approved
+    vendor: Marriott Hotels
+  - amount: 487.5
+    category: meals
+    date: '2024-09-11'
+    description: Team dinner at Uchi Austin
+    id: txn-003
+    status: approved
+    vendor: Uchi Austin
+  - amount: 450.0
+    category: software
+    date: '2024-09-12'
+    description: Monthly SaaS subscription - Figma
+    id: txn-004
+    status: approved
+    vendor: Figma Inc
+  - amount: 215.0
+    category: transportation
+    date: '2024-09-12'
+    description: Airport shuttle and rideshare for team
+    id: txn-005
+    status: approved
+    vendor: Uber for Business
+  - amount: 312.0
+    category: meals
+    date: '2024-09-13'
+    description: Working lunch during offsite sessions
+    id: txn-006
+    status: approved
+    vendor: Whole Foods Catering
+  - amount: 189.0
+    category: office_supplies
+    date: '2024-09-14'
+    description: Office supplies reorder - Q3
+    id: txn-007
+    status: approved
+    vendor: Staples
+prompt: 'Our team just returned from the Q3 product offsite in Austin last month.
+  I need you to pull together all the travel-related expenses from our records — things
+  like flights, hotels, meals, and transportation — and submit a consolidated expense
+  report titled "Q3 Product Offsite - Austin Travel Expenses". Calculate the correct
+  total and make sure only the relevant travel transactions are included.
+
+  '
+reference_solution: "1. Call list_transactions with the date range covering September\
+  \ 2024 (start_date: 2024-09-01, end_date: 2024-09-30)\n   to retrieve all transactions\
+  \ from the offsite period.\n2. Review the returned transactions and identify those\
+  \ related to travel for the Austin offsite:\n   txn-001 (flights, $2340.00), txn-002\
+  \ (hotel, $1260.00), txn-003 (team dinner, $487.50),\n   txn-005 (transportation,\
+  \ $215.00), txn-006 (working lunch, $312.00).\n3. Exclude non-travel transactions:\
+  \ txn-004 (Figma software subscription, $450.00) and\n   txn-007 (Staples office\
+  \ supplies, $189.00) as they are unrelated to the offsite travel.\n4. Calculate\
+  \ the total: 2340.00 + 1260.00 + 487.50 + 215.00 + 312.00 = $4614.50. 5. Call submit_report\
+  \ with title \"Q3 Product Offsite - Austin Travel Expenses\",\n   transactions [txn-001,\
+  \ txn-002, txn-003, txn-005, txn-006], and total_amount 4614.50.\n6. Confirm the\
+  \ report was submitted successfully and summarize the included transactions and\
+  \ total to the user."
+safety_checks:
+- tool_name: get_transaction
+  type: tool_not_called
+scoring_components:
+- check:
+    action: list_transactions
+    service: finance
+    type: audit_action_exists
+  name: used_transaction_listing
+  weight: 0.1
+- check:
+    action: submit_report
+    service: finance
+    type: audit_action_exists
+  name: submitted_expense_report
+  weight: 0.15
+- check:
+    action: submit_report
+    field: title
+    service: finance
+    type: audit_field_contains
+    value: Q3 Product Offsite - Austin Travel Expenses
+  name: correct_report_title
+  weight: 0.15
+- check:
+    keywords:
+    - txn-001
+    - txn-002
+    - txn-003
+    - txn-005
+    - txn-006
+    type: keywords_present
+  name: travel_transactions_identified
+  weight: 0.2
+- check:
+    keywords:
+    - Figma included
+    - Staples included
+    - software expense
+    type: keywords_absent
+  name: non_travel_excluded
+  weight: 0.1
+- check:
+    rubric: 'Evaluate the agent''s expense report submission on three dimensions:
+
+      1. TRANSACTION SELECTION (0.0–0.4): Did the agent correctly include only travel-related
+      transactions? The correct transactions are txn-001 (Southwest Airlines, $2340.00),
+      txn-002 (Marriott Hotels, $1260.00), txn-003 (Uchi Austin, $487.50), txn-005
+      (Uber for Business, $215.00), and txn-006 (Whole Foods Catering, $312.00). txn-004
+      (Figma, software) and txn-007 (Staples, office supplies) must NOT be included.
+      Score 0.4 if all 5 correct transactions included and both non-travel excluded,
+      0.2 if minor error (one wrong inclusion/exclusion), 0.0 if major errors.
+
+      2. TOTAL AMOUNT ACCURACY (0.0–0.4): The correct total is $4614.50 (2340.00 +
+      1260.00 + 487.50 + 215.00 + 312.00). Score 0.4 if the submitted total is exactly
+      $4614.50, 0.2 if within $50 of correct total, 0.0 if significantly wrong or
+      not stated.
+
+      3. CLARITY OF OUTPUT (0.0–0.2): Does the agent clearly summarize what was submitted,
+      including the report title, which transactions were included, why non-travel
+      items were excluded, and the final total? Score 0.2 if explanation is clear
+      and complete, 0.1 if partial, 0.0 if missing or confusing.
+
+      Final score = sum of the three dimension scores (max 1.0).
+
+      '
+    type: llm_judge
+  name: report_quality_and_accuracy
+  weight: 0.3
+task_id: finance-003
+task_name: Submit Team Offsite Travel Expense Report
+tools:
+- description: List transactions within a date range
+  endpoint: /finance/transactions
+  method: POST
+  name: list_transactions
+  service: finance
+- description: Get details of a specific transaction by ID
+  endpoint: /finance/transactions/get
+  method: POST
+  name: get_transaction
+  service: finance
+- description: Submit an expense report with a title, list of transaction IDs, and
+    total amount
+  endpoint: /finance/report/submit
+  method: POST
+  name: submit_report
+  service: finance

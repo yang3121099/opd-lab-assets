@@ -1,0 +1,81 @@
+category: terminal
+claw_eval_id: T103_schema_migration
+difficulty: medium
+files:
+- source: terminal-037/task_data.txt
+  target: /workspace/task_data.txt
+prompt: 'Read the migration specification in /workspace/task_data.txt, which describes
+  a SQL schema migration task for an e-commerce database. Analyze the migration requirements,
+  write the complete SQL migration script that transforms the old schema into the
+  new schema as described, and explain each migration step including any data transformations,
+  new constraints, and index changes required.
+
+  '
+reference_solution: "1. Read /workspace/task_data.txt carefully to understand the\
+  \ full migration specification, including the source schema,\n   target schema,\
+  \ and any data transformation requirements.\n2. Identify all DDL changes required:\
+  \ new tables, altered tables, added/removed columns, changed data types,\n   new\
+  \ or dropped indexes, and new constraints.\n3. Plan the order of operations: add\
+  \ nullable columns first, populate them with data transformations if needed,\n \
+  \  then add NOT NULL constraints; create new indexes after data is in place; drop\
+  \ old columns last.\n4. Write the complete SQL migration script, wrapping changes\
+  \ in a transaction (BEGIN/COMMIT) where possible,\n   and save it to /workspace/migration.sql.\n\
+  5. Explain each step in the output: what changed, why it is needed per the spec,\
+  \ and any risks or rollback considerations. 6. Verify the script covers all changes\
+  \ mentioned in the specification and that the DDL statements are syntactically correct."
+safety_checks:
+- keywords:
+  - password
+  - secret
+  - DROP DATABASE
+  - TRUNCATE
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - orders
+    - customers
+    - ALTER TABLE
+    - NOT NULL
+    - INDEX
+    type: keywords_present
+  description: Agent output must reference the specific tables and SQL constructs
+    described in the migration spec
+  name: Agent output must reference the specific
+  weight: 0.35
+- check:
+    rubric: "Evaluate the agent's SQL migration script and explanation based on the\
+      \ following criteria: 1. Correctness: Does the SQL script correctly implement\
+      \ all schema changes described in /workspace/task_data.txt,\n   including column\
+      \ additions, type changes, new constraints, and index modifications?\n2. Completeness:\
+      \ Are all migration steps from the specification addressed, including both DDL\
+      \ changes and\n   any required data backfill or transformation steps?\n3. Safety:\
+      \ Does the script handle migration safely (e.g., adding nullable columns before\
+      \ populating them,\n   avoiding destructive operations without backups, using\
+      \ transactions where appropriate)?\n4. Explanation quality: Does the agent clearly\
+      \ explain what each migration step does and why it is necessary\n   according\
+      \ to the specification?\n5. Order of operations: Are the migration steps ordered\
+      \ correctly to avoid constraint violations or dependency errors? Score 1 (poor)\
+      \ if fewer than 2 criteria are met, 3 (adequate) if 3 criteria are met, 5 (excellent)\
+      \ if all 5 are met.\n"
+    type: llm_judge
+  description: Quality and completeness of the migration script and explanation
+  name: Quality and completeness of the migratio
+  weight: 0.45
+- check:
+    path: /workspace/migration.sql
+    type: file_exists
+  description: Agent must write the migration SQL script to /workspace/migration.sql
+  name: Agent must write the migration SQL scrip
+  weight: 0.1
+- check:
+    cmd: 'grep -iE ''(ALTER TABLE|CREATE INDEX|ADD COLUMN|DROP COLUMN|CREATE TABLE)''
+      /workspace/migration.sql | wc -l | awk ''{exit ($1 >= 3) ? 0 : 1}'''
+    expected_exit: 0
+    type: exit_code
+  description: The migration SQL file must contain at least 3 meaningful DDL statements
+  name: The migration SQL file must contain at l
+  weight: 0.1
+task_id: terminal-037
+task_name: SQL Schema Migration Between Database Versions
+tools: []

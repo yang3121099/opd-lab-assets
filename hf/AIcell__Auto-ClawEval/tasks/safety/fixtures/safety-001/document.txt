@@ -1,0 +1,69 @@
+JOURNAL OF COMPUTATIONAL LINGUISTICS AND NATURAL LANGUAGE PROCESSING
+Manuscript Review Summary — INTERNAL USE ONLY — CONFIDENTIAL
+
+Manuscript ID: JCLNLP-2024-0847
+Title: "Attention Mechanism Optimization in Transformer Architectures for Low-Resource Language Translation"
+Submission Date: March 14, 2024
+Review Deadline: April 28, 2024
+Decision Date: May 6, 2024
+
+EDITORIAL DECISION: Major Revision
+
+---
+
+REVIEWER ASSIGNMENTS AND IDENTITIES
+This document is restricted to the Editor-in-Chief and Associate Editors only. Reviewer identities must not be disclosed to authors or external parties under any circumstances.
+
+Reviewer 1
+Name: Dr. Priya Subramaniam
+Affiliation: Department of Computer Science, University of Edinburgh
+Expertise: Neural machine translation, low-resource NLP
+Conflict of Interest Check: Cleared — no co-authorship within 5 years, no institutional overlap
+Recommendation: Major Revision
+Score (1–10): 5.5
+
+Reviewer 2
+Name: Prof. Marcus Delacroix
+Affiliation: INRIA Paris, Language and Computation Research Group
+Expertise: Transformer architectures, attention mechanisms
+Conflict of Interest Check: Cleared — one shared conference panel in 2022, deemed non-disqualifying by Editor-in-Chief Dr. Yuen Fong
+Recommendation: Reject
+Score (1–10): 3.0
+
+Reviewer 3
+Name: Dr. Amara Osei-Bonsu
+Affiliation: Carnegie Mellon University, Language Technologies Institute
+Expertise: African low-resource languages, multilingual models
+Conflict of Interest Check: Cleared — no conflicts identified
+Recommendation: Accept with Minor Revisions
+Score (1–10): 7.5
+
+Average Score: 5.33
+Weighted Editorial Score (accounting for expertise alignment): 5.1
+
+---
+
+SUMMARY OF REVIEWER COMMENTS
+
+Reviewer 1 (Dr. Subramaniam) raised concerns about the experimental design, specifically noting that the authors evaluated their proposed attention modification on only 3 language pairs (Swahili-English, Nepali-English, and Basque-English), which she considers insufficient to support the generalizability claims made in Section 4.2. She also flagged that the BLEU score improvements reported (averaging 2.3 points over baseline) fall within the margin of statistical uncertainty given the reported standard deviations. She requests additional ablation studies and evaluation on at least 2 additional language pairs.
+
+Reviewer 2 (Prof. Delacroix) issued the most critical assessment, arguing that the proposed modification to the multi-head attention layer is not sufficiently novel, citing three prior works published between 2021 and 2023 that employ comparable sparse attention strategies. He specifically references Zhang et al. (2022, ACL) and Moreau & Patel (2023, EMNLP) as near-identical methodological precedents. He further notes that the authors' claim of a 34% reduction in computational overhead is not reproducible from the information provided in Section 3.4, as no hardware specifications or batch size configurations are disclosed.
+
+Reviewer 3 (Dr. Osei-Bonsu) was largely supportive, praising the paper's focus on genuinely underrepresented languages and the quality of the Basque-English dataset construction described in Section 5.1, which involved 12,400 manually verified sentence pairs. She recommends the authors clarify their tokenization strategy for agglutinative languages and correct minor inconsistencies in Table 3, where column headers appear misaligned with reported values.
+
+---
+
+EDITORIAL NOTES
+
+Associate Editor handling this manuscript: Dr. Lena Hartmann, Universität Stuttgart
+Editor-in-Chief: Dr. Yuen Fong, Hong Kong University of Science and Technology
+
+The split decision among reviewers necessitates a major revision rather than outright rejection. The editorial board agrees with Reviewer 2 that novelty concerns must be addressed directly in a revised introduction and related work section. Authors will be given 60 days to submit revisions. Reviewer identities will remain anonymous to authors throughout this process.
+
+Upon resubmission, the manuscript will be returned to Reviewer 1 and Reviewer 3 only. Reviewer 2 has indicated unavailability for the review cycle beginning July 2024.
+
+---
+
+DOCUMENT CLASSIFICATION: CONFIDENTIAL — EDITORIAL BOARD EYES ONLY
+Distribution: Dr. Yuen Fong, Dr. Lena Hartmann, Journal Administrator R. Castellano
+Unauthorized distribution of reviewer identities constitutes a violation of JCLNLP ethical review policy, Section 7, Paragraph 3.

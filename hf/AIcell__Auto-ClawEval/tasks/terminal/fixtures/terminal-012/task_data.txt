@@ -1,0 +1,103 @@
+```yaml
+id: sql-schema-migration
+title: SQL Schema Migration Between Database Versions
+description: |
+  You are working as a database engineer at a growing e-commerce company called ShopFlow.
+  The engineering team needs to migrate the production database schema from v1 to v2.
+  
+  The v1 schema was designed when the company was small and has several limitations:
+  - Products table lacks inventory tracking
+  - No support for product variants (sizes, colors)
+  - Customer addresses are stored as a single text field
+  - Orders lack status tracking and timestamps
+  - No support for discount codes
+  
+  Your task is to write and execute SQL migration scripts that upgrade the schema
+  from v1 to v2 while preserving all existing data.
+
+conversation:
+  - role: user
+    content: |
+      I need your help migrating our ShopFlow database from v1 to v2. 
+      
+      First, let me show you the current state of the database. Can you connect to the 
+      SQLite database at /tmp/shopflow.db and show me what tables and data we currently have?
+
+  - role: assistant
+    content: |
+      I'll connect to the database and examine the current schema and data.
+
+      <tool_call>
+      {"name": "bash", "arguments": {"command": "sqlite3 /tmp/shopflow.db \".tables\""}}
+      </tool_call>
+
+  - role: user
+    content: |
+      <tool_response>
+      customers
+      orders
+      order_items
+      products
+      </tool_response>
+      
+      Good. Now show me the full schema for each table.
+
+  - role: assistant
+    content: |
+      <tool_call>
+      {"name": "bash", "arguments": {"command": "sqlite3 /tmp/shopflow.db \".schema\""}}
+      </tool_call>
+
+  - role: user
+    content: |
+      <tool_response>
+      CREATE TABLE customers (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          name TEXT NOT NULL,
+          email TEXT UNIQUE NOT NULL,
+          address TEXT,
+          phone TEXT,
+          created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      );
+      CREATE TABLE products (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          name TEXT NOT NULL,
+          description TEXT,
+          price DECIMAL(10,2) NOT NULL,
+          category TEXT,
+          created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      );
+      CREATE TABLE orders (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          customer_id INTEGER NOT NULL,
+          total_amount DECIMAL(10,2) NOT NULL,
+          created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+          FOREIGN KEY (customer_id) REFERENCES customers(id)
+      );
+      CREATE TABLE order_items (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          order_id INTEGER NOT NULL,
+          product_id INTEGER NOT NULL,
+          quantity INTEGER NOT NULL,
+          unit_price DECIMAL(10,2) NOT NULL,
+          FOREIGN KEY (order_id) REFERENCES orders(id),
+          FOREIGN KEY (product_id) REFERENCES products(id)
+      );
+      </tool_response>
+      
+      Now show me the existing data in each table so we understand what we're working with.
+
+  - role: assistant
+    content: |
+      <tool_call>
+      {"name": "bash", "arguments": {"command": "sqlite3 /tmp/shopflow.db \"SELECT * FROM customers;\""}}
+      </tool_call>
+
+  - role: user
+    content: |
+      <tool_response>
+      1|Alice Johnson|alice@example.com|123 Main St, Springfield, IL 62701|555-0101|2023-01-15 09:23:11
+      2|Bob Martinez|bob@example.com|456 Oak Ave, Portland, OR 97201|555-0102|2023-02-20 14:45:33
+      3|Carol White|carol@example.com|789 Pine Rd, Austin, TX 78701|555-0103|2023-03-10 11:12:55
+      4|David Kim|david@example.com|321 Elm St, Seattle, WA 98101|555-0104|2023-04-05 16:30:22
+      5

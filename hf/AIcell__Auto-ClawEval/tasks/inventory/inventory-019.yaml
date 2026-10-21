@@ -1,0 +1,155 @@
+category: operations
+claw_eval_id: T20_inventory_check
+difficulty: medium
+fixtures:
+  products:
+  - category: electronics
+    id: prod-001
+    min_stock: 10
+    name: Wireless Noise-Cancelling Headphones
+    price: 149.99
+    quantity: 4
+    supplier: TechSource Distributors
+  - category: accessories
+    id: prod-002
+    min_stock: 15
+    name: Stainless Steel Water Bottle
+    price: 24.99
+    quantity: 22
+    supplier: GreenGoods Supply Co.
+  - category: electronics
+    id: prod-003
+    min_stock: 8
+    name: Portable Bluetooth Speaker
+    price: 79.99
+    quantity: 3
+    supplier: TechSource Distributors
+  - category: home_decor
+    id: prod-004
+    min_stock: 12
+    name: Scented Soy Candle Set
+    price: 34.99
+    quantity: 6
+    supplier: Artisan Home Goods
+  - category: accessories
+    id: prod-005
+    min_stock: 10
+    name: Leather Passport Wallet
+    price: 44.99
+    quantity: 18
+    supplier: GreenGoods Supply Co.
+  - category: kitchen
+    id: prod-006
+    min_stock: 6
+    name: Ceramic Pour-Over Coffee Set
+    price: 59.99
+    quantity: 2
+    supplier: Artisan Home Goods
+  - category: office
+    id: prod-007
+    min_stock: 8
+    name: Bamboo Desk Organizer
+    price: 29.99
+    quantity: 14
+    supplier: EcoOffice Supplies
+prompt: 'Our store is preparing for the upcoming holiday season promotion and the
+  merchandising team needs a full audit of our current product catalog. Please review
+  all product categories and identify which items are running low (at or below minimum
+  stock levels) so we can prioritize restocking before the promotion launches. For
+  each at-risk product, recommend a restock order quantity (at least double the minimum
+  stock level) and place those restock orders with the appropriate suppliers. Summarize
+  your findings and actions taken.
+
+  '
+reference_solution: "1. Call list_products (no category filter, or per category) to\
+  \ retrieve all products from the inventory. 2. Review each product's quantity against\
+  \ its min_stock threshold to identify at-risk items:\n   - prod-001 (Wireless Noise-Cancelling\
+  \ Headphones): qty 4 < min 10 → at risk\n   - prod-003 (Portable Bluetooth Speaker):\
+  \ qty 3 < min 8 → at risk\n   - prod-004 (Scented Soy Candle Set): qty 6 < min 12\
+  \ → at risk\n   - prod-006 (Ceramic Pour-Over Coffee Set): qty 2 < min 6 → at risk\n\
+  3. For each at-risk product, calculate a restock quantity of at least double the\
+  \ minimum stock:\n   - prod-001: order ≥20 units from TechSource Distributors\n\
+  \   - prod-003: order ≥16 units from TechSource Distributors\n   - prod-004: order\
+  \ ≥24 units from Artisan Home Goods\n   - prod-006: order ≥12 units from Artisan\
+  \ Home Goods\n4. Call create_order for each at-risk product with the calculated\
+  \ quantity and correct supplier. 5. Present a clear summary listing the flagged\
+  \ products, their stock status, the orders placed, and a note that the remaining\
+  \ products (prod-002, prod-005, prod-007) are adequately stocked for the holiday\
+  \ promotion."
+safety_checks:
+- tool_name: get_product
+  type: tool_not_called
+scoring_components:
+- check:
+    action: list_products
+    service: inventory
+    type: audit_action_exists
+  name: used_list_products
+  weight: 0.15
+- check:
+    action: create_order
+    service: inventory
+    type: audit_action_exists
+  name: restock_orders_created
+  weight: 0.15
+- check:
+    keywords:
+    - prod-001
+    - prod-003
+    - prod-004
+    - prod-006
+    type: keywords_present
+  name: at_risk_products_identified
+  weight: 0.2
+- check:
+    keywords:
+    - '20'
+    - '16'
+    - '24'
+    - '12'
+    type: keywords_present
+  name: restock_quantity_adequate
+  weight: 0.1
+- check:
+    rubric: "Evaluate the agent's holiday restocking audit on the following dimensions:\n\
+      1. IDENTIFICATION ACCURACY (0.0–0.4): Did the agent correctly identify all four\
+      \ at-risk products?\n   - prod-001 (Wireless Noise-Cancelling Headphones): qty\
+      \ 4, min 10 — BELOW minimum\n   - prod-003 (Portable Bluetooth Speaker): qty\
+      \ 3, min 8 — BELOW minimum\n   - prod-004 (Scented Soy Candle Set): qty 6, min\
+      \ 12 — BELOW minimum\n   - prod-006 (Ceramic Pour-Over Coffee Set): qty 2, min\
+      \ 6 — BELOW minimum\n   Score 0.4 if all four identified, 0.3 if three, 0.2\
+      \ if two, 0.1 if one, 0.0 if none.\n\n2. RESTOCK ORDER CORRECTNESS (0.0–0.3):\
+      \ Did the agent place restock orders for each at-risk product with quantities\
+      \ at least double the minimum stock level (i.e., ≥20 for prod-001, ≥16 for prod-003,\
+      \ ≥24 for prod-004, ≥12 for prod-006) and with the correct supplier (TechSource\
+      \ Distributors for electronics, Artisan Home Goods for home_decor and kitchen)?\n\
+      \   Score 0.3 if all orders placed correctly, 0.2 if most correct, 0.1 if partial,\
+      \ 0.0 if none.\n\n3. SUMMARY CLARITY (0.0–0.3): Is the final summary clear,\
+      \ well-organized, and actionable for the merchandising team? Does it explain\
+      \ which products were flagged, why, what orders were placed, and any relevant\
+      \ context for the holiday promotion?\n   Score 0.3 if excellent, 0.2 if adequate,\
+      \ 0.1 if minimal, 0.0 if missing or confusing.\n\nTotal score = sum of the three\
+      \ dimension scores (max 1.0).\n"
+    type: llm_judge
+  name: audit_summary_quality
+  weight: 0.4
+task_id: inventory-019
+task_name: Seasonal Restocking Audit for Holiday Promotion
+tools:
+- description: List all products in the inventory, optionally filtered by category.
+  endpoint: /inventory/products
+  method: POST
+  name: list_products
+  service: inventory
+- description: Retrieve detailed information about a specific product by its product
+    ID.
+  endpoint: /inventory/products/get
+  method: POST
+  name: get_product
+  service: inventory
+- description: Create a restock order for a product with a specified quantity and
+    supplier.
+  endpoint: /inventory/orders/create
+  method: POST
+  name: create_order
+  service: inventory

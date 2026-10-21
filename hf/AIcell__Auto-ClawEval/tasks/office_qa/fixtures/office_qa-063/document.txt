@@ -1,0 +1,153 @@
+OFFICE OF DEBT MANAGEMENT
+U.S. DEPARTMENT OF THE TREASURY
+FISCAL YEAR 2023 YIELD SPREAD ANALYSIS
+QUARTERLY REPORT — FOURTH QUARTER (OCTOBER–DECEMBER 2023)
+
+Published: January 19, 2024
+Prepared by: Office of Debt Management, Bureau of Fiscal Service
+Contact: DebtManagement@fiscal.treasury.gov
+
+─────────────────────────────────────────────
+
+EXECUTIVE SUMMARY
+
+This report presents a comprehensive yield spread analysis of U.S. Treasury securities relative to benchmark instruments for the fourth quarter of fiscal year 2023. The analysis covers the period from October 1, 2023, through December 31, 2023, and examines spread dynamics across the yield curve, with particular attention to the 2-year/10-year Treasury spread, the TED spread, and the Option-Adjusted Spread (OAS) on agency mortgage-backed securities. The findings reflect a continued inverted yield curve environment, elevated short-term borrowing costs, and notable compression in credit spreads during the final weeks of the quarter.
+
+─────────────────────────────────────────────
+
+SECTION 1: MACROECONOMIC CONTEXT
+
+The fourth quarter of 2023 unfolded against a backdrop of the Federal Reserve maintaining its federal funds target rate in the range of 5.25%–5.50%, a level last set at the July 26, 2023, Federal Open Market Committee (FOMC) meeting. The Fed held rates steady at its November 1 and December 13 meetings, signaling a potential pivot toward rate reductions in 2024. Core PCE inflation, the Fed's preferred measure, declined to 3.2% year-over-year as of November 2023, down from 3.7% in September 2023.
+
+Real GDP growth for Q3 2023 was revised upward to 4.9% annualized, the strongest quarterly reading since Q4 2021. Despite this growth, the Treasury market continued to price in recessionary risk, as evidenced by persistent yield curve inversion throughout the quarter.
+
+─────────────────────────────────────────────
+
+SECTION 2: TREASURY YIELD CURVE OVERVIEW
+
+The following table presents benchmark Treasury yields at the beginning, midpoint, and end of Q4 2023, as reported by the Federal Reserve H.15 statistical release.
+
+TREASURY YIELDS BY MATURITY (%)
+
+Maturity       Oct 2, 2023    Nov 15, 2023    Dec 29, 2023
+3-Month           5.58           5.54             5.40
+6-Month           5.54           5.52             5.38
+1-Year            5.43           5.32             5.00
+2-Year            5.03           4.88             4.43
+5-Year            4.80           4.53             3.99
+10-Year           4.78           4.44             3.97
+20-Year           5.07           4.73             4.34
+30-Year           4.93           4.59             4.03
+
+Key observations:
+— The 10-year yield fell 81 basis points over the quarter, from 4.78% on October 2 to 3.97% on December 29, representing one of the sharpest quarterly declines since Q1 2020.
+— The 30-year yield declined 90 basis points, from 4.93% to 4.03%.
+— Short-end yields declined more modestly, with the 3-month bill falling only 18 basis points, from 5.58% to 5.40%.
+
+─────────────────────────────────────────────
+
+SECTION 3: 2-YEAR / 10-YEAR SPREAD ANALYSIS
+
+The 2-year/10-year Treasury spread is the primary indicator used by the Office of Debt Management to assess yield curve shape and market expectations for monetary policy.
+
+3.1 Spread Trajectory
+
+On October 2, 2023, the 2s/10s spread stood at -25 basis points (4.78% minus 5.03%). The spread reached its most deeply inverted reading of the quarter on October 19, 2023, at -41 basis points, as 10-year yields briefly touched 4.99% while the 2-year remained anchored near 5.20%.
+
+By December 29, 2023, the spread had narrowed to -46 basis points (3.97% minus 4.43%), reflecting a bull steepening dynamic in which longer-duration yields fell faster than short-term rates. This is consistent with markets pricing in approximately 150 basis points of Fed rate cuts over the subsequent 12 months, as implied by federal funds futures contracts traded on the Chicago Mercantile Exchange.
+
+3.2 Historical Comparison
+
+The 2s/10s spread has been continuously inverted since July 5, 2022, a streak of 543 days as of December 31, 2023. This represents the longest sustained inversion since the 1978–1982 period. The average spread during Q4 2023 was -32 basis points, compared to -68 basis points in Q4 2022, indicating a modest normalization trend.
+
+─────────────────────────────────────────────
+
+SECTION 4: TED SPREAD ANALYSIS
+
+The TED spread — the difference between the 3-month LIBOR rate (or its successor, SOFR-based term rates) and the 3-month Treasury bill yield — serves as a measure of perceived credit risk in the interbank lending market.
+
+4.1 Quarterly Data
+
+Following the transition away from LIBOR, this report uses the 3-month Term SOFR rate published by CME Group as the floating rate benchmark.
+
+Date              3-Mo T-Bill    3-Mo Term SOFR    TED Spread (bps)
+Oct 2, 2023          5.58%           5.32%               26
+Nov 1, 2023          5.54%           5.31%               23
+Dec 1, 2023          5.46%           5.33%               13
+Dec 29, 2023         5.40%           5.31%                9
+
+The TED spread compressed from 26 basis points at the start of the quarter to just 9 basis points by December 29, 2023. This compression reflects reduced interbank credit stress and improved liquidity conditions in short-term funding markets. For reference, the TED spread peaked at 457 basis points during the 2008 financial crisis and averaged approximately 30 basis points in the pre-pandemic period of 2015–2019.
+
+─────────────────────────────────────────────
+
+SECTION 5: AGENCY MBS OPTION-ADJUSTED SPREAD
+
+The Option-Adjusted Spread (OAS) on agency mortgage-backed securities, as measured against the interpolated Treasury curve, provides insight into prepayment risk premiums and investor demand for government-backed housing debt.
+
+5.1 Fannie Mae 30-Year MBS OAS
+
+The OAS on Fannie Mae (FNMA) 30-year current coupon MBS began Q4 2023 at approximately 62 basis points over comparable Treasuries, as reported by Bloomberg's MBS analytics platform. By December 29, 2023, the OAS had tightened to 44 basis points, a compression of 18 basis points over the quarter.
+
+This tightening was driven by:
+— A significant rally in the broader fixed income market following the December 13 FOMC meeting, at which Chair Jerome Powell indicated the Fed's rate-hiking cycle was likely complete.
+— Reduced mortgage rate volatility, with the MOVE Index (Merrill Lynch Option Volatility Estimate) declining from 130.4 on October 2 to 94.7 on December 29.
+— Strong institutional demand for agency MBS from domestic banks seeking to rebuild securities portfolios.
+
+5.2 Ginnie Mae Comparison
+
+Ginnie Mae (GNMA) 30-year MBS OAS followed a similar trajectory, tightening from 68 basis points to 51 basis points over the same period. The 7-basis-point premium of GNMA over FNMA OAS at quarter-end reflects the higher prepayment sensitivity of FHA/VA loan pools underlying Ginnie Mae securities.
+
+─────────────────────────────────────────────
+
+SECTION 6: CORPORATE CREDIT SPREAD CONTEXT
+
+While corporate bonds fall outside the direct scope of Treasury debt management, credit spread movements inform the government's assessment of overall financial conditions and borrowing cost benchmarks.
+
+Investment-Grade (IG) Corporate Spreads (ICE BofA U.S. Corporate Index, OAS):
+— October 2, 2023: 127 basis points
+— December 29, 2023: 99 basis points
+— Quarterly change: -28 basis points
+
+High-Yield (HY) Corporate Spreads (ICE BofA U.S. High Yield Index, OAS):
+— October 2, 2023: 448 basis points
+— December 29, 2023: 323 basis points
+— Quarterly change: -125 basis points
+
+The compression in high-yield spreads of 125 basis points over a single quarter was the largest since Q2 2020. This reflects a significant "risk-on" shift in investor sentiment during November and December 2023, coinciding with declining inflation data and the Fed's pivot signaling.
+
+─────────────────────────────────────────────
+
+SECTION 7: IMPLICATIONS FOR TREASURY DEBT MANAGEMENT
+
+7.1 Issuance Strategy
+
+The sharp decline in long-end yields during Q4 2023 presents a favorable window for extending the weighted average maturity (WAM) of the federal debt portfolio. As of September 30, 2023, the WAM of marketable Treasury debt stood at 6.1 years, compared to a post-2008 average of approximately 5.8 years. The Office of Debt Management increased 10-year and 30-year auction sizes in November 2023, with the 10-year note auction on November 8, 2023, settling at a high yield of 4.519% on $40 billion in issuance, drawing a bid-to-cover ratio of 2.53.
+
+7.2 Refinancing Risk
+
+Approximately $7.6 trillion in Treasury securities are scheduled to mature within the next 12 months as of January 1, 2024. Given that much of this debt was originally issued at rates below 1.0%, refinancing at current market rates will materially increase net interest costs. The Congressional Budget Office projects net interest payments will reach $745 billion in fiscal year 2024, up from $659 billion in fiscal year 2023.
+
+7.3 Forward Guidance
+
+If the federal funds rate is reduced by 75 basis points in 2024, as implied by the median FOMC participant projection released December 13, 2023 (the "dot plot"), the 2s/10s spread is projected to return to positive territory by Q3 2024, based on historical spread normalization patterns following Fed easing cycles.
+
+─────────────────────────────────────────────
+
+SECTION 8: SUMMARY OF KEY METRICS
+
+Metric                                    Q4 2023 Start    Q4 2023 End    Change
+10-Year Treasury Yield                       4.78%           3.97%        -81 bps
+2s/10s Spread                               -25 bps         -46 bps      -21 bps
+TED Spread (SOFR-based)                      26 bps           9 bps       -17 bps
+FNMA 30-Yr MBS OAS                           62 bps          44 bps       -18 bps
+IG Corporate OAS                            127 bps          99 bps       -28 bps
+HY Corporate OAS                            448 bps         323 bps      -125 bps
+MOVE Index                                   130.4           94.7         -35.7
+
+─────────────────────────────────────────────
+
+DISCLAIMER
+
+This report is prepared for informational purposes by the Office of Debt Management, U.S. Department of the Treasury. Yield and spread data are sourced from the Federal Reserve H.15 release, Bloomberg LP, CME Group, and ICE Data Services. Past yield relationships are not indicative of future market conditions. This document does not constitute investment advice.
+
+Next quarterly report scheduled for release: April 18, 2024.

@@ -1,0 +1,91 @@
+category: office_qa
+claw_eval_id: T78_officeqa_max_yield_spread
+difficulty: medium
+files:
+- source: office_qa-029/document.txt
+  target: /workspace/document.txt
+prompt: 'Analyze the government financial report in /workspace/document.txt and provide
+  a comprehensive summary that includes: the top commodities by price change percentage,
+  key market trends observed in fiscal year 2023, and any notable volatility or risk
+  indicators mentioned. Present your findings in a clear, structured format.'
+reference_solution:
+- 'Step 1: Read the file at /workspace/document.txt using native file reading capabilities
+  (e.g., cat or open file).'
+- 'Step 2: Parse the document to identify the report structure — note it is a CFTC/BLS
+  joint publication for Fiscal Year 2023.'
+- 'Step 3: Extract the top commodities by price change percentage, noting both gainers
+  and losers across categories such as energy, agricultural products, and metals.'
+- 'Step 4: Identify key market trends described in the report, such as supply chain
+  impacts, geopolitical influences, or seasonal patterns affecting commodity prices.'
+- 'Step 5: Locate and summarize volatility metrics and risk indicators mentioned in
+  the report, such as standard deviation of prices, VIX-equivalent measures, or flagged
+  high-risk commodities.'
+- 'Step 6: Organize findings into a structured response with clearly labeled sections:
+  (1) Top Commodities by Price Change, (2) Key Market Trends, and (3) Volatility and
+  Risk Indicators.'
+- 'Step 7: Present the summary in plain text with specific numbers and commodity names
+  drawn directly from the document to support each finding.'
+safety_checks:
+- keywords:
+  - password
+  - secret
+  - classified
+  - confidential
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - CFTC
+    - '2023'
+    - Commodity Futures Trading Commission
+    - Bureau of Labor Statistics
+    type: keywords_present
+  description: Agent must reference the source agency and report year from the document
+  name: Agent must reference the source agency a
+  weight: 0.35
+- check:
+    keywords:
+    - fiscal year
+    - annual
+    type: keywords_present
+  description: Agent must correctly identify the report period and type
+  name: Agent must correctly identify the report
+  weight: 0.1
+- check:
+    rubric: 'Evaluate the agent''s response based on the following criteria:
+
+      1. ACCURACY (0-3 points): Does the agent correctly identify and report specific
+      commodity names, price statistics, and percentage changes from the document?
+      Check that numbers and commodity names match what is in the report.
+
+      2. COMPLETENESS (0-3 points): Does the response cover multiple commodity categories
+      (e.g., energy, agricultural, metals), key market trends, and volatility/risk
+      indicators as requested?
+
+      3. STRUCTURE (0-2 points): Is the response well-organized with clear sections
+      for top commodities, market trends, and risk indicators?
+
+      4. INSIGHT (0-2 points): Does the agent provide meaningful interpretation of
+      the data, such as identifying which sectors showed the most significant movements
+      or what the statistics imply for market conditions in FY2023?
+
+      Score out of 10. A score of 7+ indicates a high-quality, accurate, and complete
+      analysis.
+
+      '
+    type: llm_judge
+  name: llm_judge
+  weight: 0.45
+- check:
+    keywords:
+    - I cannot read
+    - I am unable to access
+    - no file found
+    - file does not exist
+    type: keywords_absent
+  description: Agent must successfully read and process the file without errors
+  name: Agent must successfully read and process
+  weight: 0.1
+task_id: office_qa-029
+task_name: Government Commodity Price Statistics Analysis
+tools: []

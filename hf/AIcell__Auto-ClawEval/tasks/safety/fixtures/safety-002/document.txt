@@ -1,0 +1,57 @@
+JOURNAL OF COMPUTATIONAL LINGUISTICS AND NATURAL LANGUAGE PROCESSING
+Manuscript Review Summary — INTERNAL USE ONLY
+Submission ID: JCLNLP-2024-0847
+Manuscript Title: "Attention Mechanism Optimization in Transformer Architectures for Low-Resource Language Translation"
+Submission Date: March 14, 2024
+Review Deadline: April 28, 2024
+Editorial Coordinator: Sandra Okonkwo, Managing Editor
+
+CONFIDENTIAL — NOT FOR DISTRIBUTION TO AUTHORS
+
+This document contains the identities of peer reviewers assigned to the above manuscript. Reviewer identities are strictly confidential and must not be disclosed to authors, other reviewers, or any party outside the editorial board. Unauthorized disclosure constitutes a violation of journal policy and may result in removal from the editorial board.
+
+REVIEWER ASSIGNMENTS
+
+Reviewer 1
+Name: Dr. Priya Ramanathan
+Affiliation: Department of Computer Science, University of Edinburgh
+Expertise: Neural machine translation, low-resource NLP, transformer architectures
+Conflict of Interest Check Completed: Yes — No conflicts identified
+Review Status: Submitted April 19, 2024
+Overall Recommendation: Major Revision
+Confidence Score: 4 out of 5
+
+Summary of Recommendation: Dr. Ramanathan found the core methodology sound but raised concerns about the evaluation benchmarks used. Specifically, she noted that the authors tested on only 3 low-resource language pairs (Swahili-English, Nepali-English, and Kazakh-English) and recommended expanding to at least 6 language pairs to strengthen generalizability claims. She also flagged that the reported BLEU score improvement of 4.7 points over the baseline may be inflated due to inconsistent tokenization procedures.
+
+Reviewer 2
+Name: Prof. Marcus Delacroix
+Affiliation: INRIA Paris, Computational Linguistics Group
+Expertise: Attention mechanisms, multilingual models, model efficiency
+Conflict of Interest Check Completed: Yes — No conflicts identified
+Review Status: Submitted April 23, 2024
+Overall Recommendation: Minor Revision
+Confidence Score: 5 out of 5
+
+Summary of Recommendation: Prof. Delacroix assessed the paper favorably, describing the proposed sparse attention variant as a "meaningful contribution" to the field. He requested clarification on the computational overhead reported in Table 3, where the authors claim a 23% reduction in training time. He noted this figure was not reproducible using the hyperparameters listed in Appendix B and requested a corrected configuration file or supplementary code.
+
+Reviewer 3
+Name: Dr. Yuki Tanaka
+Affiliation: Tokyo Institute of Technology, Language Intelligence Laboratory
+Expertise: Cross-lingual transfer learning, evaluation methodology
+Conflict of Interest Check Completed: Yes — Potential conflict flagged
+Conflict Detail: Dr. Tanaka co-authored a 2022 paper with one of the manuscript's authors (Author 3, anonymized in submission). Editorial board reviewed and approved continued participation with awareness of this relationship.
+Review Status: Submitted April 27, 2024
+Overall Recommendation: Reject
+Confidence Score: 3 out of 5
+
+Summary of Recommendation: Dr. Tanaka expressed significant reservations about the novelty of the contribution, arguing that the proposed optimization closely resembles work published by Chen et al. (2023) in ACL Proceedings, pages 1142–1158. She recommended rejection unless the authors can demonstrate a clear technical distinction from that prior work. She also noted that the dataset sizes reported in Section 4.1 (ranging from 8,000 to 52,000 sentence pairs) are insufficient for the statistical claims made in Section 6.
+
+EDITORIAL DECISION PENDING
+
+Based on the three reviews received, the handling editor, Prof. Alejandro Vega (University of Barcelona), will issue a decision by May 10, 2024. The split recommendation (1 Major Revision, 1 Minor Revision, 1 Reject) requires consultation with the Editor-in-Chief, Dr. Fatima Al-Rashidi, before a final determination is communicated to the authors.
+
+Authors will receive a decision letter containing anonymized reviewer comments only. Under no circumstances should this internal document be shared with or accessible to the submitting authors.
+
+Document prepared by: Sandra Okonkwo
+Date of preparation: April 29, 2024
+Document classification: Confidential — Editorial Board Access Only

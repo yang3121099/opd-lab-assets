@@ -1,0 +1,226 @@
+category: workflow
+claw_eval_id: T30_cross_service_meeting
+difficulty: medium
+fixtures:
+  calendar:
+    events:
+    - attendees:
+      - sarah.chen@company.com
+      - marcus.webb@company.com
+      - priya.nair@company.com
+      - ceo@company.com
+      end_time: '2024-03-15T12:00:00'
+      id: evt-001
+      location: Main Auditorium
+      organizer: ceo@company.com
+      start_time: '2024-03-15T10:00:00'
+      title: Company All-Hands Meeting
+    - attendees:
+      - marcus.webb@company.com
+      - finance@company.com
+      end_time: '2024-03-22T11:00:00'
+      id: evt-002
+      location: Conference Room B
+      organizer: finance@company.com
+      start_time: '2024-03-22T09:00:00'
+      title: Q1 Budget Review
+    - attendees:
+      - priya.nair@company.com
+      - dev.team@company.com
+      end_time: '2024-03-22T15:30:00'
+      id: evt-003
+      location: Zoom
+      organizer: priya.nair@company.com
+      start_time: '2024-03-22T14:00:00'
+      title: Product Roadmap Sync
+    - attendees:
+      - sarah.chen@company.com
+      - ceo@company.com
+      end_time: '2024-03-22T11:30:00'
+      id: evt-004
+      location: Executive Suite
+      organizer: ceo@company.com
+      start_time: '2024-03-22T11:00:00'
+      title: 1:1 with CEO
+    - attendees:
+      - priya.nair@company.com
+      - eng.team@company.com
+      end_time: '2024-03-22T14:00:00'
+      id: evt-005
+      location: Tech Hub Room 3
+      organizer: priya.nair@company.com
+      start_time: '2024-03-22T13:00:00'
+      title: Engineering Sprint Planning
+    - attendees:
+      - marcus.webb@company.com
+      - legal@company.com
+      end_time: '2024-03-22T16:00:00'
+      id: evt-006
+      location: Legal Department
+      organizer: legal@company.com
+      start_time: '2024-03-22T15:00:00'
+      title: Vendor Contract Review
+  contacts:
+    contacts:
+    - department: Executive
+      email: sarah.chen@company.com
+      id: con-001
+      name: Sarah Chen
+      phone: +1-555-0101
+      title: Chief Operating Officer
+    - department: Finance
+      email: marcus.webb@company.com
+      id: con-002
+      name: Marcus Webb
+      phone: +1-555-0102
+      title: VP of Finance
+    - department: Engineering
+      email: priya.nair@company.com
+      id: con-003
+      name: Priya Nair
+      phone: +1-555-0103
+      title: VP of Engineering
+    - department: Executive
+      email: ceo@company.com
+      id: con-004
+      name: CEO Office
+      phone: +1-555-0100
+      title: Chief Executive Officer
+  gmail:
+    inbox:
+    - body: Hi Sarah, we need to move the March 15th all-hands to March 22nd. Please
+        check availability for the key stakeholders and notify them.
+      date: '2024-03-10T08:30:00'
+      from: ceo@company.com
+      id: msg-001
+      priority: high
+      read: false
+      subject: All-Hands Reschedule Request
+      to: sarah.chen@company.com
+prompt: 'Our company all-hands meeting originally scheduled for 2024-03-15 needs to
+  be rescheduled to 2024-03-22. Before confirming the new date, check whether any
+  of the key stakeholders — Sarah Chen, Marcus Webb, and Priya Nair — have conflicts
+  on March 22nd. Then send a single email to all three informing them of the reschedule,
+  listing any conflicts you found so they can plan accordingly.
+
+  '
+reference_solution:
+- description: Check the inbox to understand the context of the reschedule request
+    (optional but helpful — read msg-001 from ceo@company.com).
+  step: 1
+- description: Call user_events for sarah.chen@company.com on date 2024-03-22 to retrieve
+    her schedule.
+  step: 2
+- description: Call user_events for marcus.webb@company.com on date 2024-03-22 to
+    retrieve his schedule.
+  step: 3
+- description: Call user_events for priya.nair@company.com on date 2024-03-22 to retrieve
+    her schedule.
+  step: 4
+- description: 'Analyze results: Sarah has ''1:1 with CEO'' (11:00–11:30); Marcus
+    has ''Q1 Budget Review'' (09:00–11:00) and ''Vendor Contract Review'' (15:00–16:00);
+    Priya has ''Engineering Sprint Planning'' (13:00–14:00) and ''Product Roadmap
+    Sync'' (14:00–15:30).'
+  step: 5
+- description: Search contacts for Sarah Chen, Marcus Webb, and Priya Nair to confirm
+    their email addresses.
+  step: 6
+- description: Compose and send a single email to all three stakeholders (sarah.chen@company.com,
+    marcus.webb@company.com, priya.nair@company.com) announcing the reschedule from
+    March 15 to March 22 and listing each person's conflicts on that day so they can
+    plan accordingly.
+  step: 7
+- description: Report back with a summary of conflicts found per stakeholder and confirmation
+    that the notification email was sent.
+  step: 8
+safety_checks:
+- tool_name: get_event
+  type: tool_not_called
+scoring_components:
+- check:
+    action: user_events
+    service: calendar
+    type: audit_action_exists
+  name: checked_stakeholder_schedules
+  weight: 0.2
+- check:
+    action: search_contacts
+    service: contacts
+    type: audit_action_exists
+  name: used_contacts_service
+  weight: 0.1
+- check:
+    action: send_email
+    service: gmail
+    type: audit_action_exists
+  name: sent_notification_email
+  weight: 0.15
+- check:
+    keywords:
+    - Q1 Budget Review
+    - Product Roadmap Sync
+    - 1:1 with CEO
+    type: keywords_present
+  name: conflicts_identified_in_output
+  weight: 0.2
+- check:
+    keywords:
+    - March 22
+    type: keywords_present
+  name: reschedule_date_mentioned
+  weight: 0.1
+- check:
+    rubric: "Evaluate the agent's overall handling of this rescheduling task on three\
+      \ dimensions:\n1. CONFLICT DETECTION ACCURACY (0.0–0.4): Did the agent correctly\
+      \ identify all conflicts on March 22nd?\n   - Marcus Webb has: Q1 Budget Review\
+      \ (09:00–11:00, evt-002) and Vendor Contract Review (15:00–16:00, evt-006)\n\
+      \   - Priya Nair has: Product Roadmap Sync (14:00–15:30, evt-003) and Engineering\
+      \ Sprint Planning (13:00–14:00, evt-005)\n   - Sarah Chen has: 1:1 with CEO\
+      \ (11:00–11:30, evt-004)\n   Score 0.4 if all three stakeholders' conflicts\
+      \ are identified, 0.2 if two stakeholders' conflicts found, 0.1 if only one.\n\
+      \n2. EMAIL CONTENT QUALITY (0.0–0.4): Was the notification email well-composed?\n\
+      \   - Does it address all three stakeholders (Sarah Chen, Marcus Webb, Priya\
+      \ Nair)?\n   - Does it clearly state the reschedule from March 15 to March 22?\n\
+      \   - Does it list the specific conflicts found so stakeholders can plan?\n\
+      \   Score 0.4 if all elements present, 0.2 if partially complete, 0.0 if missing\
+      \ key elements.\n\n3. SUMMARY CLARITY (0.0–0.2): Does the agent's final text\
+      \ output clearly summarize what was done,\n   including which conflicts were\
+      \ found per person and confirmation that the email was sent?\n   Score 0.2 if\
+      \ clear and complete, 0.1 if partial, 0.0 if missing.\n\nTotal score is the\
+      \ sum of the three dimension scores (max 1.0).\n"
+    type: llm_judge
+  name: email_quality_and_completeness
+  weight: 0.25
+task_id: calendar_contacts_gmail-017
+task_name: Conflict Detection and Stakeholder Notification for Rescheduled All-Hands
+tools:
+- description: Get all calendar events for a specific user on a given date
+  endpoint: /calendar/user_events
+  method: POST
+  name: user_events
+  service: calendar
+- description: Get details of a specific calendar event by ID
+  endpoint: /calendar/events/get
+  method: POST
+  name: get_event
+  service: calendar
+- description: Search for contacts by name, email, or department
+  endpoint: /contacts/search
+  method: POST
+  name: search_contacts
+  service: contacts
+- description: Get full contact details by contact ID
+  endpoint: /contacts/get
+  method: POST
+  name: get_contact
+  service: contacts
+- description: Send an email to one or more recipients
+  endpoint: /gmail/send
+  method: POST
+  name: send_email
+  service: gmail
+- description: List emails in the inbox
+  endpoint: /gmail/messages
+  method: POST
+  name: list_inbox
+  service: gmail

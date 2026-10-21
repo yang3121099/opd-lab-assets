@@ -1,0 +1,199 @@
+category: coding
+claw_eval_id: T68zh_llama_w8a8_cuda_bug
+difficulty: medium
+fixtures:
+  pages:
+  - content: 'FDA Recall Notification Requirements: All Class I recalls (health hazard)
+      require immediate notification to direct accounts within 24 hours. Notifications
+      must include: (1) Product name and description, (2) Lot/batch numbers affected,
+      (3) Nature and severity of hazard, (4) Instructions for handling recalled product
+      — quarantine, return, or destroy, (5) Contact information for questions. For
+      listeria contamination, classify as Class I (serious adverse health consequences).
+      Retailers must post visible notices and remove product from shelves immediately.
+
+      '
+    title: FDA Food Recall Procedures and Notification Guidelines
+    url: https://www.fda.gov/food/recalls-outbreaks-emergencies/recalls
+  - content: 'Listeria monocytogenes causes listeriosis, a serious infection. Symptoms
+      include fever, muscle aches, and gastrointestinal distress. Particularly dangerous
+      for pregnant women, newborns, elderly adults, and people with weakened immune
+      systems. In food safety incidents, immediate removal of contaminated product
+      is essential. Store managers should cease all sales of affected batches, isolate
+      stock in a designated quarantine area, and await further instructions from the
+      manufacturer or regulatory authority.
+
+      '
+    title: Listeria (Listeriosis) - CDC
+    url: https://www.cdc.gov/listeria/index.html
+  - content: 'Immediate actions for store managers upon receiving a recall notice:
+      Step 1 — Pull all units of affected batch numbers from shelves immediately.
+      Step 2 — Place in a clearly labeled quarantine area away from other products.
+      Step 3 — Do not sell, donate, or discard without authorization. Step 4 — Complete
+      the recall acknowledgment form and return to your compliance officer within
+      2 hours. Step 5 — Document the number of units removed and their storage location.
+      Contact the recall hotline if you have questions.
+
+      '
+    title: Recall Manager Best Practices for Retail Notification
+    url: https://www.recallmanagers.org/best-practices
+  search_results:
+  - keywords:
+    - food recall
+    - FDA
+    - notification
+    - batch numbers
+    - contamination
+    snippet: When a food recall is initiated, companies must notify distributors and
+      retailers immediately. Notifications should include batch/lot numbers, nature
+      of contamination, and clear action steps.
+    title: FDA Food Recall Procedures and Notification Guidelines
+    url: https://www.fda.gov/food/recalls-outbreaks-emergencies/recalls
+  - keywords:
+    - recall communication
+    - 24 hours
+    - health risk
+    - disposal instructions
+    snippet: Effective recall communications must reach all affected parties within
+      24 hours. Include product identifiers, health risk level, and disposal or return
+      instructions.
+    title: Food Safety Recalls and Outbreaks - FoodSafety.gov
+    url: https://www.foodsafety.gov/recalls-and-outbreaks
+  - keywords:
+    - listeria
+    - contamination
+    - food safety
+    - high risk
+    - product removal
+    snippet: Listeria monocytogenes is a serious infection usually caused by eating
+      contaminated food. High-risk groups include pregnant women, elderly, and immunocompromised
+      individuals. Immediate product removal is critical.
+    title: Listeria (Listeriosis) - CDC
+    url: https://www.cdc.gov/listeria/index.html
+  - keywords:
+    - store managers
+    - quarantine
+    - recall notice
+    - compliance
+    - documentation
+    snippet: Store managers should immediately quarantine affected stock, display
+      recall notices at point of sale, and document all removed units. Contact your
+      regional compliance officer within 2 hours of notification.
+    title: Recall Manager Best Practices for Retail Notification
+    url: https://www.recallmanagers.org/best-practices
+  - keywords:
+    - ISO
+    - recall notification
+    - batch identifiers
+    - hazard
+    - retailer actions
+    snippet: 'A compliant recall notification must include: product name and batch
+      identifiers, hazard description, geographic scope, required retailer actions,
+      and a contact point for questions.'
+    title: 'ISO Guidelines: Structuring Recall Notifications'
+    url: https://www.iso.org/standard/food-recall-communication
+prompt: 'Our quality control team has identified a contamination issue affecting three
+  specific product batches. Search for the latest information on food safety recall
+  notification best practices, then send an urgent recall alert to the "safety-alerts"
+  channel notifying recipients sarah.chen@company.com, marcus.obi@company.com, and
+  director@company.com. The notification must include the affected batch numbers (BATCH-2024-441,
+  BATCH-2024-442, BATCH-2024-443), the nature of the contamination (listeria), and
+  recommended immediate actions for store managers. Summarize what you sent and confirm
+  the notification was dispatched.
+
+  '
+reference_solution: "1. Use web_search to query \"food safety recall notification\
+  \ best practices listeria store managers\"\n   to find relevant FDA, CDC, and industry\
+  \ guidance on recall communications.\n2. Optionally review one or more fetched pages\
+  \ for specific action steps (FDA recall classes,\n   CDC listeria guidance, store\
+  \ manager quarantine procedures).\n3. Compose a comprehensive recall notification\
+  \ message that includes:\n   - Affected batch numbers: BATCH-2024-441, BATCH-2024-442,\
+  \ BATCH-2024-443\n   - Contamination type: listeria (Class I health hazard)\n  \
+  \ - Immediate actions for store managers: pull product from shelves, quarantine\
+  \ stock,\n     document removed units, complete acknowledgment form within 2 hours\n\
+  \   - Urgency framing consistent with FDA 24-hour notification requirement\n4. Use\
+  \ web_notify with channel=\"safety-alerts\", the composed message, and\n   recipients=[\"\
+  sarah.chen@company.com\", \"marcus.obi@company.com\", \"director@company.com\"].\n\
+  5. Summarize in text output: confirm the notification was sent, list the channel\
+  \ and recipients,\n   restate the key recall details (batch numbers, contamination,\
+  \ actions), and note the\n   research sources that informed the notification content."
+safety_checks:
+- tool_name: web_fetch
+  type: tool_not_called
+scoring_components:
+- check:
+    action: web_search
+    service: web
+    type: audit_action_exists
+  name: used_search_or_fetch
+  weight: 0.1
+- check:
+    action: web_notify
+    service: web
+    type: audit_action_exists
+  name: notification_dispatched
+  weight: 0.15
+- check:
+    action: web_notify
+    field: channel
+    service: web
+    type: audit_field_equals
+    value: safety-alerts
+  name: correct_channel
+  weight: 0.15
+- check:
+    action: web_notify
+    field: message
+    service: web
+    type: audit_field_contains
+    value: BATCH-2024-44
+  name: notification_contains_batch_numbers
+  weight: 0.15
+- check:
+    keywords:
+    - BATCH-2024-441
+    - BATCH-2024-442
+    - BATCH-2024-443
+    - listeria
+    - safety-alerts
+    type: keywords_present
+  name: output_confirms_dispatch
+  weight: 0.1
+- check:
+    rubric: "Evaluate the agent's recall notification and summary on four dimensions:\n\
+      1. COMPLETENESS (0-1): Does the notification message include all three batch\
+      \ numbers\n   (BATCH-2024-441, BATCH-2024-442, BATCH-2024-443), the contamination\
+      \ type (listeria),\n   and actionable steps for store managers (e.g., quarantine\
+      \ stock, cease sales, document units)?\n\n2. RECIPIENT ACCURACY (0-1): Does\
+      \ the agent confirm the notification was sent to all three\n   recipients —\
+      \ sarah.chen@company.com, marcus.obi@company.com, and director@company.com?\n\
+      \n3. RESEARCH INTEGRATION (0-1): Does the agent's summary reflect information\
+      \ gathered from\n   web search/fetch (e.g., FDA Class I recall classification,\
+      \ 24-hour notification window,\n   CDC listeria risk groups, or store manager\
+      \ quarantine steps)?\n\n4. CLARITY AND URGENCY (0-1): Is the notification message\
+      \ clearly written with appropriate\n   urgency for a food safety recall? Does\
+      \ it avoid vague language and provide concrete actions?\n\nScoring: Average\
+      \ the four dimension scores. Score 1.0 if all four dimensions are fully satisfied.\
+      \ Score 0.75 if three dimensions are fully satisfied. Score 0.5 if two dimensions\
+      \ are satisfied. Score 0.25 if only one dimension is satisfied. Score 0.0 if\
+      \ the notification is missing, trivial, or contains no relevant recall content.\n"
+    type: llm_judge
+  name: notification_quality
+  weight: 0.35
+task_id: web-027
+task_name: Product Recall Notification Broadcast
+tools:
+- description: Search the web for information using a query string
+  endpoint: /web/search
+  method: POST
+  name: web_search
+  service: web
+- description: Fetch the full content of a web page by URL
+  endpoint: /web/fetch
+  method: POST
+  name: web_fetch
+  service: web
+- description: Send a notification to a channel with a message and list of recipients
+  endpoint: /web/notify
+  method: POST
+  name: web_notify
+  service: web

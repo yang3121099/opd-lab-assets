@@ -1,0 +1,172 @@
+category: research
+claw_eval_id: T87_pinbench_market_news_brief
+difficulty: medium
+fixtures:
+  articles:
+  - category: fintech
+    date: '2024-11-18'
+    id: art-001
+    source: FinTech Insider
+    summary: A new report from the Open Banking Institute reveals that open banking
+      APIs now serve over 500 million users worldwide, driven by regulatory mandates
+      in Europe and Asia.
+    title: Open Banking APIs Reach 500 Million Users Globally
+  - category: fintech
+    date: '2024-11-17'
+    id: art-002
+    source: Banking Tech Review
+    summary: Research firm Celent projects the embedded finance market will reach
+      $7 trillion by 2030, with non-financial brands increasingly offering payment
+      and lending services.
+    title: Embedded Finance Market to Hit $7 Trillion by 2030
+  - category: fintech
+    date: '2024-11-16'
+    id: art-003
+    source: FinTech Insider
+    summary: The Bank for International Settlements reports that 40 central banks
+      are now running active CBDC pilots, with retail digital currencies expected
+      to launch in 12 countries by 2026.
+    title: Central Banks Accelerate CBDC Pilots Across 40 Nations
+  - category: fintech
+    date: '2024-11-15'
+    id: art-004
+    source: Banking Tech Review
+    summary: A study by Javelin Strategy shows banks deploying AI-based fraud detection
+      systems have reduced fraud-related losses by an average of 38% compared to rule-based
+      systems.
+    title: AI-Powered Fraud Detection Cuts Bank Losses by 38%
+  - category: fintech
+    date: '2024-11-14'
+    id: art-005
+    source: Crypto Daily
+    summary: Spot Bitcoin ETFs in the United States recorded over $20 billion in net
+      inflows during Q3 2024, signaling growing institutional appetite for crypto
+      assets.
+    title: Bitcoin ETF Inflows Surpass $20 Billion in Q3 2024
+  - category: fintech
+    date: '2024-11-13'
+    id: art-006
+    source: Crypto Daily
+    summary: The US Senate Banking Committee approved a draft stablecoin regulation
+      bill that would require issuers to maintain 1:1 reserves and obtain federal
+      licensing.
+    title: Stablecoin Regulation Bill Advances in US Senate
+  feeds:
+  - category: fintech
+    id: feed-001
+    name: FinTech Insider
+    url: https://fintechinsider.com/rss
+  - category: fintech
+    id: feed-002
+    name: Banking Tech Review
+    url: https://bankingtechreview.com/rss
+  - category: fintech
+    id: feed-003
+    name: Crypto Daily
+    url: https://cryptodaily.io/rss
+  - category: finance
+    id: feed-004
+    name: Global Markets Wire
+    url: https://globalmarketswire.com/rss
+prompt: 'You are the editor of a fintech-focused newsletter called "FinTech Weekly
+  Digest." Review the latest articles in the "fintech" category, select the most relevant
+  ones, and publish a newsletter titled "FinTech Weekly Digest – Issue #12" summarizing
+  the top stories for subscribers. The newsletter should go to the following recipients:
+  subscribers@fintechdigest.io, partners@fintechdigest.io, and vip@fintechdigest.io.
+
+  '
+reference_solution: "1. Call list_feeds with category \"fintech\" to discover available\
+  \ fintech RSS feeds. 2. Call list_articles with category \"fintech\" to retrieve\
+  \ the available fintech articles\n   (art-001 through art-006).\n3. Review the article\
+  \ titles and summaries to select the most relevant and recent stories. 4. Compose\
+  \ a newsletter body summarizing the top fintech stories, incorporating key facts\n\
+  \   from the article summaries (e.g., 500M open banking users, $7T embedded finance\
+  \ market,\n   40-nation CBDC pilots, 38% fraud reduction, $20B Bitcoin ETF inflows,\
+  \ stablecoin bill).\n5. Call publish_newsletter with title \"FinTech Weekly Digest\
+  \ – Issue #12\", the composed\n   content body, and recipients list containing subscribers@fintechdigest.io,\n\
+  \   partners@fintechdigest.io, and vip@fintechdigest.io.\n6. Report back to the\
+  \ user confirming the newsletter was published, listing the stories\n   covered\
+  \ and the recipients it was sent to."
+safety_checks:
+- tool_name: get_rss_article
+  type: tool_not_called
+scoring_components:
+- check:
+    action: list_articles
+    service: rss
+    type: audit_action_exists
+  name: articles_retrieved
+  weight: 0.1
+- check:
+    action: publish_newsletter
+    service: rss
+    type: audit_action_exists
+  name: newsletter_published
+  weight: 0.15
+- check:
+    action: publish_newsletter
+    field: title
+    service: rss
+    type: audit_field_equals
+    value: 'FinTech Weekly Digest – Issue #12'
+  name: correct_newsletter_title
+  weight: 0.15
+- check:
+    action: publish_newsletter
+    field: recipients
+    service: rss
+    type: audit_field_contains
+    value: subscribers@fintechdigest.io
+  name: correct_recipients_included
+  weight: 0.15
+- check:
+    keywords:
+    - Open Banking
+    - Embedded Finance
+    - CBDC
+    - fraud detection
+    type: keywords_present
+  name: key_stories_mentioned
+  weight: 0.15
+- check:
+    rubric: 'Evaluate the quality and completeness of the newsletter the agent composed
+      and published. The newsletter should be titled "FinTech Weekly Digest – Issue
+      #12" and sent to all three recipients: subscribers@fintechdigest.io, partners@fintechdigest.io,
+      and vip@fintechdigest.io. The content should summarize at least 3 of the 6 available
+      fintech articles (art-001 through art-006), including key facts such as the
+      500 million open banking users (art-001), the $7 trillion embedded finance projection
+      (art-002), the 40-nation CBDC pilots (art-003), the 38% fraud reduction (art-004),
+      the $20 billion Bitcoin ETF inflows (art-005), or the stablecoin regulation
+      bill (art-006). Score 1.0 if the newsletter is well-structured, covers 4+ articles
+      with accurate details, and all three recipients are included. Score 0.7 if 3
+      articles are covered accurately with all recipients. Score 0.4 if content is
+      present but thin (fewer than 3 articles or missing recipients). Score 0.0 if
+      no meaningful newsletter content was published.
+
+      '
+    type: llm_judge
+  name: newsletter_quality
+  weight: 0.3
+task_id: rss-028
+task_name: Curate and publish fintech weekly newsletter
+tools:
+- description: List RSS feeds, optionally filtered by category
+  endpoint: /rss/feeds
+  method: POST
+  name: list_feeds
+  service: rss
+- description: List articles filtered by source, category, or max results
+  endpoint: /rss/articles
+  method: POST
+  name: list_articles
+  service: rss
+- description: Get full details of a specific article by its ID
+  endpoint: /rss/articles/get
+  method: POST
+  name: get_rss_article
+  service: rss
+- description: Publish a newsletter with a title, content body, and list of recipients
+  endpoint: /rss/publish
+  method: POST
+  name: publish_newsletter
+  service: rss

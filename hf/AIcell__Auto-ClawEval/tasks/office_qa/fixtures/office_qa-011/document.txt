@@ -1,0 +1,176 @@
+OFFICE OF MANAGEMENT AND BUDGET
+DEPARTMENT OF DEFENSE BUDGET ANALYSIS DIVISION
+
+FISCAL YEAR 2024 DEFENSE SPENDING ANALYSIS
+Prepared by the Office of the Under Secretary of Defense (Comptroller)
+Publication Date: February 14, 2024
+Report Reference: DOD-FY2024-BSA-0214
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EXECUTIVE SUMMARY
+
+This report presents a comprehensive analysis of United States Department of Defense spending for Fiscal Year 2024, covering appropriations, obligations, and expenditure trends across all major defense accounts. The analysis draws on data submitted through the Defense Finance and Accounting Service (DFAS) and cross-referenced with Congressional Budget Office projections issued in January 2024. Total enacted defense spending for FY2024 stands at $886.3 billion, representing a 3.2 percent increase over the FY2023 enacted level of $858.5 billion.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 1: OVERVIEW OF FY2024 DEFENSE APPROPRIATIONS
+
+The National Defense Authorization Act for Fiscal Year 2024 (Public Law 118-31), signed by President Biden on December 22, 2023, authorized $886.3 billion in total national defense spending. This figure encompasses both the base defense budget and supplemental overseas contingency operations funding.
+
+The enacted topline breaks down as follows:
+
+BASE BUDGET ALLOCATION BY CATEGORY (FY2024)
+
+Category                              Amount (Billions)    % of Total
+Department of Defense (Base)          $849.8               95.9%
+Department of Energy (Nuclear)        $31.8                3.6%
+Other Defense-Related Agencies        $4.7                 0.5%
+TOTAL ENACTED                         $886.3               100.0%
+
+Within the core Department of Defense base budget of $849.8 billion, funding is distributed across the following primary accounts:
+
+- Military Personnel (MILPERS): $176.2 billion (20.7%)
+- Operations and Maintenance (O&M): $295.4 billion (34.8%)
+- Procurement: $170.6 billion (20.1%)
+- Research, Development, Test and Evaluation (RDT&E): $145.9 billion (17.2%)
+- Military Construction (MILCON): $16.3 billion (1.9%)
+- Family Housing: $1.8 billion (0.2%)
+- Revolving and Management Funds: $43.6 billion (5.1%)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 2: YEAR-OVER-YEAR COMPARATIVE ANALYSIS
+
+FY2024 defense spending represents the largest nominal defense budget in United States history, surpassing the previous record of $858.5 billion set in FY2023. Adjusted for inflation using the GDP deflator published by the Bureau of Economic Analysis (Q3 2023 baseline), real defense spending growth is estimated at approximately 0.9 percent, reflecting the impact of sustained inflation across defense-relevant sectors including fuel, labor, and advanced electronics.
+
+FIVE-YEAR DEFENSE SPENDING TREND (FY2020-FY2024)
+
+Fiscal Year    Enacted Budget    YoY Nominal Change    YoY Real Change
+FY2020         $738.0B           +3.1%                 +1.4%
+FY2021         $753.5B           +2.1%                 +0.8%
+FY2022         $782.0B           +3.8%                 -2.1%
+FY2023         $858.5B           +9.8%                 +3.2%
+FY2024         $886.3B           +3.2%                 +0.9%
+
+The anomalous 9.8 percent nominal increase in FY2023 reflected emergency supplemental appropriations totaling $44.2 billion passed in response to the conflict in Ukraine, including $21.9 billion in security assistance packages administered through the Ukraine Security Assistance Initiative (USAI) and Presidential Drawdown Authority (PDA).
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 3: SERVICE-BY-SERVICE BREAKDOWN
+
+FY2024 BUDGET BY MILITARY SERVICE
+
+Service                    FY2024 Budget    FY2023 Budget    Change
+Department of the Army     $185.7B          $178.4B          +$7.3B (+4.1%)
+Department of the Navy     $230.8B          $220.6B          +$10.2B (+4.6%)
+Department of the Air Force $268.1B         $261.3B          +$6.8B (+2.6%)
+Defense-Wide Accounts      $165.2B          $198.2B          -$33.0B (-16.6%)
+
+Note: The significant reduction in Defense-Wide accounts reflects the drawdown of emergency Ukraine supplemental funding that was classified under defense-wide appropriations in FY2023. The Department of the Navy figure includes both Navy and Marine Corps funding.
+
+The Department of the Air Force received the largest single-service allocation for the fourth consecutive fiscal year, driven primarily by continued investment in the B-21 Raider bomber program ($2.8 billion in FY2024), the F-35A procurement ($4.1 billion for 48 aircraft), and the Sentinel intercontinental ballistic missile modernization program ($3.7 billion).
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 4: MAJOR ACQUISITION PROGRAMS
+
+The following programs represent the largest individual procurement and RDT&E investments in FY2024:
+
+TOP 10 MAJOR DEFENSE ACQUISITION PROGRAMS BY FY2024 FUNDING
+
+1. Columbia-Class Submarine Program: $6.2 billion
+   Program Executive Officer: RADM Scott Pappano
+   Total Program Cost Estimate: $132.0 billion (lifecycle)
+
+2. F-35 Joint Strike Fighter (all variants): $12.4 billion
+   Contractor: Lockheed Martin Corporation
+   Units Funded FY2024: 83 aircraft across all variants
+
+3. Sentinel ICBM (formerly GBSD): $3.7 billion
+   Contractor: Northrop Grumman Corporation
+   Milestone B achieved: September 2020
+
+4. B-21 Raider Bomber: $2.8 billion
+   Contractor: Northrop Grumman Corporation
+   First flight completed: November 10, 2023
+
+5. DDG-51 Arleigh Burke Destroyer: $5.1 billion (3 ships)
+   Contractors: Huntington Ingalls Industries / Bath Iron Works
+
+6. CH-53K King Stallion Helicopter: $1.9 billion
+   Contractor: Sikorsky Aircraft (Lockheed Martin subsidiary)
+
+7. T-7A Red Hawk Trainer: $0.9 billion
+   Contractor: Boeing Defense, Space & Security
+
+8. Hypersonic Weapons Development (multiple programs): $4.7 billion
+   Primary programs: LRHW, ARRW, HACM
+
+9. Next Generation Interceptor (NGI): $1.7 billion
+   Contractor: Lockheed Martin Corporation
+
+10. MQ-25 Stingray Unmanned Tanker: $0.8 billion
+    Contractor: Boeing Defense, Space & Security
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 5: PERSONNEL COSTS AND FORCE STRUCTURE
+
+Military personnel costs of $176.2 billion in FY2024 reflect an authorized end strength of 1,328,500 active duty service members across all branches, representing a net reduction of 4,200 personnel from the FY2023 authorized level of 1,332,700.
+
+The FY2024 National Defense Authorization Act included a 5.2 percent pay raise for all military personnel, effective January 1, 2024, the largest military pay increase since 2002. This pay raise accounts for approximately $8.7 billion of the total MILPERS account increase over FY2023.
+
+ACTIVE DUTY END STRENGTH BY SERVICE (FY2024 AUTHORIZED)
+
+Army:          452,000 (down 3,000 from FY2023)
+Navy:          346,300 (down 1,200 from FY2023)
+Marine Corps:  177,000 (unchanged)
+Air Force:     321,000 (unchanged)
+Space Force:   9,400 (up 400 from FY2023)
+Coast Guard:   40,600 (down 400 from FY2023; DHS-funded)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 6: DEFENSE SPENDING AS A PERCENTAGE OF GDP
+
+Based on Congressional Budget Office projections of nominal GDP for FY2024 at $28.4 trillion, total national defense spending of $886.3 billion represents 3.12 percent of GDP. This figure remains below the Cold War peak of 6.2 percent of GDP recorded in FY1986 under the Reagan administration's defense buildup, and below the post-9/11 peak of 4.7 percent of GDP reached in FY2010 during the height of operations in Afghanistan and Iraq.
+
+The United States defense budget as a share of GDP compares to NATO allies as follows (2023 data, NATO Secretariat):
+
+- United States: 3.49% of GDP (FY2023 actuals)
+- Poland: 3.90% of GDP
+- Greece: 2.90% of GDP
+- United Kingdom: 2.07% of GDP
+- Germany: 1.57% of GDP
+- NATO Alliance Average: 2.00% of GDP
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 7: AUDIT AND FINANCIAL MANAGEMENT STATUS
+
+The Department of Defense has now completed six consecutive department-wide financial statement audits, with the most recent audit for FY2023 completed on November 15, 2023, by an independent public accounting consortium led by Ernst & Young LLP. For the sixth consecutive year, the Department received a disclaimer of opinion, indicating that auditors were unable to express an opinion on the financial statements due to material weaknesses in financial management systems.
+
+The Department has identified 28 material weaknesses as of the FY2023 audit, down from 35 material weaknesses identified in the FY2019 audit, representing a 20 percent reduction in identified deficiencies over the five-year period. The Deputy Secretary of Defense Kathleen Hicks issued a memorandum on December 8, 2023, directing all component heads to submit corrective action plans for outstanding material weaknesses no later than March 31, 2024.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 8: OUTLOOK AND PROJECTIONS
+
+The President's Budget Request for FY2025, anticipated for release in March 2024, is projected by defense analysts at the Center for Strategic and International Studies (CSIS) to request approximately $910-$920 billion in total national defense spending, representing a potential 2.7-3.8 percent nominal increase over FY2024 enacted levels.
+
+Key cost drivers anticipated to influence FY2025 and the Future Years Defense Program (FYDP) through FY2029 include:
+
+- Continued Columbia-class submarine production ramp-up
+- Accelerated hypersonic weapons fielding timelines
+- Indo-Pacific deterrence investments under the Pacific Deterrence Initiative (PDI), which received $9.1 billion in FY2024
+- Increased cyber operations funding under United States Cyber Command
+- Ongoing Ukraine security assistance obligations
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+DOCUMENT CERTIFICATION
+
+This report was prepared under the authority of the Under Secretary of Defense (Comptroller), Michael J. McCord, in accordance with the requirements of 31 U.S.C. § 1105 and the Chief Financial Officers Act of 1990. Data contained herein reflects information available as of January 31, 2024.
+
+For questions regarding this report, contact the Defense Budget Division at (703) 695-1100 or submit inquiries through the official DOD Financial Management portal at comptroller.defense.gov.

@@ -1,0 +1,133 @@
+UNITED STATES DEPARTMENT OF THE TREASURY
+Office of Debt Management
+
+QUARTERLY BOND YIELD CHANGE ANALYSIS REPORT
+Fiscal Year 2024, Third Quarter (April 1 – June 30, 2024)
+
+Prepared by: Office of Debt Management, Bureau of the Fiscal Service
+Report Date: July 18, 2024
+Classification: Public Release
+
+─────────────────────────────────────────────
+
+EXECUTIVE SUMMARY
+
+This report presents a detailed analysis of yield changes across U.S. Treasury securities during the third quarter of fiscal year 2024 (Q3 FY2024), covering the period from April 1 through June 30, 2024. The analysis documents basis point movements, duration-adjusted price impacts, and comparative yield spreads relative to prior quarters and benchmark international sovereign debt instruments. The Federal Reserve's decision to maintain the federal funds target rate at 5.25–5.50 percent throughout this period served as the primary macroeconomic anchor for yield behavior. Total outstanding marketable Treasury debt as of June 30, 2024 stood at $27.4 trillion, with interest costs representing a significant and growing component of federal outlays.
+
+─────────────────────────────────────────────
+
+SECTION 1: METHODOLOGY AND DATA SOURCES
+
+1.1 Yield Calculation Framework
+
+Bond yield changes in this report are calculated using the standard yield-to-maturity (YTM) formula, expressed as an annualized internal rate of return that equates the present value of all future cash flows to the current market price. Yield changes are expressed in basis points (bps), where one basis point equals 0.01 percentage points.
+
+The price-yield relationship for each security is approximated using modified duration and convexity adjustments as follows:
+
+Estimated Price Change (%) ≈ (−Modified Duration × Δy) + (0.5 × Convexity × Δy²)
+
+Where Δy represents the change in yield expressed in decimal form.
+
+1.2 Data Sources
+
+All yield data are sourced from the Federal Reserve H.15 Statistical Release (Selected Interest Rates), the Treasury's own auction results published through TreasuryDirect, and secondary market closing prices reported by the Federal Reserve Bank of New York. Yield observations are recorded at the close of each business day and averaged over weekly intervals for trend analysis. International comparisons draw from Bloomberg Terminal data and the Bank for International Settlements (BIS) Quarterly Review published June 2024.
+
+─────────────────────────────────────────────
+
+SECTION 2: QUARTERLY YIELD MOVEMENTS BY MATURITY
+
+2.1 Summary of Yield Changes: April 1 to June 30, 2024
+
+The following table presents opening yields (April 1), closing yields (June 28, the final business day of the quarter), and the net change in basis points for each benchmark maturity:
+
+Maturity | April 1 Yield | June 28 Yield | Change (bps)
+3-Month T-Bill | 5.37% | 5.41% | +4 bps
+6-Month T-Bill | 5.34% | 5.38% | +4 bps
+1-Year T-Bill | 5.12% | 5.17% | +5 bps
+2-Year T-Note | 4.62% | 4.75% | +13 bps
+5-Year T-Note | 4.21% | 4.36% | +15 bps
+10-Year T-Note | 4.20% | 4.40% | +20 bps
+20-Year T-Bond | 4.51% | 4.67% | +16 bps
+30-Year T-Bond | 4.34% | 4.56% | +22 bps
+
+The most significant yield increases occurred at the long end of the curve, with the 30-year bond rising 22 basis points over the quarter. This steepening dynamic reflected market participants reassessing the duration of the Federal Reserve's restrictive policy stance following the May 1, 2024 Federal Open Market Committee (FOMC) meeting, at which Chair Jerome Powell indicated that rate cuts were unlikely before late 2024 at the earliest.
+
+2.2 Intra-Quarter Volatility
+
+The 10-year Treasury note experienced its highest single-day yield on June 12, 2024, reaching 4.47 percent following the release of the May Consumer Price Index (CPI) report, which showed headline inflation at 3.3 percent year-over-year, slightly below the April reading of 3.4 percent but above consensus expectations of 3.1 percent. The lowest intra-quarter yield for the 10-year note was recorded on April 5, 2024, at 4.15 percent, following a stronger-than-expected nonfarm payrolls report of 303,000 jobs added in March, which paradoxically triggered a brief flight-to-quality bid before selling resumed.
+
+─────────────────────────────────────────────
+
+SECTION 3: PRICE IMPACT CALCULATIONS
+
+3.1 Duration and Convexity Analysis
+
+Using modified duration and convexity figures derived from standard Treasury pricing models, the following table estimates the price impact of Q3 FY2024 yield changes on representative benchmark securities:
+
+Security | Modified Duration | Convexity | Yield Change | Est. Price Change
+2-Year T-Note (4.625% due 4/30/2026) | 1.87 years | 0.05 | +13 bps | −0.24%
+5-Year T-Note (4.375% due 3/31/2029) | 4.41 years | 0.24 | +15 bps | −0.66%
+10-Year T-Note (4.625% due 5/15/2034) | 8.02 years | 0.82 | +20 bps | −1.59%
+30-Year T-Bond (4.750% due 2/15/2054) | 17.34 years | 4.21 | +22 bps | −3.79%
+
+The 30-year bond issued February 15, 2024, with a coupon rate of 4.750 percent and a face value of $1,000, experienced an estimated price decline from approximately $1,003.20 on April 1 to approximately $965.10 on June 28, representing a dollar loss of $38.10 per $1,000 face value. This calculation incorporates the convexity adjustment of +0.10 percent, which partially offsets the duration-based price decline of −3.89 percent.
+
+3.2 Portfolio-Level Impact on Federal Reserve SOMA Holdings
+
+The Federal Reserve's System Open Market Account (SOMA) held approximately $4.97 trillion in Treasury securities as of June 30, 2024, down from $5.77 trillion at the beginning of fiscal year 2024 (October 1, 2023) as quantitative tightening continued at a pace of $60 billion per month in Treasury runoff. The weighted average duration of SOMA Treasury holdings was estimated at 6.8 years. Applying the average yield increase of approximately 14 basis points across the portfolio implies an unrealized mark-to-market loss of approximately $47.3 billion on SOMA Treasury holdings during Q3 FY2024 alone. These unrealized losses do not affect Federal Reserve remittances to the Treasury in the current period but contribute to the ongoing deferred asset balance, which stood at $133.9 billion as of March 31, 2024.
+
+─────────────────────────────────────────────
+
+SECTION 4: YIELD SPREAD ANALYSIS
+
+4.1 Term Premium and Yield Curve Shape
+
+The 2-year/10-year Treasury yield spread, a widely monitored indicator of curve shape, moved from −42 basis points on April 1 to −35 basis points on June 28, 2024, indicating a modest reduction in inversion. The curve has remained inverted since July 5, 2022, representing the longest sustained inversion since the 1978–1980 period. The New York Federal Reserve's ACM term premium model estimated the 10-year term premium at +0.12 percent as of June 28, 2024, up from −0.08 percent on April 1, suggesting that investors began demanding marginally greater compensation for duration risk during the quarter.
+
+4.2 International Spread Comparisons
+
+The following table compares 10-year sovereign yields as of June 28, 2024:
+
+Country | 10-Year Yield | Spread vs. U.S. (bps)
+United States | 4.40% | —
+Germany (Bund) | 2.50% | −190 bps
+United Kingdom (Gilt) | 4.18% | −22 bps
+Japan (JGB) | 1.07% | −333 bps
+Canada | 3.72% | −68 bps
+Australia | 4.35% | −5 bps
+
+The narrowing of the U.S.-U.K. gilt spread from −38 basis points at the start of the quarter to −22 basis points reflected rising U.K. inflation expectations following the Bank of England's May 9, 2024 policy meeting, at which the Monetary Policy Committee voted 7-2 to hold the Bank Rate at 5.25 percent.
+
+─────────────────────────────────────────────
+
+SECTION 5: AUCTION RESULTS AND NEW ISSUANCE
+
+During Q3 FY2024, the Treasury conducted 47 coupon security auctions, raising $2.14 trillion in gross proceeds and $612 billion in net new cash (after rollovers). Key auction highlights include:
+
+- The May 8, 2024 auction of $42 billion in 3-year T-Notes priced at a yield of 4.605 percent, with a bid-to-cover ratio of 2.49, below the 12-auction average of 2.61, signaling modest demand softness.
+- The June 12, 2024 auction of $22 billion in 20-year T-Bonds priced at a high yield of 4.635 percent, stopping through the when-issued yield by 0.3 basis points, indicating stronger-than-expected demand.
+- The June 13, 2024 auction of $19 billion in 30-year T-Bonds priced at 4.671 percent, with a bid-to-cover ratio of 2.42 and indirect bidder takedown of 67.3 percent, reflecting continued foreign official demand.
+
+─────────────────────────────────────────────
+
+SECTION 6: INTEREST COST IMPLICATIONS FOR FEDERAL BUDGET
+
+The rise in Treasury yields during Q3 FY2024 has direct implications for federal borrowing costs. The Congressional Budget Office (CBO) estimated in its May 2024 Budget and Economic Outlook that net interest payments would total $892 billion in fiscal year 2024, representing 3.1 percent of GDP and exceeding defense discretionary spending of $849 billion for the first time in modern U.S. fiscal history. Each 10-basis-point increase in average Treasury yields sustained over a full fiscal year adds approximately $27 billion to annual interest costs, based on the current $27.4 trillion outstanding debt stock. The 14-basis-point average yield increase observed during Q3 FY2024 therefore implies an annualized incremental interest cost of approximately $37.8 billion if sustained.
+
+─────────────────────────────────────────────
+
+SECTION 7: OUTLOOK AND RISK FACTORS
+
+The Office of Debt Management identifies the following key risk factors for Treasury yield movements in Q4 FY2024 (July 1 – September 30, 2024):
+
+1. Federal Reserve Policy Path: Market-implied probabilities derived from federal funds futures contracts as of June 28, 2024 assigned a 61 percent probability to at least one 25-basis-point rate cut by the September 18, 2024 FOMC meeting, down from 73 percent probability priced at the start of the quarter.
+
+2. Fiscal Supply Pressure: Treasury announced on May 1, 2024 that it would increase auction sizes for 10-year and 30-year securities by $1 billion per month beginning in August 2024, adding incremental supply pressure at the long end.
+
+3. Inflation Data: Core PCE inflation, the Federal Reserve's preferred measure, stood at 2.6 percent year-over-year as of May 2024, still above the 2.0 percent target, limiting the Fed's flexibility to ease policy.
+
+─────────────────────────────────────────────
+
+CONTACTS AND DISTRIBUTION
+
+This report is prepared by the Office of Debt Management, U.S. Department of the Treasury, 1500 Pennsylvania Avenue NW, Washington, D.C. 20220. Inquiries may be directed to the Office of Debt Management at (202) 622-2960. This report is published pursuant to 31 U.S.C. § 3121 and is available in full on the Treasury website at www.treasury.gov/resource-center/data-chart-center/quarterly-refunding.

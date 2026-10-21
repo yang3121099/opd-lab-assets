@@ -1,0 +1,117 @@
+```python
+#!/usr/bin/env python3
+"""
+XSS Filter Testing with HTML Sanitization
+Terminal Task: Security Testing Module
+"""
+
+import re
+import html
+import json
+from typing import Optional
+
+
+# ============================================================
+# HTML SANITIZER IMPLEMENTATION (with intentional bugs to fix)
+# ============================================================
+
+class HTMLSanitizer:
+    """
+    A basic HTML sanitizer that attempts to prevent XSS attacks.
+    This implementation has several bugs that need to be identified and fixed.
+    """
+
+    ALLOWED_TAGS = {
+        'p', 'br', 'strong', 'em', 'u', 'ol', 'ul', 'li',
+        'h1', 'h2', 'h3', 'blockquote', 'code', 'pre', 'span', 'div'
+    }
+
+    ALLOWED_ATTRIBUTES = {
+        'class', 'id', 'style', 'href', 'src', 'alt', 'title'
+    }
+
+    DANGEROUS_PATTERNS = [
+        r'javascript\s*:',
+        r'vbscript\s*:',
+        r'on\w+\s*=',
+        r'<\s*script',
+        r'<\s*iframe',
+        r'<\s*object',
+        r'<\s*embed',
+        r'<\s*form',
+        r'expression\s*\(',
+        r'data\s*:.*base64',
+    ]
+
+    def __init__(self):
+        self.dangerous_regex = re.compile(
+            '|'.join(self.DANGEROUS_PATTERNS),
+            re.IGNORECASE
+        )
+
+    def sanitize(self, input_html: str) -> str:
+        """
+        Sanitize HTML input to prevent XSS attacks.
+
+        BUG #1: This method does not handle None input
+        BUG #2: The dangerous pattern check happens AFTER tag stripping,
+                but encoded payloads can bypass the initial check
+        """
+        if not input_html:
+            return ""
+
+        # Check for dangerous patterns (BUG: happens before decode)
+        if self.dangerous_regex.search(input_html):
+            return "[BLOCKED: Dangerous content detected]"
+
+        # Strip disallowed tags
+        sanitized = self._strip_tags(input_html)
+
+        # Encode special characters
+        sanitized = self._encode_special_chars(sanitized)
+
+        return sanitized
+
+    def _strip_tags(self, html_input: str) -> str:
+        """
+        Remove HTML tags that are not in the allowed list.
+
+        BUG #3: This regex-based approach can be bypassed with malformed tags
+        BUG #4: Does not handle nested or self-closing tags properly
+        """
+        # Remove script tags and content between them
+        html_input = re.sub(
+            r'<script[^>]*>.*?</script>',
+            '',
+            html_input,
+            flags=re.IGNORECASE | re.DOTALL
+        )
+
+        # Remove all tags not in allowed list
+        def replace_tag(match):
+            tag_content = match.group(1)
+            tag_name = re.match(r'/?(\w+)', tag_content)
+            if tag_name and tag_name.group(1).lower() in self.ALLOWED_TAGS:
+                return match.group(0)
+            return ''
+
+        # BUG #3 in action: This pattern can be bypassed with <<script>>
+        result = re.sub(r'<([^>]+)>', replace_tag, html_input)
+        return result
+
+    def _encode_special_chars(self, text: str) -> str:
+        """
+        Encode special HTML characters.
+
+        BUG #5: Only encodes < and > but misses other dangerous characters
+        """
+        # Incomplete encoding - missing &, ", '
+        text = text.replace('<', '&lt;')
+        text = text.replace('>', '&gt;')
+        return text
+
+    def sanitize_attribute(self, attr_name: str, attr_value: str) -> Optional[str]:
+        """
+        Sanitize an HTML attribute value.
+
+        BU

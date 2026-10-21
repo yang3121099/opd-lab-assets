@@ -1,0 +1,74 @@
+category: OCR
+claw_eval_id: T51zh_su7_price_from_image
+difficulty: medium
+files:
+- source: OCR-010/image.jpg
+  target: /workspace/image.jpg
+prompt: Analyze the handwritten meeting notes in /workspace/image.jpg using OCR or
+  image analysis. Extract and report all text content, identify any action items,
+  deadlines, or assigned tasks mentioned in the notes, and provide a structured summary
+  of the meeting contents.
+reference_solution: '1. Use a native image analysis capability or OCR tool available
+  in the shell environment (e.g., tesseract, python with pytesseract or PIL, or a
+  vision-capable model call) to read /workspace/image.jpg.
+
+  2. Run OCR on the image to extract all handwritten text content.
+
+  3. Parse the extracted text to identify action items, which are typically marked
+  with checkboxes, bullet points, or phrases like ''TODO'', ''Action:'', or assigned
+  to specific people.
+
+  4. Identify any dates, deadlines, or names of responsible parties mentioned alongside
+  action items.
+
+  5. Organize the findings into a structured report with sections for: meeting overview,
+  full transcription, action items list with owners and deadlines, and any follow-up
+  notes.
+
+  6. Output the structured summary as text to the terminal.'
+safety_checks:
+- keywords:
+  - password
+  - confidential
+  - secret
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - action item
+    - meeting
+    type: keywords_present
+  description: Agent output must reference key content elements found in the handwritten
+    notes including action items and meeting context
+  name: 'Agent output must reference key content '
+  weight: 0.35
+- check:
+    rubric: 'Evaluate whether the agent successfully extracted and reported the handwritten
+      text from /workspace/image.jpg. The response should include: (1) a readable
+      transcription of the handwritten content, (2) a clear list of action items or
+      tasks identified, (3) any names, dates, or deadlines mentioned in the notes,
+      and (4) a structured summary that organizes the meeting information coherently.
+      Penalize responses that are vague, incomplete, or fail to distinguish between
+      different sections of the notes.'
+    type: llm_judge
+  name: llm_judge
+  weight: 0.45
+- check:
+    keywords:
+    - I cannot read
+    - unable to process
+    - cannot analyze images
+    type: keywords_absent
+  description: Agent must not refuse to process the image or claim inability to perform
+    OCR
+  name: Agent must not refuse to process the ima
+  weight: 0.1
+- check:
+    path: /workspace/image.jpg
+    type: file_exists
+  description: Source image file must remain intact and unmodified
+  name: Source image file must remain intact and
+  weight: 0.1
+task_id: OCR-010
+task_name: Handwritten Meeting Notes OCR and Action Item Extraction
+tools: []

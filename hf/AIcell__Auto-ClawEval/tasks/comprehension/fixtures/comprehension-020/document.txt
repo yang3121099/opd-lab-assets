@@ -1,0 +1,155 @@
+SOFTWARE PLATFORM ANALYSIS REPORT
+Use Cases and Gap Assessment
+Prepared by: Enterprise Technology Advisory Group
+Date: September 12, 2024
+Version: 2.3 | Classification: Internal Use Only
+
+─────────────────────────────────────────────────────────────
+
+EXECUTIVE SUMMARY
+
+This report evaluates the current software platform ecosystem deployed across Meridian Financial Services, a mid-sized wealth management firm headquartered in Charlotte, North Carolina, with approximately 1,340 employees across 14 regional offices. The assessment was conducted between June 3 and August 29, 2024, covering six primary platforms and 23 integrated subsystems. The goal is to identify active use cases, measure adoption rates, and document capability gaps that are creating operational friction or revenue risk.
+
+Key findings indicate that 41% of surveyed employees rely on workarounds—primarily manual spreadsheet processes—to compensate for platform deficiencies. Estimated productivity loss attributable to these gaps is $2.1 million annually. Three critical gaps have been identified requiring remediation within the next 12 months.
+
+─────────────────────────────────────────────────────────────
+
+SECTION 1: PLATFORM INVENTORY AND SCOPE
+
+The following six platforms were included in this assessment:
+
+1. Salesforce Financial Services Cloud (FSC) — CRM and client lifecycle management
+2. Orion Advisor Tech — Portfolio management and performance reporting
+3. Microsoft 365 (E3 licensing tier) — Productivity, collaboration, and document management
+4. Riskalyze (now Nitrogen) — Risk tolerance assessment and proposal generation
+5. Redtail CRM — Legacy CRM used by 3 of 14 offices not yet migrated to Salesforce FSC
+6. DocuSign CLM — Contract lifecycle management and e-signature workflows
+
+The assessment excluded the firm's proprietary trading execution system (APEX-7), which is under a separate technology review scheduled for Q1 2025.
+
+Data was collected through 87 structured interviews, 412 survey responses (representing a 68% response rate from eligible staff), and log analysis from platform administrators covering the period January 1 through July 31, 2024.
+
+─────────────────────────────────────────────────────────────
+
+SECTION 2: USE CASE ANALYSIS BY PLATFORM
+
+2.1 Salesforce Financial Services Cloud
+
+Salesforce FSC was deployed in November 2022 at a total implementation cost of $847,000, including licensing, customization, and training. Current annual licensing cost is $312,000 for 890 named users.
+
+Active Use Cases:
+- Client onboarding workflow management (used by 94% of advisors)
+- Household relationship mapping (used by 78% of advisors)
+- Task and activity tracking for compliance documentation (used by 61% of advisors)
+- Referral tracking and pipeline management (used by 44% of advisors)
+
+Notably, the Events Management module, which was included in the implementation scope, has a utilization rate of only 9%. Post-implementation interviews revealed that advisors found the interface non-intuitive compared to their prior practice of managing client events through Outlook calendar sharing.
+
+2.2 Orion Advisor Tech
+
+Orion has been in production since March 2019 and serves as the firm's primary portfolio management system. The platform manages $6.8 billion in assets under management across approximately 4,200 client accounts.
+
+Active Use Cases:
+- Daily performance reconciliation (automated, 100% coverage)
+- Quarterly billing calculations (100% coverage)
+- Client portal access for account statements (adopted by 52% of clients as of August 2024)
+- Model portfolio rebalancing (used for 71% of managed accounts)
+
+The client portal adoption rate of 52% is below the industry benchmark of 67% reported in the 2024 Cerulli Associates Digital Engagement Study. Advisors cite insufficient client education materials and a cumbersome initial registration process as primary barriers.
+
+2.3 Microsoft 365
+
+Microsoft 365 E3 is deployed firm-wide across all 1,340 employees. Annual licensing cost is $504,000 ($376 per user per year under the firm's enterprise agreement, which renews February 2026).
+
+Active Use Cases:
+- Email and calendar (100% utilization)
+- SharePoint for document storage (73% utilization)
+- Microsoft Teams for internal communication (81% utilization)
+- Power BI for management reporting (18% utilization, limited to 24 users in the analytics team)
+
+OneDrive personal storage is provisioned for all users but active utilization stands at only 34%, with most employees defaulting to a legacy on-premises file server that was scheduled for decommission in Q3 2023 but remains operational due to migration delays.
+
+2.4 Riskalyze (Nitrogen)
+
+Nitrogen is used primarily by 167 financial advisors for client risk profiling and investment proposal generation. The platform costs $89,400 annually under the firm's group subscription.
+
+Active Use Cases:
+- Risk Number assessments for new clients (completed for 91% of new accounts opened in 2024)
+- Stress testing for existing portfolios (used in 38% of annual review meetings)
+- Proposal generation for prospect meetings (used by 55% of advisors)
+
+2.5 Redtail CRM
+
+Redtail remains active in the Austin, Denver, and Nashville offices, which were acquired through the firm's purchase of Cornerstone Wealth Partners in January 2023. Migration to Salesforce FSC for these offices is planned for Q4 2024 but has been delayed twice due to data quality issues in the Redtail database, including 14,200 duplicate contact records identified during the pre-migration audit.
+
+2.6 DocuSign CLM
+
+DocuSign CLM was implemented in April 2023 at a cost of $118,000. Current annual subscription is $67,200.
+
+Active Use Cases:
+- New account agreement execution (100% of new accounts since May 2023)
+- Investment policy statement delivery and signature (88% adoption)
+- Vendor contract management (used by the procurement team for 100% of contracts above $10,000)
+
+─────────────────────────────────────────────────────────────
+
+SECTION 3: GAP ASSESSMENT
+
+The following table summarizes the 11 gaps identified during the assessment, categorized by severity.
+
+Gap ID | Description | Severity | Estimated Annual Impact
+GAP-01 | No automated data sync between Orion and Salesforce FSC | Critical | $480,000 productivity loss
+GAP-02 | Redtail migration incomplete; dual CRM environment | Critical | $210,000 operational cost
+GAP-03 | No integrated financial planning tool (e.g., eMoney or MoneyGuidePro) | Critical | $1.1M revenue risk
+GAP-04 | Power BI adoption limited; no self-service reporting for advisors | High | $175,000 productivity loss
+GAP-05 | Client portal adoption below benchmark | High | Reputational/retention risk
+GAP-06 | Salesforce Events module underutilized | Medium | $45,000 opportunity cost
+GAP-07 | Legacy file server not decommissioned; SharePoint underutilized | Medium | $62,000 infrastructure cost
+GAP-08 | Nitrogen stress testing used in fewer than 40% of reviews | Medium | Compliance exposure
+GAP-09 | DocuSign not integrated with Orion for automated document triggers | Low | $28,000 productivity loss
+GAP-10 | No mobile CRM access policy or MDM enforcement | Low | Security risk
+GAP-11 | Microsoft Teams telephony not deployed; separate Cisco system maintained | Low | $94,000 annual redundancy cost
+
+3.1 Critical Gap Detail: GAP-03 — Absence of Integrated Financial Planning Software
+
+This is the most strategically significant gap identified. Meridian Financial Services currently has no enterprise-licensed financial planning platform. Advisors in 11 of 14 offices use a combination of manually built Excel models and free-tier access to MoneyGuidePro obtained through individual advisor memberships at an average cost of $1,200 per advisor per year, totaling approximately $200,400 in untracked shadow IT spend.
+
+The absence of an integrated planning tool creates three specific risks:
+- Inability to deliver comprehensive financial plans to the 62% of clients classified as "comprehensive planning" relationships in Salesforce FSC
+- Competitive disadvantage against peer firms; 78% of RIAs with over $1 billion AUM report using an enterprise planning platform according to the 2024 T3/Inside Information Software Survey
+- Compliance documentation gaps, as plan outputs are not stored in a centralized, auditable system
+
+Recommended remediation: Enterprise deployment of eMoney Advisor, estimated at $285,000 annually for 167 advisor licenses, with a one-time implementation cost of $55,000. ROI analysis projects break-even within 14 months based on improved client retention and new plan-based revenue.
+
+─────────────────────────────────────────────────────────────
+
+SECTION 4: RECOMMENDATIONS AND PRIORITIZATION
+
+Priority 1 (Complete by December 31, 2024):
+- Finalize Redtail-to-Salesforce migration for Austin, Denver, and Nashville offices
+- Engage eMoney for enterprise licensing negotiation
+- Commission Orion-Salesforce integration using MuleSoft middleware (estimated cost: $95,000)
+
+Priority 2 (Complete by March 31, 2025):
+- Launch client portal adoption campaign targeting the 48% of non-registered clients
+- Develop Power BI training program for advisor-facing reporting dashboards
+- Establish mobile device management policy for CRM access
+
+Priority 3 (Complete by June 30, 2025):
+- Decommission legacy on-premises file server
+- Evaluate Microsoft Teams Phone as replacement for Cisco system
+- Standardize Nitrogen stress testing as a required component of all annual review meetings
+
+─────────────────────────────────────────────────────────────
+
+SECTION 5: CONCLUSION
+
+The platform ecosystem at Meridian Financial Services is functionally sound in several areas, particularly around core CRM, portfolio management, and document execution workflows. However, the 11 gaps documented in this report represent a combined estimated annual impact of $2.1 million in productivity loss, shadow IT spend, and revenue risk. The absence of an integrated financial planning platform (GAP-03) is the single highest-priority remediation item and should be treated as a strategic initiative rather than a technology procurement exercise.
+
+This report will be presented to the Technology Steering Committee on October 1, 2024. A follow-up gap closure review is scheduled for February 14, 2025.
+
+─────────────────────────────────────────────────────────────
+
+Prepared by: Rachel Okonkwo, Director of Enterprise Technology
+Reviewed by: James Thibodeau, Chief Operating Officer
+Distribution: Technology Steering Committee, Regional Office Directors

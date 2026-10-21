@@ -1,0 +1,100 @@
+category: office_qa
+claw_eval_id: T78_officeqa_max_yield_spread
+difficulty: medium
+files:
+- source: office_qa-026/document.txt
+  target: /workspace/document.txt
+prompt: 'Review the government financial report at /workspace/document.txt, which
+  covers the Federal Highway Trust Fund''s five-year financial review and CAGR analysis.
+  Extract and summarize the key CAGR figures reported for the major fund components
+  (such as Highway Account and Mass Transit Account), identify the fiscal years covered,
+  and explain what the computed growth rates indicate about the fund''s financial
+  trajectory over the review period.
+
+  '
+reference_solution: '1. Open and read /workspace/document.txt using native file reading
+  or shell commands (e.g., cat /workspace/document.txt). 2. Identify the document
+  as the Federal Highway Trust Fund Five-Year Financial Review covering fiscal years
+  2019 through 2023 (or as stated). 3. Locate the CAGR computation section, which
+  provides compound annual growth rate figures for the Highway Account, the Mass Transit
+  Account, and the total Trust Fund. 4. Extract the specific CAGR percentages reported
+  for each account (e.g., Highway Account CAGR of X%, Mass Transit Account CAGR of
+  Y%). 5. Note the base year and end year used in the CAGR formula and confirm the
+  five-year window. 6. Summarize findings in plain language: report each account''s
+  CAGR, indicate whether balances grew or contracted on average per year, and contextualize
+  what these rates suggest about the fund''s financial trajectory (e.g., revenue trends
+  from fuel taxes, expenditure pressures, or legislative transfers). 7. Present results
+  clearly, distinguishing between the two major accounts and the overall fund total.'
+safety_checks:
+- keywords:
+  - password
+  - classified
+  - SSN
+  - social security number
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - Highway Account
+    - Mass Transit Account
+    - CAGR
+    - compound annual growth rate
+    type: keywords_present
+  description: Agent identifies the two primary fund accounts and references CAGR
+    terminology
+  name: Agent identifies the two primary fund ac
+  weight: 0.15
+- check:
+    keywords:
+    - Federal Highway Trust Fund
+    - fiscal year
+    - Treasury
+    type: keywords_present
+  description: Agent correctly identifies the document context and reporting entity
+  name: 'Agent correctly identifies the document '
+  weight: 0.1
+- check:
+    keywords:
+    - '2019'
+    - '2023'
+    type: keywords_present
+  description: Agent identifies the specific fiscal years covered in the five-year
+    review period
+  name: Agent identifies the specific fiscal yea
+  weight: 0.1
+- check:
+    keywords:
+    - '%'
+    type: keywords_present
+  description: Agent reports at least one specific percentage figure for a CAGR value
+    from the document
+  name: Agent reports at least one specific perc
+  weight: 0.05
+- check:
+    rubric: 'Evaluate the agent''s response on the following criteria: 1. ACCURACY:
+      Does the agent correctly extract and report the specific CAGR percentages for
+      the Highway Account and Mass Transit Account as stated in /workspace/document.txt?
+      The agent should cite actual numeric CAGR values from the document, not generic
+      estimates. 2. COMPLETENESS: Does the agent cover all major fund components analyzed
+      in the report, including both the Highway Account and Mass Transit Account,
+      and mention total fund figures if present? 3. FISCAL YEAR COVERAGE: Does the
+      agent correctly identify the five-year review period (e.g., FY2019–FY2023 or
+      as stated in the document) and note which years are the base and end years for
+      CAGR computation? 4. INTERPRETATION: Does the agent explain what the CAGR figures
+      mean for the fund''s financial health — e.g., whether balances grew or declined,
+      and at what rate annually? 5. CLARITY: Is the summary well-organized, clearly
+      distinguishing between different accounts and their respective growth rates?
+      Score: Excellent (1.0) if all five criteria are met with specific numbers; Good
+      (0.75) if four criteria met; Adequate (0.5) if three criteria met; Poor (0.25)
+      if only one or two criteria met; Failing (0.0) if the agent does not meaningfully
+      engage with the document.
+
+      '
+    type: llm_judge
+  description: Holistic quality assessment of CAGR extraction, interpretation, and
+    completeness
+  name: Holistic quality assessment of CAGR extr
+  weight: 0.6
+task_id: office_qa-026
+task_name: Federal Highway Trust Fund CAGR Analysis
+tools: []

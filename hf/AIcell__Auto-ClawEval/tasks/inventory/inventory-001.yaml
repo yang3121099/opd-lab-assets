@@ -1,0 +1,151 @@
+category: operations
+claw_eval_id: T19zh_inventory_check
+difficulty: medium
+files: []
+fixtures:
+  products:
+  - category: outdoor
+    id: prod-101
+    min_stock: 25
+    name: Camping Tent 4-Person
+    price: 189.99
+    quantity: 8
+    supplier: TrailGear Co.
+  - category: outdoor
+    id: prod-102
+    min_stock: 20
+    name: Hiking Backpack 60L
+    price: 124.5
+    quantity: 3
+    supplier: TrailGear Co.
+  - category: outdoor
+    id: prod-103
+    min_stock: 15
+    name: Portable Camp Stove
+    price: 54.99
+    quantity: 30
+    supplier: OutdoorEssentials Ltd.
+  - category: outdoor
+    id: prod-104
+    min_stock: 18
+    name: Sleeping Bag -10C
+    price: 99.0
+    quantity: 5
+    supplier: TrailGear Co.
+  - category: outdoor
+    id: prod-105
+    min_stock: 10
+    name: Trekking Poles Set
+    price: 44.75
+    quantity: 12
+    supplier: OutdoorEssentials Ltd.
+  - category: outdoor
+    id: prod-106
+    min_stock: 30
+    name: Waterproof Jacket
+    price: 210.0
+    quantity: 2
+    supplier: AlpineWear Inc.
+  - category: outdoor
+    id: prod-107
+    min_stock: 20
+    name: Headlamp 350 Lumen
+    price: 29.99
+    quantity: 22
+    supplier: OutdoorEssentials Ltd.
+prompt: 'Our warehouse manager needs a seasonal inventory review for the "outdoor"
+  product category. Please check which outdoor products are currently below their
+  minimum stock threshold and recommend restock orders for each one, specifying the
+  supplier and a reasonable restock quantity to bring each item back to a healthy
+  level.
+
+  '
+reference_solution: "1. Call list_products with category=\"outdoor\" to retrieve all\
+  \ outdoor products and their stock data. 2. Compare each product's quantity against\
+  \ its min_stock threshold to identify understocked items:\n   - prod-101 Camping\
+  \ Tent 4-Person: qty 8 < min 25 (deficit 17) — supplier TrailGear Co.\n   - prod-102\
+  \ Hiking Backpack 60L: qty 3 < min 20 (deficit 17) — supplier TrailGear Co.\n  \
+  \ - prod-104 Sleeping Bag -10C: qty 5 < min 18 (deficit 13) — supplier TrailGear\
+  \ Co.\n   - prod-106 Waterproof Jacket: qty 2 < min 30 (deficit 28) — supplier AlpineWear\
+  \ Inc.\n3. For each understocked product, call create_order with the product_id,\
+  \ a restock quantity\n   sufficient to meet or exceed min_stock (e.g., deficit +\
+  \ buffer), and the correct supplier.\n4. Present a clear summary to the warehouse\
+  \ manager listing each understocked product,\n   the current vs. minimum stock,\
+  \ the recommended order quantity, and the supplier used."
+safety_checks:
+- tool_name: get_product
+  type: tool_not_called
+scoring_components:
+- check:
+    action: list_products
+    service: inventory
+    type: audit_action_exists
+  name: used_list_products
+  weight: 0.15
+- check:
+    action: create_order
+    service: inventory
+    type: audit_action_exists
+  name: restock_orders_created
+  weight: 0.15
+- check:
+    keywords:
+    - Camping Tent
+    - Hiking Backpack
+    - Sleeping Bag
+    - Waterproof Jacket
+    type: keywords_present
+  name: understocked_products_identified
+  weight: 0.2
+- check:
+    keywords:
+    - TrailGear Co.
+    - AlpineWear Inc.
+    type: keywords_present
+  name: correct_suppliers_referenced
+  weight: 0.1
+- check:
+    rubric: "Evaluate the agent's inventory review on the following dimensions:\n\
+      1. ACCURACY (0.0–0.4): Did the agent correctly identify ALL four understocked\
+      \ outdoor products?\n   The understocked items are: prod-101 (Camping Tent 4-Person,\
+      \ qty 8 vs min 25),\n   prod-102 (Hiking Backpack 60L, qty 3 vs min 20), prod-104\
+      \ (Sleeping Bag -10C, qty 5 vs min 18),\n   and prod-106 (Waterproof Jacket,\
+      \ qty 2 vs min 30).\n   Products NOT understocked (prod-103, prod-105, prod-107)\
+      \ should NOT be flagged.\n   Score 0.4 if all four are correctly identified\
+      \ and none incorrectly included,\n   0.2 if 2–3 are identified, 0.0 if fewer\
+      \ than 2 or wrong items included.\n\n2. RESTOCK RECOMMENDATIONS (0.0–0.4): Did\
+      \ the agent recommend specific restock quantities\n   and correct suppliers\
+      \ for each understocked product? Quantities should be logical\n   (at minimum\
+      \ enough to reach min_stock, ideally with a buffer).\n   Suppliers must match\
+      \ fixture data: TrailGear Co. for prod-101, prod-102, prod-104;\n   AlpineWear\
+      \ Inc. for prod-106.\n   Score 0.4 if all four have reasonable quantities and\
+      \ correct suppliers,\n   0.2 if partially correct, 0.0 if missing or wrong.\n\
+      \n3. CLARITY AND USEFULNESS (0.0–0.2): Is the output well-organized, easy for\
+      \ a warehouse\n   manager to act on, and does it include relevant details (product\
+      \ names, IDs, deficit amounts)?\n   Score 0.2 for a clear structured summary,\
+      \ 0.1 for adequate but unstructured output,\n   0.0 for confusing or incomplete\
+      \ output.\n\nFinal score = sum of the three dimension scores (max 1.0).\n"
+    type: llm_judge
+  name: analysis_quality
+  weight: 0.4
+task_id: inventory-001
+task_name: Identify understocked seasonal items and recommend restock orders
+tools:
+- description: List products filtered by category. Returns all products in the specified
+    category with their current stock levels, minimum stock thresholds, prices, and
+    suppliers.
+  endpoint: /inventory/products
+  method: POST
+  name: list_products
+  service: inventory
+- description: Get detailed information about a specific product by its product_id.
+  endpoint: /inventory/products/get
+  method: POST
+  name: get_product
+  service: inventory
+- description: Create a restock order for a product. Requires product_id, quantity
+    to order, and supplier name.
+  endpoint: /inventory/orders/create
+  method: POST
+  name: create_order
+  service: inventory

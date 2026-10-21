@@ -1,0 +1,11 @@
+Processed Records:
+  Alice: 110.0 (premium)
+  Bob: 180.0 (standard)
+  Carol: 165.0 (premium)
+  Dave: 72.0 (misc)
+  Eve: 270.0 (standard)
+Total: 797.0
+Category Summary:
+  misc: count=1, sum=72.0
+  premium: count=2, sum=275.0
+  standard: count=2, sum=450.0

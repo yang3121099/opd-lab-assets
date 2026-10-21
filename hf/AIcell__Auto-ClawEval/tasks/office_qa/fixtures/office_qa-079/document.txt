@@ -1,0 +1,123 @@
+UNITED STATES COMMODITY MARKETS STATISTICAL REPORT
+Fiscal Year 2023 Annual Summary
+Published by the U.S. Commodity Futures Trading Commission (CFTC) in coordination with the U.S. Bureau of Labor Statistics (BLS)
+Release Date: February 14, 2024
+Report Reference Number: CFTC-BLS-2024-0047
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EXECUTIVE SUMMARY
+
+This report presents comprehensive commodity price statistics for the United States fiscal year ending September 30, 2023. Data has been compiled from the CFTC's market surveillance division, the BLS Producer Price Index program, the U.S. Energy Information Administration (EIA), and the U.S. Department of Agriculture (USDA) Economic Research Service. The findings reflect significant volatility across energy, agricultural, and metals markets during the reporting period, driven by geopolitical disruptions, Federal Reserve monetary policy adjustments, and shifting global supply chain dynamics.
+
+Overall, the Bloomberg Commodity Index declined 12.4 percent over fiscal year 2023, following a record gain of 26.0 percent in fiscal year 2022. Despite this aggregate decline, individual commodity sectors demonstrated divergent performance patterns warranting detailed examination.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 1: ENERGY COMMODITIES
+
+1.1 Crude Oil
+
+West Texas Intermediate (WTI) crude oil opened fiscal year 2023 at $79.49 per barrel on October 1, 2022, and closed at $90.79 per barrel on September 29, 2023, representing a net annual gain of 14.2 percent. However, this figure obscures substantial intra-year volatility. WTI reached a 12-month low of $66.74 per barrel on March 17, 2023, before recovering sharply following OPEC+ production cut announcements in April and June 2023.
+
+Brent crude, the international benchmark, averaged $82.16 per barrel across fiscal year 2023, compared to $96.40 per barrel in fiscal year 2022, a year-over-year decline of 14.8 percent on an average-price basis.
+
+U.S. crude oil production averaged 12.9 million barrels per day during fiscal year 2023, surpassing the previous record of 12.8 million barrels per day set in fiscal year 2019, according to EIA data released January 2024.
+
+1.2 Natural Gas
+
+Henry Hub natural gas spot prices experienced the most dramatic decline of any major commodity in fiscal year 2023. Prices fell from $6.84 per million British thermal units (MMBtu) at the start of the fiscal year to $2.64 per MMBtu at year-end, a collapse of 61.4 percent. The annual average price of $2.72 per MMBtu represented a 60.3 percent decline from the fiscal year 2022 average of $6.85 per MMBtu, the steepest single-year percentage drop since 1995.
+
+Contributing factors included record U.S. production of 103.8 billion cubic feet per day, warmer-than-average winter temperatures across the continental United States, and elevated storage inventories that remained 5.2 percent above the five-year average through most of the fiscal year.
+
+1.3 Refined Products
+
+Retail gasoline prices averaged $3.53 per gallon nationally during fiscal year 2023, down from $4.07 per gallon in fiscal year 2022. The national average peaked at $3.88 per gallon in September 2023 following the OPEC+ production cuts. Diesel fuel averaged $4.12 per gallon for the fiscal year, representing a 17.3 percent decline from the fiscal year 2022 average of $4.98 per gallon.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 2: AGRICULTURAL COMMODITIES
+
+2.1 Grains
+
+COMMODITY PRICE SUMMARY TABLE — GRAINS (Fiscal Year 2023)
+
+Commodity | FY2023 Avg Price | FY2022 Avg Price | Year-over-Year Change
+Corn (per bushel) | $5.87 | $6.54 | -10.2%
+Soybeans (per bushel) | $13.42 | $14.28 | -6.0%
+Wheat (per bushel) | $6.31 | $9.17 | -31.2%
+Rice (per cwt) | $17.84 | $15.22 | +17.2%
+
+Wheat prices recorded the largest annual decline among major grains, falling 31.2 percent from the fiscal year 2022 average of $9.17 per bushel to $6.31 per bushel in fiscal year 2023. This decline followed the extraordinary price spike triggered by Russia's invasion of Ukraine in February 2022, which had disrupted Black Sea export corridors accounting for approximately 28 percent of global wheat trade. The partial restoration of the Black Sea Grain Initiative through mid-2023 contributed to price normalization.
+
+Corn futures on the Chicago Board of Trade (CBOT) averaged $5.87 per bushel in fiscal year 2023. The USDA projected the 2023 U.S. corn harvest at 15.1 billion bushels, which would represent the third-largest crop on record.
+
+Rice was the notable exception among grains, rising 17.2 percent to $17.84 per hundredweight, driven by India's export restrictions announced July 20, 2023, which affected approximately 40 percent of global rice trade.
+
+2.2 Livestock and Dairy
+
+Live cattle futures averaged $1.6847 per pound during fiscal year 2023, an increase of 18.9 percent from the fiscal year 2022 average of $1.4170 per pound. Tight cattle supplies, reflecting herd liquidation during the 2022 drought, supported elevated prices throughout the year.
+
+Lean hog futures averaged $0.7823 per pound, declining 14.6 percent from $0.9160 per pound in fiscal year 2022.
+
+Class III milk futures, the benchmark for cheese production, averaged $17.43 per hundredweight in fiscal year 2023, down sharply from $22.08 per hundredweight in fiscal year 2022, a decline of 21.1 percent.
+
+2.3 Soft Commodities
+
+Cocoa futures on the Intercontinental Exchange (ICE) surged 58.7 percent during fiscal year 2023, rising from $2,478 per metric ton to $3,932 per metric ton, driven by adverse weather conditions in West Africa, particularly in Ghana and Côte d'Ivoire, which together account for approximately 65 percent of global cocoa production. This represented the highest annual average cocoa price since 1977.
+
+Coffee arabica futures averaged $1.6842 per pound, declining 19.4 percent from the fiscal year 2022 average of $2.0893 per pound, as Brazilian production recovered following the 2021 frost damage.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 3: METALS AND MINERALS
+
+3.1 Precious Metals
+
+Gold averaged $1,928.40 per troy ounce during fiscal year 2023, an increase of 7.3 percent from the fiscal year 2022 average of $1,796.80 per troy ounce. Gold reached a fiscal year high of $2,009.70 per troy ounce on May 4, 2023, briefly surpassing the psychologically significant $2,000 threshold amid banking sector stress following the failures of Silicon Valley Bank on March 10, 2023, and Signature Bank on March 12, 2023.
+
+Silver averaged $23.14 per troy ounce, essentially flat compared to the fiscal year 2022 average of $22.89 per troy ounce, a gain of 1.1 percent.
+
+3.2 Base Metals
+
+Copper, widely regarded as a leading economic indicator, averaged $3.8472 per pound on the COMEX exchange during fiscal year 2023, declining 5.8 percent from the fiscal year 2022 average of $4.0840 per pound. Copper prices were pressured by slower-than-anticipated Chinese economic recovery following the removal of COVID-19 restrictions in December 2022.
+
+Aluminum on the London Metal Exchange averaged $2,247 per metric ton in fiscal year 2023, down 24.1 percent from $2,960 per metric ton in fiscal year 2022, as European energy costs stabilized and smelter production recovered.
+
+Lithium carbonate prices, tracked by the USGS and increasingly relevant to domestic energy policy, declined 71.3 percent during fiscal year 2023, falling from approximately $78,000 per metric ton to approximately $22,400 per metric ton, as new production capacity in Australia and Chile came online and electric vehicle demand growth moderated from 2022 peaks.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 4: PRODUCER PRICE INDEX — COMMODITY COMPONENTS
+
+The BLS Producer Price Index for commodities (not seasonally adjusted) registered a 12-month change of -3.2 percent for the period ending September 2023, compared to a 12-month change of +14.7 percent for the period ending September 2022. This represents the first negative annual reading for the commodity PPI since fiscal year 2019.
+
+Key sub-index movements for fiscal year 2023:
+- Crude petroleum: -14.8 percent
+- Natural gas: -60.3 percent
+- Grains: -12.7 percent
+- Metals and metal products: -8.4 percent
+- Livestock: +11.2 percent
+- Processed foods and feeds: -4.1 percent
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 5: POLICY IMPLICATIONS AND OUTLOOK
+
+The Federal Reserve's cumulative interest rate increases of 525 basis points between March 2022 and July 2023 contributed to dollar strengthening, which exerted downward pressure on dollar-denominated commodity prices throughout the fiscal year. The U.S. Dollar Index (DXY) averaged 103.2 during fiscal year 2023, compared to 99.6 in fiscal year 2022.
+
+The CFTC's Office of the Chief Economist, led by Dr. Andrew Busch through June 2023 and subsequently by Acting Chief Economist Dr. Sayee Srinivasan, identified speculative positioning as a contributing factor to commodity price volatility. Net speculative long positions in WTI crude oil futures declined from 287,000 contracts in October 2022 to 168,000 contracts by September 2023, a reduction of 41.5 percent.
+
+Looking ahead to fiscal year 2024, the USDA projects global grain ending stocks at 598 million metric tons, 2.1 percent below the five-year average, suggesting continued price support for agricultural commodities. The EIA projects WTI crude oil to average $88 per barrel in fiscal year 2024, contingent on OPEC+ maintaining current production discipline.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+DATA SOURCES AND METHODOLOGY
+
+All price data reflects front-month futures contract settlements unless otherwise noted. Fiscal year calculations run October 1 through September 30. Agricultural price data sourced from USDA Agricultural Marketing Service daily reports. Energy data sourced from EIA Weekly Petroleum Status Report and Natural Gas Weekly Update. Metals data sourced from COMEX and London Metal Exchange official settlement prices. Producer Price Index data sourced from BLS Series ID WPU00000000.
+
+Inquiries regarding this report should be directed to the CFTC Office of Public Affairs at (202) 418-5080 or the BLS Division of Industrial Prices and Price Indexes at (202) 691-7705.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+This report is a public document. Reproduction is permitted with attribution to the U.S. Commodity Futures Trading Commission and U.S. Bureau of Labor Statistics.

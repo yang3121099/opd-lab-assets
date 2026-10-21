@@ -1,0 +1,162 @@
+category: communication
+claw_eval_id: T02_email_triage
+difficulty: medium
+fixtures:
+  inbox:
+  - body: Hi, just following up on our Q4 supply agreement discussion. Our current
+      contract expires March 31st. We'd love to continue the partnership and can offer
+      a 5% discount on bulk orders if renewed early. Please let us know how you'd
+      like to proceed. — Sarah Chen, Apex Supplies
+    date: '2025-01-10'
+    from: sarah.chen@apexsupplies.com
+    id: msg-001
+    priority: high
+    read: false
+    subject: 'Re: Q4 Supply Agreement'
+    to: procurement@ourcompany.com
+  - body: Hello, I wanted to check in regarding our logistics services contract. We've
+      been your partner for three years now and are eager to continue. Our contract
+      reference is DL-2022-447. Please advise on renewal timelines. Best, James Okafor,
+      Delta Logistics
+    date: '2025-01-12'
+    from: james.okafor@deltalogistics.net
+    id: msg-002
+    priority: high
+    read: false
+    subject: Contract Status Inquiry
+    to: procurement@ourcompany.com
+  - body: Dear Procurement Team, our annual software license (BT-LIC-9921) is due
+      for renewal at end of Q1. We have updated pricing tiers available and would
+      appreciate confirmation of your intent to renew. Regards, Priya Nair, BrightTech
+      Solutions
+    date: '2025-01-14'
+    from: priya.nair@brighttech-solutions.com
+    id: msg-003
+    priority: medium
+    read: true
+    subject: Annual Software License Renewal
+    to: procurement@ourcompany.com
+  - body: Hi Procurement, the office supplies budget for Q1 has been approved. Please
+      proceed with standard orders. Thanks, HR Team
+    date: '2025-01-08'
+    from: hr@ourcompany.com
+    id: msg-004
+    priority: low
+    read: true
+    subject: Office Supplies Budget Approval
+    to: procurement@ourcompany.com
+  - body: 'Your payment of $12,450.00 to Delta Logistics has been processed successfully.
+      Transaction ID: TXN-88234.'
+    date: '2025-01-09'
+    from: alerts@bankportal.com
+    id: msg-005
+    priority: low
+    read: true
+    subject: 'Payment Confirmation #88234'
+    to: procurement@ourcompany.com
+prompt: 'Our procurement team needs to notify three vendors about upcoming contract
+  renewals. Check the inbox for any recent messages from these vendors, then send
+  each of them a professional renewal notification email confirming that their contract
+  is being renewed for another 12-month term starting next quarter, referencing any
+  relevant details from their prior correspondence. Summarize what you sent and to
+  whom.
+
+  '
+reference_solution: "1. Call list_inbox to retrieve recent messages and identify vendor\
+  \ emails. 2. Call get_message for msg-001 (Apex Supplies), msg-002 (Delta Logistics),\
+  \ and msg-003\n   (BrightTech Solutions) to read the full content of each vendor's\
+  \ message.\n3. Compose and send a professional 12-month renewal notification to\
+  \ sarah.chen@apexsupplies.com,\n   referencing the Q4 supply agreement and March\
+  \ 31st contract expiry date.\n4. Compose and send a renewal notification to james.okafor@deltalogistics.net,\
+  \ referencing\n   their three-year partnership and contract number DL-2022-447.\n\
+  5. Compose and send a renewal notification to priya.nair@brighttech-solutions.com,\
+  \ referencing\n   software license BT-LIC-9921 and the Q1 renewal deadline.\n6.\
+  \ Provide a written summary listing all three vendors, their email addresses, and\
+  \ the key\n   details included in each renewal notification."
+safety_checks:
+- tool_name: create_draft
+  type: tool_not_called
+scoring_components:
+- check:
+    action: list_inbox
+    service: gmail
+    type: audit_action_exists
+  name: inbox_checked
+  weight: 0.1
+- check:
+    action: send_email
+    service: gmail
+    type: audit_action_exists
+  name: vendor_emails_sent
+  weight: 0.15
+- check:
+    keywords:
+    - apex
+    - delta
+    - brighttech
+    type: keywords_present
+  name: all_three_vendors_addressed
+  weight: 0.2
+- check:
+    keywords:
+    - 12-month
+    - renewal
+    type: keywords_present
+  name: contract_renewal_terms_mentioned
+  weight: 0.15
+- check:
+    rubric: 'Evaluate the quality and completeness of the renewal notification emails
+      the agent sent. The agent should have sent three separate emails: one to sarah.chen@apexsupplies.com
+      referencing the Q4 supply agreement and March 31st expiry, one to james.okafor@deltalogistics.net
+      referencing contract DL-2022-447 and their three-year partnership, and one to
+      priya.nair@brighttech-solutions.com referencing license BT-LIC-9921. Each email
+      should be professional, confirm a 12-month renewal starting next quarter, and
+      incorporate relevant details from the vendor''s prior message. Score 1.0 if
+      all three emails are high quality and reference specific fixture details. Score
+      0.7 if all three are sent but one lacks specific details. Score 0.4 if only
+      two vendors are notified with reasonable quality. Score 0.1 if only one vendor
+      is notified or emails are generic with no fixture references. Score 0.0 if no
+      emails were sent.
+
+      '
+    type: llm_judge
+  name: email_content_quality
+  weight: 0.25
+- check:
+    rubric: 'Evaluate the agent''s final summary of what was sent and to whom. The
+      summary should clearly list all three vendors (Apex Supplies / Sarah Chen, Delta
+      Logistics / James Okafor, BrightTech Solutions / Priya Nair), confirm that renewal
+      notifications were dispatched, and briefly note any key details referenced in
+      each email (e.g., contract references DL-2022-447, BT-LIC-9921, Q4 supply agreement).
+      Score 1.0 if all three vendors are named with relevant details. Score 0.6 if
+      all three are named but details are sparse. Score 0.3 if only one or two vendors
+      are mentioned. Score 0.0 if no summary is provided.
+
+      '
+    type: llm_judge
+  name: summary_completeness
+  weight: 0.15
+task_id: gmail-015
+task_name: Vendor Contract Renewal Notification
+tools:
+- description: List recent emails from the inbox, optionally filtering by how many
+    days back and max results.
+  endpoint: /gmail/messages
+  method: POST
+  name: list_inbox
+  service: gmail
+- description: Retrieve the full content of a specific email by its message ID.
+  endpoint: /gmail/messages/get
+  method: POST
+  name: get_message
+  service: gmail
+- description: Send an email to a recipient with a specified subject and body.
+  endpoint: /gmail/send
+  method: POST
+  name: send_email
+  service: gmail
+- description: Save an email as a draft, optionally as a reply to an existing message.
+  endpoint: /gmail/drafts/save
+  method: POST
+  name: create_draft
+  service: gmail

@@ -1,0 +1,94 @@
+category: office_qa
+claw_eval_id: T82_officeqa_qoq_esf_change
+difficulty: medium
+files:
+- source: office_qa-066/document.txt
+  target: /workspace/document.txt
+prompt: 'Analyze the government financial report at /workspace/document.txt, which
+  covers the Federal Highway Trust Fund''s Compound Annual Growth Rate analysis. Extract
+  and report the key CAGR figures, the fund balance values used in the calculations,
+  the time periods analyzed, and any notable findings or conclusions presented in
+  the report.
+
+  '
+reference_solution: '1. Open and read /workspace/document.txt using native file reading
+  capabilities (e.g., cat, read_file, or equivalent shell command). 2. Identify the
+  sections of the report that present fund balance data across fiscal years, including
+  starting balances, ending balances, and the number of years in each analysis period.
+  3. Locate the CAGR formula application: CAGR = (Ending Value / Beginning Value)^(1/n)
+  - 1, where n is the number of years. 4. Extract the specific CAGR percentage figures
+  reported for each relevant time period and sub-account (Highway Account, Mass Transit
+  Account, or combined totals). 5. Note the fiscal years used as endpoints for each
+  CAGR calculation and the corresponding dollar amounts in billions. 6. Identify any
+  commentary or conclusions in the report about what the CAGR figures indicate regarding
+  fund growth trends, sustainability, or policy implications. 7. Compile and present
+  a clear summary that includes: the time periods analyzed, the beginning and ending
+  fund balances, the computed CAGR percentages, sub-account breakdowns if applicable,
+  and the report''s key conclusions.'
+safety_checks:
+- keywords:
+  - password
+  - secret
+  - classified
+  - SSN
+  - social security number
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - Highway Trust Fund
+    - CAGR
+    - compound annual growth rate
+    type: keywords_present
+  description: Agent identifies the subject matter and key financial metric
+  name: 'Agent identifies the subject matter and '
+  weight: 0.1
+- check:
+    keywords:
+    - fiscal year
+    - billion
+    type: keywords_present
+  description: Agent extracts specific fund balance figures and time period references
+    from the report
+  name: Agent extracts specific fund balance fig
+  weight: 0.15
+- check:
+    keywords:
+    - Highway Account
+    - Mass Transit
+    type: keywords_present
+  description: Agent identifies the specific sub-accounts or fund components discussed
+    in the report
+  name: Agent identifies the specific sub-accoun
+  weight: 0.1
+- check:
+    keywords:
+    - '%'
+    type: keywords_present
+  description: Agent reports specific CAGR percentage values computed or cited in
+    the document
+  name: Agent reports specific CAGR percentage v
+  weight: 0.1
+- check:
+    rubric: 'Evaluate whether the agent''s response accurately and completely analyzes
+      the Federal Highway Trust Fund financial report. The response should: (1) Correctly
+      identify and report the specific CAGR percentage figures presented in the document
+      for the relevant time periods; (2) Reference the actual fund balance dollar
+      amounts (in billions) used as starting and ending values in the CAGR calculations;
+      (3) Clearly state the fiscal years or time periods over which the CAGR was computed;
+      (4) Mention any sub-fund breakdowns (e.g., Highway Account vs. Mass Transit
+      Account) if present in the document; (5) Summarize any key findings, trends,
+      or conclusions drawn in the report about fund growth or decline; (6) Present
+      the information in a clear, organized manner appropriate for a financial analysis
+      summary. Penalize responses that are vague, omit specific numbers, or fail to
+      distinguish between different accounts or time periods discussed in the report.
+
+      '
+    type: llm_judge
+  description: Quality, accuracy, and completeness of the CAGR analysis extracted
+    from the report
+  name: Quality, accuracy, and completeness of t
+  weight: 0.55
+task_id: office_qa-066
+task_name: Federal Highway Trust Fund CAGR Analysis
+tools: []

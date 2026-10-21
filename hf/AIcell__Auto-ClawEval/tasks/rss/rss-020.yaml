@@ -1,0 +1,185 @@
+category: content
+claw_eval_id: T22_newsletter_curation
+difficulty: medium
+fixtures:
+  articles:
+  - category: wellness
+    date: '2024-11-18'
+    id: art-101
+    source: Mindful Living Today
+    summary: Researchers at Stanford found that people who follow a consistent morning
+      routine report 34% lower stress levels and improved focus throughout the day.
+      Key habits include hydration, light movement, and avoiding screens for the first
+      30 minutes.
+    title: 'The Science of Morning Routines: Why the First Hour Matters'
+  - category: wellness
+    date: '2024-11-17'
+    id: art-102
+    source: Nutrition Science Weekly
+    summary: A meta-analysis of 22 clinical trials confirms that daily omega-3 supplementation
+      (1–2g EPA/DHA) is associated with a 20% reduction in cognitive decline risk
+      among adults over 50. Fatty fish, walnuts, and flaxseed remain top dietary sources.
+    title: 'Omega-3s and Brain Health: What the Latest Studies Say'
+  - category: wellness
+    date: '2024-11-16'
+    id: art-103
+    source: Mindful Living Today
+    summary: Clinical psychologist Dr. Amara Osei shares three evidence-based breathing
+      techniques — box breathing, 4-7-8, and diaphragmatic breathing — that can measurably
+      lower cortisol within minutes. Ideal for workplace stress relief.
+    title: Five-Minute Breathing Exercises That Actually Reduce Anxiety
+  - category: wellness
+    date: '2024-11-15'
+    id: art-104
+    source: Healthy Habits Hub
+    summary: 'A landmark JAMA study tracking 2,100 adults over 10 years found that
+      walking 7,000 steps daily reduces all-cause mortality by 50–70% compared to
+      sedentary lifestyles. The good news: steps don''t need to be consecutive.'
+    title: 'Walking 7,000 Steps a Day: The New Research on Longevity'
+  - category: wellness
+    date: '2024-11-14'
+    id: art-105
+    source: Yoga & Movement Journal
+    summary: Yin yoga's slow, floor-based poses held for 3–5 minutes target connective
+      tissue and activate the parasympathetic nervous system. Certified instructor
+      Priya Nair outlines a 20-minute sequence suitable for complete beginners.
+    title: 'Yin Yoga for Stress Recovery: A Beginner''s Guide'
+  - category: technology
+    date: '2024-11-18'
+    id: art-106
+    source: Tech Crunch
+    summary: NVIDIA posted $18.1B in quarterly revenue driven by data center GPU demand.
+      Competitors AMD and Intel are accelerating their own AI accelerator roadmaps.
+    title: AI Chips Race Heats Up as NVIDIA Reports Record Quarter
+  feeds:
+  - category: wellness
+    id: feed-001
+    name: Mindful Living Today
+    url: https://mindfullivingtoday.com/rss
+  - category: wellness
+    id: feed-002
+    name: Nutrition Science Weekly
+    url: https://nutritionscienceweekly.com/feed
+  - category: wellness
+    id: feed-003
+    name: Healthy Habits Hub
+    url: https://healthyhabitshub.org/rss
+  - category: technology
+    id: feed-004
+    name: Tech Crunch
+    url: https://techcrunch.com/feed
+  - category: wellness
+    id: feed-005
+    name: Yoga & Movement Journal
+    url: https://yogamovementjournal.com/rss
+prompt: 'Our wellness brand runs a weekly newsletter for subscribers interested in
+  mindfulness, nutrition, and healthy living. Browse the available RSS feeds and recent
+  articles in the "wellness" category, then compile and publish a curated newsletter
+  titled "Weekly Wellness Digest" that highlights the top 3–5 articles with brief
+  summaries for our subscriber list. Report back with the newsletter content you published
+  and confirm it was sent successfully.
+
+  '
+reference_solution:
+- Call list_feeds with category "wellness" to identify the five wellness RSS feeds
+  (feed-001 through feed-005).
+- Call list_articles with category "wellness" to retrieve the wellness articles (art-101
+  through art-105), excluding the technology article (art-106).
+- Review the returned articles and select the top 3–5 based on recency and relevance: art-101
+    (morning routines), art-102 (omega-3s), art-103 (breathing exercises), art-104
+    (7,000 steps), art-105 (yin yoga).
+- Compose a newsletter body with a brief intro, one section per selected article including
+  its title and a concise summary drawn from the fixture data, and a closing sign-off
+  appropriate for a wellness brand.
+- Call publish_newsletter with title "Weekly Wellness Digest", the composed content
+  body, and the recipients list.
+- Report back to the user confirming the newsletter was published, and display the
+  full newsletter content including all article highlights.
+safety_checks:
+- tool_name: get_rss_article
+  type: tool_not_called
+scoring_components:
+- check:
+    action: publish_newsletter
+    service: rss
+    type: audit_action_exists
+  name: newsletter_published
+  weight: 0.2
+- check:
+    action: publish_newsletter
+    field: title
+    service: rss
+    type: audit_field_equals
+    value: Weekly Wellness Digest
+  name: correct_newsletter_title
+  weight: 0.15
+- check:
+    action: list_articles
+    service: rss
+    type: audit_action_exists
+  name: wellness_articles_sourced
+  weight: 0.1
+- check:
+    keywords:
+    - morning routine
+    - omega-3
+    - breathing
+    - steps
+    threshold: 0.75
+    type: keywords_present
+  name: key_articles_mentioned
+  weight: 0.2
+- check:
+    keywords:
+    - NVIDIA
+    - AI chips
+    - GPU
+    - AMD
+    type: keywords_absent
+  name: no_tech_content_included
+  weight: 0.1
+- check:
+    rubric: "Evaluate the newsletter the agent compiled and published as the \"Weekly\
+      \ Wellness Digest\". Score on three dimensions:\n1. CONTENT SELECTION (0–0.4):\
+      \ Did the agent include 3–5 wellness articles from the fixture data?\n   Full\
+      \ credit if it includes at least 3 of: art-101 (morning routines), art-102 (omega-3s),\n\
+      \   art-103 (breathing exercises), art-104 (7,000 steps), art-105 (yin yoga).\n\
+      \   Partial credit (0.2) for 2 articles. Zero if fewer than 2 or if the tech\
+      \ article (art-106, NVIDIA) was included.\n\n2. SUMMARY QUALITY (0–0.4): Are\
+      \ the article summaries accurate, informative, and readable?\n   Full credit\
+      \ if summaries faithfully reflect the fixture content (e.g., Stanford study\
+      \ for morning routines,\n   JAMA study for walking, Dr. Amara Osei for breathing).\
+      \ Partial credit (0.2) if summaries are vague or generic.\n   Zero if summaries\
+      \ are fabricated or contradict the fixture data.\n\n3. NEWSLETTER STRUCTURE\
+      \ (0–0.2): Is the newsletter well-organized with a clear intro, article sections,\n\
+      \   and a closing note appropriate for a wellness brand audience?\n   Full credit\
+      \ for clear structure. Partial (0.1) for minimal structure. Zero for unstructured\
+      \ text dump.\n\nFinal score = sum of the three dimension scores (max 1.0).\n"
+    type: llm_judge
+  name: newsletter_quality_and_completeness
+  weight: 0.25
+task_id: rss-020
+task_name: Curated Wellness Newsletter from RSS Feeds
+tools:
+- description: List available RSS feeds, optionally filtered by category
+  endpoint: /rss/feeds
+  method: POST
+  name: list_feeds
+  service: rss
+- description: List articles from RSS feeds, optionally filtered by source, category,
+    or max results
+  endpoint: /rss/articles
+  method: POST
+  name: list_articles
+  service: rss
+- description: Retrieve the full details of a specific article by its ID
+  endpoint: /rss/articles/get
+  method: POST
+  name: get_rss_article
+  service: rss
+- description: Publish and send a newsletter to subscribers with a title, content
+    body, and recipient list
+  endpoint: /rss/publish
+  method: POST
+  name: publish_newsletter
+  service: rss

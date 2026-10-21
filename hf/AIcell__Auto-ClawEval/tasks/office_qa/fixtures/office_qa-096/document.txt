@@ -1,0 +1,171 @@
+DEPARTMENT OF THE TREASURY
+BUREAU OF FISCAL SERVICE
+
+FEDERAL HIGHWAY TRUST FUND
+COMPOUND ANNUAL GROWTH RATE ANALYSIS
+FISCAL YEARS 2014 THROUGH 2024
+
+Report Reference: BFS-HTF-2024-CAGR-007
+Prepared by: Office of Financial Analysis and Reporting
+Date of Issuance: November 14, 2024
+Classification: Public Release
+
+─────────────────────────────────────────────────────────────
+
+EXECUTIVE SUMMARY
+
+This report presents a formal Compound Annual Growth Rate (CAGR) computation for the Federal Highway Trust Fund (HTF) covering the ten-year period from fiscal year 2014 through fiscal year 2024. The analysis encompasses both the Highway Account and the Mass Transit Account, examining revenue receipts, expenditure outflows, and net fund balances. The findings are intended to support congressional budget deliberations, inform the Federal Highway Administration's long-range planning activities, and satisfy reporting requirements under the Highway and Transportation Funding Act of 2014 and the Infrastructure Investment and Jobs Act of 2021.
+
+The Highway Trust Fund recorded a beginning balance of $8.37 billion at the close of FY2014 and a reported balance of $56.42 billion at the close of FY2024, reflecting a ten-year CAGR of 20.9 percent. This exceptional growth rate is substantially attributable to the $118 billion in supplemental general fund transfers authorized under the Infrastructure Investment and Jobs Act (Public Law 117-58), signed into law on November 15, 2021. Absent those transfers, the organic CAGR derived from dedicated excise tax revenues alone would have been approximately 1.4 percent over the same period.
+
+─────────────────────────────────────────────────────────────
+
+SECTION 1: BACKGROUND AND FUND STRUCTURE
+
+The Federal Highway Trust Fund was established under the Highway Revenue Act of 1956 and is maintained by the Department of the Treasury. The fund receives dedicated revenues primarily from federal motor fuel excise taxes, heavy vehicle use taxes, and tire taxes. As of FY2024, the federal gasoline tax stands at 18.4 cents per gallon, a rate that has remained unchanged since October 1, 1993. The diesel fuel tax is set at 24.4 cents per gallon.
+
+The HTF is divided into two sub-accounts:
+
+1. Highway Account — receives approximately 84.0 percent of dedicated excise tax revenues
+2. Mass Transit Account — receives approximately 15.5 percent of dedicated excise tax revenues, with the remaining 0.5 percent allocated to the Leaking Underground Storage Tank Trust Fund
+
+For FY2024, total dedicated excise tax receipts deposited into the HTF were $46.3 billion, of which $38.9 billion was credited to the Highway Account and $7.2 billion to the Mass Transit Account.
+
+─────────────────────────────────────────────────────────────
+
+SECTION 2: CAGR METHODOLOGY
+
+The Compound Annual Growth Rate is computed using the standard financial formula:
+
+CAGR = (Ending Value / Beginning Value)^(1/n) − 1
+
+Where:
+- Ending Value = fund balance at close of FY2024
+- Beginning Value = fund balance at close of FY2014
+- n = number of years in the measurement period (10 years)
+
+All balance figures are drawn from the Monthly Treasury Statement (MTS) and the Combined Statement of Receipts, Outlays, and Balances published by the Bureau of Fiscal Service. Dollar amounts are expressed in nominal terms unless otherwise noted. Inflation-adjusted figures using the GDP Implicit Price Deflator are provided in Section 4 for supplemental context.
+
+─────────────────────────────────────────────────────────────
+
+SECTION 3: FUND BALANCE DATA AND CAGR COMPUTATIONS
+
+TABLE 1: FEDERAL HIGHWAY TRUST FUND — ANNUAL BALANCES, FY2014–FY2024
+(Dollars in Billions, End-of-Fiscal-Year Balances)
+
+Fiscal Year | Highway Account | Mass Transit Account | Total HTF Balance
+FY2014      |   $6.21         |   $2.16              |   $8.37
+FY2015      |   $7.44         |   $2.31              |   $9.75
+FY2016      |   $9.87         |   $2.58              |   $12.45
+FY2017      |   $11.23        |   $2.74              |   $13.97
+FY2018      |   $12.06        |   $2.89              |   $14.95
+FY2019      |   $13.41        |   $3.02              |   $16.43
+FY2020      |   $14.78        |   $3.19              |   $17.97
+FY2021      |   $22.34        |   $4.87              |   $27.21
+FY2022      |   $36.15        |   $7.63              |   $43.78
+FY2023      |   $42.09        |   $8.94              |   $51.03
+FY2024      |   $47.18        |   $9.24              |   $56.42
+
+Note: FY2021 and FY2022 balances reflect general fund transfers of $51.0 billion and $46.0 billion, respectively, authorized under the Infrastructure Investment and Jobs Act of 2021.
+
+CAGR COMPUTATION — TOTAL HTF BALANCE:
+
+Beginning Value (FY2014): $8.37 billion
+Ending Value (FY2024): $56.42 billion
+Number of Years (n): 10
+
+CAGR = ($56.42B / $8.37B)^(1/10) − 1
+CAGR = (6.7408)^(0.10) − 1
+CAGR = 1.2090 − 1
+CAGR = 0.2090, or 20.9 percent
+
+TABLE 2: CAGR BY ACCOUNT AND MEASUREMENT PERIOD
+
+Account               | 5-Year CAGR (FY2019–FY2024) | 10-Year CAGR (FY2014–FY2024)
+Highway Account       |   28.6%                      |   22.5%
+Mass Transit Account  |   25.1%                      |   15.6%
+Total HTF             |   27.9%                      |   20.9%
+
+TABLE 3: ORGANIC CAGR (EXCISE TAX REVENUES ONLY, EXCLUDING TRANSFERS)
+
+The following computation isolates dedicated excise tax revenue growth, excluding all general fund transfers:
+
+Fiscal Year | Excise Tax Receipts (Billions)
+FY2014      |   $38.6
+FY2015      |   $39.1
+FY2016      |   $40.3
+FY2017      |   $40.8
+FY2018      |   $41.2
+FY2019      |   $42.0
+FY2020      |   $36.7 (COVID-19 impact)
+FY2021      |   $40.4
+FY2022      |   $43.6
+FY2023      |   $45.1
+FY2024      |   $46.3
+
+Organic Revenue CAGR (FY2014–FY2024):
+= ($46.3B / $38.6B)^(1/10) − 1
+= (1.1995)^(0.10) − 1
+= 1.0183 − 1
+= 1.83 percent
+
+Note: The FY2020 decline of 12.6 percent in excise tax receipts is directly attributable to reduced vehicle miles traveled during the COVID-19 pandemic, which the Federal Highway Administration estimated at a 13.2 percent reduction in VMT for calendar year 2020.
+
+─────────────────────────────────────────────────────────────
+
+SECTION 4: INFLATION-ADJUSTED ANALYSIS
+
+To provide a real-terms perspective, fund balances were deflated using the Bureau of Economic Analysis GDP Implicit Price Deflator. The deflator index value for FY2014 was 107.6 (base year 2012 = 100), and the FY2024 index value is estimated at 131.4, representing cumulative inflation of approximately 22.1 percent over the measurement period.
+
+Real (Inflation-Adjusted) CAGR — Total HTF:
+Nominal CAGR: 20.9%
+Inflation Adjustment: −2.0% (annualized)
+Real CAGR: approximately 18.9%
+
+Even on a real basis, the fund's growth rate is dominated by legislative transfer activity rather than organic revenue performance. The real organic CAGR for excise tax receipts is estimated at negative 0.2 percent, confirming that the fixed nominal fuel tax rate of 18.4 cents per gallon has failed to keep pace with inflation over the past three decades.
+
+─────────────────────────────────────────────────────────────
+
+SECTION 5: KEY FINDINGS AND OBSERVATIONS
+
+5.1 Legislative Transfers Dominate Growth
+
+The Infrastructure Investment and Jobs Act authorized a total of $118 billion in general fund transfers to the HTF over five years (FY2022–FY2026). The first two tranches, totaling $97 billion ($51 billion in FY2021 and $46 billion in FY2022), account for approximately 86 percent of the total fund balance increase observed over the ten-year measurement period.
+
+5.2 Fuel Tax Revenue Stagnation
+
+The federal motor fuel excise tax has not been adjusted since 1993. In real 2024 dollars, the effective purchasing power of the 18.4-cent gasoline tax has declined to approximately 9.7 cents per gallon, representing a 47.3 percent erosion in real value. The Congressional Budget Office, in its August 2023 Budget and Economic Outlook, projected that without legislative action, dedicated HTF revenues will be insufficient to cover projected expenditures beginning in FY2028.
+
+5.3 Mass Transit Account Performance
+
+The Mass Transit Account grew from $2.16 billion in FY2014 to $9.24 billion in FY2024, a 10-year CAGR of 15.6 percent. The Federal Transit Administration obligated $13.7 billion from the Mass Transit Account in FY2024, with the Capital Investment Grant program accounting for $2.3 billion of that total.
+
+5.4 Expenditure Growth Rate
+
+Total HTF expenditures grew from $50.1 billion in FY2014 to $68.4 billion in FY2024, representing a 10-year CAGR of 3.2 percent. The gap between expenditure growth (3.2 percent CAGR) and organic revenue growth (1.83 percent CAGR) underscores the structural imbalance that has necessitated repeated general fund interventions since FY2008.
+
+─────────────────────────────────────────────────────────────
+
+SECTION 6: LIMITATIONS AND DISCLAIMERS
+
+This analysis is based on data available through September 30, 2024, the close of FY2024. Final audited figures for FY2024 will be published in the FY2024 Financial Report of the United States Government, expected in February 2025. Preliminary figures used herein may be subject to revision of up to 0.5 percent.
+
+CAGR is a smoothed annualized rate and does not reflect year-to-year volatility. Readers should consult Table 1 for annual balance data to understand the non-linear nature of fund growth, particularly the step-change increases in FY2021 and FY2022.
+
+─────────────────────────────────────────────────────────────
+
+SECTION 7: CONTACTS AND REFERENCES
+
+Primary Analyst: Margaret L. Thornton, Senior Financial Analyst, Office of Financial Analysis and Reporting, Bureau of Fiscal Service
+Contact: (202) 874-9880
+
+References:
+- Monthly Treasury Statement, September 2024, Bureau of Fiscal Service
+- Infrastructure Investment and Jobs Act, Public Law 117-58, November 15, 2021
+- Highway and Transportation Funding Act of 2014, Public Law 113-159
+- CBO Budget and Economic Outlook, August 2023
+- BEA GDP Implicit Price Deflator, Third Quarter 2024 Release
+
+─────────────────────────────────────────────────────────────
+END OF REPORT
+BFS-HTF-2024-CAGR-007 | Page 8 of 8

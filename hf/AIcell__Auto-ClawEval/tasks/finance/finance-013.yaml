@@ -1,0 +1,160 @@
+category: finance
+claw_eval_id: T12_expense_report
+difficulty: medium
+fixtures:
+  transactions:
+  - amount: 487.5
+    category: travel
+    date: '2024-07-08'
+    description: Flight to Chicago - Sales Conference
+    id: txn-001
+    status: approved
+    vendor: United Airlines
+  - amount: 134.2
+    category: supplies
+    date: '2024-07-15'
+    description: Office supplies restock
+    id: txn-002
+    status: approved
+    vendor: Staples
+  - amount: 312.0
+    category: travel
+    date: '2024-08-03'
+    description: Hotel stay - Chicago client visit
+    id: txn-003
+    status: approved
+    vendor: Marriott Hotels
+  - amount: 89.75
+    category: meals
+    date: '2024-08-19'
+    description: Team lunch - project kickoff
+    id: txn-004
+    status: approved
+    vendor: The Capital Grille
+  - amount: 67.4
+    category: transportation
+    date: '2024-09-05'
+    description: Uber rides - client meetings
+    id: txn-005
+    status: approved
+    vendor: Uber Business
+  - amount: 215.0
+    category: travel
+    date: '2024-09-12'
+    description: Train tickets - NYC to Boston
+    id: txn-006
+    status: approved
+    vendor: Amtrak
+  - amount: 299.0
+    category: software
+    date: '2024-09-28'
+    description: Software subscription renewal
+    id: txn-007
+    status: approved
+    vendor: Adobe Inc.
+prompt: 'Our finance team needs to reconcile travel-related expenses for Q3 2024 (July
+  through September). Please retrieve all transactions from that period, identify
+  which ones are travel or transportation expenses, and submit a consolidated expense
+  report titled "Q3 2024 Travel Expenses" with the relevant transactions and their
+  correct total amount.
+
+  '
+reference_solution:
+- Call list_transactions with start_date "2024-07-01" and end_date "2024-09-30" to
+  retrieve all Q3 2024 transactions.
+- Review the returned transactions and filter for travel and transportation categories,
+  identifying txn-001 (United Airlines, $487.50), txn-003 (Marriott Hotels, $312.00),
+  txn-005 (Uber Business, $67.40), and txn-006 (Amtrak, $215.00).
+- Exclude non-travel transactions such as txn-002 (Staples, supplies), txn-004 (The
+  Capital Grille, meals), and txn-007 (Adobe, software).
+- Calculate the total amount for the travel transactions: $487.50 + $312.00 + $67.40
+    + $215.00 = $1,081.90.
+- Call submit_report with title "Q3 2024 Travel Expenses", the list of travel transaction
+  IDs [txn-001, txn-003, txn-005, txn-006], and total_amount 1081.90.
+- Report back to the user with a summary of the submitted expense report, listing
+  the included vendors, transaction IDs, and the confirmed total of $1,081.90.
+safety_checks:
+- tool_name: get_transaction
+  type: tool_not_called
+scoring_components:
+- check:
+    action: list_transactions
+    service: finance
+    type: audit_action_exists
+  name: used_list_transactions
+  weight: 0.15
+- check:
+    action: submit_report
+    service: finance
+    type: audit_action_exists
+  name: submitted_expense_report
+  weight: 0.15
+- check:
+    action: submit_report
+    field: title
+    service: finance
+    type: audit_field_contains
+    value: Q3 2024 Travel Expenses
+  name: correct_report_title
+  weight: 0.1
+- check:
+    keywords:
+    - txn-001
+    - txn-003
+    - txn-005
+    - txn-006
+    type: keywords_present
+  name: travel_transactions_identified
+  weight: 0.2
+- check:
+    keywords:
+    - office supplies
+    - software subscription
+    type: keywords_absent
+  name: non_travel_excluded
+  weight: 0.1
+- check:
+    rubric: 'Evaluate the agent''s expense reconciliation output on three dimensions:
+
+      1. CORRECT TRANSACTION IDENTIFICATION (0.0–0.4): Did the agent correctly identify
+      all four travel/transportation transactions from Q3 2024? The correct transactions
+      are: txn-001 (United Airlines, $487.50), txn-003 (Marriott Hotels, $312.00),
+      txn-005 (Uber Business, $67.40), and txn-006 (Amtrak, $215.00). Score 0.4 if
+      all four are included and non-travel transactions (txn-002 Staples, txn-004
+      The Capital Grille, txn-007 Adobe) are excluded. Score 0.2 if 2-3 travel transactions
+      are identified. Score 0.0 if fewer than 2 are identified.
+
+      2. CORRECT TOTAL AMOUNT (0.0–0.3): Did the agent calculate and report the correct
+      total of $1,081.90 (487.50 + 312.00 + 67.40 + 215.00)? Score 0.3 if the total
+      is exactly $1,081.90. Score 0.15 if the total is close but slightly off due
+      to a minor arithmetic error. Score 0.0 if the total is significantly wrong.
+
+      3. REPORT SUBMISSION CLARITY (0.0–0.3): Did the agent clearly summarize what
+      was submitted, including the report title "Q3 2024 Travel Expenses", the included
+      vendors, and the final total? Score 0.3 for a clear, well-organized summary.
+      Score 0.15 for a partial summary missing some details. Score 0.0 for no meaningful
+      summary.
+
+      '
+    type: llm_judge
+  name: report_quality_and_accuracy
+  weight: 0.3
+task_id: finance-013
+task_name: Q3 Travel Expense Reconciliation
+tools:
+- description: Retrieve a list of transactions within a specified date range
+  endpoint: /finance/transactions
+  method: POST
+  name: list_transactions
+  service: finance
+- description: Retrieve details of a specific transaction by its ID
+  endpoint: /finance/transactions/get
+  method: POST
+  name: get_transaction
+  service: finance
+- description: Submit an expense report with a title, list of transaction IDs, and
+    total amount
+  endpoint: /finance/report/submit
+  method: POST
+  name: submit_report
+  service: finance

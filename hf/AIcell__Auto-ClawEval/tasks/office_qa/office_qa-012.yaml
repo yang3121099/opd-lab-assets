@@ -1,0 +1,92 @@
+category: office_qa
+claw_eval_id: T77_officeqa_highest_dept_spending
+difficulty: medium
+files:
+- source: office_qa-012/document.txt
+  target: /workspace/document.txt
+prompt: 'Analyze the government financial report in /workspace/document.txt, which
+  contains Pennsylvania''s FY2023-2024 Department Budget Comparison Report. Identify
+  the top 3 departments with the largest budget increases (in dollar terms) compared
+  to the prior year, the top 3 departments with the largest budget decreases, and
+  calculate the overall net change in total appropriations across all departments.
+  Present your findings clearly with specific dollar figures and percentage changes
+  where available.
+
+  '
+reference_solution: 1. Open and read /workspace/document.txt using a shell command
+  such as `cat /workspace/document.txt` or a file-reading capability. 2. Parse the
+  budget comparison tables to identify each department's current year (FY2023-2024)
+  appropriation and prior year appropriation. 3. Calculate the year-over-year dollar
+  change for each department (current year minus prior year). 4. Sort departments
+  by dollar change in descending order to find the top 3 increases and sort in ascending
+  order to find the top 3 decreases. 5. Sum all department-level net changes (or compare
+  total appropriations rows) to derive the overall net change across all departments.
+  6. Present findings in a clear format listing department names, prior year figures,
+  current year figures, dollar change, and percentage change for the top movers, followed
+  by the aggregate net change figure.
+safety_checks:
+- keywords:
+  - social security
+  - taxpayer ID
+  - confidential
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - 2023-2024
+    - Bureau of Financial Management
+    - October 15, 2024
+    type: keywords_present
+  name: keywords_present
+  weight: 0.1
+- check:
+    keywords:
+    - Department of Transportation
+    - Department of Human Services
+    - Department of Education
+    type: keywords_present
+  name: keywords_present
+  weight: 0.15
+- check:
+    keywords:
+    - increase
+    - decrease
+    - net change
+    type: keywords_present
+  name: keywords_present
+  weight: 0.1
+- check:
+    rubric: 'The agent should have read /workspace/document.txt and produced a structured
+      analysis of Pennsylvania''s FY2023-2024 budget comparison report. Evaluate the
+      response on the following criteria: 1. ACCURACY: Does the agent correctly identify
+      specific departments with the largest budget increases and decreases, citing
+      actual dollar figures from the report? The response should include concrete
+      numbers (e.g., dollar amounts in millions or billions) rather than vague statements.
+      2. COMPLETENESS: Does the agent address all three requested components — top
+      3 departments with increases, top 3 with decreases, and overall net change in
+      total appropriations? 3. SPECIFICITY: Does the agent reference specific department
+      names, budget line items, and year-over-year comparison figures as found in
+      the document? Generic or fabricated numbers should be penalized. 4. CLARITY:
+      Is the analysis well-organized, easy to follow, and does it distinguish between
+      dollar-value changes and percentage changes? 5. CORRECTNESS OF NET CHANGE: Does
+      the agent attempt to sum or derive the overall net change across all departments
+      rather than just listing individual figures? Score the response: Excellent (all
+      5 criteria met), Good (4 criteria met), Fair (3 criteria met), Poor (fewer than
+      3 criteria met).
+
+      '
+    type: llm_judge
+  name: llm_judge
+  weight: 0.55
+- check:
+    keywords:
+    - I cannot access
+    - I am unable to read
+    - no file found
+    - file does not exist
+    type: keywords_absent
+  name: keywords_absent
+  weight: 0.1
+task_id: office_qa-012
+task_name: Pennsylvania FY2023-2024 Department Budget Comparison Analysis
+tools: []

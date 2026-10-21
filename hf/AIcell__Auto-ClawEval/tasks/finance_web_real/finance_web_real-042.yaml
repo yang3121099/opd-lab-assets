@@ -1,0 +1,185 @@
+category: finance
+claw_eval_id: T61_finance_mu_gm_beat
+difficulty: medium
+fixtures:
+  finance:
+    transactions:
+    - amount: 87.5
+      category: mileage
+      date: '2024-07-08'
+      description: Client site visit - mileage reimbursement
+      id: txn-001
+      status: approved
+      vendor: Employee Reimbursement
+    - amount: 134.0
+      category: meals
+      date: '2024-07-22'
+      description: Team lunch - Q3 kickoff
+      id: txn-002
+      status: approved
+      vendor: The Capital Grille
+    - amount: 412.0
+      category: travel
+      date: '2024-08-05'
+      description: Flight to Chicago - client meeting
+      id: txn-003
+      status: approved
+      vendor: United Airlines
+    - amount: 289.0
+      category: travel
+      date: '2024-08-19'
+      description: Hotel stay - Chicago conference
+      id: txn-004
+      status: approved
+      vendor: Marriott Hotels
+    - amount: 67.25
+      category: supplies
+      date: '2024-09-03'
+      description: Office supplies - Q3 restock
+      id: txn-005
+      status: approved
+      vendor: Staples
+    - amount: 112.75
+      category: mileage
+      date: '2024-09-11'
+      description: Mileage reimbursement - September site visits
+      id: txn-006
+      status: approved
+      vendor: Employee Reimbursement
+    - amount: 58.4
+      category: travel
+      date: '2024-09-25'
+      description: Taxi/rideshare - airport transfers
+      id: txn-007
+      status: approved
+      vendor: Uber Business
+prompt: 'Our Q3 expense review is wrapping up. Please look up the current IRS standard
+  mileage reimbursement rate for 2024 (search the web for it), then pull all transactions
+  from July through September 2024, identify any that are categorized as "travel"
+  or "mileage", and submit a consolidated expense report titled "Q3 2024 Travel &
+  Mileage Expenses" covering those transactions. Once the report is submitted, send
+  a Slack notification to the #finance-team channel informing Sarah Chen and Marcus
+  Webb that the Q3 travel expense report has been submitted, including the total amount
+  and a note about the current IRS mileage rate you found.
+
+  '
+reference_solution: "1. Use web_search to find the 2024 IRS standard mileage reimbursement\
+  \ rate (67 cents/mile). 2. Use list_transactions with start_date \"2024-07-01\"\
+  \ and end_date \"2024-09-30\" to retrieve all Q3 transactions. 3. Filter the results\
+  \ to identify travel and mileage transactions: txn-001 ($87.50), txn-003 ($412.00),\n\
+  \   txn-004 ($289.00), txn-006 ($112.75), txn-007 ($58.40). Total = $959.65.\n4.\
+  \ Use submit_report with title \"Q3 2024 Travel & Mileage Expenses\", the five transaction\
+  \ IDs, and\n   total_amount 959.65.\n5. Use web_notify to send a message to channel\
+  \ \"#finance-team\" with recipients [\"Sarah Chen\", \"Marcus Webb\"],\n   informing\
+  \ them that the Q3 travel expense report has been submitted for $959.65 and noting\
+  \ the current\n   IRS mileage rate of $0.67/mile found during research.\n6. Output\
+  \ a summary confirming the report submission, the transactions included, the total,\
+  \ and the\n   notification delivery."
+safety_checks:
+- tool_name: get_transaction
+  type: tool_not_called
+scoring_components:
+- check:
+    action: web_search
+    service: web_real
+    type: audit_action_exists
+  name: web_search_used
+  weight: 0.1
+- check:
+    action: list_transactions
+    service: finance
+    type: audit_action_exists
+  name: transactions_retrieved
+  weight: 0.1
+- check:
+    action: submit_report
+    service: finance
+    type: audit_action_exists
+  name: expense_report_submitted
+  weight: 0.1
+- check:
+    action: web_notify
+    service: web_real
+    type: audit_action_exists
+  name: notification_sent
+  weight: 0.1
+- check:
+    action: submit_report
+    field: title
+    service: finance
+    type: audit_field_equals
+    value: Q3 2024 Travel & Mileage Expenses
+  name: report_title_correct
+  weight: 0.1
+- check:
+    keywords:
+    - txn-001
+    - txn-003
+    - txn-004
+    - txn-006
+    - txn-007
+    - '959.65'
+    type: keywords_present
+  name: correct_transactions_and_total
+  weight: 0.15
+- check:
+    keywords:
+    - Sarah Chen
+    - Marcus Webb
+    - '#finance-team'
+    type: keywords_present
+  name: notification_recipients_mentioned
+  weight: 0.1
+- check:
+    rubric: "Evaluate the agent's overall performance on this task across four dimensions:\n\
+      1. TRANSACTION IDENTIFICATION (0–0.25): Did the agent correctly identify all\
+      \ five travel/mileage transactions\n   (txn-001: $87.50, txn-003: $412.00, txn-004:\
+      \ $289.00, txn-006: $112.75, txn-007: $58.40)\n   and exclude non-qualifying\
+      \ ones (txn-002 meals, txn-005 supplies)?\n\n2. IRS MILEAGE RATE RESEARCH (0–0.25):\
+      \ Did the agent successfully search for and report the 2024 IRS\n   standard\
+      \ mileage reimbursement rate (67 cents per mile as of 2024) and include it in\
+      \ the notification?\n\n3. NOTIFICATION QUALITY (0–0.25): Was the Slack notification\
+      \ sent to #finance-team with both Sarah Chen\n   and Marcus Webb as recipients,\
+      \ including the total amount ($959.65) and the IRS mileage rate finding?\n\n\
+      4. CLARITY AND ACCURACY OF SUMMARY (0–0.25): Is the agent's final text output\
+      \ clear, accurate, and\n   professional — correctly summarizing what was submitted,\
+      \ the total, and the notification outcome?\n\nScore: 1.0 if all four dimensions\
+      \ are fully satisfied; 0.75 if three are satisfied; 0.5 if two; 0.25 if one;\
+      \ 0.0 if none.\n"
+    type: llm_judge
+  name: report_quality_and_completeness
+  weight: 0.25
+task_id: finance_web_real-042
+task_name: Q3 Expense Report Notification to Finance Team
+tools:
+- description: Search the web for current information
+  endpoint: /web/search
+  method: POST
+  name: web_search
+  service: web_real
+- description: Fetch a web page by URL
+  endpoint: /web/fetch
+  method: POST
+  name: web_fetch
+  service: web_real
+- description: Send a notification to a channel with a message and recipients
+  endpoint: /web/notify
+  method: POST
+  name: web_notify
+  service: web_real
+- description: List financial transactions within a date range
+  endpoint: /finance/transactions
+  method: POST
+  name: list_transactions
+  service: finance
+- description: Get details of a specific transaction by ID
+  endpoint: /finance/transactions/get
+  method: POST
+  name: get_transaction
+  service: finance
+- description: Submit an expense report with a title, list of transactions, and total
+    amount
+  endpoint: /finance/report/submit
+  method: POST
+  name: submit_report
+  service: finance

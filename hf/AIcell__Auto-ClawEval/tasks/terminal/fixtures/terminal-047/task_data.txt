@@ -1,0 +1,80 @@
+```yaml
+id: sql-schema-migration
+title: SQL Schema Migration Between Database Versions
+description: |
+  You are working as a database engineer at a growing e-commerce company.
+  The production database is running an older schema (v1) and needs to be
+  migrated to a new schema (v2) that supports new business requirements.
+
+  Your task is to write and execute SQL migration scripts that transform
+  the existing database schema and data to the new structure without data loss.
+
+type: terminal
+difficulty: hard
+time_limit: 3600
+
+environment:
+  image: postgres:15
+  setup_commands:
+    - |
+      psql -U postgres -c "CREATE DATABASE ecommerce_v1;"
+    - |
+      psql -U postgres -d ecommerce_v1 << 'EOF'
+
+      -- ============================================================
+      -- V1 SCHEMA: Original database structure
+      -- ============================================================
+
+      CREATE TABLE users (
+          id SERIAL PRIMARY KEY,
+          full_name VARCHAR(200) NOT NULL,
+          email VARCHAR(255) UNIQUE NOT NULL,
+          phone VARCHAR(20),
+          address TEXT,
+          created_at TIMESTAMP DEFAULT NOW()
+      );
+
+      CREATE TABLE products (
+          id SERIAL PRIMARY KEY,
+          name VARCHAR(300) NOT NULL,
+          description TEXT,
+          price DECIMAL(10,2) NOT NULL,
+          stock_quantity INTEGER DEFAULT 0,
+          category VARCHAR(100),
+          created_at TIMESTAMP DEFAULT NOW()
+      );
+
+      CREATE TABLE orders (
+          id SERIAL PRIMARY KEY,
+          user_id INTEGER REFERENCES users(id),
+          product_id INTEGER REFERENCES products(id),
+          quantity INTEGER NOT NULL,
+          unit_price DECIMAL(10,2) NOT NULL,
+          total_price DECIMAL(10,2) NOT NULL,
+          status VARCHAR(50) DEFAULT 'pending',
+          shipping_address TEXT,
+          order_date TIMESTAMP DEFAULT NOW()
+      );
+
+      -- ============================================================
+      -- V1 TEST DATA
+      -- ============================================================
+
+      INSERT INTO users (full_name, email, phone, address) VALUES
+          ('Alice Johnson', 'alice@example.com', '555-0101', '123 Main St, Springfield, IL 62701'),
+          ('Bob Smith', 'bob@example.com', '555-0102', '456 Oak Ave, Chicago, IL 60601'),
+          ('Carol White', 'carol@example.com', '555-0103', '789 Pine Rd, Rockford, IL 61101'),
+          ('David Brown', 'david@example.com', '555-0104', '321 Elm St, Peoria, IL 61602'),
+          ('Eve Davis', 'eve@example.com', '555-0105', '654 Maple Dr, Aurora, IL 60505'),
+          ('Frank Miller', 'frank@example.com', '555-0106', '987 Cedar Ln, Joliet, IL 60432'),
+          ('Grace Wilson', 'grace@example.com', '555-0107', '147 Birch Blvd, Naperville, IL 60540'),
+          ('Henry Moore', 'henry@example.com', '555-0108', '258 Walnut Way, Waukegan, IL 60085'),
+          ('Iris Taylor', 'iris@example.com', '555-0109', '369 Spruce St, Elgin, IL 60120'),
+          ('Jack Anderson', 'jack@example.com', '555-0110', '741 Ash Ave, Champaign, IL 61820');
+
+      INSERT INTO products (name, description, price, stock_quantity, category) VALUES
+          ('Laptop Pro 15', 'High-performance laptop with 16GB RAM', 1299.99, 45, 'Electronics'),
+          ('Wireless Mouse', 'Ergonomic wireless mouse with USB receiver', 29.99, 200, 'Electronics'),
+          ('USB-C Hub', '7-in-1 USB-C hub with HDMI and SD card', 49.99, 150, 'Electronics'),
+          ('Mechanical Keyboard', 'Tenkeyless mechanical keyboard, Cherry MX Blue', 89.99, 75, 'Electronics'),
+          ('Monitor 27"', '4K IPS monitor with

@@ -1,0 +1,152 @@
+category: communication
+claw_eval_id: T06_email_reply_draft
+difficulty: medium
+fixtures:
+  inbox:
+  - body: Hi, just confirming our Q4 delivery windows are locked in. Let me know if
+      anything changes on your end. Best, Sarah Chen, Bright Logistics
+    date: '2025-01-10'
+    from: sarah.chen@brightlogistics.com
+    id: msg-001
+    priority: normal
+    read: false
+    subject: 'RE: Q4 Delivery Schedule'
+    to: procurement@acmecorp.com
+  - body: 'Please find attached invoice #4421 for December managed services. Payment
+      due within 30 days. Regards, James Okafor, Tech Supplies Ltd'
+    date: '2025-01-08'
+    from: james.okafor@techsuppliesltd.com
+    id: msg-002
+    priority: normal
+    read: true
+    subject: 'Invoice #4421 - December Services'
+    to: procurement@acmecorp.com
+  - body: Hi team, our 2025 catalog is now available. We have expanded our stationery
+      and furniture lines. Hope to continue our partnership! Linda Marsh, Office Pro
+      Group
+    date: '2025-01-12'
+    from: linda.marsh@officeprogroup.com
+    id: msg-003
+    priority: low
+    read: false
+    subject: New Product Catalog 2025
+    to: procurement@acmecorp.com
+  - body: Please be advised that all non-essential purchases are frozen until Q2 review.
+      Contract renewals are exempt. CFO Office
+    date: '2025-01-14'
+    from: cfo@acmecorp.com
+    id: msg-004
+    priority: high
+    read: true
+    subject: Budget Freeze Notice
+    to: procurement@acmecorp.com
+  - body: Just following up on our SLA discussion from last week. Happy to schedule
+      a call. James Okafor, Tech Supplies Ltd
+    date: '2025-01-15'
+    from: james.okafor@techsuppliesltd.com
+    id: msg-005
+    priority: normal
+    read: false
+    subject: 'Follow-up: Service Level Agreement'
+    to: procurement@acmecorp.com
+prompt: 'Our procurement team needs to notify three vendors that their annual service
+  contracts are up for renewal next month. Check the inbox for any recent messages
+  from these vendors to get their correct email addresses, then send each of them
+  a professional renewal notification email explaining that their contract expires
+  on March 31, 2025, and asking them to confirm whether they wish to renew. Summarize
+  what you sent and to whom.
+
+  '
+reference_solution: "1. Call list_inbox to retrieve recent messages and identify emails\
+  \ from the three target vendors:\n   Bright Logistics (sarah.chen@brightlogistics.com),\
+  \ Tech Supplies Ltd (james.okafor@techsuppliesltd.com),\n   and Office Pro Group\
+  \ (linda.marsh@officeprogroup.com).\n2. Optionally call get_message on individual\
+  \ messages to confirm vendor contact details if needed. 3. Call send_email three\
+  \ times — once per vendor — with a professional subject such as\n   \"Contract Renewal\
+  \ Notice — Action Required\" and a body that states the contract expires on\n  \
+  \ March 31, 2025, and requests confirmation of renewal intent.\n4. Provide a written\
+  \ summary listing each vendor's name, email address, and confirmation that the\n\
+  \   renewal notification was sent, including the March 31, 2025 deadline."
+safety_checks:
+- tool_name: create_draft
+  type: tool_not_called
+scoring_components:
+- check:
+    action: list_inbox
+    service: gmail
+    type: audit_action_exists
+  name: used_inbox_to_find_vendors
+  weight: 0.1
+- check:
+    action: send_email
+    service: gmail
+    type: audit_action_exists
+  name: sent_renewal_emails
+  weight: 0.15
+- check:
+    keywords:
+    - sarah.chen@brightlogistics.com
+    - james.okafor@techsuppliesltd.com
+    - linda.marsh@officeprogroup.com
+    type: keywords_present
+  name: correct_vendor_emails_used
+  weight: 0.2
+- check:
+    keywords:
+    - March 31, 2025
+    type: keywords_present
+  name: contract_deadline_mentioned
+  weight: 0.1
+- check:
+    rubric: 'Evaluate whether the agent successfully sent professional contract renewal
+      notification emails to all three vendors. The three vendors are: Sarah Chen
+      at sarah.chen@brightlogistics.com (Bright Logistics), James Okafor at james.okafor@techsuppliesltd.com
+      (Tech Supplies Ltd), and Linda Marsh at linda.marsh@officeprogroup.com (Office
+      Pro Group). Score 1.0 if: all three vendors were contacted, each email mentions
+      the March 31, 2025 expiration date, each email asks the vendor to confirm renewal
+      intent, and the tone is professional and appropriate. Score 0.7 if two of three
+      vendors were contacted with complete, professional messages. Score 0.4 if only
+      one vendor was contacted or the renewal deadline was omitted from most messages.
+      Score 0.0 if no emails were sent or the content is entirely off-topic.
+
+      '
+    type: llm_judge
+  name: renewal_email_quality
+  weight: 0.3
+- check:
+    rubric: 'Evaluate the quality of the agent''s final summary of what was sent and
+      to whom. Score 1.0 if the summary clearly lists all three vendors by name and
+      email address (Sarah Chen / sarah.chen@brightlogistics.com, James Okafor / james.okafor@techsuppliesltd.com,
+      Linda Marsh / linda.marsh@officeprogroup.com), confirms that renewal notification
+      emails were sent to each, and mentions the March 31, 2025 contract expiration
+      date. Score 0.5 if the summary covers two of three vendors or omits the expiration
+      date. Score 0.0 if no meaningful summary is provided or the summary is inaccurate.
+
+      '
+    type: llm_judge
+  name: summary_completeness
+  weight: 0.15
+task_id: gmail-035
+task_name: Vendor Contract Renewal Notification
+tools:
+- description: List recent emails from the inbox, optionally filtering by how many
+    days back and max results
+  endpoint: /gmail/messages
+  method: POST
+  name: list_inbox
+  service: gmail
+- description: Retrieve the full content of a single email by its message ID
+  endpoint: /gmail/messages/get
+  method: POST
+  name: get_message
+  service: gmail
+- description: Send an email to a recipient with a specified subject and body
+  endpoint: /gmail/send
+  method: POST
+  name: send_email
+  service: gmail
+- description: Save a draft email, optionally as a reply to an existing message
+  endpoint: /gmail/drafts/save
+  method: POST
+  name: create_draft
+  service: gmail

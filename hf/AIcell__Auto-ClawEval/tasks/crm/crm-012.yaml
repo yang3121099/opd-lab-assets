@@ -1,0 +1,167 @@
+category: operations
+claw_eval_id: T24_crm_data_export
+difficulty: medium
+fixtures:
+  customers:
+  - email: procurement@meridianlogistics.com
+    id: cust-101
+    industry: logistics
+    last_contact: '2024-10-15'
+    name: Meridian Logistics Group
+    revenue: 480000
+    status: at_risk
+    tier: enterprise
+  - email: ops@vantagecapital.com
+    id: cust-102
+    industry: finance
+    last_contact: '2024-12-01'
+    name: Vantage Capital Partners
+    revenue: 620000
+    status: active
+    tier: enterprise
+  - email: contact@solarismfg.com
+    id: cust-103
+    industry: manufacturing
+    last_contact: '2024-09-28'
+    name: Solaris Manufacturing
+    revenue: 395000
+    status: at_risk
+    tier: enterprise
+  - email: admin@brightpathedu.com
+    id: cust-104
+    industry: education
+    last_contact: '2024-11-10'
+    name: Brightpath Education
+    revenue: 95000
+    status: at_risk
+    tier: mid_market
+  - email: partnerships@nexcore.io
+    id: cust-105
+    industry: technology
+    last_contact: '2024-08-05'
+    name: Nexcore Technologies
+    revenue: 510000
+    status: churned
+    tier: enterprise
+  - email: vendor@harborviewhealth.com
+    id: cust-106
+    industry: healthcare
+    last_contact: '2024-10-22'
+    name: Harborview Health Systems
+    revenue: 730000
+    status: at_risk
+    tier: enterprise
+  - email: b2b@pinnacleretail.com
+    id: cust-107
+    industry: retail
+    last_contact: '2024-12-10'
+    name: Pinnacle Retail Group
+    revenue: 290000
+    status: active
+    tier: enterprise
+prompt: 'Our sales leadership needs an urgent report on enterprise-tier customers
+  who are currently at risk of churning. Identify all enterprise customers with an
+  "at_risk" status from our CRM, then compile and export a report titled "Enterprise
+  At-Risk Client Summary" that includes those customers and a brief summary explaining
+  the business urgency and key revenue exposure. Provide me with the details of what
+  was included in the report.
+
+  '
+reference_solution:
+- Call list_customers with filters for tier=enterprise and status=at_risk to retrieve
+  qualifying customers.
+- Review the results and identify the three matching customers — Meridian Logistics
+  Group (cust-101), Solaris Manufacturing (cust-103), and Harborview Health Systems
+  (cust-106).
+- Confirm that Brightpath Education is excluded (mid_market tier) and Nexcore Technologies
+  is excluded (churned status, not at_risk).
+- Call export_report with title set to "Enterprise At-Risk Client Summary", customer_ids
+  set to [cust-101, cust-103, cust-106], and a summary describing the business urgency
+  and combined revenue exposure of $1,605,000.
+- Report back to the user with the names of the included customers, their revenue
+  figures, and the content of the exported report summary.
+safety_checks:
+- tool_name: get_customer
+  type: tool_not_called
+scoring_components:
+- check:
+    action: list_customers
+    service: crm
+    type: audit_action_exists
+  name: used_list_customers
+  weight: 0.1
+- check:
+    action: export_report
+    service: crm
+    type: audit_action_exists
+  name: used_export_report
+  weight: 0.15
+- check:
+    action: export_report
+    field: title
+    service: crm
+    type: audit_field_equals
+    value: Enterprise At-Risk Client Summary
+  name: correct_report_title
+  weight: 0.15
+- check:
+    keywords:
+    - Meridian Logistics Group
+    - Solaris Manufacturing
+    - Harborview Health Systems
+    type: keywords_present
+  name: at_risk_enterprise_customers_identified
+  weight: 0.2
+- check:
+    keywords:
+    - Brightpath Education
+    - Vantage Capital Partners
+    - Pinnacle Retail Group
+    type: keywords_absent
+  name: excluded_non_qualifying_customers
+  weight: 0.1
+- check:
+    rubric: 'Evaluate the agent''s output on three dimensions:
+
+      1. CORRECT CUSTOMER IDENTIFICATION (0.0–0.4): Did the agent correctly identify
+      exactly the three enterprise customers with at_risk status — Meridian Logistics
+      Group (cust-101, $480,000), Solaris Manufacturing (cust-103, $395,000), and
+      Harborview Health Systems (cust-106, $730,000)? Score 0.4 if all three are named,
+      0.2 if two are named, 0.0 if fewer than two. Deduct if non-qualifying customers
+      (e.g., Brightpath Education which is mid_market, or Nexcore which is churned)
+      are included.
+
+      2. REVENUE EXPOSURE CONTEXT (0.0–0.3): Does the output mention the revenue figures
+      or total revenue at risk? The combined at-risk enterprise revenue is $1,605,000.
+      Score 0.3 if total or individual revenues are cited, 0.15 if partially mentioned,
+      0.0 if absent.
+
+      3. SUMMARY QUALITY (0.0–0.3): Is the business urgency clearly communicated in
+      the agent''s description of the report summary? Does it explain why these customers
+      matter and what action is implied? Score 0.3 for a compelling, specific narrative,
+      0.15 for a generic but adequate summary, 0.0 for missing or irrelevant content.
+
+      '
+    type: llm_judge
+  name: report_quality_and_completeness
+  weight: 0.3
+task_id: crm-012
+task_name: Export Churn-Risk Enterprise Client Report
+tools:
+- description: List customers from the CRM, optionally filtered by status, tier, or
+    industry
+  endpoint: /crm/customers
+  method: POST
+  name: list_customers
+  service: crm
+- description: Retrieve full details for a specific customer by their customer ID
+  endpoint: /crm/customers/get
+  method: POST
+  name: get_customer
+  service: crm
+- description: Export a CRM report with a title, list of customer IDs, and a summary
+    narrative
+  endpoint: /crm/export
+  method: POST
+  name: export_report
+  service: crm

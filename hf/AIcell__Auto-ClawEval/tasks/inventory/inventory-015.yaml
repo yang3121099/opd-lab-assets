@@ -1,0 +1,160 @@
+category: operations
+claw_eval_id: T20_inventory_check
+difficulty: medium
+fixtures:
+  products:
+  - category: stationery
+    id: prod-101
+    min_stock: 100
+    name: Ballpoint Pen Set (12-pack)
+    price: 4.99
+    quantity: 45
+    supplier: OfficeSupplyCo
+  - category: stationery
+    id: prod-102
+    min_stock: 150
+    name: Spiral Notebook A5
+    price: 3.49
+    quantity: 210
+    supplier: PaperGoods Ltd
+  - category: stationery
+    id: prod-103
+    min_stock: 80
+    name: Highlighter Multipack (8 colors)
+    price: 6.75
+    quantity: 18
+    supplier: OfficeSupplyCo
+  - category: stationery
+    id: prod-104
+    min_stock: 120
+    name: Mechanical Pencil 0.5mm
+    price: 2.99
+    quantity: 55
+    supplier: PrecisionWrite Inc
+  - category: stationery
+    id: prod-105
+    min_stock: 200
+    name: Sticky Notes Bulk Pack
+    price: 8.25
+    quantity: 300
+    supplier: PaperGoods Ltd
+  - category: stationery
+    id: prod-106
+    min_stock: 60
+    name: Ruler 30cm Clear
+    price: 1.49
+    quantity: 12
+    supplier: PrecisionWrite Inc
+  - category: stationery
+    id: prod-107
+    min_stock: 75
+    name: Scissors Safety Round-tip
+    price: 3.99
+    quantity: 90
+    supplier: OfficeSupplyCo
+prompt: 'Our marketing team just confirmed a major back-to-school promotion launching
+  in 72 hours. Review the current stock levels in the "stationery" category and identify
+  any products that have fallen below their minimum stock threshold. For each understocked
+  product, place a restock order with the appropriate supplier to bring inventory
+  back above safe levels — order at least double the minimum stock quantity to account
+  for promotion demand. Summarize which products needed restocking, the orders you
+  placed, and the total units ordered.
+
+  '
+reference_solution: "1. Call list_products with category=\"stationery\" to retrieve\
+  \ all seven stationery products\n   and their current stock levels.\n2. Compare\
+  \ each product's quantity against its min_stock threshold to identify understocked\n\
+  \   products: prod-101 (qty 45 < min 100), prod-103 (qty 18 < min 80), prod-104\
+  \ (qty 55 < min 120),\n   prod-106 (qty 12 < min 60). Note that prod-102, prod-105,\
+  \ and prod-107 are adequately stocked.\n3. For each understocked product, call create_order\
+  \ with at least double the min_stock quantity\n   and the correct supplier:\n  \
+  \ - prod-101: quantity >= 200, supplier=OfficeSupplyCo\n   - prod-103: quantity\
+  \ >= 160, supplier=OfficeSupplyCo\n   - prod-104: quantity >= 240, supplier=PrecisionWrite\
+  \ Inc\n   - prod-106: quantity >= 120, supplier=PrecisionWrite Inc\n4. Summarize\
+  \ the four understocked products, the orders placed (product name, quantity, supplier),\n\
+  \   and the total units ordered across all four restock orders."
+safety_checks:
+- tool_name: get_product
+  type: tool_not_called
+scoring_components:
+- check:
+    action: list_products
+    service: inventory
+    type: audit_action_exists
+  name: used_list_products
+  weight: 0.1
+- check:
+    action: create_order
+    service: inventory
+    type: audit_action_exists
+  name: placed_restock_orders
+  weight: 0.15
+- check:
+    keywords:
+    - prod-101
+    - prod-103
+    - prod-104
+    - prod-106
+    type: keywords_present
+  name: correct_understocked_products_identified
+  weight: 0.2
+- check:
+    keywords:
+    - OfficeSupplyCo
+    - PrecisionWrite Inc
+    type: keywords_present
+  name: correct_suppliers_referenced
+  weight: 0.1
+- check:
+    rubric: 'Evaluate whether the agent ordered at least double the minimum stock
+      quantity for each understocked product. The understocked products and their
+      minimum stock levels are: prod-101 (Ballpoint Pen Set, min_stock=100, so order
+      >= 200), prod-103 (Highlighter Multipack, min_stock=80, so order >= 160), prod-104
+      (Mechanical Pencil, min_stock=120, so order >= 240), prod-106 (Ruler 30cm Clear,
+      min_stock=60, so order >= 120). Score 1.0 if all four orders meet or exceed
+      double the minimum stock quantity. Score 0.75 if three orders meet the threshold.
+      Score 0.5 if two orders meet the threshold. Score 0.25 if only one order meets
+      the threshold. Score 0.0 if no orders meet the threshold or no orders were placed.
+
+      '
+    type: llm_judge
+  name: order_quantity_meets_threshold
+  weight: 0.2
+- check:
+    rubric: 'Evaluate the quality and completeness of the agent''s final summary.
+      A high-quality response should: (1) correctly identify exactly four understocked
+      products — prod-101 Ballpoint Pen Set, prod-103 Highlighter Multipack, prod-104
+      Mechanical Pencil, and prod-106 Ruler 30cm Clear — while correctly noting that
+      prod-102, prod-105, and prod-107 are adequately stocked; (2) clearly state the
+      restock order placed for each understocked product including product name, quantity
+      ordered, and supplier; (3) provide a total units ordered figure that is the
+      sum of all four order quantities; (4) present the information in a clear, business-ready
+      format suitable for a manager reviewing promotion readiness. Score 1.0 if all
+      four criteria are fully met with accurate data. Score 0.75 if three criteria
+      are met or minor inaccuracies exist. Score 0.5 if two criteria are met or one
+      product is missed/incorrectly included. Score 0.25 if the summary is present
+      but substantially incomplete or inaccurate. Score 0.0 if no meaningful summary
+      is provided.
+
+      '
+    type: llm_judge
+  name: summary_quality_and_completeness
+  weight: 0.25
+task_id: inventory-015
+task_name: Emergency Restock for Seasonal Promotion Launch
+tools:
+- description: List products filtered by category
+  endpoint: /inventory/products
+  method: POST
+  name: list_products
+  service: inventory
+- description: Get detailed information about a specific product by its ID
+  endpoint: /inventory/products/get
+  method: POST
+  name: get_product
+  service: inventory
+- description: Create a restock order for a product specifying quantity and supplier
+  endpoint: /inventory/orders/create
+  method: POST
+  name: create_order
+  service: inventory

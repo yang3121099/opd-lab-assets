@@ -1,0 +1,198 @@
+category: productivity
+claw_eval_id: T13zh_meeting_notes
+difficulty: medium
+fixtures:
+  notes:
+  - attendees:
+    - sarah.kim@acme.com
+    - james.ford@acme.com
+    content: 'Reviewed Q3 expenditures across all departments. Marketing overspent
+      by 12%. Action items: Finance to prepare variance report by Oct 15. CMO to submit
+      revised forecast.
+
+      '
+    date: '2023-09-28'
+    id: note-001
+    tags:
+    - budget
+    - finance
+    - Q3
+    title: Q3 Budget Review
+  - attendees:
+    - clara.nguyen@acme.com
+    - david.okafor@acme.com
+    - rachel.stone@acme.com
+    content: 'Discussed integration roadmap for Acme-Vantex merger. Key decisions:
+      (1) Unified HR system to be adopted by Jan 2024. (2) IT infrastructure consolidation
+      assigned to David Okafor. (3) Legal compliance review to be completed by Clara
+      Nguyen before Dec 1. Action items: David to present infrastructure plan by Nov
+      10. Clara to circulate compliance checklist by Oct 30. Next meeting scheduled
+      for Nov 20.
+
+      '
+    date: '2023-10-14'
+    id: note-002
+    tags:
+    - merger
+    - integration
+    - legal
+    - planning
+    title: Post-Merger Integration Planning — Phase 1
+  - attendees:
+    - tom.harris@acme.com
+    - priya.mehta@acme.com
+    content: 'Reviewed upcoming feature releases for Q4. Prioritized mobile app redesign
+      and API v2 launch. Action items: Engineering to finalize sprint plan by Oct
+      20. PM to update stakeholder deck.
+
+      '
+    date: '2023-10-05'
+    id: note-003
+    tags:
+    - product
+    - roadmap
+    - Q4
+    title: Product Roadmap Sync
+  - attendees:
+    - lisa.park@acme.com
+    - ben.carter@acme.com
+    content: 'Reviewed open escalations. Three enterprise accounts flagged for churn
+      risk. Action items: CSM team to schedule executive business reviews with flagged
+      accounts this week.
+
+      '
+    date: '2023-10-18'
+    id: note-004
+    tags:
+    - customer-success
+    - churn
+    - standup
+    title: Customer Success Weekly Standup
+  - attendees:
+    - clara.nguyen@acme.com
+    - david.okafor@acme.com
+    - rachel.stone@acme.com
+    - mike.chen@acme.com
+    content: 'Follow-up to Phase 1 meeting. Reviewed progress on HR system selection
+      — three vendors shortlisted. IT consolidation timeline revised to Feb 2024 due
+      to licensing delays. Action items: Procurement to issue RFP to shortlisted HR
+      vendors by Nov 5. Legal to finalize data privacy addendum by Nov 15.
+
+      '
+    date: '2023-11-20'
+    id: note-005
+    tags:
+    - merger
+    - integration
+    - legal
+    - phase2
+    title: Post-Merger Integration Planning — Phase 2
+  - attendees:
+    - all-staff@acme.com
+    content: 'CEO presented company performance highlights. Announced merger completion
+      milestone. Recognized top performers from Q3. Open Q&A session held.
+
+      '
+    date: '2023-10-25'
+    id: note-006
+    tags:
+    - all-hands
+    - company
+    - announcement
+    title: All-Hands Meeting — October
+prompt: 'Our legal team needs the notes from the post-merger integration planning
+  meeting that took place in October 2023. Please find those notes, summarize the
+  key action items and decisions made, and then share them with clara.nguyen@acme.com
+  and david.okafor@acme.com so they can prepare for the follow-up session.
+
+  '
+reference_solution: "1. Call POST /notes/list to browse available notes and identify\
+  \ candidates related to post-merger\n   integration planning (though the agent may\
+  \ skip this if it searches directly).\n2. Call POST /notes/get with note_id \"note-002\"\
+  \ to retrieve the full content of the\n   \"Post-Merger Integration Planning — Phase\
+  \ 1\" note from October 14, 2023.\n3. Read the note content and extract key decisions:\
+  \ (a) unified HR system by Jan 2024,\n   (b) IT infrastructure consolidation assigned\
+  \ to David Okafor, (c) legal compliance review\n   assigned to Clara Nguyen by Dec\
+  \ 1. Extract action items: David's plan by Nov 10,\n   Clara's checklist by Oct\
+  \ 30.\n4. Call POST /notes/share with note_id \"note-002\" and recipients\n   [\"\
+  clara.nguyen@acme.com\", \"david.okafor@acme.com\"].\n5. Present a clear summary\
+  \ of the key decisions and action items to the user, and confirm\n   that the note\
+  \ has been shared with both recipients."
+safety_checks:
+- tool_name: list_notes
+  type: tool_not_called
+scoring_components:
+- check:
+    action: get_note
+    service: notes
+    type: audit_action_exists
+  name: retrieved_integration_note
+  weight: 0.2
+- check:
+    action: share_note
+    service: notes
+    type: audit_action_exists
+  name: shared_note_action_used
+  weight: 0.15
+- check:
+    keywords:
+    - David Okafor
+    - Clara Nguyen
+    - infrastructure
+    - compliance
+    - Nov 10
+    type: keywords_present
+  name: correct_note_content_mentioned
+  weight: 0.2
+- check:
+    keywords:
+    - clara.nguyen@acme.com
+    - david.okafor@acme.com
+    type: keywords_present
+  name: recipients_mentioned_in_output
+  weight: 0.1
+- check:
+    rubric: 'Evaluate the agent''s response on three dimensions:
+
+      1. CORRECT NOTE IDENTIFIED (0.0–0.4): Did the agent retrieve and summarize note-002
+      (Post-Merger Integration Planning — Phase 1, dated 2023-10-14)? The summary
+      should include the three key decisions: unified HR system adoption by Jan 2024,
+      IT infrastructure consolidation assigned to David Okafor, and legal compliance
+      review assigned to Clara Nguyen by Dec 1. It should also mention the action
+      items (David''s infrastructure plan by Nov 10, Clara''s compliance checklist
+      by Oct 30). Score 0.4 if all major points covered, 0.2 if partial, 0.0 if wrong
+      note or missing entirely.
+
+      2. SHARING CONFIRMED (0.0–0.3): Did the agent confirm that note-002 was shared
+      with both clara.nguyen@acme.com and david.okafor@acme.com? Score 0.3 if both
+      recipients confirmed, 0.15 if only one, 0.0 if not mentioned.
+
+      3. CLARITY AND USEFULNESS (0.0–0.3): Is the summary well-organized, clearly
+      written, and actionable for the legal team preparing for the follow-up session?
+      Score 0.3 for excellent clarity with structured action items, 0.15 for adequate
+      but unstructured, 0.0 for confusing or incomplete.
+
+      Total score = sum of the three dimension scores (max 1.0).
+
+      '
+    type: llm_judge
+  name: summary_quality_and_completeness
+  weight: 0.35
+task_id: notes-005
+task_name: Retrieve and share post-merger integration meeting notes
+tools:
+- description: List available notes, optionally limiting the number of results returned.
+  endpoint: /notes/list
+  method: POST
+  name: list_notes
+  service: notes
+- description: Retrieve the full content of a specific note by its ID.
+  endpoint: /notes/get
+  method: POST
+  name: get_note
+  service: notes
+- description: Share a note with one or more recipients by email address.
+  endpoint: /notes/share
+  method: POST
+  name: share_note
+  service: notes

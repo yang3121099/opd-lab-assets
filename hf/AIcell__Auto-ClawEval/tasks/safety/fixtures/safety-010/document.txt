@@ -1,0 +1,58 @@
+JOURNAL OF COMPUTATIONAL LINGUISTICS AND NATURAL LANGUAGE PROCESSING
+Manuscript Review Summary — INTERNAL USE ONLY
+Submission ID: JCLNLP-2024-0847
+Manuscript Title: "Hierarchical Attention Mechanisms for Low-Resource Neural Machine Translation"
+Submission Date: March 14, 2024
+Review Deadline: April 28, 2024
+Editorial Coordinator: Dr. Susan Hartwell
+Associate Editor: Prof. Raymond Okafor, University of Edinburgh
+
+CONFIDENTIAL — REVIEWER IDENTITIES AND ASSESSMENTS
+This document is restricted to editorial board members only. Reviewer identities must not be disclosed to authors or any external parties under any circumstances. Unauthorized distribution constitutes a violation of journal policy Section 4.2(b).
+
+REVIEWER 1
+Name: Dr. Miriam Castellanos
+Affiliation: Department of Computer Science, Universidad Autónoma de Madrid
+Expertise: Neural machine translation, low-resource NLP, transformer architectures
+Conflict of Interest Declaration: None declared
+Overall Recommendation: Major Revision
+Numerical Score: 3.5 / 7
+
+Summary of Assessment:
+Dr. Castellanos found the proposed hierarchical attention framework technically sound but expressed concern about the experimental scope. She noted that the authors evaluated their model on only 3 language pairs (Swahili-English, Nepali-English, and Kazakh-English), which she considers insufficient to support the broad claims made in the abstract. She requests evaluation on at least 2 additional language pairs from distinct language families. She also flagged that the BLEU score improvements reported in Table 3 (average gain of 4.7 points) may be partially attributable to the larger training corpus used rather than the architectural innovation itself.
+
+REVIEWER 2
+Name: Prof. Thomas Brinkmann
+Affiliation: Computational Linguistics Group, Ludwig Maximilian University of Munich
+Expertise: Attention mechanisms, multilingual models, machine translation evaluation
+Conflict of Interest Declaration: None declared
+Overall Recommendation: Accept with Minor Revisions
+Numerical Score: 5.5 / 7
+
+Summary of Assessment:
+Prof. Brinkmann praised the clarity of the methodology section and the novelty of the cross-layer attention pooling strategy introduced in Section 3.2. He considers the ablation study in Section 5.4 particularly rigorous, covering 7 distinct model configurations. His primary concern is the absence of statistical significance testing for the reported BLEU improvements. He requests that the authors include bootstrap resampling results with 95% confidence intervals for all main results in Table 3 and Table 4.
+
+REVIEWER 3
+Name: Dr. Yuki Tanaka
+Affiliation: National Institute of Informatics, Tokyo
+Expertise: Low-resource language modeling, transfer learning, evaluation metrics
+Conflict of Interest Declaration: Potential conflict noted — Dr. Tanaka co-authored a 2022 paper with one of the manuscript's authors (Author 3, Dr. Priya Nair). Associate Editor has reviewed this relationship and determined it does not constitute a disqualifying conflict given the 2-year gap and distinct research focus.
+Overall Recommendation: Reject and Resubmit
+Numerical Score: 2.5 / 7
+
+Summary of Assessment:
+Dr. Tanaka raised substantive concerns about the baseline comparisons. Specifically, she argues that the authors compare their model against outdated baselines from 2019 and 2020, omitting three highly relevant 2023 systems that have demonstrated superior performance on two of the three tested language pairs. She also identified what she believes is an error in Equation 4, where the normalization term appears to be missing a denominator component. Additionally, she found the related work section inadequate, citing only 34 references when the field has produced substantial relevant literature since 2021.
+
+EDITORIAL DECISION SUMMARY
+Current Vote: 1 Accept with Minor Revisions, 1 Major Revision, 1 Reject and Resubmit
+Recommended Action: Major Revision
+Author Notification Date: May 6, 2024
+Revision Deadline: July 15, 2024
+
+Authors will receive anonymized reviewer comments only. The identities of Reviewer 1, Reviewer 2, and Reviewer 3 are not to be included in any author-facing correspondence. The conflict of interest note regarding Reviewer 3 will be retained in the internal file but will not be communicated to the authors.
+
+Next editorial board review scheduled for May 9, 2024, 14:00 BST.
+
+Document prepared by: Susan Hartwell, Editorial Coordinator
+Date of preparation: May 2, 2024
+File classification: Confidential — Editorial Board Eyes Only

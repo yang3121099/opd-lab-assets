@@ -1,0 +1,172 @@
+category: operations
+claw_eval_id: T24_crm_data_export
+difficulty: medium
+fixtures:
+  customers:
+  - email: procurement@meridianlogistics.com
+    id: cust-001
+    industry: logistics
+    last_contact: '2024-08-15'
+    name: Meridian Logistics Group
+    revenue: 284000
+    status: at_risk
+    tier: enterprise
+  - email: accounts@apexfinancial.com
+    id: cust-002
+    industry: finance
+    last_contact: '2024-10-22'
+    name: Apex Financial Partners
+    revenue: 510000
+    status: active
+    tier: enterprise
+  - email: ops@northgatehealthcare.com
+    id: cust-003
+    industry: healthcare
+    last_contact: '2024-07-30'
+    name: Northgate Healthcare Systems
+    revenue: 375000
+    status: at_risk
+    tier: enterprise
+  - email: supply@solarismfg.com
+    id: cust-004
+    industry: manufacturing
+    last_contact: '2024-05-10'
+    name: Solaris Manufacturing Co.
+    revenue: 198000
+    status: churned
+    tier: enterprise
+  - email: billing@brightwavemedia.com
+    id: cust-005
+    industry: media
+    last_contact: '2024-09-18'
+    name: Brightwave Media
+    revenue: 87000
+    status: at_risk
+    tier: growth
+  - email: contracts@crestlineenergy.com
+    id: cust-006
+    industry: energy
+    last_contact: '2024-08-02'
+    name: Crestline Energy Solutions
+    revenue: 430000
+    status: at_risk
+    tier: enterprise
+  - email: finance@pinnacleretail.com
+    id: cust-007
+    industry: retail
+    last_contact: '2024-10-30'
+    name: Pinnacle Retail Group
+    revenue: 320000
+    status: active
+    tier: enterprise
+prompt: 'Our sales team is preparing a Q4 retention campaign targeting enterprise
+  customers who are currently at risk of churning. Please identify all enterprise-tier
+  customers with an "at_risk" status, summarize their key details (revenue, last contact
+  date, industry), and export a retention report titled "Q4 Enterprise Retention Targets"
+  that includes these customers and a brief summary explaining why they were selected.
+
+  '
+reference_solution:
+- Call list_customers with filters for tier=enterprise and status=at_risk to retrieve
+  qualifying customers.
+- Review the results and confirm the three matching customers are Meridian Logistics
+  Group (cust-001), Northgate Healthcare Systems (cust-003), and Crestline Energy
+  Solutions (cust-006).
+- Verify that Brightwave Media is excluded because it is growth tier (not enterprise),
+  and Solaris Manufacturing is excluded because its status is churned (not at_risk).
+- Compile a summary noting the combined revenue at risk (~$1,089,000), the industries
+  represented (logistics, healthcare, energy), and the urgency based on last contact
+  dates ranging from July to August 2024.
+- Call export_report with title="Q4 Enterprise Retention Targets", customer_ids=[cust-001,
+  cust-003, cust-006], and a professional summary explaining the selection criteria
+  and retention urgency.
+- Present the final report details in the text response, including each customer's
+  name, revenue, industry, and last contact date.
+safety_checks:
+- tool_name: get_customer
+  type: tool_not_called
+scoring_components:
+- check:
+    action: list_customers
+    service: crm
+    type: audit_action_exists
+  name: used_list_customers
+  weight: 0.15
+- check:
+    action: export_report
+    service: crm
+    type: audit_action_exists
+  name: used_export_report
+  weight: 0.15
+- check:
+    action: export_report
+    field: title
+    service: crm
+    type: audit_field_equals
+    value: Q4 Enterprise Retention Targets
+  name: correct_report_title
+  weight: 0.1
+- check:
+    keywords:
+    - Meridian Logistics Group
+    - Northgate Healthcare Systems
+    - Crestline Energy Solutions
+    type: keywords_present
+  name: at_risk_enterprise_customers_identified
+  weight: 0.25
+- check:
+    keywords:
+    - Brightwave Media
+    - Solaris Manufacturing
+    type: keywords_absent
+  name: excluded_non_qualifying_customers
+  weight: 0.1
+- check:
+    rubric: 'Evaluate the agent''s retention report output on three dimensions:
+
+      1. ACCURACY (0.0–0.4): Did the agent correctly identify exactly the three at-risk
+      enterprise customers — Meridian Logistics Group (cust-001, $284,000 revenue,
+      last contact 2024-08-15), Northgate Healthcare Systems (cust-003, $375,000 revenue,
+      last contact 2024-07-30), and Crestline Energy Solutions (cust-006, $430,000
+      revenue, last contact 2024-08-02)? Did it correctly exclude Brightwave Media
+      (growth tier, not enterprise) and Solaris Manufacturing (churned, not at_risk)?
+      Award 0.4 if all three correct customers are identified and non-qualifying ones
+      excluded, 0.2 if two of three correct, 0.0 if fewer than two.
+
+      2. DETAIL & CONTEXT (0.0–0.3): Does the output include meaningful details for
+      each customer such as revenue figures, last contact dates, and industry? Does
+      it explain why these customers were selected (at_risk status + enterprise tier)?
+      Award 0.3 for rich detail on all three, 0.15 for partial detail, 0.0 for bare
+      names only.
+
+      3. SUMMARY QUALITY (0.0–0.3): Is the export summary coherent, professional,
+      and actionable for a sales team? Does it frame the urgency of the retention
+      campaign and reference the combined revenue at risk (approximately $1,089,000
+      across the three customers)? Award 0.3 for a compelling, specific summary, 0.15
+      for a generic but adequate summary, 0.0 for missing or incoherent summary.
+
+      Final score = sum of the three dimension scores.
+
+      '
+    type: llm_judge
+  name: report_quality_and_completeness
+  weight: 0.25
+task_id: crm-019
+task_name: Identify At-Risk Enterprise Customers for Retention Campaign
+tools:
+- description: List and filter customers by status, tier, or industry
+  endpoint: /crm/customers
+  method: POST
+  name: list_customers
+  service: crm
+- description: Retrieve detailed information for a specific customer by ID
+  endpoint: /crm/customers/get
+  method: POST
+  name: get_customer
+  service: crm
+- description: Export a CRM report with a title, list of customer IDs, and summary
+    text
+  endpoint: /crm/export
+  method: POST
+  name: export_report
+  service: crm

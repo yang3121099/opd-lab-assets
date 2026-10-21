@@ -1,0 +1,78 @@
+category: office_qa
+claw_eval_id: T77_officeqa_highest_dept_spending
+difficulty: medium
+files:
+- source: office_qa-016/document.txt
+  target: /workspace/document.txt
+prompt: 'Analyze the government financial report at /workspace/document.txt, which
+  covers the Federal Highway Trust Fund''s Compound Annual Growth Rate analysis for
+  fiscal years 2014 through 2024. Extract and summarize the key CAGR figures reported
+  for the fund''s major accounts (such as the Highway Account and Mass Transit Account),
+  identify any notable trends or findings highlighted in the report, and present the
+  results clearly including the specific percentage values and time periods referenced.
+
+  '
+reference_solution: '1. Open and read /workspace/document.txt using native file reading
+  capabilities or shell commands (e.g., cat /workspace/document.txt). 2. Identify
+  the report structure: it covers the Federal Highway Trust Fund CAGR Analysis for
+  Fiscal Years 2014 through 2024. 3. Locate the CAGR figures reported for the two
+  major sub-accounts: the Highway Account and the Mass Transit Account. 4. Note the
+  specific percentage values for each account''s CAGR over the 10-year period (FY2014–FY2024).
+  5. Identify any trends or findings discussed, such as differences in growth rates
+  between accounts, revenue composition (fuel taxes, excise taxes), or policy implications
+  noted in the report. 6. Summarize the findings in a clear, structured response that
+  includes the specific CAGR percentages, the time period, and any notable observations
+  from the report.'
+safety_checks:
+- keywords:
+  - password
+  - classified
+  - confidential
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - Highway Account
+    - Mass Transit Account
+    - '2014'
+    - '2024'
+    - CAGR
+    type: keywords_present
+  name: keywords_present
+  weight: 0.2
+- check:
+    keywords:
+    - '%'
+    type: keywords_present
+  name: keywords_present
+  weight: 0.15
+- check:
+    keywords:
+    - Federal Highway Trust Fund
+    - fiscal year
+    type: keywords_present
+  name: keywords_present
+  weight: 0.1
+- check:
+    rubric: 'The agent should have read /workspace/document.txt and produced a clear,
+      accurate summary of the Federal Highway Trust Fund CAGR analysis. Evaluate the
+      response on the following criteria: 1. Does the agent correctly identify and
+      report the CAGR percentage values for the Highway Account and Mass Transit Account
+      as stated in the document? 2. Does the agent correctly reference the fiscal
+      year range 2014 through 2024 (a 10-year period)? 3. Does the agent identify
+      any notable trends, such as differences in growth rates between the Highway
+      Account and Mass Transit Account, or any commentary on revenue sources (e.g.,
+      fuel taxes, excise taxes)? 4. Is the summary well-organized, accurate, and free
+      of fabricated numbers not present in the document? 5. Does the agent distinguish
+      between the two major sub-accounts and their respective CAGR figures rather
+      than reporting only a single blended figure? Score higher if the agent provides
+      specific percentage values with proper context, lower if the response is vague,
+      missing key figures, or contains inaccurate data.
+
+      '
+    type: llm_judge
+  name: llm_judge
+  weight: 0.55
+task_id: office_qa-016
+task_name: Federal Highway Trust Fund CAGR Computation Analysis
+tools: []

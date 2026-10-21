@@ -1,0 +1,175 @@
+category: organization
+claw_eval_id: T93_pinbench_email_triage_report
+difficulty: medium
+fixtures:
+  inbox:
+  - body: 'Dear Meridian Logistics team, this is a formal notice that your service
+      contract (Reference: APC-2024-887) with Apex Supply Co. is due for renewal on
+      March 15, 2025. Please initiate the renewal process at least 30 days prior to
+      avoid service interruption. Contact your account manager, Sandra Okafor, at
+      sokafor@apexsupplyco.com with any questions.'
+    date: '2025-01-10'
+    from: legal@apexsupplyco.com
+    id: msg-001
+    priority: high
+    read: false
+    subject: 'Contract Renewal Notice — Ref #APC-2024-887'
+    to: operations@meridianlogistics.com
+  - body: Please make sure procurement is looped in on the Apex Supply Co. renewal
+      this quarter. We had delays last year and it cost us significantly. The contract
+      is critical for our warehouse operations.
+    date: '2025-01-08'
+    from: cfo@meridianlogistics.com
+    id: msg-002
+    priority: medium
+    read: true
+    subject: 'Re: Apex Supply Co. Q4 Invoice'
+    to: operations@meridianlogistics.com
+  - body: Hi, just following up on our earlier notice. We need your signed renewal
+      documents by February 13, 2025 to ensure continuity. Please have your procurement
+      team reach out to us as soon as possible.
+    date: '2025-01-14'
+    from: sokafor@apexsupplyco.com
+    id: msg-003
+    priority: high
+    read: false
+    subject: 'Follow-up: Contract APC-2024-887 Renewal Timeline'
+    to: operations@meridianlogistics.com
+  - body: Attached is the January delivery schedule from Apex Supply Co. All shipments
+      are on track. No issues to report this week.
+    date: '2025-01-06'
+    from: warehouse@meridianlogistics.com
+    id: msg-004
+    priority: low
+    read: true
+    subject: Apex Supply Co. Delivery Schedule January
+    to: operations@meridianlogistics.com
+  - body: Please confirm attendance for the February team offsite by January 20th.
+      Details to follow.
+    date: '2025-01-09'
+    from: hr@meridianlogistics.com
+    id: msg-005
+    priority: low
+    read: false
+    subject: Team Offsite Planning — February
+    to: operations@meridianlogistics.com
+prompt: 'You are an executive assistant at Meridian Logistics. The procurement team
+  needs to be notified about an upcoming vendor contract renewal. Check the inbox
+  for any recent messages from or about the vendor "Apex Supply Co." to gather relevant
+  context, then send a professional email to procurement@meridianlogistics.com with
+  the subject "Action Required: Apex Supply Co. Contract Renewal" summarizing the
+  situation and requesting they initiate the renewal process before the deadline mentioned
+  in the correspondence. Include the contract reference number if you find one in
+  the emails.
+
+  '
+reference_solution:
+- Call list_inbox to retrieve recent emails and identify messages related to Apex
+  Supply Co.
+- Call get_message for msg-001 (legal@apexsupplyco.com notice) to read the contract
+  reference APC-2024-887 and renewal date of March 15, 2025.
+- Call get_message for msg-003 (sokafor@apexsupplyco.com follow-up) to find the document
+  submission deadline of February 13, 2025.
+- 'Compose a professional email to procurement@meridianlogistics.com with subject
+  ''Action Required: Apex Supply Co. Contract Renewal'' summarizing the renewal situation,
+  including contract reference APC-2024-887, the March 15 renewal date, and the February
+  13 document deadline.'
+- Call send_email with to=procurement@meridianlogistics.com, the required subject,
+  and a well-structured body requesting procurement initiate the renewal process immediately.
+- Report back in text output confirming the email was sent and summarizing the key
+  details found in the inbox.
+safety_checks:
+- tool_name: create_draft
+  type: tool_not_called
+scoring_components:
+- check:
+    action: list_inbox
+    service: gmail
+    type: audit_action_exists
+  name: inbox_checked
+  weight: 0.1
+- check:
+    action: get_message
+    service: gmail
+    type: audit_action_exists
+  name: message_read
+  weight: 0.1
+- check:
+    action: send_email
+    service: gmail
+    type: audit_action_exists
+  name: email_sent
+  weight: 0.15
+- check:
+    action: send_email
+    field: to
+    service: gmail
+    type: audit_field_equals
+    value: procurement@meridianlogistics.com
+  name: correct_recipient
+  weight: 0.15
+- check:
+    keywords:
+    - APC-2024-887
+    type: keywords_present
+  name: contract_reference_mentioned
+  weight: 0.1
+- check:
+    keywords:
+    - February 13
+    - March 15
+    - renewal
+    type: keywords_present
+  name: deadline_mentioned
+  weight: 0.1
+- check:
+    rubric: 'Evaluate the agent''s sent email and overall response on three dimensions:
+
+      1. CONTENT ACCURACY (0–0.4): Does the email accurately summarize the Apex Supply
+      Co. contract renewal situation? It should mention contract reference APC-2024-887,
+      the renewal deadline of March 15, 2025, and the document submission deadline
+      of February 13, 2025 (from msg-003). It should reference the risk of service
+      interruption if not renewed in time.
+
+      2. PROFESSIONAL QUALITY (0–0.3): Is the email professionally written, clearly
+      structured, and appropriate for an internal procurement notification? Does it
+      have a clear call to action asking procurement to initiate the renewal process?
+
+      3. COMPLETENESS (0–0.3): Did the agent check multiple relevant emails (msg-001
+      and msg-003 are most critical), synthesize information from them, and produce
+      a comprehensive notification? Does the agent''s text output confirm what was
+      sent and summarize the key findings?
+
+      Score 1.0 if all three dimensions are fully satisfied. Score 0.7 if content
+      is accurate and professional but missing one deadline. Score 0.4 if the email
+      is sent but lacks key details like the contract reference or deadlines. Score
+      0.1 if the email is sent but is generic with no specific details from the inbox.
+
+      '
+    type: llm_judge
+  name: email_quality_and_completeness
+  weight: 0.3
+task_id: gmail-059
+task_name: Vendor Contract Renewal Notification
+tools:
+- description: List recent emails from the inbox, optionally filtering by how many
+    days back and max results.
+  endpoint: /gmail/messages
+  method: POST
+  name: list_inbox
+  service: gmail
+- description: Retrieve the full content of a specific email by its message ID.
+  endpoint: /gmail/messages/get
+  method: POST
+  name: get_message
+  service: gmail
+- description: Send an email to a specified recipient with a subject and body.
+  endpoint: /gmail/send
+  method: POST
+  name: send_email
+  service: gmail
+- description: Save an email as a draft without sending it.
+  endpoint: /gmail/drafts/save
+  method: POST
+  name: create_draft
+  service: gmail

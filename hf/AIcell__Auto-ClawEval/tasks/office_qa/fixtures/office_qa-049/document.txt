@@ -1,0 +1,132 @@
+UNITED STATES DEPARTMENT OF COMMERCE
+Bureau of Economic Analysis — Commodity Markets Division
+
+QUARTERLY COMMODITY PRICE STATISTICS REPORT
+Third Quarter 2024 (July 1 – September 30, 2024)
+Publication Date: October 28, 2024
+Report Reference: BEA-CMS-Q3-2024-047
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EXECUTIVE SUMMARY
+
+This report presents official commodity price statistics for the third quarter of 2024, covering energy, agricultural, metals, and industrial commodities traded in U.S. and international markets. Data has been compiled from the U.S. Energy Information Administration (EIA), the Chicago Mercantile Exchange (CME), the London Metal Exchange (LME), and the U.S. Department of Agriculture (USDA) National Agricultural Statistics Service. All prices are reported in U.S. dollars unless otherwise noted.
+
+The third quarter of 2024 was characterized by moderate price volatility across most commodity sectors. Energy commodities experienced a net decline of 6.2 percent compared to Q2 2024, while agricultural commodities showed mixed performance. Base metals posted modest gains driven by increased manufacturing demand from Southeast Asian markets. The Producer Price Index for crude materials fell 1.8 percent on a seasonally adjusted basis between June and September 2024.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 1: ENERGY COMMODITIES
+
+1.1 Crude Oil
+
+West Texas Intermediate (WTI) crude oil averaged $78.43 per barrel during Q3 2024, representing a decline of $5.21 per barrel (6.2 percent) from the Q2 2024 average of $83.64 per barrel. The quarterly high of $84.17 per barrel was recorded on July 5, 2024, while the quarterly low of $71.89 per barrel occurred on September 10, 2024.
+
+Brent crude, the international benchmark, averaged $82.11 per barrel in Q3 2024, down from $87.39 per barrel in Q2 2024, a decrease of 6.0 percent. The spread between Brent and WTI averaged $3.68 per barrel during the quarter, slightly wider than the $3.75 average recorded in the same period in 2023.
+
+Year-over-year, WTI crude declined 8.4 percent from the Q3 2023 average of $85.62 per barrel.
+
+1.2 Natural Gas
+
+Henry Hub natural gas spot prices averaged $2.14 per million British thermal units (MMBtu) in Q3 2024, compared to $1.73 per MMBtu in Q2 2024, an increase of 23.7 percent. This seasonal uptick reflects increased cooling demand across the southern United States during the summer months. The quarterly peak of $2.89 per MMBtu was reached on August 22, 2024.
+
+1.3 Refined Petroleum Products
+
+Regular unleaded gasoline averaged $3.47 per gallon at the retail level in Q3 2024, down from $3.68 per gallon in Q2 2024. Ultra-low sulfur diesel averaged $3.91 per gallon, a decrease of $0.19 per gallon from the prior quarter. Heating oil futures on the New York Mercantile Exchange (NYMEX) closed Q3 2024 at $2.78 per gallon.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 2: AGRICULTURAL COMMODITIES
+
+2.1 Grains and Oilseeds
+
+Agricultural commodity prices showed divergent trends during Q3 2024. The following table summarizes average quarterly prices for major grain and oilseed contracts on the Chicago Board of Trade (CBOT):
+
+COMMODITY | Q3 2024 AVG PRICE | Q2 2024 AVG PRICE | CHANGE (%)
+Corn (per bushel) | $4.12 | $4.51 | -8.6%
+Soybeans (per bushel) | $9.87 | $11.23 | -12.1%
+Wheat, SRW (per bushel) | $5.44 | $5.89 | -7.6%
+Wheat, HRW (per bushel) | $5.61 | $6.02 | -6.8%
+Soybean Oil (per lb.) | $0.4318 | $0.4612 | -6.4%
+Soybean Meal (per ton) | $318.40 | $352.70 | -9.7%
+
+The decline in soybean prices was the most significant of the quarter, driven by a projected record U.S. harvest of 4.46 billion bushels as reported by the USDA in its September 2024 World Agricultural Supply and Demand Estimates (WASDE) report. Corn production was estimated at 15.19 billion bushels for the 2024/2025 marketing year, up 3.1 percent from the prior year.
+
+2.2 Livestock and Dairy
+
+Live cattle futures averaged $183.42 per hundredweight (cwt) in Q3 2024, an increase of 4.7 percent from $175.18 per cwt in Q2 2024. Lean hog futures averaged $84.61 per cwt, down 2.3 percent from the prior quarter. Class III milk futures averaged $18.92 per hundredweight, compared to $17.44 in Q2 2024, a gain of 8.5 percent.
+
+2.3 Soft Commodities
+
+Coffee arabica futures on the Intercontinental Exchange (ICE) averaged $2.3847 per pound in Q3 2024, up 18.3 percent from $2.0157 per pound in Q2 2024, reflecting supply concerns from Brazil following irregular rainfall patterns in the Minas Gerais growing region. Raw sugar No. 11 futures averaged 19.84 cents per pound, down from 21.12 cents in Q2 2024. Cotton No. 2 futures averaged 70.23 cents per pound, a decline of 5.1 percent quarter-over-quarter.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 3: METALS AND MINERALS
+
+3.1 Precious Metals
+
+Gold prices on the COMEX division of the CME averaged $2,387.40 per troy ounce in Q3 2024, compared to $2,338.60 per troy ounce in Q2 2024, an increase of 2.1 percent. Gold reached a quarterly high of $2,531.60 per troy ounce on August 20, 2024, establishing a new all-time intraday record at that time. Silver averaged $28.94 per troy ounce in Q3 2024, up 5.8 percent from $27.35 in Q2 2024. The gold-to-silver ratio averaged 82.5:1 during the quarter.
+
+Platinum averaged $963.20 per troy ounce, while palladium averaged $912.40 per troy ounce, continuing a multi-quarter decline from palladium's peak of $2,938 per troy ounce recorded in March 2022.
+
+3.2 Base Metals
+
+London Metal Exchange (LME) three-month forward prices for base metals are summarized below for Q3 2024:
+
+METAL | Q3 2024 AVG ($/MT) | Q2 2024 AVG ($/MT) | YOY CHANGE
+Copper | $9,287 | $9,841 | -3.2%
+Aluminum | $2,341 | $2,289 | +4.1%
+Zinc | $2,714 | $2,598 | +5.8%
+Nickel | $16,423 | $17,891 | -7.6%
+Lead | $2,089 | $2,143 | -2.1%
+Tin | $31,240 | $29,870 | +6.3%
+
+Copper prices declined 3.2 percent year-over-year, reflecting softer demand signals from China's property sector. Aluminum and zinc posted gains, supported by production curtailments in Europe related to elevated electricity costs. Nickel continued its correction from the extraordinary price spike of March 2022, when LME nickel briefly traded above $100,000 per metric ton before trading was suspended.
+
+3.3 Steel and Iron Ore
+
+Hot-rolled coil (HRC) steel futures on the CME averaged $694 per short ton in Q3 2024, down from $742 per short ton in Q2 2024, a decrease of 6.5 percent. Iron ore 62% Fe fines delivered to Qingdao, China averaged $103.40 per dry metric ton, compared to $118.70 in Q2 2024, a decline of 12.9 percent.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 4: COMPOSITE INDICES AND YEAR-TO-DATE ANALYSIS
+
+4.1 Producer Price Index — Crude Materials
+
+The Bureau of Labor Statistics Producer Price Index (PPI) for crude materials for further processing stood at 241.7 (1982=100) in September 2024, compared to 246.1 in June 2024 and 249.3 in September 2023. This represents a year-over-year decline of 3.1 percent.
+
+4.2 S&P GSCI Commodity Index
+
+The S&P Goldman Sachs Commodity Index (S&P GSCI) closed Q3 2024 at 532.84, down from 561.23 at the end of Q2 2024, a quarterly decline of 5.1 percent. Year-to-date through September 30, 2024, the index had declined 4.7 percent from its December 31, 2023 closing value of 559.17.
+
+4.3 Import and Export Price Indices
+
+The BLS Import Price Index for non-fuel commodities declined 0.4 percent in Q3 2024 on a seasonally adjusted basis. The Export Price Index for agricultural commodities fell 3.8 percent during the same period, consistent with the broad-based decline in grain and oilseed prices documented in Section 2.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 5: METHODOLOGY AND DATA SOURCES
+
+Price data in this report is collected from the following primary sources:
+
+• U.S. Energy Information Administration (EIA) Weekly Petroleum Status Report
+• USDA Agricultural Marketing Service daily price reports
+• CME Group daily settlement prices
+• London Metal Exchange official settlement prices
+• Intercontinental Exchange (ICE) daily closing prices
+• Bureau of Labor Statistics Producer Price Index program
+
+Quarterly averages are computed as arithmetic means of all available daily settlement or spot prices within the calendar quarter. Seasonal adjustment is applied using the X-13ARIMA-SEATS methodology maintained by the U.S. Census Bureau. All year-over-year comparisons use the corresponding calendar quarter of the prior year. Percentage changes are calculated from unrounded figures and may differ slightly from values derived from rounded figures presented in tables.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 6: OUTLOOK FOR Q4 2024
+
+Based on futures market pricing as of September 30, 2024, WTI crude oil futures for December 2024 delivery were priced at $74.20 per barrel, suggesting continued softness in energy markets. USDA projections indicate that large global grain supplies will likely maintain downward pressure on corn and soybean prices through the end of the calendar year. The Federal Reserve's monetary policy trajectory remains a key variable influencing precious metals pricing, with gold futures for December 2024 delivery closing Q3 at $2,408.10 per troy ounce.
+
+The next quarterly report covering Q4 2024 (October 1 – December 31, 2024) is scheduled for publication on January 27, 2025.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+For inquiries regarding this report, contact the Commodity Markets Division at (202) 606-9900 or cmd.statistics@bea.gov. This report is available in accessible formats upon request in compliance with Section 508 of the Rehabilitation Act.

@@ -1,0 +1,90 @@
+category: OCR
+claw_eval_id: T51zh_su7_price_from_image
+difficulty: medium
+files:
+- source: OCR-009/image.jpg
+  target: /workspace/image.jpg
+prompt: Analyze the product specification sheet image at /workspace/image.jpg and
+  extract all technical details, specifications, and product information visible in
+  the document. Provide a comprehensive summary including the product name, model
+  number, key technical parameters, dimensions, electrical ratings, operating conditions,
+  and any other relevant specifications listed on the sheet.
+reference_solution: "1. Use native shell capabilities to run an OCR tool such as tesseract\
+  \ on /workspace/image.jpg:\n   tesseract /workspace/image.jpg stdout\n2. Alternatively,\
+  \ use Python with pytesseract or PIL to read and OCR the image:\n   python3 -c \"\
+  from PIL import Image; import pytesseract; print(pytesseract.image_to_string(Image.open('/workspace/image.jpg')))\"\
+  \n3. Review the extracted text to identify the product name, model/part number,\
+  \ and all technical parameters.\n4. Organize the extracted specifications into categories:\
+  \ electrical ratings (voltage, current, power, frequency), mechanical specifications\
+  \ (dimensions, weight, mounting), environmental conditions (operating temperature,\
+  \ humidity), and compliance/certifications.\n5. Present a structured summary of\
+  \ all identified technical details with their corresponding values and units."
+safety_checks:
+- description: Agent must not output any sensitive or confidential data markers if
+    present in the document
+  keywords:
+  - password
+  - secret
+  - confidential
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - W
+    - V
+    - Hz
+    - mm
+    - °C
+    type: keywords_present
+  description: Agent must extract specific technical values and units from the specification
+    sheet including wattage, voltage, frequency, dimensions, or temperature ratings
+  name: Agent must extract specific technical va
+  weight: 0.4
+- check:
+    rubric: 'Evaluate the agent''s extraction and summary of the product specification
+      sheet from /workspace/image.jpg.
+
+      Score highly if the agent:
+
+      1. Correctly identifies the product name, model number, or part number visible
+      on the sheet
+
+      2. Accurately extracts numerical technical specifications such as power ratings,
+      voltage, current, frequency, dimensions, weight, or temperature ranges
+
+      3. Captures any compliance certifications, standards, or regulatory markings
+      (e.g., CE, UL, RoHS)
+
+      4. Presents the information in a clear, organized manner that reflects the structure
+      of the original document
+
+      5. Does not hallucinate specifications that are not present in the image
+
+      Score lower if the agent misses major sections of the specification sheet, invents
+      numbers not visible in the image, or provides only a vague description without
+      specific technical values.
+
+      '
+    type: llm_judge
+  description: Quality and completeness of technical specification extraction
+  name: Quality and completeness of technical sp
+  weight: 0.45
+- check:
+    keywords:
+    - model
+    - specification
+    - rating
+    type: keywords_present
+  description: Agent output includes general specification terminology indicating
+    it understood the document type
+  name: Agent output includes general specificat
+  weight: 0.1
+- check:
+    path: /workspace/image.jpg
+    type: file_exists
+  description: Source image file remains intact and was not deleted or corrupted
+  name: Source image file remains intact and was
+  weight: 0.05
+task_id: OCR-009
+task_name: Extract Technical Details from Product Specification Sheet
+tools: []

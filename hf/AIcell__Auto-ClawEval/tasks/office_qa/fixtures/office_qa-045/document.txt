@@ -1,0 +1,173 @@
+UNITED STATES DEPARTMENT OF THE TREASURY
+BUREAU OF THE FISCAL SERVICE
+
+QUARTERLY FIXED INCOME ANALYSIS REPORT
+Bond Yield Change Calculation and Portfolio Impact Assessment
+Fiscal Quarter Ending September 30, 2024
+
+Report Reference Number: BFS-FI-2024-Q3-0047
+Prepared by: Office of Debt Management, Fixed Income Analytics Division
+Date of Publication: October 18, 2024
+
+---
+
+EXECUTIVE SUMMARY
+
+This report presents a comprehensive analysis of U.S. Treasury bond yield changes observed during the third fiscal quarter of 2024, covering the period from July 1, 2024 through September 30, 2024. The analysis encompasses yield movement calculations across multiple maturities, duration-adjusted price impact assessments, and portfolio valuation effects on the $26.9 trillion outstanding public debt. The Federal Reserve's decision to reduce the federal funds rate by 50 basis points on September 18, 2024, to a target range of 4.75 to 5.00 percent, represented the most significant policy event of the quarter and drove substantial recalibration across the yield curve.
+
+---
+
+SECTION 1: METHODOLOGY AND CALCULATION FRAMEWORK
+
+1.1 Yield Change Measurement Approach
+
+All yield change calculations in this report employ the standard basis point convention, where one basis point equals 0.01 percent (or 0.0001 in decimal form). Yield changes are computed as the arithmetic difference between the yield observed at the end of the measurement period and the yield observed at the beginning of the measurement period. A negative result indicates a yield decline, which corresponds to a bond price increase under standard fixed income pricing relationships.
+
+The formula applied throughout this report is as follows:
+
+Yield Change (in basis points) = [Yield(End Date) - Yield(Start Date)] x 10,000
+
+Price change approximations are derived using modified duration, calculated as:
+
+Approximate Price Change (%) = -Modified Duration x Yield Change (decimal)
+
+For convexity-adjusted estimates, the following expanded formula is applied:
+
+Adjusted Price Change (%) = (-Modified Duration x Yield Change) + (0.5 x Convexity x Yield Change squared)
+
+1.2 Data Sources
+
+All yield data is sourced from the U.S. Treasury Daily Yield Curve Par Rates, published by the Bureau of the Fiscal Service. Closing yields are recorded at 3:00 PM Eastern Time on each business day. Modified duration and convexity figures are derived from the Treasury's internal portfolio analytics system, TreasuryDirect Analytics Platform (TDAP), version 4.2.
+
+---
+
+SECTION 2: YIELD CURVE OBSERVATIONS — Q3 2024
+
+2.1 Starting Yields (July 1, 2024)
+
+The following table presents the par yield curve as of the market close on July 1, 2024:
+
+Maturity | Yield (%) | Modified Duration (years) | Convexity
+3-Month | 5.38 | 0.25 | 0.06
+6-Month | 5.32 | 0.49 | 0.24
+2-Year | 4.75 | 1.94 | 0.42
+5-Year | 4.36 | 4.51 | 0.23
+10-Year | 4.40 | 8.72 | 0.89
+20-Year | 4.62 | 13.44 | 2.31
+30-Year | 4.56 | 17.83 | 4.12
+
+2.2 Ending Yields (September 30, 2024)
+
+The following table presents the par yield curve as of the market close on September 30, 2024:
+
+Maturity | Yield (%) | Modified Duration (years) | Convexity
+3-Month | 4.96 | 0.25 | 0.06
+6-Month | 4.74 | 0.49 | 0.24
+2-Year | 3.64 | 1.95 | 0.43
+5-Year | 3.57 | 4.53 | 0.23
+10-Year | 3.78 | 8.74 | 0.90
+20-Year | 4.18 | 13.47 | 2.32
+30-Year | 4.12 | 17.86 | 4.13
+
+2.3 Yield Change Summary
+
+Maturity | Start Yield (%) | End Yield (%) | Change (bps) | Direction
+3-Month | 5.38 | 4.96 | -42 | Decline
+6-Month | 5.32 | 4.74 | -58 | Decline
+2-Year | 4.75 | 3.64 | -111 | Decline
+5-Year | 4.36 | 3.57 | -79 | Decline
+10-Year | 4.40 | 3.78 | -62 | Decline
+20-Year | 4.62 | 4.18 | -44 | Decline
+30-Year | 4.56 | 4.12 | -44 | Decline
+
+The 2-year Treasury note experienced the largest yield decline of the quarter at 111 basis points, reflecting the market's forward-looking repricing of near-term Federal Reserve policy expectations following the September 18 rate cut. The 30-year bond and 20-year bond showed the smallest declines at 44 basis points each, consistent with the long end of the curve being less sensitive to near-term monetary policy shifts and more anchored by long-run inflation expectations.
+
+---
+
+SECTION 3: PRICE IMPACT CALCULATIONS
+
+3.1 Duration-Adjusted Price Change Estimates
+
+Using the modified duration formula, the approximate price change for each maturity segment was calculated as follows:
+
+For the 10-Year Treasury Note:
+- Yield change: -62 basis points (-0.0062 in decimal)
+- Modified duration: 8.72 years
+- Approximate price change: -8.72 x (-0.0062) = +5.41%
+
+For the 30-Year Treasury Bond:
+- Yield change: -44 basis points (-0.0044 in decimal)
+- Modified duration: 17.83 years
+- Approximate price change: -17.83 x (-0.0044) = +7.85%
+
+For the 2-Year Treasury Note:
+- Yield change: -111 basis points (-0.0111 in decimal)
+- Modified duration: 1.94 years
+- Approximate price change: -1.94 x (-0.0111) = +2.15%
+
+3.2 Convexity-Adjusted Price Change Estimates
+
+For the 30-Year Treasury Bond (convexity adjustment):
+- Base duration effect: +7.85%
+- Convexity adjustment: 0.5 x 4.12 x (0.0044)^2 = 0.5 x 4.12 x 0.00001936 = +0.004%
+- Total convexity-adjusted price change: +7.854%
+
+The convexity adjustment for the 30-year bond adds only 0.4 basis points of additional price appreciation given the relatively modest yield change of 44 basis points. Convexity effects become substantially more meaningful in scenarios involving yield changes exceeding 150 basis points.
+
+---
+
+SECTION 4: PORTFOLIO VALUATION IMPACT
+
+4.1 Outstanding Debt Composition as of July 1, 2024
+
+As of July 1, 2024, total marketable Treasury securities outstanding stood at $26.9 trillion. The maturity distribution was as follows:
+
+- Treasury Bills (under 1 year): $6.1 trillion (22.7% of total)
+- Treasury Notes (1-10 years): $14.8 trillion (55.0% of total)
+- Treasury Bonds (over 10 years): $4.3 trillion (16.0% of total)
+- Treasury Inflation-Protected Securities (TIPS): $1.7 trillion (6.3% of total)
+
+4.2 Estimated Mark-to-Market Valuation Change
+
+Applying the weighted average price change across the portfolio's maturity distribution, the estimated mark-to-market appreciation of the outstanding Treasury portfolio during Q3 2024 was approximately $892 billion. This figure represents an unrealized gain from the perspective of existing bondholders and a corresponding increase in the market value of outstanding federal obligations relative to par value.
+
+The weighted average yield of the entire marketable debt portfolio declined from 3.24 percent on July 1, 2024, to 3.01 percent on September 30, 2024, a reduction of 23 basis points. This weighted average reflects the large proportion of shorter-duration bills and notes in the portfolio, which dilutes the impact of larger yield moves at the long end.
+
+4.3 New Issuance Cost Implications
+
+The Treasury Department issued $2.4 trillion in new marketable securities during Q3 2024. The average yield on new issuance declined from 5.29 percent in July 2024 to 4.61 percent in September 2024, representing a reduction of 68 basis points over the quarter. This decline in new issuance yields is projected to reduce annualized interest expense on Q3 2024 issuance by approximately $16.3 billion compared to what would have been incurred had yields remained at July 1 levels.
+
+---
+
+SECTION 5: NOTABLE EVENTS AND ANALYTICAL OBSERVATIONS
+
+5.1 Federal Reserve Rate Decision — September 18, 2024
+
+The Federal Open Market Committee voted 11 to 1 on September 18, 2024, to reduce the federal funds rate target range by 50 basis points, from 5.25-5.50 percent to 4.75-5.00 percent. This was the first rate reduction since March 2020. In the two trading sessions immediately following the announcement, the 2-year Treasury yield declined an additional 14 basis points, while the 10-year yield declined 8 basis points, reflecting a steepening of the yield curve.
+
+5.2 Yield Curve Slope Analysis
+
+The spread between the 2-year and 10-year Treasury yields, a widely monitored indicator of curve shape, moved from -35 basis points on July 1, 2024 (inverted) to +14 basis points on September 30, 2024 (positively sloped). This represents a shift of 49 basis points in the 2s10s spread over the quarter and marks the first sustained positive slope in this segment since July 2022.
+
+5.3 Comparison to Prior Quarter
+
+During Q2 2024 (April 1 through June 30, 2024), the 10-year yield rose from 4.20 percent to 4.40 percent, an increase of 20 basis points. The Q3 2024 decline of 62 basis points in the 10-year yield therefore represents a reversal more than three times the magnitude of the prior quarter's increase.
+
+---
+
+SECTION 6: CONCLUSION AND FORWARD GUIDANCE
+
+The third quarter of fiscal year 2024 produced the most significant broad-based decline in Treasury yields since Q1 2020, driven primarily by the Federal Reserve's 50 basis point rate reduction and evolving market expectations for continued easing. The 2-year note's 111 basis point decline was the largest single-quarter move in that maturity since Q1 2020, when the emergency rate cuts associated with the COVID-19 pandemic drove yields sharply lower.
+
+The Office of Debt Management will continue to monitor yield curve dynamics and their implications for federal borrowing costs. The next quarterly report covering Q4 2024 (October 1 through December 31, 2024) will be published on January 17, 2025, under reference number BFS-FI-2025-Q4-0001.
+
+Questions regarding this report should be directed to the Fixed Income Analytics Division at (202) 504-3550 or via secure correspondence to the Bureau of the Fiscal Service, 3201 Pennsy Drive, Landover, Maryland 20785.
+
+---
+
+Authorized for release by:
+Jonathan R. Caldwell, Director
+Office of Debt Management, Fixed Income Analytics Division
+Bureau of the Fiscal Service
+U.S. Department of the Treasury
+October 18, 2024

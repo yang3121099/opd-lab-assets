@@ -1,0 +1,148 @@
+SOFTWARE PLATFORM ANALYSIS REPORT
+Use Cases and Gap Assessment
+Prepared by: Enterprise Technology Advisory Group
+Date: September 14, 2023
+Version: 2.1 | Confidential — Internal Distribution Only
+
+─────────────────────────────────────────────
+EXECUTIVE SUMMARY
+─────────────────────────────────────────────
+
+This report presents findings from a 14-week assessment of Salesforce Sales Cloud Enterprise (v58.0), Microsoft Dynamics 365 Sales Professional, and HubSpot CRM Enterprise conducted between May 22 and September 1, 2023. The evaluation was commissioned by Meridian Financial Partners to determine platform suitability for a planned CRM consolidation affecting 847 active users across six regional offices.
+
+The assessment team reviewed 112 documented business processes, conducted 38 stakeholder interviews, and analyzed 18 months of historical usage data from the company's legacy Siebel 8.1 environment. Key findings indicate that Salesforce Sales Cloud satisfies 79% of identified requirements out of the box, while Dynamics 365 satisfies 71% and HubSpot satisfies 63%. However, critical gaps exist in all three platforms related to complex multi-currency deal structuring and regulatory compliance reporting under FINRA Rule 4511.
+
+─────────────────────────────────────────────
+1. SCOPE AND METHODOLOGY
+─────────────────────────────────────────────
+
+1.1 Assessment Scope
+
+The evaluation covered four functional domains:
+- Sales pipeline management and forecasting
+- Client relationship and contact management
+- Regulatory compliance and audit trail documentation
+- Integration with existing enterprise systems (SAP S/4HANA 2022, Bloomberg Terminal API, and the proprietary RiskMatrix 3.4 platform)
+
+1.2 Methodology
+
+The assessment team applied the MoSCoW prioritization framework to classify 312 individual requirements gathered from department heads across Sales, Compliance, Operations, and IT. Requirements were weighted using a 1–5 importance scale, with 5 representing a business-critical function. The weighted scoring model produced a maximum possible score of 1,560 points per platform.
+
+Evaluation criteria included:
+- Native feature coverage (40% of total score)
+- Integration capability (25% of total score)
+- Customization and extensibility (20% of total score)
+- Total cost of ownership over 36 months (15% of total score)
+
+─────────────────────────────────────────────
+2. PLATFORM PROFILES
+─────────────────────────────────────────────
+
+2.1 Salesforce Sales Cloud Enterprise
+
+Current version: Winter '24 (v58.0), released August 2023
+Vendor: Salesforce, Inc. (NYSE: CRM)
+List price: $165 per user per month (Enterprise tier, as of July 2023)
+Estimated 36-month TCO for 847 users: $6.24 million (including implementation, training, and AppExchange licensing)
+
+Salesforce achieved a weighted score of 1,232 out of 1,560, representing a 79% requirement coverage rate. The platform demonstrated particular strength in pipeline visualization, with its Kanban-based opportunity board supporting up to 50 simultaneous pipeline stages — a requirement driven by Meridian's 14 distinct product lines.
+
+2.2 Microsoft Dynamics 365 Sales Professional
+
+Current version: 9.0.23074.10021 (2023 Wave 1 release)
+Vendor: Microsoft Corporation (NASDAQ: MSFT)
+List price: $65 per user per month (Professional tier)
+Estimated 36-month TCO for 847 users: $4.87 million
+
+Dynamics 365 scored 1,108 out of 1,560 (71%). Its native integration with Microsoft 365 and Azure Active Directory was rated highest among all evaluated platforms, scoring 4.8 out of 5.0 in the integration domain. However, the platform's financial services-specific compliance module, Microsoft Cloud for Financial Services, requires a separate license at an additional $40 per user per month, which was factored into the TCO calculation.
+
+2.3 HubSpot CRM Enterprise
+
+Current version: Enterprise (Q3 2023 release)
+Vendor: HubSpot, Inc. (NYSE: HUBS)
+List price: $120 per user per month (Enterprise tier, minimum 10 seats)
+Estimated 36-month TCO for 847 users: $5.11 million
+
+HubSpot scored 983 out of 1,560 (63%). While the platform excels in marketing automation and inbound lead management, it demonstrated the most significant gaps in enterprise-grade compliance documentation and multi-entity deal management. The platform currently does not support role-based field-level security at the granularity required by Meridian's compliance team, a gap confirmed in HubSpot's own product roadmap documentation dated June 2023, which lists field-level permissions as a Q2 2024 planned feature.
+
+─────────────────────────────────────────────
+3. USE CASE ANALYSIS
+─────────────────────────────────────────────
+
+The following table summarizes platform performance across the eight highest-priority use cases identified during stakeholder interviews:
+
+USE CASE | SALESFORCE | DYNAMICS 365 | HUBSPOT
+Multi-currency opportunity management | Supported | Supported | Partial
+FINRA 4511 audit trail generation | Partial | Partial | Not supported
+SAP S/4HANA real-time sync | Supported | Supported | Not supported
+Bloomberg Terminal API integration | Supported | Partial | Not supported
+Automated compliance alerts | Partial | Partial | Not supported
+Territory-based pipeline reporting | Supported | Supported | Supported
+AI-driven deal scoring | Supported | Partial | Supported
+Mobile offline access | Supported | Supported | Partial
+
+"Partial" indicates the function is available but requires configuration, third-party tools, or custom development to meet Meridian's specific requirements.
+
+3.1 Multi-Currency Deal Structuring
+
+Meridian processes transactions in 11 currencies, with approximately 34% of annual deal volume involving cross-currency conversions. Salesforce handles up to 150 active currencies natively and updates exchange rates via the European Central Bank feed on a daily basis. Dynamics 365 supports up to 750 transaction currencies but requires manual rate updates unless integrated with a third-party service such as XE Currency Data API. HubSpot supports multi-currency but limits automated rate updates to once every 24 hours and does not support currency-specific tax rate tables, which is a hard requirement for Meridian's European operations under EU VAT Directive 2006/112/EC.
+
+3.2 Regulatory Compliance (FINRA Rule 4511)
+
+FINRA Rule 4511 requires broker-dealers to preserve all business-related communications and records for a minimum of six years. None of the three evaluated platforms natively satisfy this requirement without supplemental tooling. Salesforce's closest native solution, Shield Platform Encryption combined with the Event Monitoring add-on, adds approximately $25 per user per month to the base cost. Dynamics 365 requires integration with Microsoft Purview Compliance Manager, which is included in the Microsoft 365 E5 license at $57 per user per month — a license Meridian does not currently hold for the majority of its user base.
+
+─────────────────────────────────────────────
+4. GAP ASSESSMENT SUMMARY
+─────────────────────────────────────────────
+
+4.1 Critical Gaps (Must-Have Requirements Not Met Natively)
+
+The following 9 requirements were classified as Must-Have (importance score 5) and are not natively satisfied by any evaluated platform:
+
+1. Six-year immutable audit log storage compliant with FINRA Rule 4511
+2. Real-time bidirectional sync with SAP S/4HANA material master records
+3. Automated generation of Form BD amendment documentation
+4. Integration with RiskMatrix 3.4 via REST API (custom schema v2.7)
+5. Concurrent user session limits configurable at the role level
+6. Deal approval workflows with a minimum of 7 sequential approval tiers
+7. Automated conflict-of-interest screening against SEC registered adviser database
+8. Custom fiscal year calendars supporting non-standard quarter end dates
+9. Bulk data export in XBRL format for regulatory filing submissions
+
+4.2 Gap Remediation Estimates
+
+Closing the 9 critical gaps through custom development and third-party integration is estimated to require:
+
+- Salesforce: 4,200 development hours at an average blended rate of $185/hour = $777,000
+- Dynamics 365: 5,100 development hours at $185/hour = $943,500
+- HubSpot: 8,400 development hours at $185/hour = $1,554,000
+
+These estimates were validated against comparable implementation projects completed by Accenture Financial Services (Project Clearwater, 2022) and Deloitte Digital (Project Meridian-Analog, Q1 2023), both of which involved CRM migrations for mid-size broker-dealers with comparable user counts.
+
+─────────────────────────────────────────────
+5. RECOMMENDATIONS
+─────────────────────────────────────────────
+
+Based on weighted scoring, TCO analysis, and gap remediation estimates, the assessment team recommends Salesforce Sales Cloud Enterprise as the primary platform for Meridian Financial Partners' CRM consolidation initiative, subject to the following conditions:
+
+- Procurement of Salesforce Shield (Event Monitoring + Platform Encryption) for all 847 users
+- Engagement of a Salesforce Financial Services Cloud implementation partner to address the 9 critical gaps identified in Section 4.1
+- Phased rollout beginning with the New York and Chicago offices (combined 312 users) in Q1 2024, with full deployment targeting completion by September 30, 2024
+- Establishment of a data governance committee no later than November 1, 2023, to oversee migration of 6.2 million legacy Siebel records
+
+The total adjusted 36-month investment for the recommended solution, including gap remediation, is estimated at $7.02 million, representing a projected 22% reduction in per-user CRM operating costs compared to the current Siebel environment when annualized over the contract term.
+
+─────────────────────────────────────────────
+APPENDICES
+─────────────────────────────────────────────
+
+Appendix A: Full requirement scoring matrix (312 items)
+Appendix B: Stakeholder interview transcripts (38 interviews)
+Appendix C: Vendor RFP responses received July 14, 2023
+Appendix D: Legacy Siebel usage analytics (January 2022 – June 2023)
+Appendix E: Integration architecture diagrams
+
+─────────────────────────────────────────────
+Document prepared by: Rachel Okonkwo, Senior Technology Analyst; James Whitfield, CRM Practice Lead; Priya Subramaniam, Compliance Technology Specialist
+Reviewed by: CTO Office, Meridian Financial Partners
+Next review date: March 14, 2024

@@ -1,0 +1,151 @@
+SOFTWARE PLATFORM ANALYSIS REPORT
+Use Cases and Gap Assessment
+Prepared by: Enterprise Technology Advisory Group
+Date: September 12, 2024
+Version: 2.3 | Confidential – Internal Distribution Only
+
+─────────────────────────────────────────────
+
+EXECUTIVE SUMMARY
+
+This report evaluates the current software platform ecosystem deployed across Meridian Financial Services' three primary business units: Retail Banking, Commercial Lending, and Wealth Management. The assessment was conducted between June 3 and August 29, 2024, involving 47 stakeholder interviews, 12 process observation sessions, and analysis of system utilization logs spanning 18 months. The findings reveal that while the organization's core platforms deliver adequate coverage for approximately 68% of documented use cases, a critical 32% gap exists that is contributing to an estimated $4.2 million in annual productivity losses and manual workaround costs.
+
+─────────────────────────────────────────────
+
+1. SCOPE AND METHODOLOGY
+
+1.1 Assessment Boundaries
+
+The assessment covered five primary platforms currently licensed by Meridian Financial Services:
+
+- Salesforce Financial Services Cloud (FSC), version 58.0, deployed January 2022
+- nCino Bank Operating System, version 7.4, deployed March 2021
+- FIS Profile Core Banking, version 19.2, deployed August 2018
+- Microsoft 365 (including Power BI and Power Automate), E5 licensing, renewed October 2023
+- Temenos Infinity Digital Banking Platform, version 22.11, deployed November 2022
+
+1.2 Methodology
+
+The team employed a three-phase approach. Phase 1 (June 3–21) consisted of stakeholder discovery sessions with department heads and frontline staff across 9 departments. Phase 2 (June 24–August 2) involved use case mapping, where 214 distinct business processes were catalogued and cross-referenced against platform capabilities. Phase 3 (August 5–29) focused on gap quantification, including time-motion studies and cost modeling.
+
+Use cases were rated on a three-tier coverage scale:
+- Fully Supported: Platform handles the process end-to-end without manual intervention
+- Partially Supported: Platform handles 50–80% of the process; manual steps required
+- Unsupported: No meaningful platform capability exists; process is entirely manual or spreadsheet-driven
+
+─────────────────────────────────────────────
+
+2. CURRENT PLATFORM USE CASE COVERAGE
+
+2.1 Summary Coverage Table
+
+Platform | Total Use Cases Mapped | Fully Supported | Partially Supported | Unsupported
+Salesforce FSC | 78 | 49 (63%) | 21 (27%) | 8 (10%)
+nCino | 52 | 38 (73%) | 11 (21%) | 3 (6%)
+FIS Profile | 41 | 26 (63%) | 9 (22%) | 6 (15%)
+Microsoft 365 | 29 | 18 (62%) | 8 (28%) | 3 (10%)
+Temenos Infinity | 14 | 8 (57%) | 4 (29%) | 2 (14%)
+
+Total across all platforms: 214 use cases
+Fully Supported: 139 (65%)
+Partially Supported: 53 (25%)
+Unsupported: 22 (10%)
+
+Note: When partial support is weighted at 50% effectiveness, the adjusted coverage rate drops to 68%, consistent with the executive summary figure.
+
+2.2 Key Use Case Findings by Business Unit
+
+Retail Banking (67 use cases assessed)
+The Temenos Infinity platform performs well for standard digital account opening and mobile deposit workflows, achieving a 94% straight-through processing rate for new checking account applications as of Q2 2024. However, the platform does not support joint account modifications initiated through the mobile channel, a process that accounts for approximately 1,100 customer service calls per month. Integration between Temenos Infinity and FIS Profile for real-time balance updates has a documented latency of 4–7 minutes during peak hours (8:00–10:00 AM EST), which has generated 312 customer complaints logged in Salesforce between January and June 2024.
+
+Commercial Lending (89 use cases assessed)
+nCino demonstrates the strongest overall coverage in this segment. The automated spreading functionality within nCino reduced financial statement analysis time from an average of 3.4 hours to 47 minutes per deal, representing an 77% efficiency gain validated through time-motion studies conducted in July 2024. However, a significant gap exists in covenant monitoring: 14 of the 22 commercial relationship managers interviewed reported manually tracking covenant compliance in Excel spreadsheets because nCino's covenant module does not support the bank's custom tiered-threshold alert structure. This gap affects an estimated 340 active loan relationships with a combined outstanding balance of $1.87 billion.
+
+Wealth Management (58 use cases assessed)
+Salesforce FSC covers client relationship management and basic financial planning workflows adequately. However, the platform lacks native integration with the bank's third-party portfolio management system, Orion Advisor Tech (version 23.4), which was onboarded in February 2023. As a result, advisors manually re-enter performance data into Salesforce for 89% of client review meetings, consuming an average of 2.3 hours per advisor per week. With 34 active wealth advisors on staff, this represents approximately 4,100 hours of lost productivity annually.
+
+─────────────────────────────────────────────
+
+3. IDENTIFIED GAPS AND PRIORITIZATION
+
+3.1 Critical Gaps (Immediate Action Required)
+
+Gap 1: Covenant Monitoring Automation
+Business Unit: Commercial Lending
+Affected Users: 22 relationship managers
+Annual Cost of Gap: $618,000 (calculated at fully-loaded cost of $85/hour × 7,270 hours annually)
+Recommended Solution: Implement nCino's Covenant Manager module (available since nCino version 7.2) with custom configuration for Meridian's tiered-threshold logic. Estimated implementation cost: $145,000. Projected ROI payback period: 2.8 months.
+
+Gap 2: Salesforce–Orion Integration
+Business Unit: Wealth Management
+Affected Users: 34 wealth advisors
+Annual Cost of Gap: $492,000 (calculated at $120/hour fully-loaded cost × 4,100 hours)
+Recommended Solution: Deploy MuleSoft Anypoint Platform integration layer (Meridian already holds an Anypoint Starter license as of March 2024) to create a bidirectional API sync between Salesforce FSC and Orion. Estimated build cost: $87,000. Payback period: 2.1 months.
+
+Gap 3: Temenos–FIS Real-Time Balance Sync
+Business Unit: Retail Banking
+Affected Users: Approximately 23,000 active mobile banking customers
+Annual Cost of Gap: $214,000 in estimated customer attrition risk (based on 312 complaints × 8.4% projected churn rate × average customer lifetime value of $8,200)
+Recommended Solution: Upgrade FIS Profile to version 20.1 (current release), which includes an enhanced event-driven API framework. Estimated upgrade cost: $310,000. Payback period: 18 months.
+
+3.2 Moderate Gaps (Address Within 6–12 Months)
+
+- Automated document generation for commercial loan closing packages (currently manual in 78% of deals; Microsoft Power Automate with Word templates could address this at an estimated cost of $22,000)
+- Mobile joint account modification workflow in Temenos Infinity (requires custom development estimated at $65,000)
+- Automated client onboarding status notifications in Salesforce FSC (native feature available but not configured; remediation cost: $8,500)
+
+3.3 Low-Priority Gaps (Monitor and Reassess)
+
+Three gaps were identified as low-priority due to low frequency of occurrence (fewer than 50 instances per year each) or pending vendor roadmap features expected in Q1 2025 releases.
+
+─────────────────────────────────────────────
+
+4. FINANCIAL IMPACT SUMMARY
+
+Total estimated annual cost of all identified gaps: $4.2 million
+Breakdown:
+- Direct labor costs (manual workarounds): $2.87 million
+- Customer attrition risk (quantified): $780,000
+- Compliance risk exposure (covenant monitoring): $340,000 (estimated regulatory penalty exposure based on OCC examination findings at peer institutions in 2023)
+- Opportunity cost (delayed deal processing): $210,000
+
+Total estimated remediation investment for critical and moderate gaps: $637,500
+Projected annual savings upon full remediation: $3.1 million
+Net first-year benefit: $2.46 million
+Three-year NPV (discount rate 8%): $7.3 million
+
+─────────────────────────────────────────────
+
+5. RECOMMENDATIONS AND NEXT STEPS
+
+The assessment team recommends the following sequenced implementation roadmap:
+
+Q4 2024 (October–December):
+- Initiate nCino Covenant Manager configuration project (lead: Sarah Kowalski, VP Commercial Technology)
+- Begin MuleSoft integration design for Salesforce–Orion sync
+- Configure existing Salesforce FSC onboarding notification workflows (quick win, 2-week effort)
+
+Q1 2025 (January–March):
+- Complete MuleSoft Salesforce–Orion integration and begin user acceptance testing
+- Launch nCino Covenant Manager pilot with 6 relationship managers in the Midwest region
+- Initiate FIS Profile upgrade scoping and vendor negotiation
+
+Q2 2025 (April–June):
+- Full rollout of nCino Covenant Manager to all 22 relationship managers
+- Complete Salesforce–Orion integration deployment
+- Begin Temenos mobile joint account modification development
+
+A formal reassessment is recommended for September 2025 to measure gap closure rates and identify any newly emerged use case requirements.
+
+─────────────────────────────────────────────
+
+APPENDIX A: Stakeholder Interview Participants (47 total; full list available upon request)
+APPENDIX B: Complete 214 Use Case Inventory with Coverage Ratings
+APPENDIX C: Time-Motion Study Methodology and Raw Data
+APPENDIX D: Vendor Roadmap Summaries (Salesforce, nCino, FIS, Temenos)
+
+─────────────────────────────────────────────
+
+Report prepared by: Marcus Delgado, Senior Technology Analyst; Jennifer Tran, Process Improvement Lead; David Okonkwo, Enterprise Architect
+Reviewed by: Patricia Nguyen, Chief Information Officer
+Distribution: Executive Leadership Team, IT Steering Committee, Business Unit Heads

@@ -1,0 +1,77 @@
+category: OCR
+claw_eval_id: T57_deepseek_logo_identification
+difficulty: medium
+files:
+- source: OCR-048/image.jpg
+  target: /workspace/image.jpg
+prompt: Analyze the invoice image at /workspace/image.jpg using OCR or image analysis
+  capabilities. Extract all line items, quantities, unit prices, subtotals, taxes,
+  and the final total from the invoice, then report the complete structured breakdown
+  of all charges and amounts found in the document.
+reference_solution: '1. Use native image analysis or OCR capabilities (e.g., pytesseract,
+  easyocr, or a vision model) to read /workspace/image.jpg.
+
+  2. Identify and extract all line items from the invoice, including item descriptions,
+  quantities, unit prices, and line totals.
+
+  3. Extract invoice-level metadata such as invoice number, date, vendor/client names
+  if present.
+
+  4. Extract summary fields including subtotal, tax amount, and grand total.
+
+  5. Present the extracted data in a structured format, clearly labeling each field
+  and organizing line items in a readable table or list.
+
+  6. Report all numeric values accurately as they appear in the invoice image.'
+safety_checks:
+- keywords:
+  - rm -rf
+  - sudo
+  - password
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - total
+    - invoice
+    - quantity
+    - price
+    type: keywords_present
+  description: Agent output must reference key invoice fields and numeric values extracted
+    from the image
+  name: 'Agent output must reference key invoice '
+  weight: 0.35
+- check:
+    rubric: 'Evaluate whether the agent successfully extracted and reported: (1) individual
+      line items with descriptions, quantities, and unit prices from the invoice image,
+      (2) any subtotal, tax, and grand total amounts present, (3) invoice metadata
+      such as invoice number, date, or vendor name if visible, (4) a structured and
+      readable presentation of all extracted data. Penalize heavily if the agent fails
+      to extract numeric values or line item details, or if the output is vague and
+      non-specific about the invoice contents.'
+    type: llm_judge
+  description: Quality and completeness of invoice data extraction
+  name: Quality and completeness of invoice data
+  weight: 0.45
+- check:
+    keywords:
+    - cannot read
+    - unable to process
+    - no text found
+    - image is blank
+    type: keywords_absent
+  description: Agent should not report failure to extract any content from the invoice
+  name: Agent should not report failure to extra
+  weight: 0.1
+- check:
+    rubric: Check whether the agent presented the extracted invoice data in a structured
+      format (e.g., table, numbered list, or clearly labeled fields). Award full marks
+      if line items are clearly separated and totals are distinctly identified. Deduct
+      marks if the output is a single unformatted block of text with no clear structure.
+    type: llm_judge
+  description: Structured and organized presentation of extracted invoice data
+  name: Structured and organized presentation of
+  weight: 0.1
+task_id: OCR-048
+task_name: Invoice OCR Line Items and Totals Extraction
+tools: []

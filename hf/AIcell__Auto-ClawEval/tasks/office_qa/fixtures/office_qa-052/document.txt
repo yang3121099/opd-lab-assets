@@ -1,0 +1,147 @@
+COMMONWEALTH OF PENNSYLVANIA
+OFFICE OF THE BUDGET
+ANNUAL DEPARTMENT BUDGET COMPARISON REPORT
+FISCAL YEAR 2023–2024 vs. FISCAL YEAR 2022–2023
+
+Prepared by: Bureau of Financial Management and Analysis
+Report Date: October 15, 2024
+Report Reference Number: OB-FY2024-BCR-0047
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EXECUTIVE SUMMARY
+
+This report presents a comparative analysis of appropriated and expended budgets across major Commonwealth departments for fiscal year 2023–2024 (July 1, 2023 through June 30, 2024) against the prior fiscal year 2022–2023. The analysis was prepared under the direction of Budget Secretary Uri Monson and reflects data compiled from the Commonwealth's SAP-based financial management system as of September 30, 2024. Total general fund expenditures for FY 2023–2024 reached $42.8 billion, representing an increase of $2.1 billion, or 5.2 percent, over the FY 2022–2023 total of $40.7 billion.
+
+This document is intended for distribution to members of the General Assembly, the Governor's Office, and the public pursuant to the Commonwealth's transparency and accountability obligations under Act 48 of 1993.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 1: METHODOLOGY AND DATA SOURCES
+
+Budget figures presented in this report are drawn from the Commonwealth's Integrated Enterprise System (IES), which serves as the official financial ledger for all executive branch agencies. Appropriation amounts reflect final enacted budgets as signed by Governor Josh Shapiro. Expenditure figures reflect actual disbursements recorded through June 30, 2024, with a 90-day close period ending September 30, 2024.
+
+Departments are categorized under four functional clusters: Health and Human Services, Education, Public Safety and Justice, and General Government Operations. Lapse rates (the percentage of appropriated funds not expended) are calculated as: (Appropriation minus Expenditure) divided by Appropriation, multiplied by 100.
+
+All figures are reported in U.S. dollars. Percentage changes are calculated year-over-year using final expenditure totals. Inflation adjustments are noted where applicable using the Bureau of Labor Statistics CPI-U index, with a 3.4 percent inflation rate applied for calendar year 2023.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 2: GENERAL FUND BUDGET OVERVIEW
+
+TOTAL GENERAL FUND COMPARISON
+
+Category | FY 2022–2023 | FY 2023–2024 | Dollar Change | % Change
+Total Appropriations | $41.5 billion | $44.1 billion | +$2.6 billion | +6.3%
+Total Expenditures | $40.7 billion | $42.8 billion | +$2.1 billion | +5.2%
+Unspent Appropriations | $0.8 billion | $1.3 billion | +$0.5 billion | +62.5%
+Overall Lapse Rate | 1.93% | 2.95% | — | —
+
+The increase in unspent appropriations from $800 million to $1.3 billion reflects delayed capital project timelines in the Department of Transportation and a hiring freeze implemented in February 2024 across several agencies in response to revised revenue projections issued by the Independent Fiscal Office on January 19, 2024.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 3: DEPARTMENT-BY-DEPARTMENT ANALYSIS
+
+3.1 DEPARTMENT OF HUMAN SERVICES (DHS)
+
+The Department of Human Services, led by Secretary Dr. Val Arkoosh, remains the single largest recipient of general fund appropriations in the Commonwealth.
+
+Budget Item | FY 2022–2023 | FY 2023–2024 | Change
+Total Appropriation | $14.2 billion | $15.1 billion | +$0.9 billion (+6.3%)
+Total Expenditure | $14.0 billion | $14.9 billion | +$0.9 billion (+6.4%)
+Lapse Rate | 1.41% | 1.32% | -0.09 pts
+
+Key expenditure drivers in FY 2023–2024 included:
+- Medical Assistance (Medicaid): $9.6 billion expended, up from $9.1 billion in FY 2022–2023, a 5.5 percent increase driven by enrollment growth of approximately 87,000 additional beneficiaries following the end of continuous enrollment protections on April 1, 2023.
+- Child Care Works Subsidy Program: $412 million expended, up 11.2 percent from $370.5 million, reflecting expanded eligibility thresholds enacted under Act 22 of 2023.
+- Mental Health Services Block Grant: $318 million, unchanged from prior year per legislative directive.
+
+3.2 DEPARTMENT OF EDUCATION (PDE)
+
+Secretary Dr. Khalid Mumin oversees the Department of Education, which received the second-largest general fund allocation.
+
+Budget Item | FY 2022–2023 | FY 2023–2024 | Change
+Total Appropriation | $8.1 billion | $8.9 billion | +$0.8 billion (+9.9%)
+Total Expenditure | $7.9 billion | $8.7 billion | +$0.8 billion (+10.1%)
+Lapse Rate | 2.47% | 2.25% | -0.22 pts
+
+Notable allocations:
+- Basic Education Funding (BEF): $7.0 billion in FY 2023–2024, an increase of $567 million (8.8 percent) over the prior year's $6.433 billion. This increase reflects the first year of implementation of the adequacy supplement formula established following the Commonwealth Court ruling in William Penn School District v. Pennsylvania Department of Education, issued February 7, 2023.
+- Special Education Funding: $1.24 billion, up from $1.19 billion, a 4.2 percent increase.
+- Pre-K Counts Program: $284 million, an increase of $34 million or 13.6 percent over FY 2022–2023.
+
+3.3 DEPARTMENT OF TRANSPORTATION (PennDOT)
+
+Secretary Mike Carroll leads PennDOT, which operates on a combination of general fund, Motor License Fund, and federal pass-through revenues. This comparison focuses on general fund allocations only.
+
+Budget Item | FY 2022–2023 | FY 2023–2024 | Change
+Total Appropriation | $2.3 billion | $2.4 billion | +$0.1 billion (+4.3%)
+Total Expenditure | $2.1 billion | $2.0 billion | -$0.1 billion (-4.8%)
+Lapse Rate | 8.70% | 16.67% | +7.97 pts
+
+PennDOT recorded the highest lapse rate among major departments at 16.67 percent, resulting in $400 million in unspent appropriations. The primary cause was the delayed procurement of the Interstate 95 rehabilitation Phase 2 contract, originally scheduled for award in March 2024 but postponed to October 2024 due to contractor bid protests filed with the Board of Claims on February 28, 2024. Additionally, supply chain delays affecting steel procurement extended timelines on 14 bridge replacement projects across Allegheny, Luzerne, and Erie counties.
+
+3.4 DEPARTMENT OF CORRECTIONS (DOC)
+
+Secretary Dr. Laurel Harry administers the Department of Corrections, which operates 23 state correctional institutions housing approximately 37,400 incarcerated individuals as of June 30, 2024.
+
+Budget Item | FY 2022–2023 | FY 2023–2024 | Change
+Total Appropriation | $2.85 billion | $2.98 billion | +$0.13 billion (+4.6%)
+Total Expenditure | $2.83 billion | $2.96 billion | +$0.13 billion (+4.6%)
+Lapse Rate | 0.70% | 0.67% | -0.03 pts
+
+Per-inmate daily cost rose from $118.40 in FY 2022–2023 to $126.90 in FY 2023–2024, an increase of $8.50 or 7.2 percent, driven primarily by healthcare contract renegotiations with Centurion Health Services finalized on August 1, 2023, and a 6.1 percent increase in pharmaceutical costs.
+
+3.5 DEPARTMENT OF HEALTH (DOH)
+
+Budget Item | FY 2022–2023 | FY 2023–2024 | Change
+Total Appropriation | $1.12 billion | $1.19 billion | +$0.07 billion (+6.3%)
+Total Expenditure | $1.08 billion | $1.15 billion | +$0.07 billion (+6.5%)
+Lapse Rate | 3.57% | 3.36% | -0.21 pts
+
+The Department of Health, led by Secretary Dr. Debra Bogen, directed $214 million toward the Opioid Crisis Response Initiative in FY 2023–2024, up from $188 million in the prior year, a 13.8 percent increase. This funding supported 47 regional recovery centers and the distribution of 1.2 million naloxone kits statewide.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 4: YEAR-OVER-YEAR LAPSE RATE COMPARISON BY DEPARTMENT
+
+Department | FY 2022–2023 Lapse | FY 2023–2024 Lapse | Change
+Human Services | 1.41% | 1.32% | -0.09 pts
+Education | 2.47% | 2.25% | -0.22 pts
+Transportation | 8.70% | 16.67% | +7.97 pts
+Corrections | 0.70% | 0.67% | -0.03 pts
+Health | 3.57% | 3.36% | -0.21 pts
+All Other Agencies | 2.10% | 2.44% | +0.34 pts
+STATEWIDE AVERAGE | 1.93% | 2.95% | +1.02 pts
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 5: REVENUE CONTEXT AND FISCAL OUTLOOK
+
+General fund revenues for FY 2023–2024 totaled $43.6 billion, exceeding the enacted estimate of $43.1 billion by $500 million, or 1.16 percent. Personal income tax collections of $16.8 billion and sales and use tax collections of $12.4 billion were the two largest revenue sources, together comprising 67 percent of total general fund receipts.
+
+The Independent Fiscal Office projects general fund expenditure growth of 4.1 percent for FY 2024–2025, with the largest pressures anticipated in Medical Assistance ($10.2 billion projected) and debt service obligations, which are forecast to increase by $180 million due to bond issuances approved under the Redevelopment Assistance Capital Program in March 2024.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 6: CONCLUSIONS AND RECOMMENDATIONS
+
+The Bureau of Financial Management and Analysis offers the following observations:
+
+1. The statewide lapse rate increase from 1.93 percent to 2.95 percent warrants monitoring, though it is primarily attributable to PennDOT procurement delays rather than systemic underspending.
+
+2. The Department of Human Services demonstrated strong budget execution with a lapse rate below 1.5 percent for the second consecutive year.
+
+3. Departments are encouraged to submit mid-year expenditure projections no later than January 31, 2025, to allow for timely supplemental appropriation requests if needed.
+
+4. The Office of the Budget will conduct a targeted review of PennDOT's capital project procurement timelines beginning November 1, 2024.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+For questions regarding this report, contact the Bureau of Financial Management and Analysis at (717) 787-2542 or budget.info@pa.gov.
+
+Certified accurate by:
+Uri Monson, Secretary of the Budget
+Commonwealth of Pennsylvania
+October 15, 2024

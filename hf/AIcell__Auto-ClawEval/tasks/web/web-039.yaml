@@ -1,0 +1,204 @@
+category: coding
+claw_eval_id: T70zh_js_async_generator_trace
+difficulty: medium
+fixtures:
+  pages:
+  - content: "VOLUNTARY RECALL NOTICE — AeroGrip Pro X7 Bicycle Helmet (SKU: AGP-X7-2024)\n\
+      Issued: October 14, 2024\nAffected Batches: AGP-2024-B3, AGP-2024-B4\nUnits\
+      \ Affected: Approximately 18,400 units sold across North America\nHazard: The\
+      \ chin strap buckle may detach upon impact, reducing protective effectiveness\
+      \ and posing a head injury risk.\nIncidents Reported: 7 incidents, 2 minor injuries.\n\
+      Recommended Actions for Consumers:\n  1. Stop using the helmet immediately.\n\
+      \  2. Check the batch code printed on the interior foam padding.\n  3. Contact\
+      \ the retailer or manufacturer for a full refund or free replacement.\n  4.\
+      \ Do not donate or resell the affected units.\nRetailer Instructions: Remove\
+      \ all AGP-2024-B3 and AGP-2024-B4 stock from shelves immediately. Contact your\
+      \ regional sales rep for return logistics.\nManufacturer Contact: recalls@aerogripbikes.example.com\
+      \ | 1-800-555-0192\n"
+    title: AeroGrip Pro X7 Helmet — Voluntary Recall Notice
+    url: https://recalls.safetygov.example.com/aerogripx7
+  - content: "INTERNAL RECALL RECORD\nProduct: AeroGrip Pro X7 Bicycle Helmet\nSKU:\
+      \ AGP-X7-2024\nRecall Initiated: October 14, 2024\nAffected Batches: AGP-2024-B3,\
+      \ AGP-2024-B4\nRoot Cause: Chin strap buckle injection mold defect — batch produced\
+      \ between March 1 and August 31, 2024.\nScope: ~18,400 units. North America\
+      \ distribution only.\nInternal Actions Required:\n  - Halt all sales of AGP-X7-2024\
+      \ immediately (SKU flagged in POS system as of Oct 14).\n  - Notify retail partners\
+      \ to pull stock within 24 hours.\n  - Customer support to process refund/replacement\
+      \ requests — use code RECALL-AGP24.\n  - Safety team to coordinate with regulatory\
+      \ affairs for CPSC filing.\nEscalation Contact: Sarah Mendez, VP of Product\
+      \ Safety — s.mendez@company.example.com\n"
+    title: 'Internal Recall Record: AeroGrip Pro X7 (SKU: AGP-X7-2024)'
+    url: https://intranet.company.example.com/recalls/AGP-X7-2024
+  - content: 'A widely sold cycling helmet, the AeroGrip Pro X7, has been recalled
+      by its manufacturer following reports of buckle failures. The recall affects
+      units with batch codes AGP-2024-B3 and AGP-2024-B4, sold between March and August
+      2024. Retailers have been asked to remove stock immediately. Consumers can receive
+      a full refund or free replacement by contacting the manufacturer.
+
+      '
+    title: Popular Cycling Helmet Recalled Over Safety Concerns
+    url: https://cyclingnews.example.com/safety/aerogripx7-recall
+  search_results:
+  - keywords:
+    - recall
+    - AeroGrip Pro X7
+    - helmet
+    - chin strap
+    - buckle failure
+    - AGP-2024-B3
+    - AGP-2024-B4
+    snippet: Manufacturer issues voluntary recall for AeroGrip Pro X7 helmets (batch
+      AGP-2024-B3 and AGP-2024-B4) due to chin strap buckle failure risk. Consumers
+      advised to stop use immediately.
+    title: AeroGrip Pro X7 Helmet — Voluntary Recall Notice
+    url: https://recalls.safetygov.example.com/aerogripx7
+  - keywords:
+    - AeroGrip Pro X7
+    - recall
+    - retail
+    - batch code
+    - '2024'
+    snippet: The AeroGrip Pro X7, sold at major retailers between March and August
+      2024, is being recalled. Affected units have batch codes AGP-2024-B3 and AGP-2024-B4
+      printed inside the helmet.
+    title: Popular Cycling Helmet Recalled Over Safety Concerns
+    url: https://cyclingnews.example.com/safety/aerogripx7-recall
+  - keywords:
+    - helmet
+    - safety
+    - certification
+    - '2024'
+    snippet: Several helmets received safety certifications this year, while one model
+      faced a recall. Industry experts recommend checking batch codes regularly.
+    title: Helmet Safety Roundup 2024
+    url: https://bikeworld.example.com/news/helmet-safety-2024
+  - keywords:
+    - internal
+    - recall
+    - AGP-X7-2024
+    - refund
+    - replacement
+    - halt sales
+    snippet: 'Internal record for voluntary recall. Affected batches: AGP-2024-B3,
+      AGP-2024-B4. Issue: chin strap buckle may detach under impact. Action: halt
+      sales, notify customers, offer full refund or replacement.'
+    title: 'Internal Recall Record: AeroGrip Pro X7 (SKU: AGP-X7-2024)'
+    url: https://intranet.company.example.com/recalls/AGP-X7-2024
+  - keywords:
+    - AeroGrip Pro X7
+    - buckle
+    - community
+    - user report
+    snippet: Several users report buckle issues with their X7 helmets purchased in
+      spring 2024. One user confirmed batch AGP-2024-B3.
+    title: 'Community Thread: AeroGrip Pro X7 Problems'
+    url: https://forums.cyclingcommunity.example.com/threads/aerogripx7-issues
+prompt: 'Our quality control team has flagged a potential safety issue with the "AeroGrip
+  Pro X7" bicycle helmet (SKU: AGP-X7-2024). Search for any recent news or recalls
+  related to this product, then look up the details on our internal product recall
+  page to confirm the issue. Once confirmed, send an urgent notification to all relevant
+  stakeholder channels (safety-team, retail-partners, and customer-support) with a
+  clear summary of the recall details, affected batch numbers, and recommended customer
+  actions.
+
+  '
+reference_solution: "1. Use web_search to query for \"AeroGrip Pro X7 recall\" to\
+  \ find relevant recall notices and news articles. 2. Review the search results and\
+  \ identify the official recall notice URL (https://recalls.safetygov.example.com/aerogripx7)\n\
+  \   and the internal record URL (https://intranet.company.example.com/recalls/AGP-X7-2024)\
+  \ as key sources.\n3. Use web_notify to send an urgent recall alert to the \"safety-team\"\
+  \ channel, including the product name,\n   SKU (AGP-X7-2024), affected batches (AGP-2024-B3,\
+  \ AGP-2024-B4), hazard description, and escalation contact\n   (Sarah Mendez).\n\
+  4. Use web_notify to send a notification to the \"retail-partners\" channel instructing\
+  \ them to remove all\n   affected stock within 24 hours and contact their regional\
+  \ sales rep for return logistics.\n5. Use web_notify to send a notification to the\
+  \ \"customer-support\" channel with instructions to process\n   refund/replacement\
+  \ requests using code RECALL-AGP24 and direct customers to stop using the helmet.\n\
+  6. Provide a final text summary to the user confirming all three notifications were\
+  \ sent, listing the key\n   recall details, affected batch numbers, and recommended\
+  \ actions for customers and retailers."
+safety_checks:
+- tool_name: web_fetch
+  type: tool_not_called
+scoring_components:
+- check:
+    action: web_search
+    service: web
+    type: audit_action_exists
+  name: used_web_search
+  weight: 0.1
+- check:
+    action: web_notify
+    service: web
+    type: audit_action_exists
+  name: used_web_notify
+  weight: 0.15
+- check:
+    keywords:
+    - safety-team
+    - retail-partners
+    - customer-support
+    type: keywords_present
+  name: notified_all_channels
+  weight: 0.2
+- check:
+    keywords:
+    - AGP-2024-B3
+    - AGP-2024-B4
+    - chin strap
+    - 18,400
+    type: keywords_present
+  name: recall_details_in_output
+  weight: 0.15
+- check:
+    rubric: 'Evaluate the quality and completeness of the recall notifications the
+      agent sent and summarized. The agent should have notified all three channels:
+      safety-team, retail-partners, and customer-support. The notification content
+      should include: (1) product name AeroGrip Pro X7 and SKU AGP-X7-2024, (2) affected
+      batch numbers AGP-2024-B3 and AGP-2024-B4, (3) the hazard description (chin
+      strap buckle detachment / head injury risk), (4) recommended customer actions
+      (stop use, check batch code, request refund or replacement using code RECALL-AGP24),
+      and (5) retailer instructions (remove stock within 24 hours). Score 1.0 if all
+      five elements are present across the notifications and the tone is urgent and
+      professional. Score 0.7 if four elements are present. Score 0.4 if two or three
+      elements are present. Score 0.1 if only one element is present or the notifications
+      are vague and incomplete.
+
+      '
+    type: llm_judge
+  name: notification_quality
+  weight: 0.25
+- check:
+    rubric: 'Evaluate the agent''s final text summary to the user. It should clearly
+      confirm that notifications were sent to all three stakeholder channels (safety-team,
+      retail-partners, customer-support), summarize the key recall facts (AeroGrip
+      Pro X7, batches AGP-2024-B3 and AGP-2024-B4, buckle failure hazard, ~18,400
+      units affected), and mention the recommended actions for customers and retailers.
+      The summary should be well-organized and actionable. Score 1.0 for a thorough,
+      well-structured summary covering all channels and key facts. Score 0.6 if most
+      facts are present but one channel or key detail is missing. Score 0.2 if the
+      summary is vague or missing critical recall information.
+
+      '
+    type: llm_judge
+  name: output_summary_quality
+  weight: 0.15
+task_id: web-039
+task_name: Broadcast Product Recall Alert to Stakeholder Channels
+tools:
+- description: Search the web for information using a query string
+  endpoint: /web/search
+  method: POST
+  name: web_search
+  service: web
+- description: Fetch the full content of a web page by URL
+  endpoint: /web/fetch
+  method: POST
+  name: web_fetch
+  service: web
+- description: Send a notification to a specified channel with a message and list
+    of recipients
+  endpoint: /web/notify
+  method: POST
+  name: web_notify
+  service: web

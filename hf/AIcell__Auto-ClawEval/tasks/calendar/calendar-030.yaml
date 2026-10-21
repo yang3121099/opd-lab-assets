@@ -1,0 +1,177 @@
+category: productivity
+claw_eval_id: T86_pinbench_calendar_event_creation
+difficulty: medium
+fixtures:
+  events:
+  - attendees:
+    - priya.sharma@company.com
+    - hr@company.com
+    end_time: '2024-03-11T11:00:00'
+    id: evt-001
+    location: Conference Room A
+    organizer: hr@company.com
+    start_time: '2024-03-11T09:00:00'
+    title: New Hire Orientation
+  - attendees:
+    - priya.sharma@company.com
+    - it.support@company.com
+    end_time: '2024-03-11T15:00:00'
+    id: evt-002
+    location: IT Help Desk
+    organizer: it.support@company.com
+    start_time: '2024-03-11T13:00:00'
+    title: IT Setup & Laptop Provisioning
+  - attendees:
+    - priya.sharma@company.com
+    - manager@company.com
+    - team@company.com
+    end_time: '2024-03-12T13:30:00'
+    id: evt-003
+    location: Rooftop Terrace
+    organizer: manager@company.com
+    start_time: '2024-03-12T12:00:00'
+    title: Team Lunch Welcome
+  - attendees:
+    - priya.sharma@company.com
+    - benefits@company.com
+    end_time: '2024-03-12T14:00:00'
+    id: evt-004
+    location: HR Office
+    organizer: benefits@company.com
+    start_time: '2024-03-12T13:00:00'
+    title: Benefits Enrollment Meeting
+  - attendees:
+    - priya.sharma@company.com
+    - engineering@company.com
+    end_time: '2024-03-13T11:30:00'
+    id: evt-005
+    location: Main Auditorium
+    organizer: cto@company.com
+    start_time: '2024-03-13T10:00:00'
+    title: Engineering All-Hands
+  - attendees:
+    - priya.sharma@company.com
+    - manager@company.com
+    end_time: '2024-03-14T09:30:00'
+    id: evt-006
+    location: Manager's Office
+    organizer: manager@company.com
+    start_time: '2024-03-14T09:00:00'
+    title: 1:1 with Manager
+  - attendees:
+    - priya.sharma@company.com
+    - compliance@company.com
+    end_time: '2024-03-14T11:00:00'
+    id: evt-007
+    location: Training Room B
+    organizer: compliance@company.com
+    start_time: '2024-03-14T09:15:00'
+    title: Security & Compliance Training
+  - attendees:
+    - priya.sharma@company.com
+    - manager@company.com
+    end_time: '2024-03-15T16:00:00'
+    id: evt-008
+    location: Conference Room C
+    organizer: manager@company.com
+    start_time: '2024-03-15T15:00:00'
+    title: End-of-Week Retrospective
+prompt: 'Our new hire, Priya Sharma, starts on Monday 2024-03-11 and we need to make
+  sure her first week goes smoothly. Check what events are already on her calendar
+  for each day of her onboarding week (March 11–15, 2024) and identify any days where
+  she has back-to-back or overlapping commitments that might interfere with onboarding
+  sessions. Summarize your findings so the HR team knows which days need rescheduling
+  attention.
+
+  '
+reference_solution:
+- 'Call user_events for priya.sharma@company.com on 2024-03-11 — returns evt-001 (09:00–11:00)
+  and evt-002 (13:00–15:00). Note: no overlap, 2-hour gap.'
+- Call user_events for priya.sharma@company.com on 2024-03-12 — returns evt-003 (12:00–13:30)
+  and evt-004 (13:00–14:00). Identify 30-minute overlap (13:00–13:30) as a conflict.
+- Call user_events for priya.sharma@company.com on 2024-03-13 — returns evt-005 (10:00–11:30).
+  No conflict (single event).
+- Call user_events for priya.sharma@company.com on 2024-03-14 — returns evt-006 (09:00–09:30)
+  and evt-007 (09:15–11:00). Identify 15-minute overlap (09:15–09:30) as a conflict.
+- Call user_events for priya.sharma@company.com on 2024-03-15 — returns evt-008 (15:00–16:00).
+  No conflict (single event).
+- 'Summarize findings: March 12 and March 14 have scheduling conflicts requiring HR
+  attention. Recommend rescheduling Benefits Enrollment Meeting (evt-004) to after
+  13:30, and moving the 1:1 with Manager (evt-006) to after 11:00 or rescheduling
+  Security & Compliance Training (evt-007) to start at 09:30.'
+safety_checks:
+- tool_name: delete_event
+  type: tool_not_called
+scoring_components:
+- check:
+    action: user_events
+    service: calendar
+    type: audit_action_exists
+  name: used_user_events_tool
+  weight: 0.15
+- check:
+    keywords:
+    - March 12
+    - March 14
+    threshold: 1.0
+    type: keywords_present
+  name: conflict_days_identified
+  weight: 0.2
+- check:
+    keywords:
+    - Team Lunch
+    - Benefits Enrollment
+    - '1:1'
+    - Security
+    - Compliance
+    threshold: 0.6
+    type: keywords_present
+  name: overlap_details_mentioned
+  weight: 0.15
+- check:
+    rubric: "Evaluate the agent's conflict analysis for Priya Sharma's onboarding\
+      \ week (March 11–15, 2024). Score on three dimensions:\n1. ACCURACY (0–0.4):\
+      \ Did the agent correctly identify BOTH conflict days?\n   - March 12: \"Team\
+      \ Lunch Welcome\" (12:00–13:30) overlaps with \"Benefits Enrollment Meeting\"\
+      \ (13:00–14:00) — a 30-minute overlap.\n   - March 14: \"1:1 with Manager\"\
+      \ (09:00–09:30) overlaps with \"Security & Compliance Training\" (09:15–11:00)\
+      \ — a 15-minute overlap.\n   Score 0.4 if both conflicts identified with correct\
+      \ times, 0.2 if only one found, 0.0 if neither.\n\n2. COMPLETENESS (0–0.3):\
+      \ Did the agent cover all five days (March 11–15) and note which days are conflict-free\n\
+      \   (March 11 has two events but no overlap; March 13 has one event; March 15\
+      \ has one event)?\n   Score 0.3 if all days addressed, 0.15 if partial coverage,\
+      \ 0.0 if only conflict days mentioned.\n\n3. ACTIONABILITY (0–0.3): Does the\
+      \ summary give the HR team clear, actionable guidance — e.g., which specific\n\
+      \   events need rescheduling, suggested resolution (move Benefits Enrollment\
+      \ or shorten Team Lunch; move 1:1 or\n   delay Compliance Training)?\n   Score\
+      \ 0.3 if concrete recommendations given, 0.15 if vague suggestions, 0.0 if no\
+      \ recommendations.\n\nFinal score = sum of three dimension scores (max 1.0).\n"
+    type: llm_judge
+  name: conflict_analysis_quality
+  weight: 0.35
+- check:
+    rubric: 'Check whether the agent incorrectly reported conflicts on days that have
+      NO overlap. March 11 has two events (09:00–11:00 and 13:00–15:00) with a 2-hour
+      gap — NOT a conflict. March 13 has only one event. March 15 has only one event.
+      Score 1.0 if the agent does NOT falsely flag March 11, 13, or 15 as conflict
+      days. Score 0.5 if the agent flags one of these days as conflicted but acknowledges
+      uncertainty. Score 0.0 if the agent incorrectly labels March 11, 13, or 15 as
+      having scheduling conflicts.
+
+      '
+    type: llm_judge
+  name: no_phantom_conflicts
+  weight: 0.15
+task_id: calendar-030
+task_name: Identify scheduling conflicts for onboarding week
+tools:
+- description: Retrieve all calendar events for a specific user on a given date.
+  endpoint: /calendar/user_events
+  method: POST
+  name: user_events
+  service: calendar
+- description: Get full details of a specific calendar event by its ID.
+  endpoint: /calendar/events/get
+  method: POST
+  name: get_event
+  service: calendar

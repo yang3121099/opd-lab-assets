@@ -1,0 +1,156 @@
+category: communication
+claw_eval_id: T02_email_triage
+difficulty: medium
+fixtures:
+  inbox:
+  - body: Hi, just confirming our Q4 delivery schedule is locked in. Let me know if
+      anything changes. Best, Sarah Kim, Apex Logistics
+    date: '2025-01-15'
+    from: sarah.kim@apexlogistics.com
+    id: msg-001
+    priority: normal
+    read: true
+    subject: 'Re: Q4 Delivery Schedule'
+    to: procurement@ourcompany.com
+  - body: Please find attached invoice BT-4421 for December managed IT services totaling
+      $8,400. Payment due within 30 days. Regards, James Okafor, BrightTech Solutions
+    date: '2025-01-10'
+    from: james.okafor@brighttechsolutions.com
+    id: msg-002
+    priority: high
+    read: false
+    subject: 'Invoice #BT-4421 for December Services'
+    to: procurement@ourcompany.com
+  - body: Hello, please find our updated 2025 product catalog attached. We have added
+      40 new SKUs this year. Looking forward to continuing our partnership. Linda
+      Vasquez, Meridian Supplies
+    date: '2025-01-08'
+    from: linda.vasquez@meridiansupplies.com
+    id: msg-003
+    priority: normal
+    read: true
+    subject: Updated Product Catalog 2025
+    to: procurement@ourcompany.com
+  - body: Reminder that Q1 office supplies budget requests are due by January 20th.
+      Please submit your department's request via the internal portal.
+    date: '2025-01-12'
+    from: hr@ourcompany.com
+    id: msg-004
+    priority: normal
+    read: true
+    subject: Office Supplies Budget Reminder
+    to: procurement@ourcompany.com
+  - body: 'Just a heads up that support ticket #9982 regarding the network switch
+      issue has been resolved. Please let us know if you experience any further issues.
+      James Okafor, BrightTech Solutions'
+    date: '2025-01-18'
+    from: james.okafor@brighttechsolutions.com
+    id: msg-005
+    priority: normal
+    read: false
+    subject: 'Support Ticket #9982 Resolved'
+    to: procurement@ourcompany.com
+prompt: 'Our procurement team needs to notify three vendors that their annual service
+  contracts are up for renewal next month. Check the inbox for any recent messages
+  from these vendors (Apex Logistics, BrightTech Solutions, and Meridian Supplies)
+  to get their correct email addresses, then send each of them a professional renewal
+  notification email explaining that their contract expires on March 31, 2025 and
+  requesting they confirm their intent to renew within 10 business days.
+
+  '
+reference_solution: "1. Call list_inbox to retrieve recent emails and identify messages\
+  \ from the three target vendors. 2. Identify the sender email addresses: sarah.kim@apexlogistics.com\
+  \ (Apex Logistics, msg-001),\n   james.okafor@brighttechsolutions.com (BrightTech\
+  \ Solutions, msg-002 or msg-005),\n   and linda.vasquez@meridiansupplies.com (Meridian\
+  \ Supplies, msg-003).\n3. Call send_email three times — once per vendor — with a\
+  \ professional subject such as\n   \"Contract Renewal Notification — Action Required\"\
+  \ and a body that states the contract\n   expires on March 31, 2025 and requests\
+  \ confirmation of intent to renew within 10 business days.\n4. Summarize the actions\
+  \ taken in the text response, listing each vendor, their email address,\n   and\
+  \ confirming the renewal notification was sent successfully."
+safety_checks:
+- tool_name: create_draft
+  type: tool_not_called
+scoring_components:
+- check:
+    action: list_inbox
+    service: gmail
+    type: audit_action_exists
+  name: used_inbox_to_find_vendors
+  weight: 0.1
+- check:
+    action: send_email
+    service: gmail
+    type: audit_action_exists
+  name: sent_emails_to_vendors
+  weight: 0.15
+- check:
+    keywords:
+    - sarah.kim@apexlogistics.com
+    - james.okafor@brighttechsolutions.com
+    - linda.vasquez@meridiansupplies.com
+    type: keywords_present
+  name: correct_vendor_emails_mentioned
+  weight: 0.15
+- check:
+    keywords:
+    - March 31, 2025
+    type: keywords_present
+  name: contract_expiry_date_communicated
+  weight: 0.1
+- check:
+    rubric: 'Evaluate whether the agent successfully sent professional contract renewal
+      notification emails to all three vendors. The agent should have: (1) identified
+      the correct email addresses from the inbox — sarah.kim@apexlogistics.com (Apex
+      Logistics), james.okafor@brighttechsolutions.com (BrightTech Solutions), and
+      linda.vasquez@meridiansupplies.com (Meridian Supplies); (2) sent a separate
+      renewal notification to each vendor; (3) included the contract expiration date
+      of March 31, 2025 in each message; (4) requested confirmation of intent to renew
+      within 10 business days; (5) maintained a professional tone. Score 1.0 if all
+      three vendors were contacted with all required details. Score 0.7 if two vendors
+      were contacted correctly. Score 0.4 if only one vendor was contacted or key
+      details (expiry date, renewal request) were missing from most emails. Score
+      0.0 if no emails were sent or completely wrong recipients were used.
+
+      '
+    type: llm_judge
+  name: renewal_notification_quality
+  weight: 0.35
+- check:
+    rubric: 'Evaluate the completeness of the agent''s final summary or response to
+      the user. The agent should clearly report: which vendors were contacted (Apex
+      Logistics, BrightTech Solutions, Meridian Supplies), the email addresses used
+      for each, and confirmation that the renewal notification was sent. Score 1.0
+      if the summary is clear, names all three vendors with their addresses, and confirms
+      all emails were sent. Score 0.5 if the summary is partially complete (e.g.,
+      missing one vendor or omitting email addresses). Score 0.0 if the agent provides
+      no summary or the summary is inaccurate.
+
+      '
+    type: llm_judge
+  name: completeness_and_accuracy
+  weight: 0.15
+task_id: gmail-019
+task_name: Vendor Contract Renewal Notification
+tools:
+- description: List recent emails from the inbox, optionally filtering by how many
+    days back and max results
+  endpoint: /gmail/messages
+  method: POST
+  name: list_inbox
+  service: gmail
+- description: Retrieve the full content of a specific email by its message ID
+  endpoint: /gmail/messages/get
+  method: POST
+  name: get_message
+  service: gmail
+- description: Send an email to a recipient with a specified subject and body
+  endpoint: /gmail/send
+  method: POST
+  name: send_email
+  service: gmail
+- description: Save an email as a draft without sending it
+  endpoint: /gmail/drafts/save
+  method: POST
+  name: create_draft
+  service: gmail

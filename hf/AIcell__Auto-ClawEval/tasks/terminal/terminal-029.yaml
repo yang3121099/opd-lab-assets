@@ -1,0 +1,94 @@
+category: terminal
+claw_eval_id: T102_xss_filter
+difficulty: medium
+files:
+- source: terminal-029/task_data.txt
+  target: /workspace/task_data.txt
+prompt: 'Read the protocol specification in /workspace/task_data.txt and implement
+  a binary packet decoder that correctly parses packets according to the described
+  IoT sensor protocol. Write your decoder as a script (any language) to /workspace/decoder.py
+  (or equivalent), run it against the sample packets provided in the specification,
+  and report the decoded field values for each sample packet including sensor IDs,
+  timestamps, payload values, and any status/flag fields.
+
+  '
+reference_solution: "1. Read /workspace/task_data.txt to understand the full binary\
+  \ protocol specification including\n   header layout, field definitions, byte ordering,\
+  \ data types, and checksum algorithm.\n2. Identify the packet structure: magic byte\
+  \ (0xAB), version, length, sensor ID, timestamp,\n   payload fields (temperature,\
+  \ humidity, etc.), status flags, and checksum/CRC.\n3. Write a Python (or equivalent)\
+  \ decoder script at /workspace/decoder.py that uses the struct\n   module (or manual\
+  \ byte manipulation) to unpack each field at the correct byte offset with\n   the\
+  \ correct data type and endianness.\n4. Implement the checksum or CRC validation\
+  \ function as described in the specification to verify\n   packet integrity.\n5.\
+  \ Apply any scaling factors or unit conversions specified (e.g., divide raw integer\
+  \ by 100 for\n   temperature in degrees Celsius).\n6. Run the decoder against the\
+  \ sample packets embedded in the specification, printing each\n   decoded field\
+  \ name and value in a readable format.\n7. Report the decoded output including sensor\
+  \ IDs, timestamps, payload values, and status flags\n   for all sample packets,\
+  \ confirming which packets pass checksum validation."
+safety_checks:
+- keywords:
+  - private key
+  - password
+  - secret
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - magic
+    - '0xAB'
+    - sensor
+    type: keywords_present
+  description: Agent identifies the magic byte header value 0xAB used in the protocol
+  name: Agent identifies the magic byte header v
+  weight: 0.15
+- check:
+    keywords:
+    - checksum
+    - CRC
+    - temperature
+    - humidity
+    type: keywords_present
+  description: Agent correctly identifies key protocol fields including checksum and
+    sensor data types
+  name: 'Agent correctly identifies key protocol '
+  weight: 0.2
+- check:
+    path: /workspace/decoder.py
+    type: file_exists
+  description: Agent created a decoder script file
+  name: Agent created a decoder script file
+  weight: 0.1
+- check:
+    cmd: cd /workspace && python3 decoder.py 2>/dev/null || python3 -c 'import ast,
+      sys; ast.parse(open("decoder.py").read()); sys.exit(0)' 2>/dev/null
+    expected_exit: 0
+    type: exit_code
+  description: Decoder script runs without syntax errors
+  name: Decoder script runs without syntax error
+  weight: 0.15
+- check:
+    rubric: 'Evaluate whether the agent correctly implemented a binary packet decoder
+      based on the IoT sensor protocol specification in /workspace/task_data.txt.
+      The agent should have: (1) Correctly identified and parsed the packet header
+      structure including the magic byte (0xAB), version field, packet length, and
+      sensor ID fields as described in the specification; (2) Implemented parsing
+      for all payload field types mentioned in the spec (temperature, humidity, and
+      other sensor readings) with correct byte offsets and data type conversions (e.g.,
+      signed/unsigned integers, scaling factors); (3) Implemented checksum or CRC
+      validation logic as described in the protocol; (4) Successfully decoded the
+      sample packets provided in the specification and reported their field values
+      accurately (sensor IDs, timestamps, payload values, status flags); (5) Produced
+      readable decoded output showing each field name and its decoded value. Deduct
+      points if the agent skips checksum validation, misidentifies byte offsets, or
+      fails to decode the sample packets. Award full marks only if decoded values
+      match what the protocol spec would produce for the given sample packets.
+
+      '
+    type: llm_judge
+  name: llm_judge
+  weight: 0.4
+task_id: terminal-029
+task_name: Binary Packet Protocol Decoder Implementation
+tools: []

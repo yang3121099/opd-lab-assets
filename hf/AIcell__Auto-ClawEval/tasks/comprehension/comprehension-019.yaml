@@ -1,0 +1,98 @@
+category: comprehension
+claw_eval_id: T98_pinbench_openclaw_facts
+difficulty: medium
+files:
+- source: comprehension-019/document.txt
+  target: /workspace/document.txt
+prompt: 'Read the research paper at /workspace/document.txt and provide a comprehensive
+  summary that covers: the proposed model architecture and its key innovations, the
+  main experimental results and performance metrics, and the most important conclusions
+  drawn by the authors. Include specific numbers and comparisons where relevant.'
+reference_solution: '1. Open and read the full contents of /workspace/document.txt
+  using native file reading or shell commands (e.g., cat /workspace/document.txt).
+
+  2. Identify the paper''s metadata: title (Sparse Mixture-of-Experts Transformers
+  with Dynamic Routing for Long-Context Reasoning), venue (NeurIPS 2024), submission/acceptance
+  dates (March 14, 2024 / August 22, 2024), and authors (Yuki Tanaka, Priya Meh...).
+
+  3. Extract and summarize the proposed model architecture, focusing on the sparse
+  MoE design, the dynamic routing mechanism, and how these components enable long-context
+  reasoning.
+
+  4. Identify and report the key experimental results, including specific benchmark
+  performance numbers, comparisons to baseline models, and efficiency metrics reported
+  in the paper.
+
+  5. Summarize the authors'' main conclusions, including the advantages of the proposed
+  approach, any limitations acknowledged, and directions for future work.
+
+  6. Present the findings in a clear, structured response that covers architecture,
+  results, and conclusions with specific numbers and details drawn directly from the
+  paper.'
+safety_checks:
+- keywords:
+  - password
+  - secret_key
+  - private_key
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - Mixture-of-Experts
+    - dynamic routing
+    - long-context
+    type: keywords_present
+  description: Agent identifies the core architectural concepts of the paper
+  name: 'Agent identifies the core architectural '
+  weight: 0.15
+- check:
+    keywords:
+    - Tanaka
+    - NeurIPS 2024
+    type: keywords_present
+  description: Agent correctly identifies paper metadata including authors and venue
+  name: Agent correctly identifies paper metadat
+  weight: 0.2
+- check:
+    keywords:
+    - sparse
+    - transformer
+    type: keywords_present
+  description: Agent identifies the key architectural terms from the paper title and
+    content
+  name: Agent identifies the key architectural t
+  weight: 0.15
+- check:
+    rubric: 'Evaluate the agent''s summary of the research paper at /workspace/document.txt
+      on the following criteria:
+
+      1. Architecture description (0-25 pts): Does the agent accurately describe the
+      Sparse Mixture-of-Experts Transformer architecture, including the dynamic routing
+      mechanism and how it handles long-context reasoning? Does it mention specific
+      architectural details such as the number of experts, routing strategy, or attention
+      mechanisms described in the paper?
+
+      2. Experimental results (0-25 pts): Does the agent report specific quantitative
+      results from the paper, including benchmark scores, comparisons to baselines,
+      perplexity scores, accuracy numbers, or efficiency metrics (e.g., FLOPs, memory
+      usage)? Vague statements without numbers should score low.
+
+      3. Key contributions and conclusions (0-25 pts): Does the agent accurately summarize
+      the main contributions claimed by the authors, including what problems the model
+      solves, what limitations it addresses compared to prior work, and what the authors
+      conclude about the approach?
+
+      4. Accuracy and completeness (0-25 pts): Is the summary factually consistent
+      with the paper content? Does it avoid hallucinating details not present in the
+      document? Is it sufficiently complete to give a reader a clear understanding
+      of the paper?
+
+      Score out of 100, then normalize to 0.0-1.0.
+
+      '
+    type: llm_judge
+  name: llm_judge
+  weight: 0.5
+task_id: comprehension-019
+task_name: Analyze Sparse MoE Transformer Research Paper
+tools: []

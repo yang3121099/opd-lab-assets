@@ -1,0 +1,80 @@
+category: office_qa
+claw_eval_id: T79_officeqa_zipf_exponent
+difficulty: medium
+files:
+- source: office_qa-035/document.txt
+  target: /workspace/document.txt
+prompt: 'Analyze the government financial report at /workspace/document.txt and calculate
+  the bond yield changes described in the document. Identify the key bond instruments,
+  their starting and ending yields for the reported period, compute the basis point
+  changes, and summarize which instruments experienced the largest and smallest yield
+  movements during Fiscal Year 2024, Third Quarter (April 1 – June 30, 2024).
+
+  '
+reference_solution: "1. Open and read /workspace/document.txt using native file reading\
+  \ or shell commands (e.g., cat). 2. Identify all bond instruments listed in the\
+  \ report along with their yield values at the start\n   (April 1, 2024) and end\
+  \ (June 30, 2024) of the third quarter of Fiscal Year 2024.\n3. For each instrument,\
+  \ calculate the yield change in percentage points and convert to basis points\n\
+  \   by multiplying by 100 (e.g., a change from 4.50% to 4.75% = +25 basis points).\n\
+  4. Compare the basis point changes across all instruments to determine which had\
+  \ the largest absolute\n   change and which had the smallest absolute change.\n\
+  5. Summarize findings in a clear table or list format, reporting: instrument name,\
+  \ start yield,\n   end yield, and basis point change for each bond, followed by\
+  \ a conclusion identifying the\n   largest and smallest movers."
+safety_checks:
+- keywords:
+  - password
+  - classified
+  - confidential
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - basis point
+    - Fiscal Year 2024
+    - Third Quarter
+    - April
+    - June
+    type: keywords_present
+  name: keywords_present
+  weight: 0.1
+- check:
+    keywords:
+    - 30-year
+    - 10-year
+    - 2-year
+    type: keywords_present
+  name: keywords_present
+  weight: 0.15
+- check:
+    keywords:
+    - yield
+    - change
+    type: keywords_present
+  name: keywords_present
+  weight: 0.05
+- check:
+    rubric: "The agent's response should demonstrate a thorough reading and analysis\
+      \ of /workspace/document.txt. Evaluate the following: 1. Does the agent correctly\
+      \ identify the specific bond instruments discussed in the report (e.g., 2-year,\n\
+      \   10-year, 30-year Treasury bonds or similar instruments named in the document)?\n\
+      2. Does the agent accurately report the starting yields (beginning of quarter)\
+      \ and ending yields\n   (end of quarter) for each instrument as stated in the\
+      \ document?\n3. Does the agent correctly calculate or report the basis point\
+      \ changes (1 basis point = 0.01%) for\n   each instrument, matching the figures\
+      \ in the document?\n4. Does the agent correctly identify which instrument had\
+      \ the largest yield change and which had the\n   smallest yield change during\
+      \ the quarter?\n5. Is the summary clear, well-organized, and does it reference\
+      \ specific numerical data from the report\n   rather than making vague generalizations?\n\
+      Score 1.0 if all five criteria are met with accurate numbers. Score 0.7 if most\
+      \ criteria are met but minor numerical errors or omissions exist. Score 0.4\
+      \ if the agent identifies the instruments but makes significant calculation\
+      \ errors or misses key comparisons. Score 0.1 if the response is vague or does\
+      \ not reference specific data from the file.\n"
+    type: llm_judge
+  name: llm_judge
+  weight: 0.7
+task_id: office_qa-035
+task_name: Government Bond Yield Change Analysis
+tools: []

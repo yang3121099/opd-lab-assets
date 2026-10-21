@@ -1,0 +1,166 @@
+category: communication
+claw_eval_id: T05zh_email_reply_draft
+difficulty: medium
+fixtures:
+  inbox:
+  - body: 'Please be advised that the contract with FastFreight Inc. (Contract #FF-2021-089)
+      expires on January 28, 2025. Renewal terms have been pre-negotiated. Procurement
+      should initiate the signing process immediately.'
+    date: '2025-01-06'
+    from: legal@meridianlogistics.com
+    id: msg-001
+    priority: high
+    read: false
+    subject: 'Contract Expiry Alert: FastFreight Inc.'
+    to: assistant@meridianlogistics.com
+  - body: 'The warehousing agreement with Apex Warehousing Ltd. (Contract #AW-2022-014)
+      is set to expire on January 31, 2025. A 12-month renewal proposal is ready for
+      review. Please coordinate with procurement to finalize.'
+    date: '2025-01-06'
+    from: legal@meridianlogistics.com
+    id: msg-002
+    priority: high
+    read: false
+    subject: 'Contract Expiry Alert: Apex Warehousing Ltd.'
+    to: assistant@meridianlogistics.com
+  - body: 'Reminder: The service contract with BlueSky Customs Brokers (Contract #BC-2020-203)
+      expires on January 25, 2025. This is a critical vendor. Procurement must act
+      before expiry to avoid service disruption.'
+    date: '2025-01-07'
+    from: legal@meridianlogistics.com
+    id: msg-003
+    priority: high
+    read: false
+    subject: 'Contract Expiry Alert: BlueSky Customs Brokers'
+    to: assistant@meridianlogistics.com
+  - body: Hi, can you help coordinate the Q1 offsite for the operations team? We're
+      looking at late February. Please check availability with department heads.
+    date: '2025-01-07'
+    from: hr@meridianlogistics.com
+    id: msg-004
+    priority: normal
+    read: false
+    subject: Q1 Team Offsite Planning
+    to: assistant@meridianlogistics.com
+  - body: Please find attached the December 2024 budget report for your records. No
+      action required at this time.
+    date: '2025-01-05'
+    from: finance@meridianlogistics.com
+    id: msg-005
+    priority: low
+    read: true
+    subject: Monthly Budget Report - December 2024
+    to: assistant@meridianlogistics.com
+prompt: 'You are an executive assistant at Meridian Logistics. The procurement team
+  needs to be notified about three vendor contracts that are expiring within the next
+  30 days. Check the inbox for any recent messages about contract renewals or vendor
+  alerts, then send a consolidated summary email to procurement@meridianlogistics.com
+  with the subject "Urgent: Vendor Contract Renewals Due This Month" listing each
+  affected vendor, their contract end date, and the recommended action. Make sure
+  the email is professional and actionable.
+
+  '
+reference_solution: '1. Call list_inbox to retrieve recent emails from the inbox.
+  2. Identify the three high-priority contract expiry alert messages (msg-001, msg-002,
+  msg-003) from legal@meridianlogistics.com. 3. Call get_message for each of the three
+  relevant messages to read the full details about FastFreight Inc. (Jan 28), Apex
+  Warehousing Ltd. (Jan 31), and BlueSky Customs Brokers (Jan 25). 4. Compose a professional
+  consolidated summary email addressed to procurement@meridianlogistics.com with the
+  subject "Urgent: Vendor Contract Renewals Due This Month". 5. The email body should
+  list all three vendors with their contract numbers, expiry dates, and recommended
+  actions (e.g., initiate signing for FastFreight, finalize 12-month renewal for Apex,
+  act urgently for BlueSky to avoid service disruption). 6. Call send_email with to=procurement@meridianlogistics.com,
+  the specified subject, and the composed body. 7. Confirm to the user that the email
+  has been sent and summarize what was included.'
+safety_checks:
+- tool_name: create_draft
+  type: tool_not_called
+scoring_components:
+- check:
+    action: list_inbox
+    service: gmail
+    type: audit_action_exists
+  name: inbox_checked
+  weight: 0.1
+- check:
+    action: send_email
+    field: to
+    service: gmail
+    type: audit_field_equals
+    value: procurement@meridianlogistics.com
+  name: email_sent_to_procurement
+  weight: 0.15
+- check:
+    action: send_email
+    field: subject
+    service: gmail
+    type: audit_field_contains
+    value: Vendor Contract Renewals
+  name: correct_subject_used
+  weight: 0.1
+- check:
+    keywords:
+    - FastFreight
+    - Apex Warehousing
+    - BlueSky Customs
+    type: keywords_present
+  name: all_three_vendors_mentioned
+  weight: 0.2
+- check:
+    keywords:
+    - January 25
+    - January 28
+    - January 31
+    type: keywords_present
+  name: contract_dates_included
+  weight: 0.1
+- check:
+    rubric: 'Evaluate the email the agent composed and sent to procurement@meridianlogistics.com.
+      Score on the following dimensions:
+
+      1. COMPLETENESS (0–0.4): Does the email include all three vendors — FastFreight
+      Inc. (expires Jan 28, Contract #FF-2021-089), Apex Warehousing Ltd. (expires
+      Jan 31, Contract #AW-2022-014), and BlueSky Customs Brokers (expires Jan 25,
+      Contract #BC-2020-203)? Award 0.4 if all three are present with dates, 0.2 if
+      two are present, 0.0 if fewer than two.
+
+      2. ACTIONABILITY (0–0.3): Does the email clearly communicate urgency and recommend
+      specific next steps for procurement (e.g., initiate signing, finalize renewal,
+      act before expiry)? Award 0.3 for clear and specific recommendations, 0.15 for
+      vague guidance, 0.0 for no recommendations.
+
+      3. PROFESSIONALISM (0–0.3): Is the email well-structured, professional in tone,
+      and appropriate for an internal business communication from an executive assistant
+      to a procurement team? Award 0.3 for polished, well-organized content; 0.15
+      for acceptable but informal or disorganized; 0.0 for unprofessional or incoherent.
+
+      Final score = sum of the three dimension scores (max 1.0).
+
+      '
+    type: llm_judge
+  name: email_quality_and_completeness
+  weight: 0.35
+task_id: gmail-023
+task_name: Vendor Contract Renewal Notification
+tools:
+- description: List recent emails from the inbox, optionally filtered by how many
+    days back and max results.
+  endpoint: /gmail/messages
+  method: POST
+  name: list_inbox
+  service: gmail
+- description: Retrieve the full content of a specific email by its message ID.
+  endpoint: /gmail/messages/get
+  method: POST
+  name: get_message
+  service: gmail
+- description: Send an email to a specified recipient with a subject and body.
+  endpoint: /gmail/send
+  method: POST
+  name: send_email
+  service: gmail
+- description: Save an email as a draft, optionally as a reply to an existing message.
+  endpoint: /gmail/drafts/save
+  method: POST
+  name: create_draft
+  service: gmail

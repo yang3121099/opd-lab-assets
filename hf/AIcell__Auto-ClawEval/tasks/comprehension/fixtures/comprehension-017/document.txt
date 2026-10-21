@@ -1,0 +1,122 @@
+SPARSE MIXTURE-OF-EXPERTS TRANSFORMERS WITH DYNAMIC ROUTING FOR EFFICIENT LONG-CONTEXT REASONING
+
+Preprint submitted to arXiv: March 14, 2024
+Authors: Yuki Tanaka, Priya Mehrotra, Aleksandr Volkov, Chen Wei, Fatima Al-Rashidi
+Affiliation: Meridian AI Research Lab, Cambridge, Massachusetts
+
+Abstract
+
+We present SparseRoute-7B, a 7.2 billion parameter sparse mixture-of-experts language model designed for efficient long-context reasoning tasks. By combining dynamic expert routing with a novel attention compression mechanism we call Compressed Rotary Attention (CRA), SparseRoute-7B achieves state-of-the-art performance on the SCROLLS benchmark (78.4 average score) while activating only 1.8 billion parameters per forward pass. The model demonstrates a 3.7x reduction in inference latency compared to dense 7B models and maintains competitive performance on standard benchmarks including MMLU (71.2%), HumanEval (58.9%), and GSM8K (74.3%). Training was completed on 1.4 trillion tokens using 512 NVIDIA H100 GPUs over 23 days.
+
+1. Introduction
+
+The scaling of large language models has produced remarkable capabilities, but dense transformer architectures impose substantial computational costs that scale linearly with parameter count during inference. Sparse mixture-of-experts (MoE) architectures offer a compelling alternative: by routing each input token to a subset of specialized expert networks, these models can maintain large total parameter counts while keeping per-token computation tractable.
+
+Previous work including Switch Transformer (Fedus et al., 2022), GLaM (Du et al., 2022), and Mixtral 8x7B (Mistral AI, January 2024) demonstrated that MoE approaches can match or exceed dense model performance at reduced computational cost. However, these architectures struggle with long-context tasks exceeding 16,000 tokens, where attention mechanisms become the dominant bottleneck rather than feed-forward computation.
+
+SparseRoute-7B addresses this limitation through two primary contributions: (1) a dynamic routing mechanism that adapts expert selection based on positional context within long sequences, and (2) Compressed Rotary Attention, which reduces the quadratic attention complexity to approximately O(n log n) for sequences up to 128,000 tokens.
+
+2. Model Architecture
+
+2.1 Overall Design
+
+SparseRoute-7B consists of 32 transformer layers. Each layer contains a multi-head attention module followed by a mixture-of-experts feed-forward block. The model uses a hidden dimension of 4,096, 32 attention heads, and a head dimension of 128.
+
+The MoE feed-forward blocks contain 16 expert networks per layer, each with an intermediate dimension of 14,336. During inference, the dynamic router activates exactly 2 experts per token per layer, yielding an active parameter count of approximately 1.8 billion out of 7.2 billion total.
+
+2.2 Dynamic Routing Mechanism
+
+Unlike static top-k routing used in prior work, our dynamic router incorporates positional embeddings into the routing decision. For a token at position p in a sequence of length L, the routing logits are computed as:
+
+r(x, p) = W_r * [x; sin(p/L); cos(p/L)]
+
+where x is the token representation and W_r is a learned routing matrix of dimension 16 x (d_model + 2). This positional conditioning allows the router to assign tokens appearing in different parts of a long document to different expert specializations. Ablation experiments showed this modification improved SCROLLS performance by 4.2 percentage points compared to position-agnostic routing.
+
+2.3 Compressed Rotary Attention (CRA)
+
+Standard rotary position embeddings (RoPE) require full pairwise attention computation. CRA introduces a hierarchical compression step: tokens are grouped into blocks of size 64, and each block produces a single compressed key-value representation via learned pooling. Attention is then computed in two stages: local attention within each block (full resolution) and global attention across block representations (compressed resolution).
+
+This two-stage approach reduces peak memory consumption by 67% for 32,768-token sequences compared to standard flash attention implementations, while introducing less than 0.8% degradation on long-document QA tasks.
+
+3. Training Details
+
+3.1 Dataset Composition
+
+SparseRoute-7B was trained on a curated mixture of 1.4 trillion tokens drawn from the following sources:
+
+Source | Tokens (billions) | Percentage
+Web text (filtered Common Crawl) | 840 | 60.0%
+Books and long-form text | 196 | 14.0%
+Code (GitHub, Stack) | 168 | 12.0%
+Scientific papers (Semantic Scholar) | 98 | 7.0%
+Conversational data | 70 | 5.0%
+Multilingual text (42 languages) | 28 | 2.0%
+
+Data filtering removed documents with perplexity scores above the 95th percentile of a reference 125M parameter model, following the approach of Dolma (Soldaini et al., 2023). Deduplication using MinHash with 128 hash functions reduced the raw crawl corpus from approximately 12 trillion tokens to the final 840 billion web tokens.
+
+3.2 Training Configuration
+
+Training used the AdamW optimizer with beta values of 0.9 and 0.95, epsilon of 1e-8, and a peak learning rate of 3e-4 with cosine decay to 3e-5. Weight decay was set to 0.1. Gradient clipping at 1.0 was applied throughout training. The batch size was 4 million tokens per step, achieved through gradient accumulation across 512 H100 GPUs arranged in 64 nodes of 8 GPUs each.
+
+Training ran for 350,000 steps over 23 days beginning January 8, 2024, and concluding January 31, 2024. Total compute consumed was approximately 2.1 x 10^23 FLOPs. Three training instabilities were observed and resolved: a loss spike at step 47,000 attributed to a corrupted data shard, a gradient norm explosion at step 183,000 resolved by temporarily reducing the learning rate by 50%, and a routing collapse event at step 261,000 addressed by applying an auxiliary load-balancing loss with coefficient 0.02.
+
+4. Evaluation Results
+
+4.1 Standard Benchmarks
+
+We evaluated SparseRoute-7B against comparable open-weight models including Mistral 7B v0.2, Llama-3 8B, and Mixtral 8x7B (which has 46.7B total parameters but activates 12.9B per forward pass).
+
+Benchmark | SparseRoute-7B | Mistral 7B v0.2 | Llama-3 8B | Mixtral 8x7B
+MMLU (5-shot) | 71.2% | 70.6% | 68.4% | 70.6%
+HumanEval (pass@1) | 58.9% | 59.4% | 62.2% | 45.1%
+GSM8K (8-shot) | 74.3% | 74.2% | 79.6% | 74.4%
+HellaSwag | 83.1% | 81.9% | 82.0% | 86.5%
+ARC-Challenge | 62.7% | 60.0% | 59.5% | 66.0%
+
+4.2 Long-Context Benchmarks
+
+The primary motivation for SparseRoute-7B was long-context performance. We evaluated on SCROLLS (Shaham et al., 2022), which aggregates seven long-document tasks, and on the RULER benchmark (Hsieh et al., 2024) at context lengths of 32K and 128K tokens.
+
+Benchmark | SparseRoute-7B | Mistral 7B v0.2 | Llama-3 8B
+SCROLLS Average | 78.4 | 61.3 | 67.2
+RULER @ 32K | 84.7 | 52.1 | 71.4
+RULER @ 128K | 71.9 | N/A | 38.6
+
+Mistral 7B v0.2 does not support 128K context natively. Llama-3 8B supports 128K context via RoPE scaling but shows substantial degradation beyond 64K tokens.
+
+4.3 Inference Efficiency
+
+Measured on a single NVIDIA A100 80GB GPU with batch size 1:
+
+Metric | SparseRoute-7B | Mistral 7B v0.2 | Llama-3 8B
+Tokens/second (4K ctx) | 847 | 312 | 298
+Tokens/second (32K ctx) | 634 | 89 | 103
+Peak memory @ 32K (GB) | 18.4 | 31.7 | 29.2
+Time-to-first-token @ 32K (ms) | 412 | 1,847 | 1,623
+
+SparseRoute-7B achieves 2.71x higher throughput than Mistral 7B v0.2 at 4K context and 7.12x higher throughput at 32K context, where the CRA mechanism provides the greatest advantage.
+
+5. Ablation Studies
+
+We conducted ablations on a 1.3B parameter version of the architecture trained on 100 billion tokens to isolate the contribution of each component:
+
+Component Removed | SCROLLS Score | RULER @ 32K | Throughput (tok/s)
+Full SparseRoute model | 74.1 | 81.3 | 791
+Without positional routing | 69.9 | 76.8 | 793
+Without CRA (standard attention) | 73.8 | 80.1 | 341
+With static top-2 routing | 70.6 | 77.4 | 788
+Dense baseline (1.3B) | 67.4 | 69.2 | 344
+
+The CRA mechanism accounts for the majority of throughput gains while positional routing provides the largest accuracy improvement on long-context tasks.
+
+6. Limitations and Future Work
+
+SparseRoute-7B underperforms on code generation relative to Llama-3 8B, likely due to the lower proportion of code in the training mixture. Expert load balancing remains imperfect: analysis of routing statistics shows that 3 of 16 experts receive fewer than 4% of tokens on average, suggesting room for improved auxiliary loss formulations. Future work will explore extending the architecture to 70B total parameters and investigating whether dynamic routing generalizes to multimodal inputs.
+
+7. Conclusion
+
+SparseRoute-7B demonstrates that sparse mixture-of-experts architectures with context-aware routing and hierarchical attention compression can substantially advance the efficiency-performance frontier for long-context language modeling. The model achieves a 78.4 SCROLLS score and 71.9 RULER score at 128K context while maintaining competitive performance on standard benchmarks, all with inference costs substantially below comparable dense models.
+
+Model weights, training code, and evaluation scripts are available at github.com/meridian-ai/sparseroute.
+
+References available in supplementary materials. Correspondence: ytanaka@meridian-ai.org

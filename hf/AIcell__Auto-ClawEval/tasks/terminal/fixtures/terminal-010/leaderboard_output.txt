@@ -1,0 +1,5 @@
+Rank | Player | Score | Level | Final Score
+---------------------------------------------
+   1 | Eve    |  7100 | Master | 21300
+   2 | Carol  |  5800 | Expert | 14500
+   3 | Alice  |  4200 | Hard   | 8400

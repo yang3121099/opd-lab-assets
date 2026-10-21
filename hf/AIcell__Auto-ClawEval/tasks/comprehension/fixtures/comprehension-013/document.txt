@@ -1,0 +1,148 @@
+SPARSE MIXTURE-OF-EXPERTS TRANSFORMERS WITH DYNAMIC ROUTING FOR LONG-CONTEXT REASONING
+
+Published in Proceedings of the 41st International Conference on Machine Learning (ICML 2024)
+Submission received: January 14, 2024 | Accepted: April 3, 2024
+
+Authors: Priya Nambiar, Wei-Lin Chen, Dmitri Sorokin, Fatima Al-Rashid, James Okafor
+Affiliation: Meridian AI Research Lab, Cambridge, Massachusetts
+
+---
+
+ABSTRACT
+
+We introduce DART (Dynamic Adaptive Routing Transformer), a sparse mixture-of-experts architecture designed to address computational inefficiencies in long-context language modeling. DART achieves state-of-the-art performance on the SCROLLS benchmark with an aggregate score of 71.4, surpassing the previous best result of 68.9 held by Mixtral-8x7B. Our model activates only 13.2 billion parameters per forward pass despite a total parameter count of 94 billion, reducing inference FLOPs by 61% compared to a dense baseline of equivalent capacity. Training was completed on 1.8 trillion tokens using 512 NVIDIA H100 GPUs over 23 days in February 2024.
+
+---
+
+1. INTRODUCTION
+
+Large language models have demonstrated remarkable capabilities across reasoning, coding, and knowledge retrieval tasks. However, scaling these models to handle contexts exceeding 32,000 tokens while maintaining computational tractability remains an open challenge. Dense transformer architectures scale quadratically with sequence length in attention computation, and simply increasing model size to improve performance incurs proportional inference costs.
+
+Mixture-of-experts (MoE) approaches offer a promising alternative by conditionally activating subsets of parameters. Prior work including Switch Transformer (Fedus et al., 2022) and GLaM (Du et al., 2022) demonstrated that sparse activation can decouple parameter count from per-token compute. However, these models suffer from load imbalance across experts and degraded performance on tasks requiring sustained multi-step reasoning over long documents.
+
+DART addresses these limitations through three architectural innovations: (1) a learned dynamic routing mechanism that conditions expert selection on both token content and positional context, (2) a hierarchical attention scheme that reduces long-context attention complexity from O(n²) to O(n log n), and (3) a novel auxiliary loss term that enforces expert specialization without sacrificing routing flexibility.
+
+---
+
+2. MODEL ARCHITECTURE
+
+2.1 Overall Design
+
+DART follows a decoder-only transformer architecture with 64 layers. Each layer contains a multi-head attention module followed by a sparse feedforward block. The sparse feedforward block consists of 16 experts per layer, each implemented as a two-layer MLP with hidden dimension 8,192. The router selects the top-2 experts per token at each layer, yielding the 13.2B active parameter count noted above.
+
+Key architectural hyperparameters:
+
+Parameter                        Value
+Total parameters                 94.1 billion
+Active parameters per token      13.2 billion
+Number of layers                 64
+Attention heads                  48
+Head dimension                   128
+Experts per layer                16
+Top-k routing (k)                2
+Expert hidden dimension          8,192
+Maximum context length           131,072 tokens
+Vocabulary size                  131,072 tokens
+
+2.2 Dynamic Routing Mechanism
+
+Standard MoE routers compute expert affinities using only the current token's hidden state. DART's router additionally incorporates a 256-dimensional positional embedding derived from the token's relative position within the current context window. This positional conditioning allows the model to route tokens differently based on whether they appear in the early, middle, or late portions of a long document, which we find empirically improves coherence in multi-document summarization tasks.
+
+Formally, given token hidden state h_t and positional embedding p_t, the routing logits are computed as:
+
+g_t = W_r · concat(h_t, p_t) + b_r
+
+where W_r ∈ R^(16 × 1280) and b_r ∈ R^16. The top-2 experts are selected via a straight-through estimator to maintain gradient flow during training.
+
+2.3 Hierarchical Attention
+
+For sequences exceeding 8,192 tokens, DART employs a two-level attention scheme. Local attention operates over windows of 2,048 tokens with full quadratic complexity. Global attention then operates over summary tokens extracted at 512-token intervals, with each summary token computed as the mean-pooled representation of its corresponding local window. This reduces the effective sequence length for global attention from n to n/512, making 131,072-token contexts computationally feasible.
+
+2.4 Expert Specialization Loss
+
+To prevent expert collapse—a common failure mode where a small number of experts receive the majority of routing decisions—we introduce a specialization loss L_spec that penalizes high cosine similarity between expert weight matrices. Specifically:
+
+L_spec = (1/|E|²) Σ_{i≠j} max(0, cos(W_i, W_j) - τ)
+
+where τ = 0.15 is a similarity threshold tuned on validation data. This loss is weighted at 0.01 relative to the primary cross-entropy objective.
+
+---
+
+3. TRAINING DETAILS
+
+DART was trained on a curated corpus of 1.8 trillion tokens assembled from the following sources:
+
+Data Source                      Tokens (billions)    Percentage
+Web text (filtered Common Crawl) 900                  50.0%
+Books and long-form documents    360                  20.0%
+Code (GitHub, StackOverflow)     270                  15.0%
+Scientific papers (arXiv, PubMed)180                  10.0%
+Multilingual text (42 languages) 90                   5.0%
+
+Training used the AdamW optimizer with β₁ = 0.9, β₂ = 0.95, and weight decay 0.1. The learning rate followed a cosine schedule peaking at 3×10⁻⁴ after 2,000 warmup steps and decaying to 3×10⁻⁵ at the end of training. Gradient clipping was applied at a norm of 1.0. Global batch size was 4,096 sequences of 4,096 tokens each, yielding approximately 16.8 million tokens per gradient step.
+
+Training ran from February 1 to February 23, 2024, on 512 NVIDIA H100 80GB SXM5 GPUs across 64 nodes. Total compute consumed was approximately 4.7×10²³ FLOPs. We observed one significant training instability at step 187,000, characterized by a loss spike from 2.31 to 4.87, which was resolved by rolling back to the checkpoint at step 185,000 and reducing the learning rate by 20% for 5,000 steps.
+
+---
+
+4. EVALUATION AND RESULTS
+
+4.1 Long-Context Benchmarks
+
+We evaluate DART on SCROLLS, a benchmark aggregating seven long-document NLP tasks. DART achieves an aggregate score of 71.4, compared to 68.9 for Mixtral-8x7B and 67.2 for GPT-4-Turbo (128k context version, evaluated January 2024).
+
+Task                    DART    Mixtral-8x7B    GPT-4-Turbo    Human
+GovReport (ROUGE-1)     57.3    54.1            55.8           —
+SummScreenFD (ROUGE-1)  49.8    47.2            48.3           —
+QMSum (ROUGE-1)         35.6    33.4            34.1           —
+QASPER (F1)             48.2    44.7            46.9           —
+NarrativeQA (F1)        31.4    28.9            30.2           —
+QuALITY (Accuracy)      91.2    87.6            89.4           93.1
+ContractNLI (Accuracy)  88.7    85.3            86.7           —
+
+4.2 Standard Language Modeling Benchmarks
+
+DART also performs competitively on shorter-context tasks despite its specialization for long-context settings.
+
+Benchmark               DART    Llama-3-70B    Mixtral-8x7B
+MMLU (5-shot)           82.3    79.5           70.6
+HellaSwag               87.6    85.2           81.2
+HumanEval (pass@1)      67.4    62.0           40.2
+GSM8K (8-shot CoT)      88.1    83.0           74.4
+ARC-Challenge           72.8    68.4           66.0
+
+4.3 Inference Efficiency
+
+At a sequence length of 32,768 tokens, DART processes 847 tokens per second on a single H100 GPU, compared to 312 tokens per second for a dense 70B model under identical hardware conditions. This 2.7× throughput advantage stems directly from the sparse activation pattern. Memory consumption at this sequence length is 38.4 GB, within the capacity of a single H100 80GB device.
+
+---
+
+5. ABLATION STUDIES
+
+We conducted ablations on a smaller 12B/total, 1.8B/active version of DART trained on 200 billion tokens to isolate the contribution of each architectural component.
+
+Component Removed               SCROLLS Score    Δ vs. Full Model
+Full DART (small)               64.7             —
+Without positional routing       62.1             -2.6
+Without hierarchical attention   61.8             -2.9
+Without specialization loss      63.4             -1.3
+Without both routing innovations 59.3             -5.4
+
+The hierarchical attention mechanism provides the largest single contribution, particularly on tasks with documents exceeding 50,000 tokens where standard attention becomes computationally prohibitive.
+
+---
+
+6. LIMITATIONS AND FUTURE WORK
+
+DART's dynamic routing introduces approximately 8% overhead in routing computation compared to static top-k MoE approaches. Additionally, the model shows degraded performance on tasks requiring precise numerical reasoning, scoring 61.3 on MATH benchmark compared to 71.2 for a dense model of equivalent active parameter count. We hypothesize that the sparse activation pattern disrupts the dense numerical representations required for multi-step arithmetic.
+
+Future work will explore extending DART's context window beyond 131,072 tokens using ring attention across multiple devices, and investigating whether expert specialization can be explicitly guided toward domain-specific knowledge clusters during pretraining.
+
+---
+
+REFERENCES
+
+Du, N., et al. (2022). GLaM: Efficient Scaling of Language Models with Mixture-of-Experts. ICML 2022.
+Fedus, W., Zoph, B., Shazeer, N. (2022). Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity. JMLR 23(120).
+Jiang, A., et al. (2024). Mixtral of Experts. arXiv:2401.04088.
+Shaham, U., et al. (2022). SCROLLS: Standardized CompaRison Over Long Language Sequences. EMNLP 2022.

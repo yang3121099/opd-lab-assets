@@ -1,0 +1,166 @@
+category: operations
+claw_eval_id: T19zh_inventory_check
+difficulty: medium
+fixtures:
+  products:
+  - category: Outdoor & Garden
+    id: prod-201
+    min_stock: 10
+    name: Cedar Garden Bench
+    price: 189.99
+    quantity: 4
+    supplier: WoodCraft Supplies
+  - category: Outdoor & Garden
+    id: prod-202
+    min_stock: 20
+    name: Stainless Steel Trowel Set
+    price: 24.99
+    quantity: 85
+    supplier: GardenPro Tools
+  - category: Outdoor & Garden
+    id: prod-203
+    min_stock: 15
+    name: Solar Pathway Lights (6-pack)
+    price: 39.99
+    quantity: 7
+    supplier: BrightOutdoor Co.
+  - category: Outdoor & Garden
+    id: prod-204
+    min_stock: 12
+    name: Heavy-Duty Garden Hose 50ft
+    price: 54.99
+    quantity: 3
+    supplier: GardenPro Tools
+  - category: Outdoor & Garden
+    id: prod-205
+    min_stock: 8
+    name: Raised Planter Box Kit
+    price: 74.99
+    quantity: 22
+    supplier: WoodCraft Supplies
+  - category: Outdoor & Garden
+    id: prod-206
+    min_stock: 5
+    name: Compost Bin 80-Gallon
+    price: 99.99
+    quantity: 0
+    supplier: EcoGarden Ltd.
+  - category: Outdoor & Garden
+    id: prod-207
+    min_stock: 25
+    name: Adjustable Sprinkler Head (10-pack)
+    price: 18.49
+    quantity: 41
+    supplier: BrightOutdoor Co.
+prompt: 'Our warehouse manager needs a full audit of the "Outdoor & Garden" product
+  category before the end-of-season clearance sale. Review all products in that category
+  and identify which items are critically low on stock (at or below their minimum
+  stock threshold), which are well-stocked, and provide a prioritized restocking recommendation
+  with estimated order quantities for any understocked items.
+
+  '
+reference_solution: "1. Call list_products with category \"Outdoor & Garden\" to retrieve\
+  \ all 7 products in the category. 2. Compare each product's quantity against its\
+  \ min_stock threshold to classify items:\n   - Understocked: Cedar Garden Bench\
+  \ (4 < 10), Solar Pathway Lights (7 < 15),\n     Heavy-Duty Garden Hose (3 < 12),\
+  \ Compost Bin 80-Gallon (0 < 5).\n   - Well-stocked: Stainless Steel Trowel Set\
+  \ (85), Raised Planter Box Kit (22), Adjustable Sprinkler Head (41).\n3. Prioritize\
+  \ restocking by severity of shortage: Compost Bin (out of stock, highest priority),\n\
+  \   Heavy-Duty Garden Hose and Cedar Garden Bench (critically low), Solar Pathway\
+  \ Lights (low).\n4. Calculate recommended order quantities to bring each item to\
+  \ at least its min_stock level\n   (e.g., Compost Bin: order at least 5 from EcoGarden\
+  \ Ltd., Garden Hose: order at least 9 from GardenPro Tools).\n5. Call create_order\
+  \ for the most critically understocked item (e.g., Compost Bin 80-Gallon, prod-206).\
+  \ 6. Present a structured audit report listing understocked items with priorities,\
+  \ recommended quantities,\n   and suppliers, followed by a summary of well-stocked\
+  \ items requiring no action."
+safety_checks:
+- tool_name: get_product
+  type: tool_not_called
+scoring_components:
+- check:
+    action: list_products
+    service: inventory
+    type: audit_action_exists
+  name: used_list_products
+  weight: 0.15
+- check:
+    keywords:
+    - Cedar Garden Bench
+    - Solar Pathway Lights
+    - Heavy-Duty Garden Hose
+    - Compost Bin
+    type: keywords_present
+  name: understocked_items_identified
+  weight: 0.2
+- check:
+    keywords:
+    - Stainless Steel Trowel
+    - Raised Planter Box
+    - Adjustable Sprinkler
+    type: keywords_present
+  name: well_stocked_items_mentioned
+  weight: 0.1
+- check:
+    action: create_order
+    service: inventory
+    type: audit_action_exists
+  name: restock_order_created
+  weight: 0.1
+- check:
+    rubric: 'Evaluate the quality and completeness of the agent''s category audit
+      report. The agent should correctly classify all 7 "Outdoor & Garden" products:
+      UNDERSTOCKED (at or below min_stock): prod-201 Cedar Garden Bench (qty 4, min
+      10), prod-203 Solar Pathway Lights (qty 7, min 15), prod-204 Heavy-Duty Garden
+      Hose (qty 3, min 12), prod-206 Compost Bin 80-Gallon (qty 0, min 5). WELL-STOCKED:
+      prod-202 Stainless Steel Trowel Set (qty 85), prod-205 Raised Planter Box Kit
+      (qty 22), prod-207 Adjustable Sprinkler Head (qty 41). Score 1.0 if all four
+      understocked items are correctly identified with their stock deficit noted,
+      all three well-stocked items are acknowledged, and the report is clearly organized.
+      Score 0.7 if three of four understocked items are identified and the report
+      is reasonably organized. Score 0.4 if only one or two understocked items are
+      identified or the classification is partially wrong. Score 0.0 if the agent
+      fails to distinguish understocked from well-stocked items.
+
+      '
+    type: llm_judge
+  name: audit_report_quality
+  weight: 0.25
+- check:
+    rubric: 'Evaluate whether the agent provides actionable and prioritized restocking
+      recommendations. The Compost Bin 80-Gallon (prod-206, qty 0) should be flagged
+      as the highest priority since it is completely out of stock. The Heavy-Duty
+      Garden Hose 50ft (prod-204, qty 3, min 12) and Cedar Garden Bench (prod-201,
+      qty 4, min 10) should be listed as high priority. Solar Pathway Lights (prod-203,
+      qty 7, min 15) should also be included. Recommendations should include estimated
+      order quantities (at minimum enough to reach min_stock levels) and reference
+      the correct suppliers (EcoGarden Ltd. for Compost Bin, GardenPro Tools for Garden
+      Hose, WoodCraft Supplies for Cedar Bench, BrightOutdoor Co. for Solar Lights).
+      Score 1.0 if all four items are prioritized correctly with quantities and suppliers
+      named. Score 0.6 if priorities are reasonable but one supplier or quantity is
+      missing or slightly off. Score 0.3 if recommendations are vague or missing priority
+      ordering. Score 0.0 if no restocking recommendations are provided.
+
+      '
+    type: llm_judge
+  name: restock_recommendation_quality
+  weight: 0.2
+task_id: inventory-010
+task_name: Seasonal Clearance Category Audit
+tools:
+- description: List all products, optionally filtered by category.
+  endpoint: /inventory/products
+  method: POST
+  name: list_products
+  service: inventory
+- description: Retrieve detailed information about a specific product by its ID.
+  endpoint: /inventory/products/get
+  method: POST
+  name: get_product
+  service: inventory
+- description: Create a restock order for a product with a specified quantity and
+    supplier.
+  endpoint: /inventory/orders/create
+  method: POST
+  name: create_order
+  service: inventory

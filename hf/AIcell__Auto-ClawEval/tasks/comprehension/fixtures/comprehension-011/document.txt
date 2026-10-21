@@ -1,0 +1,175 @@
+SPARSE MIXTURE-OF-EXPERTS TRANSFORMERS WITH DYNAMIC ROUTING FOR EFFICIENT LONG-CONTEXT REASONING
+
+Submitted to NeurIPS 2024 | Received March 14, 2024 | Accepted September 3, 2024
+
+Authors: Priya Nambiar¹, Jonas Weidemann², Takeshi Okubo³, Fatima Al-Rashidi¹
+¹ Stanford University Department of Computer Science
+² ETH Zürich Institute for Machine Learning
+³ RIKEN Center for Advanced Intelligence Project
+
+---
+
+ABSTRACT
+
+We present SparseRoute-7B, a 7.4 billion parameter sparse mixture-of-experts language model that achieves state-of-the-art performance on long-context reasoning benchmarks while reducing inference-time FLOPs by 61.3% compared to dense models of equivalent parameter count. Our dynamic routing mechanism, which we call Confidence-Weighted Expert Selection (CWES), activates an average of 2.1 experts per token from a pool of 16 experts, compared to the fixed top-2 routing used in prior work such as Mixtral 8x7B. On the SCROLLS benchmark, SparseRoute-7B achieves an average score of 74.8, surpassing GPT-4-Turbo (72.1) and Mixtral 8x7B (68.4) while using 43% fewer active parameters during inference. Training was completed on 1.2 trillion tokens over 23 days using 512 NVIDIA H100 GPUs.
+
+---
+
+1. INTRODUCTION
+
+The scaling of large language models has produced remarkable capabilities, but the computational cost of dense transformer architectures grows quadratically with context length and linearly with parameter count. Mixture-of-experts (MoE) architectures address parameter efficiency by routing each token to a subset of specialized feed-forward networks, but existing routing strategies suffer from load imbalance and expert collapse—phenomena where a small fraction of experts receive the majority of tokens.
+
+Prior work by Fedus et al. (2022) demonstrated that Switch Transformers with top-1 routing could achieve 7x speedups over T5-XXL on pre-training tasks. Lepikhin et al. (2021) introduced GShard, scaling MoE to 600 billion parameters. More recently, Jiang et al. (2024) released Mixtral 8x7B, which uses top-2 routing across 8 experts and achieves strong performance on standard benchmarks. However, none of these systems dynamically adjust the number of activated experts based on token complexity, leaving efficiency gains on the table for simple tokens while potentially under-resourcing complex reasoning steps.
+
+Our contributions are threefold:
+- We introduce CWES, a routing mechanism that uses a lightweight confidence estimator (3.2M parameters) to determine per-token expert activation count
+- We demonstrate that dynamic routing reduces expert collapse by 78% compared to fixed top-k routing, as measured by expert utilization entropy
+- We achieve a new state-of-the-art on four long-context benchmarks with a model requiring only 2.3B active parameters per forward pass
+
+---
+
+2. MODEL ARCHITECTURE
+
+2.1 Base Transformer Configuration
+
+SparseRoute-7B is built on a decoder-only transformer with the following specifications:
+
+- Total parameters: 7.4 billion
+- Active parameters per forward pass: 2.3 billion (average)
+- Number of layers: 32
+- Hidden dimension: 4,096
+- Attention heads: 32
+- Key/value heads: 8 (grouped-query attention)
+- Context window: 131,072 tokens (128K)
+- Vocabulary size: 65,536 tokens
+- Positional encoding: RoPE with base frequency 500,000
+
+The model uses SwiGLU activations throughout the feed-forward layers, following the architecture choices of LLaMA 2 (Touvron et al., 2023). Layer normalization uses RMSNorm with epsilon 1e-5.
+
+2.2 Expert Architecture
+
+Each of the 32 transformer layers contains a MoE feed-forward block with 16 experts. Each expert is a two-layer feed-forward network with intermediate dimension 14,336. Two experts are designated as "anchor experts" that receive all tokens regardless of routing decisions, ensuring stable gradient flow during training. The remaining 14 experts are selectively activated.
+
+Expert parameters per layer: 16 × (4,096 × 14,336 × 2) ≈ 1.88 billion
+Total expert parameters: 32 × 1.88B ≈ 60.2 billion (shared across layers via weight tying for 8 of 16 experts)
+
+2.3 Confidence-Weighted Expert Selection (CWES)
+
+The CWES router operates as follows. For each token representation h ∈ ℝ^4096, a confidence estimator network f_c produces a scalar c ∈ [0, 1] representing estimated token complexity. This estimator is a two-layer MLP with hidden dimension 512, trained jointly with the main model using an auxiliary complexity prediction loss.
+
+The number of experts activated for token i is:
+
+k_i = 2 + ⌊c_i × 4⌋
+
+This yields between 2 and 6 active experts per token. In practice, the distribution across our evaluation set shows:
+- k=2: 47.3% of tokens
+- k=3: 28.6% of tokens
+- k=4: 15.2% of tokens
+- k=5: 6.4% of tokens
+- k=6: 2.5% of tokens
+
+The average of 2.1 experts per token (weighted by frequency) represents a 47.5% reduction in expert computation compared to a fixed top-4 routing baseline.
+
+---
+
+3. TRAINING DETAILS
+
+3.1 Dataset
+
+Pre-training used a 1.2 trillion token corpus assembled from the following sources:
+
+| Source | Tokens (billions) | Percentage |
+|---|---|---|
+| Common Crawl (filtered) | 680 | 56.7% |
+| GitHub code | 180 | 15.0% |
+| ArXiv papers | 95 | 7.9% |
+| Books3 | 88 | 7.3% |
+| Wikipedia (multilingual) | 72 | 6.0% |
+| StackExchange | 45 | 3.8% |
+| Legal documents | 40 | 3.3% |
+
+Data filtering removed documents with perplexity above 1,500 under a 125M parameter reference model, eliminating approximately 34% of raw Common Crawl data.
+
+3.2 Training Configuration
+
+- Optimizer: AdamW with β₁=0.9, β₂=0.95, ε=1e-8
+- Peak learning rate: 3e-4 with cosine decay to 3e-5
+- Warmup steps: 2,000
+- Batch size: 4 million tokens (global)
+- Gradient clipping: 1.0
+- Weight decay: 0.1
+- Training duration: 300,000 steps
+- Hardware: 512 NVIDIA H100 80GB SXM5 GPUs
+- Wall-clock time: 23 days, 7 hours
+- Total compute: approximately 4.8 × 10²³ FLOPs
+
+Load balancing was enforced through an auxiliary loss weighted at 0.01, penalizing deviation from uniform expert utilization. Expert dropout of 0.1 was applied during training to prevent over-reliance on specific experts.
+
+---
+
+4. EVALUATION RESULTS
+
+4.1 Long-Context Benchmarks
+
+Table 2: Performance on long-context benchmarks (higher is better)
+
+| Benchmark | SparseRoute-7B | GPT-4-Turbo | Mixtral 8x7B | LLaMA-3-70B |
+|---|---|---|---|---|
+| SCROLLS (avg) | 74.8 | 72.1 | 68.4 | 71.3 |
+| QASPER | 51.3 | 48.7 | 44.2 | 49.8 |
+| NarrativeQA | 31.7 | 29.4 | 26.1 | 30.2 |
+| QuALITY | 93.4 | 91.2 | 87.6 | 90.5 |
+| MUSIQUEQA | 38.6 | 35.8 | 31.9 | 36.7 |
+
+4.2 Standard Benchmarks
+
+| Benchmark | SparseRoute-7B | Mixtral 8x7B | LLaMA-3-8B |
+|---|---|---|---|
+| MMLU (5-shot) | 73.4 | 70.6 | 66.6 |
+| HumanEval | 67.1 | 59.0 | 62.2 |
+| GSM8K (8-shot) | 79.3 | 74.4 | 79.6 |
+| HellaSwag | 87.2 | 86.5 | 82.0 |
+| ARC-Challenge | 68.9 | 66.0 | 59.2 |
+
+4.3 Efficiency Metrics
+
+Inference throughput was measured on a single NVIDIA A100 80GB GPU with batch size 1 and sequence length 4,096:
+
+- SparseRoute-7B: 847 tokens/second
+- Mixtral 8x7B (top-2): 312 tokens/second
+- LLaMA-3-8B (dense): 743 tokens/second
+
+Memory footprint at 4-bit quantization: 14.2 GB, enabling deployment on consumer hardware with 16 GB VRAM.
+
+---
+
+5. ABLATION STUDIES
+
+We conducted ablations on a 1.2B parameter version of the architecture trained on 100 billion tokens to validate design choices:
+
+- Removing CWES in favor of fixed top-2 routing: -3.1 points on SCROLLS, +12% throughput
+- Removing anchor experts: -1.8 points on SCROLLS, 4.3x increase in training instability events
+- Reducing expert count from 16 to 8: -2.4 points on SCROLLS, -19% memory usage
+- Removing weight tying on 8 experts: +0.6 points on SCROLLS, +31% total parameter count
+
+The anchor expert mechanism proved critical for training stability, reducing loss spikes (defined as single-step loss increase >0.5) from 23 events to 4 events over 50,000 training steps.
+
+---
+
+6. LIMITATIONS AND FUTURE WORK
+
+SparseRoute-7B underperforms on tasks requiring dense numerical computation, scoring 71.2 on MATH compared to 74.8 for LLaMA-3-70B. We hypothesize that sparse activation may fragment the computational graph needed for multi-step arithmetic. Additionally, the confidence estimator adds 3.2M parameters and approximately 0.8ms latency per forward pass on A100 hardware.
+
+Future work will explore extending CWES to attention layers, investigating whether expert specialization emerges along linguistic dimensions (syntax vs. semantics), and scaling the architecture to 70 billion total parameters.
+
+---
+
+REFERENCES
+
+Fedus, W., Zoph, B., & Shazeer, N. (2022). Switch Transformers: Scaling to trillion parameter models with simple and efficient sparsity. JMLR, 23(120), 1-39.
+
+Jiang, A. Q., et al. (2024). Mixtral of Experts. arXiv:2401.04088.
+
+Lepikhin, D., et al. (2021). GShard: Scaling giant models with conditional computation and automatic sharding. ICLR 2021.
+
+Touvron, H., et al. (2023). LLaMA 2: Open foundation and fine-tuned chat models. arXiv:2307.09288.

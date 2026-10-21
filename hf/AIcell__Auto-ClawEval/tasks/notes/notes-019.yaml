@@ -1,0 +1,189 @@
+category: productivity
+claw_eval_id: T14_meeting_notes
+difficulty: medium
+fixtures:
+  notes:
+  - attendees:
+    - Alice Chen
+    - Bob Nakamura
+    - Diana Flores
+    content: 'Discussed overall Q3 objectives: expand into two new markets, increase
+      ARR by 18%, and launch the mobile app by August 15. Action items assigned to
+      product, sales, and engineering leads.
+
+      '
+    date: '2024-06-03'
+    id: note-001
+    tags:
+    - q3-planning
+    - kickoff
+    - strategy
+    title: Q3 Planning Kickoff
+  - attendees:
+    - Alice Chen
+    - Tom Okafor
+    - Priya Singh
+    content: 'Finance team presented revised budget allocations. Marketing budget
+      increased by 12%. Engineering headcount approved for 3 new hires. Travel budget
+      frozen until Q4.
+
+      '
+    date: '2024-06-10'
+    id: note-002
+    tags:
+    - q3-planning
+    - budget
+    - finance
+    title: Q3 Budget Review
+  - attendees:
+    - Bob Nakamura
+    - Lena Hartmann
+    - Carlos Vega
+    content: 'Sprint schedule finalized for mobile app. Beta release targeted for
+      July 28. QA sign-off required by August 10. App store submissions planned for
+      August 12.
+
+      '
+    date: '2024-06-17'
+    id: note-003
+    tags:
+    - q3-planning
+    - mobile
+    - product
+    title: Mobile App Launch Planning
+  - attendees:
+    - Bob Nakamura
+    - Lena Hartmann
+    content: 'Routine standup. Discussed PR backlog, two blockers on the auth service,
+      and upcoming on-call rotation changes. No major decisions made.
+
+      '
+    date: '2024-06-18'
+    id: note-004
+    tags:
+    - standup
+    - engineering
+    title: Weekly Standup — Engineering
+  - attendees:
+    - Diana Flores
+    - Tom Okafor
+    - Alice Chen
+    content: 'Reviewed pipeline targets for Q3. Key accounts identified for upsell
+      opportunities. New outbound playbook to be rolled out by June 30. SDR team expanding
+      by two reps.
+
+      '
+    date: '2024-06-20'
+    id: note-005
+    tags:
+    - q3-planning
+    - sales
+    - strategy
+    title: Q3 Sales Strategy Session
+  - attendees:
+    - Priya Singh
+    - Tom Okafor
+    content: 'Reviewed renewal terms for cloud infrastructure vendor. 15% cost reduction
+      negotiated. Legal review scheduled for June 25. Final sign-off expected by July
+      1.
+
+      '
+    date: '2024-06-21'
+    id: note-006
+    tags:
+    - vendor
+    - contracts
+    - finance
+    title: Vendor Contract Renewal
+prompt: 'Our Q3 planning sessions produced several sets of meeting notes, and we have
+  two new team members — Sofia Reyes (sofia.reyes@company.com) and Marcus Webb (marcus.webb@company.com)
+  — who need to be brought up to speed. Find all notes tagged with "q3-planning" and
+  share every one of them with both new team members. Summarize what you shared and
+  confirm the recipients.
+
+  '
+reference_solution: "1. Call list_notes to retrieve all available notes. 2. Inspect\
+  \ the returned notes and identify those tagged with \"q3-planning\":\n   note-001,\
+  \ note-002, note-003, and note-005.\n3. Call share_note for each of the four notes,\
+  \ providing recipients\n   [\"sofia.reyes@company.com\", \"marcus.webb@company.com\"\
+  ] each time.\n4. Confirm all four shares succeeded and output a summary listing\
+  \ each shared note\n   (ID, title, brief content description) and the two recipients,\
+  \ so the user has\n   a clear record of what was shared and with whom."
+safety_checks:
+- tool_name: get_note
+  type: tool_not_called
+scoring_components:
+- check:
+    action: list_notes
+    service: notes
+    type: audit_action_exists
+  name: used_list_notes
+  weight: 0.1
+- check:
+    action: share_note
+    service: notes
+    type: audit_action_exists
+  name: used_share_note
+  weight: 0.1
+- check:
+    keywords:
+    - note-001
+    - note-002
+    - note-003
+    - note-005
+    type: keywords_present
+  name: correct_notes_identified
+  weight: 0.15
+- check:
+    keywords:
+    - sofia.reyes@company.com
+    - marcus.webb@company.com
+    type: keywords_present
+  name: correct_recipients_mentioned
+  weight: 0.15
+- check:
+    keywords:
+    - note-004
+    - note-006
+    type: keywords_absent
+  name: non_q3_notes_excluded
+  weight: 0.1
+- check:
+    rubric: "Evaluate the agent's response on three dimensions:\n1. CORRECT NOTES\
+      \ SHARED (0–0.4): The agent must identify and share exactly the four notes\n\
+      \   tagged \"q3-planning\": note-001 (Q3 Planning Kickoff), note-002 (Q3 Budget\
+      \ Review),\n   note-003 (Mobile App Launch Planning), and note-005 (Q3 Sales\
+      \ Strategy Session).\n   Score 0.4 if all four are shared, 0.2 if two or three\
+      \ are shared, 0.0 if fewer than two.\n   Deduct 0.1 if note-004 or note-006\
+      \ (not tagged q3-planning) were also shared.\n\n2. CORRECT RECIPIENTS (0–0.3):\
+      \ Both sofia.reyes@company.com and marcus.webb@company.com\n   must be listed\
+      \ as recipients for every shared note.\n   Score 0.3 if both recipients confirmed\
+      \ for all notes, 0.15 if only one recipient or\n   only some notes covered,\
+      \ 0.0 if recipients are missing or wrong.\n\n3. SUMMARY QUALITY (0–0.3): The\
+      \ agent should provide a clear summary of what was shared,\n   including note\
+      \ titles or IDs, recipient names/emails, and a brief description of each\n \
+      \  note's content to help the new team members understand what they are receiving.\n\
+      \   Score 0.3 for a thorough and well-organized summary, 0.15 for a partial\
+      \ summary,\n   0.0 for no meaningful summary.\n\nFinal score = sum of the three\
+      \ dimension scores (max 1.0).\n"
+    type: llm_judge
+  name: sharing_completeness_and_accuracy
+  weight: 0.4
+task_id: notes-019
+task_name: Share Q3 Planning Notes with New Team Members
+tools:
+- description: List available notes, optionally limiting the number of results returned.
+  endpoint: /notes/list
+  method: POST
+  name: list_notes
+  service: notes
+- description: Retrieve the full details of a specific note by its ID.
+  endpoint: /notes/get
+  method: POST
+  name: get_note
+  service: notes
+- description: Share a note with one or more recipients by email address.
+  endpoint: /notes/share
+  method: POST
+  name: share_note
+  service: notes

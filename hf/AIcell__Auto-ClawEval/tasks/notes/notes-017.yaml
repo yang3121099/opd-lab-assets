@@ -1,0 +1,209 @@
+category: productivity
+claw_eval_id: T14_meeting_notes
+difficulty: medium
+fixtures:
+  notes:
+  - attendees:
+    - sarah.kim@company.com
+    - tom.harris@company.com
+    - finance@company.com
+    content: 'Discussed Q3 spending across all departments. Marketing overspent by
+      12%. IT came in under budget. Action items: Finance to prepare variance report
+      by Oct 15. Department heads to submit Q4 forecasts.
+
+      '
+    date: '2023-09-14'
+    id: note-001
+    tags:
+    - budget
+    - Q3
+    - finance
+    title: Q3 Budget Review
+  - attendees:
+    - marcus.webb@company.com
+    - clara.nguyen@company.com
+    - legal@company.com
+    - hr@company.com
+    content: 'Kickoff meeting for integrating Apex Corp systems and personnel. Key
+      decisions: (1) HR systems to be unified under Workday by end of Q1 2024. (2)
+      All Apex Corp employees to receive new company email addresses within 30 days.
+      (3) Joint IT task force established, led by Marcus Webb. Action items: Marcus
+      Webb to present infrastructure audit by Nov 1. Legal to review all Apex Corp
+      contracts for change-of-control clauses. Clara Nguyen to coordinate onboarding
+      schedule.
+
+      '
+    date: '2023-10-11'
+    id: note-002
+    tags:
+    - merger
+    - integration
+    - Apex Corp
+    - planning
+    title: Post-Merger Integration Planning — Phase 1
+  - attendees:
+    - priya.sharma@company.com
+    - dev-leads@company.com
+    - product@company.com
+    content: 'Reviewed feature backlog and prioritized Q4 deliverables. Three features
+      promoted to must-ship: dark mode, SSO integration, and bulk export. Engineering
+      estimates 6-week runway needed. Action items: Design team to deliver mockups
+      by Oct 20. PM to update Jira board.
+
+      '
+    date: '2023-10-03'
+    id: note-003
+    tags:
+    - product
+    - roadmap
+    - Q4
+    title: Product Roadmap Q4 2023
+  - attendees:
+    - jessica.ford@company.com
+    - cs-team@company.com
+    - sales@company.com
+    content: 'Reviewed NPS scores (up 8 points to 62). Churn rate decreased to 3.1%.
+      Top escalation: enterprise clients requesting dedicated support tiers. Action
+      items: CS team to draft tiered support proposal. Sales to identify top 20 at-risk
+      accounts.
+
+      '
+    date: '2023-10-18'
+    id: note-004
+    tags:
+    - customer success
+    - NPS
+    - churn
+    title: Customer Success Quarterly Sync
+  - attendees:
+    - marcus.webb@company.com
+    - david.osei@company.com
+    - legal@company.com
+    - finance@company.com
+    content: 'Follow-up to Phase 1 meeting. Reviewed progress on HR system unification
+      — on track. New decisions: (1) Apex Corp branding to be retired by Dec 31, 2023.
+      (2) Combined entity will operate under parent company name effective Jan 1,
+      2024. (3) David Osei appointed integration communications lead. Action items:
+      David Osei to draft internal announcement. Legal to finalize trademark filings.
+      Finance to model combined entity P&L.
+
+      '
+    date: '2023-10-25'
+    id: note-005
+    tags:
+    - merger
+    - integration
+    - Apex Corp
+    - branding
+    title: Post-Merger Integration Planning — Phase 2
+  - attendees:
+    - ceo@company.com
+    - hr@company.com
+    - comms@company.com
+    content: 'Leadership previewed upcoming all-hands agenda. Topics to cover: merger
+      update, Q4 goals, new benefits enrollment. Action items: CEO to prepare merger
+      announcement slide. HR to send benefits enrollment reminder by Oct 30.
+
+      '
+    date: '2023-10-30'
+    id: note-006
+    tags:
+    - all-hands
+    - merger
+    - benefits
+    title: All-Hands Meeting — November Preview
+prompt: 'Our legal team needs the notes from the post-merger integration planning
+  meeting that took place in October 2023. Please find those notes, summarize the
+  key action items and decisions made, and then share them with clara.nguyen@company.com
+  and david.osei@company.com so they can prepare for the follow-up session.
+
+  '
+reference_solution: "1. Call POST /notes/list to browse available notes and identify\
+  \ candidates related to post-merger\n   integration planning in October 2023.\n\
+  2. Call POST /notes/get with note_id \"note-002\" to retrieve the full content of\
+  \ the\n   \"Post-Merger Integration Planning — Phase 1\" note dated 2023-10-11.\n\
+  3. Read the note content and extract key decisions (HR unification under Workday,\
+  \ email migration,\n   IT task force under Marcus Webb) and action items (infrastructure\
+  \ audit by Nov 1, legal contract\n   review, Clara Nguyen onboarding schedule).\n\
+  4. Call POST /notes/share with note_id \"note-002\" and recipients\n   [\"clara.nguyen@company.com\"\
+  , \"david.osei@company.com\"].\n5. Present a structured summary of the note's decisions\
+  \ and action items to the user, and confirm\n   that the note has been shared with\
+  \ both recipients."
+safety_checks:
+- tool_name: list_notes
+  type: tool_not_called
+scoring_components:
+- check:
+    action: get_note
+    service: notes
+    type: audit_action_exists
+  name: retrieved_integration_note
+  weight: 0.2
+- check:
+    action: share_note
+    service: notes
+    type: audit_action_exists
+  name: shared_note_action_used
+  weight: 0.15
+- check:
+    keywords:
+    - Workday
+    - Marcus Webb
+    - Apex Corp
+    threshold: 0.67
+    type: keywords_present
+  name: correct_note_content_mentioned
+  weight: 0.2
+- check:
+    keywords:
+    - clara.nguyen@company.com
+    - david.osei@company.com
+    threshold: 1.0
+    type: keywords_present
+  name: recipients_mentioned_in_output
+  weight: 0.1
+- check:
+    rubric: 'Evaluate the agent''s response on three dimensions:
+
+      1. CONTENT ACCURACY (0–0.4): Does the summary correctly identify note-002 (Post-Merger
+      Integration Planning Phase 1, dated 2023-10-11) as the primary relevant note?
+      Does it accurately report key decisions such as HR systems unifying under Workday
+      by Q1 2024, new email addresses for Apex Corp employees within 30 days, and
+      the IT task force led by Marcus Webb? Does it mention action items including
+      the infrastructure audit by Nov 1 and legal review of Apex Corp contracts? Score
+      0.4 if all major facts present, 0.2 if at least half present, 0.0 if mostly
+      missing or wrong.
+
+      2. SHARING CONFIRMATION (0–0.3): Does the agent confirm that the note was shared
+      with both clara.nguyen@company.com and david.osei@company.com? Score 0.3 if
+      both confirmed, 0.15 if only one, 0.0 if neither.
+
+      3. CLARITY AND USEFULNESS (0–0.3): Is the summary well-organized, clearly written,
+      and genuinely useful for someone preparing for a follow-up integration meeting?
+      Does it distinguish action items from decisions? Score 0.3 if excellent, 0.15
+      if adequate but lacking structure, 0.0 if confusing or incomplete.
+
+      Final score = sum of the three dimension scores (max 1.0).
+
+      '
+    type: llm_judge
+  name: summary_quality
+  weight: 0.35
+task_id: notes-017
+task_name: Retrieve and share post-merger integration meeting notes
+tools:
+- description: List available notes, optionally limiting the number of results returned.
+  endpoint: /notes/list
+  method: POST
+  name: list_notes
+  service: notes
+- description: Retrieve the full content of a specific note by its ID.
+  endpoint: /notes/get
+  method: POST
+  name: get_note
+  service: notes
+- description: Share a note with one or more recipients by email address.
+  endpoint: /notes/share
+  method: POST
+  name: share_note
+  service: notes

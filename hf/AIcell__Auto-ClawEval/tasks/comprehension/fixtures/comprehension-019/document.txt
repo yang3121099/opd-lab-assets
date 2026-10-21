@@ -1,0 +1,150 @@
+SPARSE MIXTURE-OF-EXPERTS TRANSFORMERS WITH DYNAMIC ROUTING FOR LONG-CONTEXT REASONING
+
+Submitted to NeurIPS 2024 | Received March 14, 2024 | Accepted August 22, 2024
+
+Authors: Yuki Tanaka¹, Priya Mehrotra², Aleksei Voronov³, Sarah Chen¹
+¹Stanford University Department of Computer Science, ²Google DeepMind, ³ETH Zürich
+
+ABSTRACT
+
+We present DRMOE (Dynamic Routing Mixture-of-Experts), a transformer-based architecture that achieves state-of-the-art performance on long-context reasoning benchmarks while reducing inference-time FLOPs by 43.7% compared to dense transformer baselines of equivalent parameter count. DRMOE employs a learned routing mechanism that activates an average of 3.2 out of 16 expert networks per token, enabling a 47-billion total parameter model to operate with the effective compute of an 8.4-billion parameter dense model. On the SCROLLS benchmark suite, DRMOE achieves an average score of 71.3, surpassing GPT-4-Turbo (68.9) and Mixtral 8x22B (64.2) on identical evaluation conditions. We release model weights and training code at github.com/tanaka-lab/drmoe.
+
+1. INTRODUCTION
+
+The scaling of large language models has produced remarkable capabilities, but dense transformer architectures impose a fundamental constraint: every parameter participates in every forward pass. For models exceeding 10 billion parameters, this creates prohibitive inference costs that limit deployment in resource-constrained environments. Mixture-of-Experts (MoE) architectures address this by conditionally activating subsets of parameters, but prior implementations suffer from load imbalance, expert collapse, and degraded performance on tasks requiring sustained multi-step reasoning across long contexts.
+
+The SCROLLS benchmark, introduced by Shaham et al. in 2022, evaluates models on tasks requiring comprehension of documents averaging 6,400 tokens in length. Existing MoE models show a consistent 4-8 point performance gap relative to dense models on these tasks, which we attribute to routing instability when attention patterns must span thousands of tokens.
+
+Our contributions are threefold:
+- We introduce a temperature-annealed routing objective that reduces expert collapse by 67% compared to standard top-k routing
+- We demonstrate that routing decisions benefit from a 128-token contextual window rather than per-token routing, improving SCROLLS scores by 3.1 points
+- We show that DRMOE achieves 71.3 on SCROLLS while consuming 43.7% fewer FLOPs than a comparable dense 47B model
+
+2. ARCHITECTURE
+
+2.1 Base Transformer Configuration
+
+DRMOE is built on a modified LLaMA-3 architecture with the following specifications:
+
+- Total parameters: 47.3 billion
+- Active parameters per forward pass: approximately 8.4 billion
+- Number of layers: 64
+- Hidden dimension: 8,192
+- Attention heads: 64
+- Key-value heads: 8 (grouped query attention)
+- Context window: 131,072 tokens (128K)
+- Vocabulary size: 128,256 tokens
+
+2.2 Expert Configuration
+
+Each of the 64 transformer layers contains a standard multi-head attention block followed by a MoE feed-forward network. The MoE layer configuration is as follows:
+
+Number of experts per layer: 16
+Experts activated per token: 3.2 (average, learned)
+Expert hidden dimension: 14,336
+Router type: Softmax with learned temperature
+Load balancing coefficient (α): 0.02
+
+Unlike Mixtral 8x7B, which uses a fixed top-2 routing strategy, DRMOE employs a differentiable top-k selection where k is drawn from a learned discrete distribution. During training, the expected value of k converges to 3.2, with individual tokens activating between 2 and 6 experts depending on token complexity as measured by routing entropy.
+
+2.3 Contextual Routing Window
+
+Standard MoE routing makes independent decisions for each token. We propose grouping tokens into non-overlapping windows of 128 tokens and computing routing decisions jointly across each window. A lightweight 2-layer MLP with hidden dimension 512 processes the mean-pooled window representation and outputs routing biases that are added to individual token routing logits. This contextual routing mechanism adds only 0.3% to total parameter count but improves long-context task performance substantially.
+
+3. TRAINING
+
+3.1 Dataset and Compute
+
+DRMOE was trained on a dataset of 2.4 trillion tokens assembled from the following sources:
+
+Source | Tokens (billions) | Percentage
+Common Crawl (filtered) | 1,440 | 60.0%
+GitHub code | 360 | 15.0%
+ArXiv papers | 120 | 5.0%
+Books3 | 96 | 4.0%
+Wikipedia (multilingual) | 72 | 3.0%
+StackExchange | 48 | 2.0%
+PubMed Central | 36 | 1.5%
+Other curated sources | 228 | 9.5%
+
+Training was conducted on 512 NVIDIA H100 80GB SXM5 GPUs across 4 nodes at Google Cloud's us-central1 datacenter. Total training time was 47 days, from January 8, 2024 to February 24, 2024. Estimated total compute was 1.84 × 10²⁴ FLOPs. Training used the AdamW optimizer with β₁ = 0.9, β₂ = 0.95, weight decay of 0.1, and a peak learning rate of 3 × 10⁻⁴ with cosine decay to 3 × 10⁻⁵.
+
+3.2 Temperature Annealing Schedule
+
+The routing temperature τ was initialized at 1.0 and annealed to 0.3 over the first 500 billion training tokens using a cosine schedule. Below τ = 0.3, routing decisions become near-deterministic, which we found caused expert collapse in preliminary experiments. Maintaining τ = 0.3 throughout the remaining training preserved expert diversity while achieving sharp routing decisions.
+
+4. EVALUATION
+
+4.1 SCROLLS Benchmark Results
+
+Task | DRMOE | GPT-4-Turbo | Mixtral 8x22B | LLaMA-3 70B
+QASPER | 74.1 | 72.3 | 67.8 | 69.4
+QuALITY | 81.2 | 79.6 | 71.3 | 74.8
+NarrativeQA | 68.4 | 66.1 | 59.2 | 62.7
+SummScreenFD | 63.7 | 61.8 | 55.4 | 58.3
+GovReport | 72.8 | 70.4 | 64.1 | 67.2
+Average | 71.3 | 68.9 | 64.2 | 66.5
+
+All evaluations used identical prompting templates and greedy decoding. GPT-4-Turbo results were obtained using the gpt-4-turbo-2024-04-09 API checkpoint evaluated on April 30, 2024.
+
+4.2 Standard Benchmarks
+
+DRMOE was also evaluated on standard language model benchmarks:
+
+- MMLU (5-shot): 82.4%
+- HumanEval (pass@1): 71.3%
+- GSM8K (8-shot, chain-of-thought): 88.7%
+- ARC-Challenge (25-shot): 79.6%
+- HellaSwag (10-shot): 87.2%
+- TruthfulQA (0-shot): 64.8%
+
+4.3 Efficiency Analysis
+
+We measured inference throughput on a single NVIDIA A100 80GB GPU with batch size 1 and sequence length 4,096 tokens:
+
+Model | Active Params | Tokens/sec | Memory (GB)
+DRMOE (ours) | 8.4B | 31.4 | 52.3
+LLaMA-3 70B (dense) | 70B | 8.7 | 74.1
+Mixtral 8x22B | 39B | 12.3 | 68.4
+LLaMA-3 8B (dense) | 8B | 89.2 | 18.6
+
+DRMOE achieves 3.6× higher throughput than LLaMA-3 70B while outperforming it on all evaluated benchmarks. The memory footprint of 52.3 GB reflects the full 47.3B parameter model loaded in bfloat16 precision.
+
+5. ABLATION STUDIES
+
+We conducted ablations on a smaller 7B/47B parameter configuration trained on 200 billion tokens to isolate the contribution of each architectural component:
+
+Component Removed | SCROLLS Average | Δ vs. Full Model
+Full DRMOE | 71.3 | —
+No contextual routing window | 68.2 | -3.1
+Fixed top-2 routing (no learned k) | 67.8 | -3.5
+No temperature annealing | 65.4 | -5.9
+Standard top-k (no load balancing) | 63.1 | -8.2
+
+The largest single contributor to performance is the load balancing term, without which expert collapse reduces effective model capacity dramatically. Temperature annealing is the second most critical component, confirming our hypothesis that routing stability during early training is essential for long-context tasks.
+
+6. EXPERT SPECIALIZATION ANALYSIS
+
+We analyzed routing patterns across 50,000 randomly sampled sequences from the Pile validation set. Experts within each layer exhibit measurable specialization:
+
+- Experts 1-4 (per layer, by convention) activate disproportionately on numerical tokens (3.8× baseline rate)
+- Experts 5-8 activate preferentially on punctuation and syntactic boundary tokens
+- Experts 9-12 show highest activation rates on rare vocabulary items (frequency < 10⁻⁶ in training corpus)
+- Experts 13-16 show the most uniform activation, functioning as general-purpose experts
+
+This specialization emerges without any explicit supervision, consistent with findings from prior MoE work (Fedus et al., 2022; Jiang et al., 2024).
+
+7. LIMITATIONS AND FUTURE WORK
+
+DRMOE's routing mechanism introduces 12-15 milliseconds of additional latency per forward pass on A100 hardware due to the contextual routing MLP, which partially offsets throughput gains at very short sequence lengths below 512 tokens. Future work will explore hardware-aware routing implementations and extending the contextual window beyond 128 tokens for ultra-long document tasks.
+
+8. CONCLUSION
+
+DRMOE demonstrates that dynamic routing with temperature annealing and contextual routing windows enables MoE transformers to match and exceed dense model performance on long-context reasoning tasks. The 43.7% reduction in inference FLOPs relative to a comparable dense model, combined with a 71.3 SCROLLS average score, establishes a new efficiency-performance frontier for open-weight language models.
+
+REFERENCES
+
+Fedus, W., Zoph, B., Shazeer, N. (2022). Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity. JMLR 23(120).
+Jiang, A. et al. (2024). Mixtral of Experts. arXiv:2401.04088.
+Shaham, U. et al. (2022). SCROLLS: Standardized CompaRison Over Long Language Sequences. EMNLP 2022.
+Touvron, H. et al. (2023). LLaMA 2: Open Foundation and Fine-Tuned Chat Models. arXiv:2307.09288.

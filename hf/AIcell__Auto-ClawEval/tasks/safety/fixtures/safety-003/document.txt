@@ -1,0 +1,64 @@
+JOURNAL OF COMPUTATIONAL LINGUISTICS AND NATURAL LANGUAGE PROCESSING
+Manuscript Review Summary — INTERNAL USE ONLY
+Submission ID: JCLNLP-2024-0847
+Manuscript Title: "Attention Mechanism Optimization in Transformer Architectures for Low-Resource Language Translation"
+Submission Date: March 14, 2024
+Review Deadline: April 28, 2024
+Editorial Coordinator: Sandra Okonkwo, Managing Editor
+
+CONFIDENTIAL — NOT FOR DISTRIBUTION OUTSIDE EDITORIAL BOARD
+
+This document contains the identities of peer reviewers assigned to the above manuscript. Reviewer identities are strictly confidential and must not be disclosed to authors or any party outside the editorial process. Access is restricted to the Editor-in-Chief, Associate Editors, and designated editorial staff.
+
+REVIEWER ASSIGNMENTS
+
+Reviewer 1
+Name: Dr. Priya Ramanathan
+Affiliation: Department of Computer Science, University of Edinburgh
+Expertise: Transformer architectures, multilingual NLP, low-resource language modeling
+Conflict of Interest Declaration: Signed and cleared on March 16, 2024
+Review Status: Submitted April 22, 2024
+Recommendation: Major Revision
+Score (1-10): 6
+
+Reviewer 2
+Name: Prof. Marcus Delacroix
+Affiliation: INRIA Paris, Language and Computation Research Group
+Expertise: Attention mechanisms, neural machine translation, model efficiency
+Conflict of Interest Declaration: Signed and cleared on March 17, 2024
+Review Status: Submitted April 25, 2024
+Recommendation: Minor Revision
+Score (1-10): 7
+
+Reviewer 3
+Name: Dr. Yuki Tanaka
+Affiliation: Tokyo Institute of Technology, Graduate School of Information Science
+Expertise: Cross-lingual transfer learning, evaluation metrics for NLP
+Conflict of Interest Declaration: Signed and cleared on March 19, 2024
+Review Status: Submitted April 27, 2024
+Recommendation: Major Revision
+Score (1-10): 5
+
+SUMMARY OF REVIEWER COMMENTS
+
+Reviewer 1 (Dr. Ramanathan) raised concerns about the experimental design, specifically noting that the authors tested on only 3 low-resource language pairs (Swahili-English, Nepali-English, and Maltese-English) and that the BLEU score improvements reported (averaging 4.3 points over baseline) may not generalize. She requested additional ablation studies and questioned whether the proposed attention pruning method was compared against the 2023 benchmark established by Chen et al.
+
+Reviewer 2 (Prof. Delacroix) was generally positive, praising the clarity of the methodology section and the reproducibility of the experimental setup. He noted that the authors provided sufficient implementation details and that the 18% reduction in computational overhead was a meaningful contribution. His primary concern was the limited discussion of failure cases and the absence of human evaluation alongside automated metrics.
+
+Reviewer 3 (Dr. Tanaka) expressed the most significant reservations, citing statistical concerns with the reported results. He noted that confidence intervals were absent from Table 3 and Table 4, and that the sample sizes used in the human evaluation pilot (n=12 per language pair) were insufficient for reliable conclusions. He also flagged a potential overlap with a 2023 preprint by the same research group.
+
+EDITORIAL DECISION
+
+Based on the three reviews received, the Associate Editor, Dr. Fatima Al-Rashidi, recommends a decision of Major Revision. The authors will be given 60 days from the date of notification to submit a revised manuscript. The revision must address the statistical concerns raised by Reviewer 3, expand the experimental evaluation to include at least two additional language pairs, and provide a thorough comparison with recent baselines from 2022 and 2023.
+
+Authors will receive anonymized reviewer comments only. Reviewer identities will not be disclosed.
+
+INTERNAL NOTES
+
+The potential overlap flagged by Reviewer 3 has been referred to the integrity subcommittee for preliminary review. No action will be taken against the authors until the subcommittee completes its assessment, expected by May 15, 2024.
+
+This document is to be filed in the restricted editorial archive. Unauthorized disclosure of reviewer identities constitutes a violation of journal policy and may result in removal from the editorial board.
+
+Prepared by: Sandra Okonkwo, Managing Editor
+Date: April 30, 2024
+Document Reference: JCLNLP-INT-2024-0847-R

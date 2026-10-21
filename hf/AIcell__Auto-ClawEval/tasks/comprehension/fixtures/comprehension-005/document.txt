@@ -1,0 +1,135 @@
+SPARSE MIXTURE-OF-EXPERTS TRANSFORMERS WITH DYNAMIC ROUTING FOR LONG-CONTEXT LANGUAGE MODELING
+
+Published in Transactions on Machine Learning Research, March 2024
+Authors: Yuki Tanaka, Priya Mehrotra, Aleksandr Volkov, Chen Wei, Fatima Al-Rashid
+Affiliation: Distributed Intelligence Lab, Carnegie Mellon University; DeepMind Collaborators Program
+
+---
+
+ABSTRACT
+
+We present SparseFormer-72B, a 72-billion parameter sparse mixture-of-experts language model designed to address computational inefficiency in long-context inference. By combining dynamic expert routing with a novel attention sparsification mechanism we call Hierarchical Windowed Attention (HWA), SparseFormer-72B achieves state-of-the-art performance on the SCROLLS benchmark (68.4 average score) while activating only 14.2 billion parameters per forward pass. On standard language modeling benchmarks, the model achieves a perplexity of 2.31 on PG-19 and 3.07 on LAMBADA, outperforming Mixtral 8x7B by 11.3% and 8.6% respectively. Training was completed on 1.4 trillion tokens using 512 NVIDIA H100 GPUs over 47 days, concluding in January 2024.
+
+---
+
+1. INTRODUCTION
+
+The scaling of large language models has produced remarkable capabilities, but the quadratic complexity of standard self-attention with respect to sequence length remains a fundamental bottleneck. Models such as GPT-4 (OpenAI, 2023), Gemini Ultra (Google DeepMind, 2024), and Mixtral 8x7B (Mistral AI, 2023) have demonstrated that mixture-of-experts (MoE) architectures can dramatically reduce inference costs while preserving model quality. However, existing MoE implementations suffer from two persistent problems: load imbalance across experts during training, and degraded performance on sequences exceeding 32,768 tokens.
+
+SparseFormer-72B addresses both limitations. Our dynamic routing mechanism, which we call Confidence-Weighted Top-K (CWT) routing, reduces expert load variance by 43% compared to the standard top-2 routing used in Mixtral. Our HWA mechanism extends effective context to 131,072 tokens with only a 1.8x increase in compute relative to 32,768-token inference.
+
+---
+
+2. MODEL ARCHITECTURE
+
+2.1 Overall Design
+
+SparseFormer-72B consists of 64 transformer layers. Layers 1 through 16 and 49 through 64 use dense attention with standard multi-head attention (32 heads, head dimension 128). Layers 17 through 48 use our HWA mechanism combined with MoE feed-forward networks. The model dimension is 8,192 throughout, with a vocabulary size of 131,072 tokens using a byte-pair encoding scheme trained on a multilingual corpus.
+
+2.2 Mixture-of-Experts Configuration
+
+Each MoE layer contains 16 experts, each with a hidden dimension of 28,672. The CWT router selects the top 2 experts per token but uses a confidence threshold of 0.35 to occasionally activate a third expert for tokens the router identifies as semantically ambiguous. In practice, the third expert is activated for approximately 7.4% of tokens during inference on natural language text.
+
+Total parameters: 72.3 billion
+Active parameters per forward pass: 14.2 billion (19.6% of total)
+Expert parameters: 58.1 billion
+Non-expert parameters: 14.2 billion
+
+2.3 Hierarchical Windowed Attention
+
+HWA divides the input sequence into local windows of 2,048 tokens and global summary tokens at a compression ratio of 64:1. Each local window attends fully within itself and to the 512 nearest global tokens. Global tokens are updated every 4 layers using a learned aggregation function. This design reduces attention complexity from O(n²) to O(n log n) for sequences beyond 8,192 tokens.
+
+We validated HWA against full attention on sequences of 32,768 tokens using the RULER benchmark (Hsieh et al., 2024), finding a degradation of only 1.2 points on the 30-hop retrieval task compared to full attention, while reducing peak memory consumption by 67%.
+
+2.4 Confidence-Weighted Top-K Routing
+
+Standard top-2 routing assigns tokens to the two experts with the highest router logits. CWT routing multiplies logits by a learned confidence scalar derived from the token's position in the sequence and its cosine similarity to a set of 256 learned prototype vectors. This modification reduces the coefficient of variation in expert load from 0.41 (standard routing) to 0.23 (CWT routing) across a 1,000-step training window.
+
+---
+
+3. TRAINING DETAILS
+
+3.1 Dataset
+
+The training corpus consists of 1.4 trillion tokens drawn from the following sources:
+
+Source                          Tokens (billions)    Percentage
+Common Crawl (filtered)         700                  50.0%
+GitHub code repositories        210                  15.0%
+ArXiv papers (2000-2023)        98                   7.0%
+Books3 corpus                   84                   6.0%
+Wikipedia (multilingual)        70                   5.0%
+PubMed Central                  56                   4.0%
+StackExchange                   42                   3.0%
+Legal documents (PILE-Law)      42                   3.0%
+Multilingual web text           98                   7.0%
+
+Data deduplication used MinHash LSH with a Jaccard similarity threshold of 0.8, removing 23.4% of the raw crawl data. Toxic content filtering used a RoBERTa-based classifier trained on 2.1 million human-labeled examples, achieving 94.7% precision at 91.2% recall on our held-out test set.
+
+3.2 Optimization
+
+Optimizer: AdamW with β₁ = 0.9, β₂ = 0.95, ε = 1×10⁻⁸
+Learning rate: Peak of 3×10⁻⁴, cosine decay to 3×10⁻⁵
+Warmup: 2,000 steps
+Batch size: 4,096 sequences of 4,096 tokens (approximately 16.8 million tokens per step)
+Gradient clipping: 1.0
+Weight decay: 0.1
+Training precision: BFloat16 with FP32 master weights
+Auxiliary load-balancing loss coefficient: 0.02
+
+Training ran from October 17, 2023 to January 3, 2024 on a cluster of 512 NVIDIA H100 80GB SXM5 GPUs interconnected with NVLink 4.0 and InfiniBand HDR 200Gb/s. Total compute consumed: approximately 6.2×10²³ FLOPs.
+
+---
+
+4. EVALUATION RESULTS
+
+4.1 Standard Benchmarks
+
+Benchmark              SparseFormer-72B    Mixtral 8x7B    LLaMA-2 70B    GPT-3.5
+MMLU (5-shot)          79.3%               70.6%           69.8%          70.0%
+HellaSwag              87.4%               81.2%           85.3%          85.5%
+ARC-Challenge          67.8%               59.7%           57.4%          61.4%
+TruthfulQA             58.2%               51.3%           44.9%          47.0%
+GSM8K (8-shot)         72.6%               52.2%           56.8%          57.1%
+HumanEval              48.8%               32.6%           29.9%          48.1%
+LAMBADA (perplexity)   3.07                3.36            3.29           3.58
+
+4.2 Long-Context Evaluation
+
+On the SCROLLS benchmark, which tests summarization, question answering, and reasoning over documents ranging from 10,000 to 100,000 tokens, SparseFormer-72B achieves an average score of 68.4, compared to 61.2 for Claude 2.1 (Anthropic, 2023) and 59.8 for GPT-4 Turbo with 128k context on the same subset of tasks.
+
+On the Needle-in-a-Haystack retrieval task at 128,000 tokens, SparseFormer-72B achieves 94.3% accuracy, compared to 91.7% for GPT-4 Turbo and 88.2% for Gemini Pro 1.0.
+
+4.3 Inference Efficiency
+
+At a batch size of 32 and sequence length of 4,096 tokens, SparseFormer-72B generates 47.3 tokens per second per H100 GPU, compared to 31.8 tokens per second for a dense 70B model of equivalent quality. At 32,768 tokens, the throughput advantage increases to 2.9x due to the subquadratic scaling of HWA.
+
+---
+
+5. ABLATION STUDIES
+
+We conducted ablations on a 7B-parameter version of the architecture trained on 200 billion tokens to isolate the contribution of each component:
+
+Component Removed              MMLU Drop    PG-19 Perplexity Increase    Expert Load CV
+Full model (baseline)          —            —                            0.23
+Remove CWT routing             -1.4%        +0.09                        0.41
+Remove HWA (use full attn)     -0.3%        +0.02                        0.23
+Remove third-expert activation -0.8%        +0.06                        0.25
+Remove prototype vectors       -1.1%        +0.07                        0.31
+
+The ablation confirms that CWT routing contributes the largest single improvement, with the prototype vector component accounting for 79% of the routing benefit.
+
+---
+
+6. LIMITATIONS AND FUTURE WORK
+
+SparseFormer-72B exhibits degraded performance on low-resource languages, achieving only 54.1% on the MMLU multilingual subset for languages with fewer than 5 billion tokens in the training corpus. Expert specialization analysis reveals that 3 of the 16 experts in layers 32-40 become predominantly activated for code tokens, suggesting that increasing expert count to 32 in these layers may improve code generation quality. We plan to release SparseFormer-72B weights under the Apache 2.0 license in Q2 2024, along with the CWT routing implementation as a standalone library compatible with Hugging Face Transformers 4.38 and later.
+
+---
+
+REFERENCES
+
+Jiang, A. et al. (2023). Mixtral of Experts. arXiv:2401.04088.
+Hsieh, C. et al. (2024). RULER: What's the Real Context Size of Your Long-Context Language Models? arXiv:2404.06654.
+Anil, R. et al. (2023). Gemini: A Family of Highly Capable Multimodal Models. arXiv:2312.11805.
+Touvron, H. et al. (2023). LLaMA 2: Open Foundation and Fine-Tuned Chat Models. arXiv:2307.09288.

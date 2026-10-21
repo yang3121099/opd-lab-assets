@@ -1,0 +1,124 @@
+OFFICE OF FISCAL ANALYSIS AND RISK MANAGEMENT
+DEPARTMENT OF THE TREASURY
+STATISTICAL DISTRIBUTION FITTING ANALYSIS OF FEDERAL REVENUE STREAMS
+Fiscal Year 2023 Annual Technical Report
+
+Report Number: OFARM-2023-TR-047
+Publication Date: March 14, 2024
+Prepared by: Dr. Melissa Hartwell, Chief Quantitative Analyst; James Okonkwo, Senior Statistician; Priya Subramaniam, Revenue Modeling Specialist
+
+---
+
+EXECUTIVE SUMMARY
+
+This technical report presents the results of statistical distribution fitting analyses applied to federal revenue data collected across fiscal year 2023 (October 1, 2022 through September 30, 2023). The Office of Fiscal Analysis and Risk Management conducted this analysis to improve probabilistic forecasting of individual income tax receipts, corporate tax receipts, and excise tax collections. Total federal revenues for FY2023 reached $4.44 trillion, representing a 9.3 percent decline from the FY2022 figure of $4.90 trillion. Understanding the distributional properties of these revenue streams is essential for budget reserve planning, debt ceiling negotiations, and quarterly cash flow management.
+
+The primary finding of this report is that individual income tax receipts are best modeled using a log-normal distribution with parameters μ = 12.847 and σ = 0.412, while corporate tax receipts conform most closely to a generalized extreme value (GEV) distribution. Excise tax collections exhibit strong seasonal periodicity and are most accurately described using a mixture model combining a normal distribution with a sinusoidal seasonal component.
+
+---
+
+SECTION 1: BACKGROUND AND MOTIVATION
+
+Federal revenue forecasting has historically relied on macroeconomic projection models developed by the Congressional Budget Office and the Office of Management and Budget. While these models perform adequately for annual aggregate projections, they provide limited guidance for intra-year cash management and tail-risk assessment. The debt ceiling crisis of May through June 2023, during which the Treasury Department's extraordinary measures were exhausted to within approximately $37 billion of the statutory limit, underscored the operational necessity of more granular probabilistic revenue modeling.
+
+Beginning in January 2023, the Office of Fiscal Analysis and Risk Management initiated a systematic program of distribution fitting across all major revenue categories. This report documents the methodology, goodness-of-fit results, and operational implications of that program.
+
+---
+
+SECTION 2: DATA DESCRIPTION
+
+Revenue data were drawn from the Treasury's Financial Management Service daily receipts database, covering the period October 1, 2017 through September 30, 2023. This six-year window provides 2,191 daily observations per revenue category, sufficient for robust distributional inference.
+
+Revenue Category Summary — FY2023
+
+Category | FY2023 Total | FY2022 Total | Year-over-Year Change
+Individual Income Taxes | $2.176 trillion | $2.632 trillion | -17.3%
+Payroll Taxes | $1.614 trillion | $1.484 trillion | +8.8%
+Corporate Income Taxes | $0.420 trillion | $0.425 trillion | -1.2%
+Excise Taxes | $0.087 trillion | $0.089 trillion | -2.2%
+Estate and Gift Taxes | $0.034 trillion | $0.037 trillion | -8.1%
+Other Revenues | $0.109 trillion | $0.233 trillion | -53.2%
+
+The sharp decline in individual income taxes reflects the expiration of pandemic-era capital gains realizations and reduced stock option exercises following the 2022 equity market correction, in which the S&P 500 declined 19.4 percent. The 53.2 percent decline in other revenues is attributable primarily to the cessation of Federal Reserve remittances, which had contributed $106.8 billion in FY2022 but fell to near zero in FY2023 as the Fed's portfolio generated operating losses.
+
+---
+
+SECTION 3: METHODOLOGY
+
+3.1 Candidate Distributions
+
+For each revenue category, the following eight candidate distributions were evaluated: normal, log-normal, gamma, Weibull, beta, generalized extreme value, Pareto, and exponential. Fitting was performed using maximum likelihood estimation (MLE) implemented in R version 4.3.1 using the fitdistrplus package (version 1.1-11) and the MASS library.
+
+3.2 Goodness-of-Fit Testing
+
+Three complementary goodness-of-fit criteria were applied:
+
+1. Kolmogorov-Smirnov (KS) test statistic, with critical value at α = 0.05
+2. Anderson-Darling (AD) test statistic, which weights tail fit more heavily than the KS test
+3. Akaike Information Criterion (AIC), used for model comparison across distributions with differing numbers of parameters
+
+Visual diagnostics including quantile-quantile plots and probability-probability plots were generated for each candidate distribution. Analysts reviewed all visual diagnostics independently before final distribution selection.
+
+3.3 Temporal Aggregation
+
+Daily receipts data were aggregated to weekly totals prior to fitting, reducing noise from day-of-week effects (particularly the Monday spike in electronic fund transfers) while preserving sufficient sample size. This yielded 313 weekly observations per revenue category across the six-year analysis window.
+
+---
+
+SECTION 4: RESULTS BY REVENUE CATEGORY
+
+4.1 Individual Income Taxes
+
+Individual income taxes represent 49.0 percent of total FY2023 federal revenues. Weekly collections ranged from a minimum of $2.3 billion (week ending January 7, 2023) to a maximum of $89.4 billion (week ending April 22, 2023, reflecting the April 18 tax filing deadline).
+
+The log-normal distribution provided the best fit, with MLE parameters μ = 12.847 and σ = 0.412. The KS test statistic was 0.038 (p-value = 0.71), and the AD statistic was 0.847, both indicating failure to reject the null hypothesis of log-normal fit at the 5 percent significance level. The AIC for the log-normal model was 4,218.3, compared to 4,301.7 for the next-best candidate (gamma distribution).
+
+The right-skewed nature of the log-normal distribution appropriately captures the asymmetric pattern of income tax receipts, where large April payments from high-income filers create a pronounced upper tail. The 95th percentile of the fitted distribution corresponds to weekly collections of $67.2 billion, while the 5th percentile corresponds to $8.9 billion.
+
+4.2 Corporate Income Taxes
+
+Corporate income taxes totaled $420 billion in FY2023. Weekly collections are characterized by extreme clustering around quarterly estimated payment dates (April 18, June 15, September 15, and December 15), creating a multimodal distribution that standard unimodal distributions cannot adequately capture.
+
+The generalized extreme value distribution with shape parameter ξ = 0.31, location parameter μ = 4.2 billion, and scale parameter σ = 3.8 billion provided the best fit among unimodal candidates (KS statistic = 0.052, p-value = 0.39). However, a two-component mixture model — combining a GEV distribution for payment-week observations with a log-normal distribution for non-payment weeks — reduced the AIC from 3,847.2 to 3,614.9, a difference of 232.3 AIC units representing overwhelming evidence in favor of the mixture model.
+
+4.3 Excise Taxes
+
+Excise tax collections of $87 billion in FY2023 are dominated by fuel taxes, tobacco taxes, and alcohol taxes, which together account for approximately 78 percent of excise receipts. These categories exhibit strong seasonal patterns driven by summer driving activity and holiday alcohol consumption.
+
+A normal distribution with seasonal adjustment — specifically, a sinusoidal component with amplitude $0.31 billion and period 52.18 weeks — provided the best fit. The base normal distribution parameters are μ = $1.67 billion per week and σ = $0.28 billion. The seasonal model reduced root mean squared error from $0.34 billion to $0.19 billion compared to the unadjusted normal model, a 44.1 percent improvement.
+
+4.4 Payroll Taxes
+
+Payroll taxes, the second-largest revenue category at $1.614 trillion, exhibited the most stable distributional behavior. Weekly collections follow a normal distribution with μ = $31.0 billion and σ = $4.2 billion. The KS test statistic of 0.029 (p-value = 0.93) indicates excellent fit. The coefficient of variation of 13.5 percent is substantially lower than the 31.8 percent coefficient of variation observed for individual income taxes, reflecting the more uniform timing of payroll withholding relative to annual filing behavior.
+
+---
+
+SECTION 5: OPERATIONAL IMPLICATIONS
+
+5.1 Cash Flow Reserve Requirements
+
+Using the fitted distributions and Monte Carlo simulation with 100,000 iterations, the 99th percentile shortfall scenario for any given four-week period in FY2024 is estimated at $47.3 billion below the baseline forecast. This figure informs the recommended minimum operating cash balance maintained in the Treasury General Account at the Federal Reserve Bank of New York. As of September 30, 2023, the Treasury General Account balance stood at $691 billion, providing substantial buffer relative to the modeled tail risk.
+
+5.2 Forecast Accuracy Benchmarking
+
+Applying the fitted distributions to out-of-sample data from October through December 2023 (the first quarter of FY2024), the log-normal model for individual income taxes produced a mean absolute percentage error of 6.8 percent at the weekly level, compared to 11.4 percent for the previously used linear trend model. This represents a 40.4 percent improvement in forecast accuracy.
+
+---
+
+SECTION 6: LIMITATIONS AND FUTURE WORK
+
+The distribution fitting approach documented in this report assumes stationarity of the underlying revenue-generating process. Structural breaks — such as major tax legislation, economic recessions, or pandemic-related disruptions — can invalidate fitted parameters. The Tax Cuts and Jobs Act of 2017 required complete re-estimation of all distribution parameters and represents a cautionary example of model fragility.
+
+Future work will incorporate regime-switching models to accommodate structural breaks, and will extend the analysis to customs duties and Federal Reserve deposits. Additionally, the Office plans to implement Bayesian updating procedures that allow distribution parameters to be revised in real time as new weekly data become available, rather than relying solely on the annual re-estimation cycle documented here.
+
+---
+
+SECTION 7: CONCLUSIONS
+
+Statistical distribution fitting provides a rigorous and operationally useful framework for characterizing federal revenue uncertainty. The log-normal distribution for individual income taxes, the GEV mixture model for corporate taxes, the seasonally adjusted normal model for excise taxes, and the normal distribution for payroll taxes collectively provide a probabilistic foundation for cash management, reserve planning, and risk communication. The 40.4 percent improvement in individual income tax forecast accuracy relative to the legacy linear trend model demonstrates the practical value of this approach.
+
+This report will be updated annually. The next edition, covering FY2024, is scheduled for publication in March 2025.
+
+---
+
+Contact: Office of Fiscal Analysis and Risk Management, U.S. Department of the Treasury, 1500 Pennsylvania Avenue NW, Washington, DC 20220. Technical inquiries may be directed to melissa.hartwell@treasury.gov.

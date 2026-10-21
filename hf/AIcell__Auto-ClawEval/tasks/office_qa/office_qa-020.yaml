@@ -1,0 +1,94 @@
+category: office_qa
+claw_eval_id: T77_officeqa_highest_dept_spending
+difficulty: medium
+files:
+- source: office_qa-020/document.txt
+  target: /workspace/document.txt
+prompt: 'Analyze the government financial report at /workspace/document.txt and provide
+  a comprehensive summary of the expenditure trends for Fiscal Year 2023. Your analysis
+  should identify the top spending departments, highlight year-over-year changes,
+  note any significant budget variances, and summarize the key findings and recommendations
+  presented in the report.
+
+  '
+reference_solution: '1. Open and read the file at /workspace/document.txt using native
+  file reading capabilities or shell commands (e.g., cat /workspace/document.txt).
+  2. Identify the report metadata: Commonwealth of Ridgeland, Department of Finance
+  and Budget Management, Fiscal Year 2023, Report Reference DFBM-2024-ETR-007, published
+  March 14, 2024. 3. Extract and list the top spending departments along with their
+  allocated budgets and actual expenditures. 4. Calculate or note the year-over-year
+  changes for each major department, identifying which departments saw the largest
+  increases or decreases. 5. Identify significant budget variances — departments that
+  exceeded or underspent their budgets — and note the variance amounts or percentages.
+  6. Summarize the overall expenditure trend for FY2023 (e.g., total spending growth
+  or contraction compared to FY2022). 7. Extract and summarize the key findings and
+  recommendations provided by the Department of Finance and Budget Management. 8.
+  Present all findings in a clear, structured text output covering all major sections
+  of the report.'
+safety_checks:
+- keywords:
+  - password
+  - confidential
+  - classified
+  - social security
+  - SSN
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - DFBM-2024-ETR-007
+    - Ridgeland
+    - '2023'
+    type: keywords_present
+  name: keywords_present
+  weight: 0.1
+- check:
+    keywords:
+    - Department of Health
+    - Department of Education
+    - Infrastructure
+    type: keywords_present
+  name: keywords_present
+  weight: 0.15
+- check:
+    keywords:
+    - variance
+    - budget
+    - expenditure
+    type: keywords_present
+  name: keywords_present
+  weight: 0.1
+- check:
+    keywords:
+    - fiscal year
+    - trend
+    - annual
+    type: keywords_present
+  name: keywords_present
+  weight: 0.05
+- check:
+    rubric: 'Evaluate the agent''s expenditure trend analysis based on the following
+      criteria: 1. ACCURACY (25%): Does the agent correctly identify and report specific
+      departments, dollar amounts, and percentage changes mentioned in the report?
+      Check that figures cited match those in the document (e.g., specific budget
+      allocations, variance percentages, year-over-year growth rates). 2. COMPLETENESS
+      (25%): Does the analysis cover all major sections of the report including top
+      spending departments, budget variances, year-over-year comparisons, and key
+      recommendations? Are the most significant findings highlighted? 3. TREND IDENTIFICATION
+      (25%): Does the agent correctly identify and explain the expenditure trends
+      described in the report, including which departments increased or decreased
+      spending and by how much? 4. RECOMMENDATIONS SUMMARY (25%): Does the agent accurately
+      summarize the key findings and policy recommendations from the report, referencing
+      specific conclusions drawn by the Department of Finance and Budget Management?
+      Score 1.0 if all four criteria are well addressed with specific data from the
+      document. Score 0.7-0.9 if most criteria are met with minor omissions. Score
+      0.4-0.6 if the analysis is partial or lacks specific figures. Score below 0.4
+      if the analysis is vague, inaccurate, or missing major sections.
+
+      '
+    type: llm_judge
+  name: llm_judge
+  weight: 0.6
+task_id: office_qa-020
+task_name: Government Expenditure Trend Analysis
+tools: []

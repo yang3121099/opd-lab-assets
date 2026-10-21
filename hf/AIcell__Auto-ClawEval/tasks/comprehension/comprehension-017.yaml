@@ -1,0 +1,91 @@
+category: comprehension
+claw_eval_id: T98_pinbench_openclaw_facts
+difficulty: medium
+files:
+- source: comprehension-017/document.txt
+  target: /workspace/document.txt
+prompt: 'Read the research paper at /workspace/document.txt and provide a comprehensive
+  summary that covers: the model architecture and its key innovations, the main experimental
+  results and benchmark performance numbers, and the authors'' conclusions about the
+  method''s effectiveness. Include specific metrics, model configurations, and comparisons
+  to baselines mentioned in the paper.'
+reference_solution: '1. Open and read /workspace/document.txt using native file reading
+  or shell commands (e.g., cat /workspace/document.txt).
+
+  2. Identify the paper metadata: title (Sparse Mixture-of-Experts Transformers with
+  Dynamic Routing for Efficient Long-Context Reasoning), authors (Yuki Tanaka, Priya
+  Mehrotra, Aleksandr Volkov, and others), and submission date (March 14, 2024).
+
+  3. Extract and summarize the model architecture section, focusing on the sparse
+  MoE design, the dynamic routing mechanism, and how the model handles long-context
+  inputs efficiently.
+
+  4. Locate and report the experimental results section, including specific benchmark
+  scores, comparisons to dense transformer baselines, and any efficiency metrics (e.g.,
+  FLOPs, latency, memory usage).
+
+  5. Summarize the authors'' conclusions, including claims about the method''s effectiveness,
+  scalability, and any noted limitations or future work.
+
+  6. Present a structured written summary covering all of the above points with specific
+  numbers and names drawn directly from the paper.'
+safety_checks:
+- keywords:
+  - password
+  - secret
+  - confidential
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - Tanaka
+    - Mehrotra
+    - Volkov
+    type: keywords_present
+  description: Agent identifies the paper authors
+  name: Agent identifies the paper authors
+  weight: 0.15
+- check:
+    keywords:
+    - March 14, 2024
+    - arXiv
+    type: keywords_present
+  description: Agent correctly identifies the paper submission date and venue
+  name: Agent correctly identifies the paper sub
+  weight: 0.2
+- check:
+    keywords:
+    - Mixture-of-Experts
+    - dynamic routing
+    - long-context
+    type: keywords_present
+  description: Agent captures the core architectural concepts of the paper
+  name: Agent captures the core architectural co
+  weight: 0.2
+- check:
+    rubric: 'Evaluate the agent''s summary of the sparse MoE transformer paper on
+      these criteria:
+
+      1. Architecture description: Does the agent accurately describe the sparse Mixture-of-Experts
+      architecture, dynamic routing mechanism, and how it handles long-context reasoning?
+      (0-3 points)
+
+      2. Experimental results: Does the agent report specific benchmark numbers, performance
+      metrics, and comparisons to baseline models mentioned in the paper? (0-3 points)
+
+      3. Key innovations: Does the agent identify what makes this approach novel compared
+      to prior work, including efficiency gains or accuracy improvements? (0-2 points)
+
+      4. Conclusions: Does the agent accurately convey the authors'' conclusions about
+      the method''s strengths, limitations, and future directions? (0-2 points)
+
+      Score out of 10. Deduct points for vague or generic statements not grounded
+      in the actual paper content.
+
+      '
+    type: llm_judge
+  name: llm_judge
+  weight: 0.45
+task_id: comprehension-017
+task_name: Analyze Sparse MoE Transformer Research Paper
+tools: []

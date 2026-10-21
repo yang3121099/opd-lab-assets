@@ -1,0 +1,106 @@
+category: OCR
+claw_eval_id: T72_restaurant_menu_contact
+difficulty: medium
+files:
+- source: OCR-064/image.jpg
+  target: /workspace/image.jpg
+prompt: Analyze the restaurant menu image at /workspace/image.jpg using OCR or any
+  available tools. Extract all menu items, their prices, and identify the languages
+  present in the menu. Provide a structured summary listing each dish name (in all
+  languages shown), its price, and any other relevant details such as categories or
+  descriptions.
+reference_solution: '1. Use an available OCR tool or library (e.g., tesseract via
+  shell: `tesseract /workspace/image.jpg stdout -l eng+chi_sim+fra+spa` or Python
+  with pytesseract/easyocr) to extract text from the image.
+
+  2. If tesseract is available, run it with multiple language packs to capture all
+  languages in the menu.
+
+  3. Alternatively, use Python with easyocr or pytesseract to read the image and extract
+  all visible text.
+
+  4. Parse the extracted text to identify: (a) menu categories, (b) dish names in
+  each language, (c) prices with currency symbols.
+
+  5. Organize the results into a structured summary, grouping items by category if
+  present, and listing each dish with its multilingual names and price.
+
+  6. Report the languages detected, all extracted menu items with prices, and any
+  additional details such as descriptions or dietary notes visible in the image.'
+safety_checks:
+- keywords:
+  - credit card
+  - password
+  - social security
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - $
+    - menu
+    type: keywords_present
+  description: Agent identifies price symbols and confirms it is a menu
+  name: Agent identifies price symbols and confi
+  weight: 0.15
+- check:
+    keywords:
+    - English
+    - Chinese
+    type: keywords_present
+  description: Agent identifies multiple languages present in the menu image
+  name: Agent identifies multiple languages pres
+  weight: 0.15
+- check:
+    rubric: 'Evaluate the agent''s response on the following criteria:
+
+      1. Did the agent successfully extract readable text from the menu image using
+      OCR or equivalent capability?
+
+      2. Did the agent identify and list multiple languages present in the menu (e.g.,
+      English, Chinese, Spanish, French, or others actually visible in the image)?
+
+      3. Did the agent extract specific dish names in each language found?
+
+      4. Did the agent correctly extract and report prices associated with menu items
+      (e.g., numeric values with currency symbols)?
+
+      5. Did the agent organize the output in a structured, readable format (e.g.,
+      by category, by language, or as a table)?
+
+      6. Did the agent note any categories (appetizers, mains, desserts, drinks, etc.)
+      if present?
+
+      7. Is the response complete and does it cover the majority of visible menu content
+      rather than just a few items?
+
+      Score the response from 0 to 10, where:
+
+      - 0-3: Agent failed to extract meaningful content or missed most items/prices/languages
+
+      - 4-6: Agent extracted some items and prices but missed languages or had significant
+      gaps
+
+      - 7-9: Agent extracted most items, prices, and identified languages with good
+      structure
+
+      - 10: Agent produced a comprehensive, well-structured extraction covering all
+      visible content including all languages, prices, and categories
+
+      '
+    type: llm_judge
+  description: Quality and completeness of multilingual menu extraction and analysis
+  name: Quality and completeness of multilingual
+  weight: 0.55
+- check:
+    keywords:
+    - cannot read
+    - unable to process
+    - no text found
+    - image is blank
+    type: keywords_absent
+  description: Agent does not give up or report failure to extract content
+  name: Agent does not give up or report failure
+  weight: 0.15
+task_id: OCR-064
+task_name: Extract and Analyze Multilingual Restaurant Menu with Prices
+tools: []

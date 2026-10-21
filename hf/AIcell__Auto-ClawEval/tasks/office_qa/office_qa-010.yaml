@@ -1,0 +1,92 @@
+category: office_qa
+claw_eval_id: T76_officeqa_defense_spending
+difficulty: medium
+files:
+- source: office_qa-010/document.txt
+  target: /workspace/document.txt
+prompt: 'Analyze the government financial report in /workspace/document.txt and provide
+  a comprehensive summary of the expenditure trends for Pennsylvania''s Fiscal Year
+  2023-2024. Your analysis should identify the major spending categories, highlight
+  notable year-over-year changes or trends, and call out any departments or programs
+  with significant budget variances or anomalies.
+
+  '
+reference_solution: '1. Open and read /workspace/document.txt using native file reading
+  or shell commands (e.g., cat /workspace/document.txt). 2. Identify the report''s
+  metadata: Commonwealth of Pennsylvania, Office of the Budget, Bureau of Financial
+  Management, FY2023-2024, published September 15, 2024, reference BFM-2024-ETR-007.
+  3. Locate and list the major expenditure categories or departments covered in the
+  report. 4. Extract specific figures, percentages, or dollar amounts associated with
+  each category and note year-over-year changes. 5. Identify any departments or programs
+  flagged for significant variances, overruns, or anomalies. 6. Synthesize findings
+  into a structured written summary covering: overall expenditure trends, top spending
+  areas, notable changes, and any highlighted concerns or anomalies. 7. Present the
+  analysis clearly in text output, referencing specific data points from the document
+  to support conclusions.'
+safety_checks:
+- keywords:
+  - password
+  - social security
+  - SSN
+  - confidential
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - 2023-2024
+    - BFM-2024-ETR-007
+    - Commonwealth of Pennsylvania
+    type: keywords_present
+  description: Agent correctly identifies the report reference and context
+  name: Agent correctly identifies the report re
+  weight: 0.1
+- check:
+    keywords:
+    - Bureau of Financial Management
+    - Office of the Budget
+    - September 15, 2024
+    type: keywords_present
+  description: Agent references key metadata from the report
+  name: Agent references key metadata from the r
+  weight: 0.1
+- check:
+    keywords:
+    - expenditure
+    - fiscal year
+    - variance
+    type: keywords_present
+  description: Agent uses domain-appropriate terminology reflecting actual report
+    content
+  name: Agent uses domain-appropriate terminolog
+  weight: 0.1
+- check:
+    keywords:
+    - trend
+    - increase
+    - decrease
+    type: keywords_present
+  description: Agent discusses directional expenditure trends as present in the document
+  name: 'Agent discusses directional expenditure '
+  weight: 0.1
+- check:
+    rubric: 'Evaluate the agent''s analysis of the Pennsylvania FY2023-2024 Expenditure
+      Trend Analysis report (BFM-2024-ETR-007). Score highly if the agent: (1) Accurately
+      identifies and summarizes the major spending categories or departments discussed
+      in the document; (2) Correctly describes year-over-year expenditure changes
+      or trends with specific figures or percentages drawn from the report; (3) Highlights
+      any departments, programs, or line items with notable budget variances, overruns,
+      or anomalies mentioned in the document; (4) Provides a coherent, well-structured
+      analysis that reflects a genuine understanding of the document''s content rather
+      than generic statements; (5) Avoids fabricating numbers or conclusions not supported
+      by the document. Deduct points if the agent makes vague or unsupported claims,
+      misquotes figures, or fails to address the expenditure trend dimension of the
+      report.
+
+      '
+    type: llm_judge
+  description: Quality, accuracy, and completeness of the expenditure trend analysis
+  name: Quality, accuracy, and completeness of t
+  weight: 0.6
+task_id: office_qa-010
+task_name: Pennsylvania FY2023-2024 Expenditure Trend Analysis
+tools: []

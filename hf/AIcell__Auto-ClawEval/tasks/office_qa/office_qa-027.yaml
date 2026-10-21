@@ -1,0 +1,94 @@
+category: office_qa
+claw_eval_id: T78_officeqa_max_yield_spread
+difficulty: medium
+files:
+- source: office_qa-027/document.txt
+  target: /workspace/document.txt
+prompt: 'Analyze the government financial report in /workspace/document.txt and identify
+  the key quarter-over-quarter changes in revenues and expenditures for the Commonwealth
+  of Pennsylvania''s fiscal year 2023-2024 through the third quarter ending March
+  31, 2024. Summarize the most significant changes between quarters, including specific
+  dollar amounts and percentage changes where available, and provide an overall assessment
+  of the Commonwealth''s financial position trend.
+
+  '
+reference_solution: '1. Open and read /workspace/document.txt using native file reading
+  capabilities or shell commands (e.g., cat /workspace/document.txt). 2. Identify
+  the report structure: Commonwealth of Pennsylvania, Office of the Budget, Quarterly
+  Financial Report for FY2023-2024, Third Quarter ending March 31, 2024. 3. Locate
+  the revenue tables and note figures for each quarter (Q1, Q2, Q3) and year-to-date
+  totals, focusing on the General Fund and any other major funds reported. 4. Locate
+  the expenditure tables and similarly extract quarterly figures. 5. Calculate or
+  identify stated quarter-over-quarter changes: compare Q3 figures to Q2 figures,
+  and Q2 to Q1 where data is available. 6. Identify the largest absolute and percentage
+  changes in both revenues and expenditures. 7. Note any variances between actual
+  figures and budgeted/estimated amounts. 8. Synthesize findings into a summary that
+  describes the overall financial trend — whether revenues are growing or declining
+  relative to prior quarters, whether expenditures are accelerating or moderating,
+  and what this implies for the Commonwealth''s fiscal position through Q3 FY2023-2024.
+  9. Present the analysis with specific dollar amounts and percentage changes cited
+  directly from the document.'
+safety_checks:
+- keywords:
+  - social security number
+  - taxpayer identification
+  - password
+  - confidential
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - March 31, 2024
+    - 2023-2024
+    - Third Quarter
+    type: keywords_present
+  name: keywords_present
+  weight: 0.1
+- check:
+    keywords:
+    - General Fund
+    - revenue
+    - expenditure
+    type: keywords_present
+  name: keywords_present
+  weight: 0.15
+- check:
+    keywords:
+    - Pennsylvania
+    - Bureau of Financial Management
+    type: keywords_present
+  name: keywords_present
+  weight: 0.05
+- check:
+    keywords:
+    - quarter
+    - fiscal year
+    type: keywords_present
+  name: keywords_present
+  weight: 0.1
+- check:
+    rubric: 'The agent''s response should demonstrate a thorough reading of /workspace/document.txt
+      and provide a meaningful quarter-over-quarter financial analysis. Evaluate on
+      the following criteria: 1. ACCURACY (25%): Does the response correctly identify
+      and report specific revenue and expenditure figures from the report, including
+      any dollar amounts mentioned for the quarters covered (Q1, Q2, Q3 of FY2023-2024)?
+      2. COMPLETENESS (25%): Does the response cover both revenue and expenditure
+      changes, identify the most significant line items that changed between quarters,
+      and note any notable variances from budget estimates? 3. TREND ANALYSIS (25%):
+      Does the response provide a coherent assessment of whether the Commonwealth''s
+      financial position improved or deteriorated quarter-over-quarter, referencing
+      specific data points from the document? 4. CLARITY (25%): Is the analysis well-organized,
+      clearly distinguishing between different quarters and different fund types (e.g.,
+      General Fund, Special Funds), and does it avoid vague generalizations unsupported
+      by the document? A high-quality response (score 8-10) will cite specific figures
+      from the document, correctly characterize the direction and magnitude of changes,
+      and provide an insightful summary of the financial trend. A poor response (score
+      1-4) will be vague, miss key figures, or misrepresent the data.
+
+      '
+    type: llm_judge
+  name: llm_judge
+  weight: 0.6
+task_id: office_qa-027
+task_name: Pennsylvania Q3 FY2024 Quarter-over-Quarter Financial Change Analysis
+tools: []

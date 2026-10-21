@@ -1,0 +1,139 @@
+SOFTWARE PLATFORM ANALYSIS REPORT
+Use Cases and Gap Assessment
+Prepared by: Enterprise Technology Advisory Group
+Date: September 14, 2023
+Version: 2.1 — Internal Distribution
+
+─────────────────────────────────────────────
+EXECUTIVE SUMMARY
+─────────────────────────────────────────────
+
+This report presents findings from a structured evaluation of three enterprise software platforms conducted between June 1 and August 31, 2023. The assessment was commissioned following a Q2 2023 internal audit that identified 23 distinct workflow inefficiencies across the Operations, Finance, and Customer Success divisions. The platforms evaluated are Salesforce Sales Cloud (Enterprise Edition), Microsoft Dynamics 365 Business Central, and HubSpot CRM Professional.
+
+The evaluation team consisted of 11 stakeholders drawn from IT, Finance, Sales, and Customer Operations. A total of 847 hours of combined user testing, vendor interviews, and data analysis were logged during the assessment period. This report identifies active use cases, platform strengths, and critical capability gaps that must be addressed before any procurement decision is finalized.
+
+─────────────────────────────────────────────
+SECTION 1: EVALUATION METHODOLOGY
+─────────────────────────────────────────────
+
+The assessment followed a four-phase methodology:
+
+Phase 1 — Requirements Gathering (June 1–15, 2023): Stakeholder interviews with 34 employees across 6 departments. A total of 112 functional requirements were documented and categorized into 9 capability domains.
+
+Phase 2 — Platform Demonstration and Sandbox Testing (June 16 – July 28, 2023): Each vendor provided a 90-day sandbox environment. Testers executed 64 scripted test scenarios per platform, totaling 192 individual test runs.
+
+Phase 3 — Data Integration Assessment (July 29 – August 18, 2023): Technical teams evaluated API compatibility, data migration complexity, and integration with existing tools including NetSuite ERP (version 2022.2), Zendesk Support Suite, and Tableau Desktop 2023.1.
+
+Phase 4 — Gap Analysis and Scoring (August 19–31, 2023): Requirements were scored on a 1–5 scale across all platforms. Weighted scoring applied heavier coefficients to mission-critical requirements (weight: 3.0) versus nice-to-have features (weight: 1.0).
+
+─────────────────────────────────────────────
+SECTION 2: PLATFORM OVERVIEW AND LICENSING COSTS
+─────────────────────────────────────────────
+
+Platform | Vendor | Annual License Cost (50 users) | Implementation Estimate | Support Tier
+Salesforce Sales Cloud Enterprise | Salesforce Inc. | $90,000 | $145,000–$210,000 | Premier ($18,000/yr)
+Microsoft Dynamics 365 Business Central | Microsoft Corp. | $54,000 | $95,000–$130,000 | Unified ($22,500/yr)
+HubSpot CRM Professional | HubSpot Inc. | $43,200 | $35,000–$60,000 | Professional (included)
+
+Note: All costs reflect calendar year 2023 pricing as quoted by vendor account executives on July 10, 2023. Salesforce pricing reflects a 12% discount negotiated from list price of $102,000.
+
+─────────────────────────────────────────────
+SECTION 3: USE CASE ANALYSIS
+─────────────────────────────────────────────
+
+3.1 Sales Pipeline Management
+
+All three platforms support core pipeline management. Salesforce demonstrated the strongest performance in this domain, successfully completing 61 of 64 test scenarios (95.3% pass rate). Dynamics 365 completed 57 of 64 (89.1%), and HubSpot completed 59 of 64 (92.2%).
+
+Key differentiator: Salesforce's Einstein Lead Scoring feature, available in the Enterprise tier, automatically ranked 500 test leads with 87% accuracy against manually scored benchmarks. HubSpot's equivalent predictive scoring tool reached 74% accuracy in the same test. Dynamics 365 does not offer native predictive lead scoring without a separate Azure AI Services subscription, which adds approximately $8,400 annually at projected usage volumes.
+
+3.2 Customer Service and Case Management
+
+This domain was weighted most heavily (coefficient: 3.0) due to the Customer Success team's stated priority of reducing average case resolution time from its current 4.2 days to a target of 2.5 days.
+
+- Salesforce: Native case management through Service Cloud requires a separate license at $75 per user per month, adding $45,000 annually to the base cost. Integration with existing Zendesk environment rated 4 out of 5 by technical reviewers.
+- Dynamics 365: Customer Service module is included in the Business Central license at the evaluated tier. Zendesk integration requires a third-party connector (Scribe Online, approximately $3,600/year). Rated 3 out of 5 for integration quality.
+- HubSpot: Service Hub Professional supports ticketing and SLA management natively. Zendesk integration is available via native connector at no additional cost. Rated 4 out of 5.
+
+3.3 Financial Reporting and ERP Integration
+
+The Finance team requires bi-directional data sync with NetSuite ERP at a minimum frequency of every 4 hours. This requirement was classified as mission-critical.
+
+- Salesforce: Achieved 4-hour sync via MuleSoft Anypoint Platform connector. MuleSoft licensing adds $36,000 annually. Total integration cost rated as high.
+- Dynamics 365: Native NetSuite connector available through Microsoft AppSource. Sync tested at 2-hour intervals with 99.4% data fidelity across 15,000 test records. No additional licensing required.
+- HubSpot: No native NetSuite integration. Third-party solution (Celigo, $7,200/year) achieved 6-hour sync intervals, failing to meet the 4-hour requirement. This represents a critical gap.
+
+3.4 Marketing Automation
+
+The Marketing team currently uses Mailchimp (Standard plan, $350/month) and requires consolidation into a single platform.
+
+- HubSpot: Strongest performer in this domain. Email automation workflows tested with 10,000-record segments achieved 99.1% delivery rate and sub-3-second send latency. Native A/B testing, landing page builder, and campaign attribution reporting all passed testing.
+- Salesforce: Marketing Cloud Account Engagement (formerly Pardot) requires a separate license starting at $1,250/month for 10,000 contacts. Adds significant cost.
+- Dynamics 365: Marketing module available but limited. Tested email campaigns showed a 94.7% delivery rate and lacked native multi-step drip campaign functionality without ClickDimensions add-on ($6,000/year).
+
+─────────────────────────────────────────────
+SECTION 4: GAP ASSESSMENT SUMMARY
+─────────────────────────────────────────────
+
+The following table summarizes critical and moderate gaps identified per platform across the 9 evaluated capability domains.
+
+Capability Domain | Salesforce | Dynamics 365 | HubSpot
+Sales Pipeline | 0 critical / 1 moderate | 1 critical / 2 moderate | 0 critical / 1 moderate
+Case Management | 1 critical (cost) | 1 critical / 1 moderate | 0 critical / 0 moderate
+ERP Integration | 0 critical / 1 moderate | 0 critical / 0 moderate | 1 critical / 1 moderate
+Marketing Automation | 1 critical (cost) | 1 critical / 2 moderate | 0 critical / 0 moderate
+Reporting & Analytics | 0 critical / 0 moderate | 0 critical / 1 moderate | 1 critical / 2 moderate
+Mobile Access | 0 critical / 0 moderate | 0 critical / 1 moderate | 0 critical / 1 moderate
+Role-Based Access Control | 0 critical / 0 moderate | 0 critical / 0 moderate | 0 critical / 1 moderate
+Workflow Automation | 0 critical / 1 moderate | 1 critical / 1 moderate | 0 critical / 0 moderate
+Data Security & Compliance | 0 critical / 0 moderate | 0 critical / 0 moderate | 0 critical / 1 moderate
+
+TOTALS | 2 critical / 3 moderate | 3 critical / 8 moderate | 2 critical / 7 moderate
+
+─────────────────────────────────────────────
+SECTION 5: WEIGHTED SCORING RESULTS
+─────────────────────────────────────────────
+
+After applying the weighted scoring model across all 112 requirements, final composite scores (maximum 500 points) were:
+
+- Salesforce Sales Cloud Enterprise: 412 points (82.4%)
+- Microsoft Dynamics 365 Business Central: 374 points (74.8%)
+- HubSpot CRM Professional: 381 points (76.2%)
+
+Salesforce leads primarily due to its ecosystem depth and AI capabilities. However, when total 3-year cost of ownership is factored in — including licensing, implementation, support, and identified add-on requirements — the picture shifts materially:
+
+Platform | 3-Year TCO (50 users)
+Salesforce (with Service Cloud + MuleSoft) | $687,000
+Dynamics 365 (with Unified Support) | $394,500
+HubSpot (with Celigo + gap mitigations) | $318,600
+
+─────────────────────────────────────────────
+SECTION 6: RECOMMENDATIONS AND NEXT STEPS
+─────────────────────────────────────────────
+
+Based on the gap assessment and TCO analysis, the evaluation team offers the following recommendations:
+
+1. If maximizing functional coverage is the primary objective, Salesforce Sales Cloud Enterprise is the recommended platform, contingent on budget approval for the full $687,000 three-year commitment. A formal business case should be submitted to the CFO by October 6, 2023.
+
+2. If cost efficiency is prioritized and the ERP sync gap can be resolved, HubSpot CRM Professional presents the strongest value proposition at $318,600 over three years — a 53.6% reduction versus Salesforce. The Celigo integration gap requires escalation to the NetSuite administrator team to determine whether a custom API solution could achieve the required 4-hour sync threshold.
+
+3. Microsoft Dynamics 365 is not recommended as a primary selection given its 3 critical gaps and the highest moderate gap count (8), despite competitive licensing costs.
+
+A vendor negotiation window is recommended no later than November 1, 2023, to take advantage of Salesforce's fiscal Q3 close on October 31 and HubSpot's annual pricing lock-in deadline of December 15, 2023.
+
+─────────────────────────────────────────────
+APPENDIX A: EVALUATION TEAM
+─────────────────────────────────────────────
+
+Lead Analyst: Rachel Okonkwo, Director of Enterprise Architecture
+Technical Lead: James Ferreira, Senior Systems Engineer
+Finance Representative: Priya Nambiar, VP of Financial Planning
+Customer Success Representative: Tom Whitfield, Director of Customer Operations
+Project Coordinator: Dana Solis, IT Program Management Office
+
+Report reviewed and approved by: CTO Marcus Delacroix, September 14, 2023
+
+─────────────────────────────────────────────
+Document Classification: Internal — Restricted Distribution
+Next Review Date: December 1, 2023
+─────────────────────────────────────────────

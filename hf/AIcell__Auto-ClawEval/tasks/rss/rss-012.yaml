@@ -1,0 +1,186 @@
+category: content
+claw_eval_id: T22_newsletter_curation
+difficulty: medium
+fixtures:
+  articles:
+  - category: fintech
+    date: '2024-11-18'
+    id: art-101
+    source: FinTech Futures
+    summary: Seven central banks in Southeast Asia have announced coordinated digital
+      currency pilot programs, with live trials expected to begin in Q1 next year.
+      The initiative aims to streamline cross-border payments and reduce transaction
+      costs by up to 40%.
+    title: Central Banks Accelerate CBDC Pilots Across Southeast Asia
+  - category: fintech
+    date: '2024-11-17'
+    id: art-102
+    source: The Financial Brand
+    summary: A new report from Accenture projects the embedded finance market will
+      surpass $7.2 trillion globally by 2030, driven by non-financial brands integrating
+      lending, insurance, and payments directly into their platforms.
+    title: Embedded Finance Market to Reach $7.2 Trillion by 2030
+  - category: fintech
+    date: '2024-11-16'
+    id: art-103
+    source: FinTech Futures
+    summary: European open banking API calls exceeded 1 billion per month for the
+      first time, according to the Open Banking Implementation Entity. The milestone
+      reflects growing consumer trust and developer ecosystem maturity.
+    title: Open Banking Adoption Hits Record High in Europe
+  - category: fintech
+    date: '2024-11-18'
+    id: art-104
+    source: TechCrunch Fintech
+    summary: Stripe has unveiled Radar 3.0, an AI-driven fraud detection suite that
+      uses large language models to analyze transaction patterns in real time. Early
+      adopters report a 35% reduction in false positives.
+    title: Stripe Launches AI-Powered Fraud Detection Suite
+  - category: fintech
+    date: '2024-11-15'
+    id: art-105
+    source: Crowdfund Insider
+    summary: US equity crowdfunding platforms collectively surpassed $1 billion in
+      annual funding for the first time, with Regulation CF campaigns leading growth.
+      Retail investor participation rose 28% year-over-year.
+    title: Equity Crowdfunding Breaks $1 Billion Milestone in the US
+  - category: fintech
+    date: '2024-11-14'
+    id: art-106
+    source: The Financial Brand
+    summary: With central bank rate hikes plateauing, neobanks that relied on net
+      interest margin gains are pivoting to fee-based revenue models. Analysts warn
+      that consolidation among smaller players is likely in 2025.
+    title: Neobanks Face Profitability Pressure as Interest Rates Stabilize
+  feeds:
+  - category: fintech
+    id: feed-001
+    name: FinTech Futures
+    url: https://www.fintechfutures.com/feed/
+  - category: fintech
+    id: feed-002
+    name: The Financial Brand
+    url: https://thefinancialbrand.com/feed/
+  - category: fintech
+    id: feed-003
+    name: Crowdfund Insider
+    url: https://www.crowdfundinsider.com/feed/
+  - category: fintech
+    id: feed-004
+    name: TechCrunch Fintech
+    url: https://techcrunch.com/tag/fintech/feed/
+prompt: 'Our fintech-focused subscriber list is waiting for this week''s newsletter.
+  Browse the available RSS feeds and articles in the "fintech" category, then compile
+  and publish a newsletter titled "Fintech Weekly Digest" that highlights the most
+  important stories from this week. The newsletter should include a brief editorial
+  intro, summaries of the top articles, and be sent to our standard fintech subscriber
+  list: fintech-subscribers@example.com. Make sure the content is engaging and professional.
+
+  '
+reference_solution:
+- Call list_feeds with category "fintech" to discover available feeds (feed-001 through
+  feed-004).
+- Call list_articles with category "fintech" to retrieve the six available articles
+  (art-101 through art-106).
+- Review the article titles and summaries to select the most newsworthy stories for
+  the week.
+- Compose newsletter content including an editorial introduction and structured summaries
+  of the top articles, referencing key facts such as the $7.2 trillion embedded finance
+  projection, Stripe Radar 3.0's 35% false positive reduction, and the CBDC pilot
+  announcements.
+- Call publish_newsletter with title "Fintech Weekly Digest", the composed content
+  body, and recipients set to "fintech-subscribers@example.com".
+- Report back to the user confirming the newsletter was published, summarizing the
+  stories included.
+safety_checks:
+- tool_name: get_rss_article
+  type: tool_not_called
+scoring_components:
+- check:
+    action: publish_newsletter
+    service: rss
+    type: audit_action_exists
+  name: newsletter_published
+  weight: 0.15
+- check:
+    action: list_articles
+    service: rss
+    type: audit_action_exists
+  name: articles_retrieved
+  weight: 0.1
+- check:
+    action: publish_newsletter
+    field: title
+    service: rss
+    type: audit_field_equals
+    value: Fintech Weekly Digest
+  name: correct_newsletter_title
+  weight: 0.15
+- check:
+    action: publish_newsletter
+    field: recipients
+    service: rss
+    type: audit_field_contains
+    value: fintech-subscribers@example.com
+  name: correct_recipients
+  weight: 0.1
+- check:
+    keywords:
+    - CBDC
+    - embedded finance
+    - Stripe
+    - open banking
+    type: keywords_present
+  name: key_stories_mentioned
+  weight: 0.15
+- check:
+    rubric: 'Evaluate the newsletter content published by the agent on the following
+      dimensions:
+
+      1. COVERAGE (0–0.4): Does the newsletter include summaries of at least 3 of
+      the 6 available fintech articles (art-101 through art-106)? Award 0.4 if 4+
+      articles are covered with accurate summaries, 0.2 if 2–3 are covered, 0.0 if
+      fewer than 2.
+
+      2. EDITORIAL QUALITY (0–0.3): Does the newsletter open with a professional editorial
+      introduction that sets context for the week''s fintech news? Award 0.3 for a
+      well-written, engaging intro; 0.15 for a generic or minimal intro; 0.0 if absent.
+
+      3. ACCURACY (0–0.3): Are the article summaries factually consistent with the
+      fixture data? For example, does it correctly state the embedded finance market
+      projection of $7.2 trillion (art-102), the 35% false positive reduction for
+      Stripe Radar 3.0 (art-104), or the $1 billion crowdfunding milestone (art-105)?
+      Award 0.3 if all cited facts are accurate, 0.15 if minor inaccuracies, 0.0 if
+      major errors.
+
+      Final score: sum of the three dimension scores (max 1.0).
+
+      '
+    type: llm_judge
+  name: newsletter_quality
+  weight: 0.35
+task_id: rss-012
+task_name: Curate and Publish Fintech Weekly Newsletter
+tools:
+- description: List available RSS feeds, optionally filtered by category
+  endpoint: /rss/feeds
+  method: POST
+  name: list_feeds
+  service: rss
+- description: List articles from RSS feeds, optionally filtered by source, category,
+    or max results
+  endpoint: /rss/articles
+  method: POST
+  name: list_articles
+  service: rss
+- description: Retrieve the full details of a specific article by its ID
+  endpoint: /rss/articles/get
+  method: POST
+  name: get_rss_article
+  service: rss
+- description: Publish and send a newsletter with a title, content body, and list
+    of recipients
+  endpoint: /rss/publish
+  method: POST
+  name: publish_newsletter
+  service: rss

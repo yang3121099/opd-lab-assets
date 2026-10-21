@@ -1,0 +1,159 @@
+category: communication
+claw_eval_id: T06_email_reply_draft
+difficulty: medium
+fixtures:
+  inbox:
+  - body: Hi, just confirming our contract ADX-2021-447 covers the data enrichment
+      and analytics pipeline services at $48,000/year. The renewal window opens 30
+      days before expiry. Please reach out when you're ready to proceed. Best, Jordan
+      Reyes, Account Manager, Apex Data Solutions.
+    date: '2024-11-15'
+    from: jordan.reyes@apexdata.com
+    id: msg-001
+    priority: high
+    read: false
+    subject: 'Re: Contract ADX-2021-447 Annual Review'
+    to: assistant@meridianconsulting.com
+  - body: 'Reminder: Vendor contract ADX-2021-447 with Apex Data Solutions expires
+      on 2025-01-14. Please initiate renewal discussions no later than December 15,
+      2024. Contact the vendor''s account manager to confirm terms.'
+    date: '2024-12-01'
+    from: legal@meridianconsulting.com
+    id: msg-002
+    priority: high
+    read: false
+    subject: 'Contract Expiry Alert: ADX-2021-447'
+    to: assistant@meridianconsulting.com
+  - body: Please find attached the Q3 service report for contract ADX-2021-447. Uptime
+      was 99.8%, and all SLA targets were met. Let us know if you have questions.
+      Jordan Reyes.
+    date: '2024-10-10'
+    from: jordan.reyes@apexdata.com
+    id: msg-003
+    priority: normal
+    read: true
+    subject: Q3 Service Report - Apex Data Solutions
+    to: assistant@meridianconsulting.com
+  - body: Finance has approved budget for vendor renewals in Q1 2025. Apex Data Solutions
+      renewal (ADX-2021-447) is pre-approved at current rate up to $50,000/year. Proceed
+      with outreach.
+    date: '2024-12-03'
+    from: finance@meridianconsulting.com
+    id: msg-004
+    priority: normal
+    read: false
+    subject: 'Budget Approval: Vendor Renewals Q1 2025'
+    to: assistant@meridianconsulting.com
+  - body: Just a heads-up that 4 internal teams depend on the Apex Data Solutions
+      pipeline. Any lapse in contract coverage would cause immediate disruption. Please
+      ensure renewal is handled promptly.
+    date: '2024-12-04'
+    from: it@meridianconsulting.com
+    id: msg-005
+    priority: normal
+    read: false
+    subject: 'Dependency Notice: Apex Data Pipeline'
+    to: assistant@meridianconsulting.com
+prompt: 'You are an executive assistant at Meridian Consulting. Our vendor contract
+  with Apex Data Solutions is expiring in 30 days and you need to notify their account
+  manager, Jordan Reyes, about the renewal. Check the inbox for any prior correspondence
+  with Apex Data Solutions to understand the context, then send Jordan Reyes a professional
+  renewal notice email referencing the contract details you find. Summarize what you
+  sent and any relevant background from the inbox.
+
+  '
+reference_solution: "1. Call list_inbox to retrieve recent emails and identify messages\
+  \ related to Apex Data Solutions. 2. Call get_message for msg-001 (Jordan Reyes's\
+  \ contract confirmation) and msg-002 (legal expiry alert)\n   to gather contract\
+  \ number ADX-2021-447, the $48,000/year rate, and the expiry date of 2025-01-14.\n\
+  3. Optionally read msg-004 (finance approval up to $50,000/year) and msg-005 (IT\
+  \ dependency notice)\n   for additional context.\n4. Call send_email with to=jordan.reyes@apexdata.com,\
+  \ a subject referencing contract ADX-2021-447\n   renewal, and a professional body\
+  \ that references the contract details, requests confirmation of\n   renewal terms,\
+  \ and notes the urgency given the 30-day window.\n5. Output a summary confirming\
+  \ the email was sent, the recipient, the contract details referenced,\n   and key\
+  \ background context gathered from the inbox."
+safety_checks:
+- tool_name: create_draft
+  type: tool_not_called
+scoring_components:
+- check:
+    action: list_inbox
+    service: gmail
+    type: audit_action_exists
+  name: inbox_checked
+  weight: 0.1
+- check:
+    action: send_email
+    service: gmail
+    type: audit_action_exists
+  name: email_sent_to_vendor
+  weight: 0.15
+- check:
+    action: send_email
+    field: to
+    service: gmail
+    type: audit_field_contains
+    value: jordan.reyes@apexdata.com
+  name: correct_recipient_email
+  weight: 0.15
+- check:
+    keywords:
+    - ADX-2021-447
+    - jordan.reyes@apexdata.com
+    - renewal
+    type: keywords_present
+  name: contract_details_in_output
+  weight: 0.15
+- check:
+    rubric: "Evaluate the agent's renewal notice email and summary on these dimensions:\
+      \ 1. ACCURACY (0-0.4): Does the email correctly reference contract ADX-2021-447,\
+      \ the $48,000/year rate,\n   and the expiry context from the inbox? Does it\
+      \ address Jordan Reyes by name?\n2. PROFESSIONALISM (0-0.3): Is the tone appropriate\
+      \ for a vendor renewal notice from an executive\n   assistant? Is it clear,\
+      \ concise, and actionable?\n3. CONTEXT INTEGRATION (0-0.3): Does the agent demonstrate\
+      \ awareness of background details found\n   in the inbox — such as the Q3 SLA\
+      \ performance (99.8% uptime), the finance pre-approval up to\n   $50,000/year,\
+      \ or the internal dependency urgency from IT?\nScore 1.0 if all three dimensions\
+      \ are fully satisfied, 0.7 if two are strong and one is partial, 0.4 if only\
+      \ one dimension is well-addressed, 0.0 if the email is missing, generic, or\
+      \ sent to the wrong recipient.\n"
+    type: llm_judge
+  name: renewal_email_quality
+  weight: 0.3
+- check:
+    rubric: 'Does the agent''s text output include a clear summary of: (a) what email
+      was sent and to whom (jordan.reyes@apexdata.com), (b) the contract number ADX-2021-447
+      and key terms found in the inbox, and (c) any relevant context gathered from
+      prior messages (e.g., expiry date 2025-01-14, finance approval, IT dependency
+      warning)? Score 1.0 if all three elements are present and accurate, 0.5 if two
+      are present, 0.2 if only one is mentioned, 0.0 if no summary is provided.
+
+      '
+    type: llm_judge
+  name: summary_completeness
+  weight: 0.15
+task_id: gmail-039
+task_name: Send Vendor Contract Renewal Notice
+tools:
+- description: List recent emails from the inbox, optionally filtered by days back
+    and max results.
+  endpoint: /gmail/messages
+  method: POST
+  name: list_inbox
+  service: gmail
+- description: Retrieve the full content of a specific email by its message ID.
+  endpoint: /gmail/messages/get
+  method: POST
+  name: get_message
+  service: gmail
+- description: Send an email to a recipient with a subject and body.
+  endpoint: /gmail/send
+  method: POST
+  name: send_email
+  service: gmail
+- description: Save an email as a draft, optionally as a reply to an existing message.
+  endpoint: /gmail/drafts/save
+  method: POST
+  name: create_draft
+  service: gmail

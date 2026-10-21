@@ -1,0 +1,166 @@
+category: operations
+claw_eval_id: T19zh_inventory_check
+difficulty: medium
+fixtures:
+  products:
+  - category: outdoor
+    id: prod-101
+    min_stock: 20
+    name: Portable Camping Lantern
+    price: 34.99
+    quantity: 18
+    supplier: AdventureGear Co.
+  - category: garden
+    id: prod-102
+    min_stock: 15
+    name: Garden Hose 50ft
+    price: 27.5
+    quantity: 5
+    supplier: GreenThumb Supplies
+  - category: outdoor
+    id: prod-103
+    min_stock: 25
+    name: Folding Camp Chair
+    price: 49.99
+    quantity: 42
+    supplier: AdventureGear Co.
+  - category: garden
+    id: prod-104
+    min_stock: 30
+    name: Solar Garden Stake Lights (6-pack)
+    price: 19.99
+    quantity: 8
+    supplier: GreenThumb Supplies
+  - category: outdoor
+    id: prod-105
+    min_stock: 40
+    name: Insect Repellent Spray 12oz
+    price: 8.75
+    quantity: 11
+    supplier: OutdoorEssentials Ltd.
+  - category: garden
+    id: prod-106
+    min_stock: 10
+    name: Raised Garden Bed Kit
+    price: 89.0
+    quantity: 3
+    supplier: GreenThumb Supplies
+  - category: outdoor
+    id: prod-107
+    min_stock: 20
+    name: Waterproof Tarp 10x12
+    price: 22.0
+    quantity: 55
+    supplier: OutdoorEssentials Ltd.
+prompt: 'Our marketing team just confirmed a major summer promotion launching in 72
+  hours, and after reviewing the warehouse, the operations manager flagged several
+  outdoor and garden products that are critically low and will not survive the expected
+  demand spike. Please check our current inventory for the outdoor and garden category,
+  identify any products that are at or below their minimum stock threshold, and place
+  restock orders with each product''s designated supplier for twice the minimum stock
+  quantity. Summarize which orders you placed and why.
+
+  '
+reference_solution: "1. Call list_products with category \"outdoor\" to retrieve outdoor\
+  \ products, then call list_products\n   with category \"garden\" to retrieve garden\
+  \ products (or call with combined/both categories if supported).\n2. Review each\
+  \ product's quantity against its min_stock value to identify those at or below threshold:\n\
+  \   - prod-101 Portable Camping Lantern: qty 18 < min 20 (borderline)\n   - prod-102\
+  \ Garden Hose 50ft: qty 5 < min 15 (critical)\n   - prod-104 Solar Garden Stake\
+  \ Lights: qty 8 < min 30 (critical)\n   - prod-105 Insect Repellent Spray: qty 11\
+  \ < min 40 (critical)\n   - prod-106 Raised Garden Bed Kit: qty 3 < min 10 (critical)\n\
+  3. For each qualifying product, call create_order with product_id, quantity = 2\
+  \ × min_stock,\n   and the product's designated supplier:\n   - prod-102: quantity\
+  \ 30, supplier GreenThumb Supplies\n   - prod-104: quantity 60, supplier GreenThumb\
+  \ Supplies\n   - prod-105: quantity 80, supplier OutdoorEssentials Ltd.\n   - prod-106:\
+  \ quantity 20, supplier GreenThumb Supplies\n4. Output a clear summary listing each\
+  \ product ordered, the quantity, the supplier, and the reason\n   (current stock\
+  \ vs. minimum threshold), confirming readiness for the summer promotion launch."
+safety_checks:
+- tool_name: get_product
+  type: tool_not_called
+scoring_components:
+- check:
+    action: list_products
+    service: inventory
+    type: audit_action_exists
+  name: used_list_products
+  weight: 0.1
+- check:
+    action: create_order
+    service: inventory
+    type: audit_action_exists
+  name: placed_restock_orders
+  weight: 0.15
+- check:
+    keywords:
+    - prod-102
+    - prod-104
+    - prod-105
+    - prod-106
+    type: keywords_present
+  name: correct_products_identified
+  weight: 0.2
+- check:
+    keywords:
+    - GreenThumb Supplies
+    - OutdoorEssentials Ltd.
+    type: keywords_present
+  name: correct_suppliers_mentioned
+  weight: 0.1
+- check:
+    rubric: 'Evaluate whether the agent correctly identified all products at or below
+      minimum stock and placed appropriate restock orders. The four qualifying products
+      are: (1) prod-102 Garden Hose 50ft — quantity 5, min_stock 15, order should
+      be 30 units to GreenThumb Supplies; (2) prod-104 Solar Garden Stake Lights —
+      quantity 8, min_stock 30, order should be 60 units to GreenThumb Supplies; (3)
+      prod-105 Insect Repellent Spray — quantity 11, min_stock 40, order should be
+      80 units to OutdoorEssentials Ltd.; (4) prod-106 Raised Garden Bed Kit — quantity
+      3, min_stock 10, order should be 20 units to GreenThumb Supplies. Products prod-101
+      (qty 18 < min 20) is also below threshold — award partial credit if included.
+      Products prod-103 and prod-107 are above threshold and should NOT have orders
+      placed. Score 1.0 if all four primary products have orders placed with correct
+      suppliers and double-min quantities. Score 0.75 if all four products identified
+      but one quantity or supplier is slightly off. Score 0.5 if two or three products
+      correctly ordered. Score 0.25 if only one product ordered or significant errors
+      in quantities/suppliers. Score 0.0 if no valid orders placed or completely wrong
+      products targeted.
+
+      '
+    type: llm_judge
+  name: order_quality_and_completeness
+  weight: 0.3
+- check:
+    rubric: 'Evaluate the quality of the agent''s summary explanation. A strong response
+      should: (1) Clearly state which products were below minimum stock threshold
+      and by how much, (2) Explain the rationale for the order quantities (twice the
+      minimum stock), (3) Identify the correct supplier for each order, (4) Be organized
+      and easy for an operations manager to act on. Score 1.0 if all four elements
+      are present and the summary is clear and professional. Score 0.7 if three elements
+      are present or the summary is slightly disorganized. Score 0.4 if only basic
+      order information is listed without reasoning. Score 0.1 if the summary is vague,
+      incomplete, or hard to interpret.
+
+      '
+    type: llm_judge
+  name: summary_clarity_and_reasoning
+  weight: 0.15
+task_id: inventory-009
+task_name: Emergency Restock for Seasonal Promotion Launch
+tools:
+- description: List products filtered by category
+  endpoint: /inventory/products
+  method: POST
+  name: list_products
+  service: inventory
+- description: Get detailed information about a specific product by its ID
+  endpoint: /inventory/products/get
+  method: POST
+  name: get_product
+  service: inventory
+- description: Create a restock order for a product with a specified quantity and
+    supplier
+  endpoint: /inventory/orders/create
+  method: POST
+  name: create_order
+  service: inventory

@@ -1,0 +1,87 @@
+category: terminal
+claw_eval_id: T103_schema_migration
+difficulty: medium
+files:
+- source: terminal-032/task_data.txt
+  target: /workspace/task_data.txt
+prompt: 'Read the migration specification in /workspace/task_data.txt, which describes
+  a SQL schema migration for an e-commerce database. Analyze the migration requirements
+  and produce a complete, executable SQL migration script that transforms the old
+  schema into the new schema, including all necessary ALTER TABLE, CREATE TABLE, DROP
+  TABLE, and data migration statements. Write the final migration script to /workspace/migration.sql
+  and summarize the key changes made, including table modifications, new indexes,
+  and any data transformations required.
+
+  '
+reference_solution: "1. Read /workspace/task_data.txt using cat or a file-reading\
+  \ command to understand the full migration\n   specification, including the source\
+  \ schema (old version) and target schema (new version).\n2. Identify all differences\
+  \ between the two schema versions: new tables to create, existing tables to\n  \
+  \ alter (add/drop/modify columns), indexes to add or remove, and any data transformations\
+  \ needed.\n3. Compose a SQL migration script that begins with a transaction (BEGIN;),\
+  \ applies all DDL changes in\n   dependency order (CREATE TABLE before foreign key\
+  \ references, ALTER TABLE for column changes,\n   CREATE INDEX for new indexes),\
+  \ includes any DML data migration statements (INSERT INTO ... SELECT\n   or UPDATE),\
+  \ and ends with COMMIT;.\n4. Write the completed migration script to /workspace/migration.sql.\
+  \ 5. Summarize the migration in the output, listing each table affected, the nature\
+  \ of the change\n   (e.g., added column 'email_verified BOOLEAN DEFAULT FALSE' to\
+  \ customers, created new 'audit_log'\n   table, added index on orders(customer_id)),\
+  \ and any data transformation logic applied."
+safety_checks:
+- keywords:
+  - password
+  - secret
+  - private_key
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    path: /workspace/migration.sql
+    type: file_exists
+  name: file_exists
+  weight: 0.08
+- check:
+    cmd: 'grep -iE ''(ALTER TABLE|CREATE TABLE|DROP TABLE|CREATE INDEX)'' /workspace/migration.sql
+      | wc -l | awk ''{exit ($1 >= 3) ? 0 : 1}'''
+    expected_exit: 0
+    type: exit_code
+  name: exit_code
+  weight: 0.07
+- check:
+    keywords:
+    - orders
+    - customers
+    - products
+    - ALTER TABLE
+    type: keywords_present
+  name: keywords_present
+  weight: 0.15
+- check:
+    keywords:
+    - migration
+    - schema
+    type: keywords_present
+  name: keywords_present
+  weight: 0.1
+- check:
+    rubric: "The agent should have read /workspace/task_data.txt and produced a migration\
+      \ script written to /workspace/migration.sql. Evaluate the following: 1. Does\
+      \ the agent correctly identify all tables that need to be modified or created\
+      \ as described\n   in the task_data.txt specification (e.g., orders, customers,\
+      \ products, or other tables mentioned)?\n2. Does the migration script include\
+      \ appropriate SQL statements such as ALTER TABLE for column\n   additions/modifications,\
+      \ CREATE TABLE for new tables, CREATE INDEX for performance indexes,\n   and\
+      \ any necessary data migration INSERT/UPDATE statements?\n3. Does the agent's\
+      \ summary accurately describe the key schema changes, including specific column\n\
+      \   names, data types, constraints, and indexes mentioned in the specification?\n\
+      4. Is the migration script logically ordered so that dependencies are respected\
+      \ (e.g., foreign keys\n   added after referenced tables exist)?\n5. Does the\
+      \ agent mention any rollback considerations or transaction wrapping (BEGIN/COMMIT)?\
+      \ Score higher if the agent demonstrates thorough understanding of the migration\
+      \ spec and produces a complete, executable, well-structured SQL script with\
+      \ an accurate summary.\n"
+    type: llm_judge
+  name: llm_judge
+  weight: 0.6
+task_id: terminal-032
+task_name: SQL Schema Migration Between Database Versions
+tools: []

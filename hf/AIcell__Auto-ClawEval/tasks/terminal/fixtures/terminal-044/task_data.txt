@@ -1,0 +1,100 @@
+```markdown
+# Binary Packet Decoder
+
+## Background
+
+You are working on a network diagnostics tool that needs to decode binary packets
+according to a custom protocol specification used by embedded IoT devices. The
+devices transmit sensor data, status updates, and control messages in a compact
+binary format to minimize bandwidth usage.
+
+## Protocol Specification
+
+### Packet Structure
+
+Every packet follows this layout:
+
+```
++--------+--------+--------+------------------+----------+
+| MAGIC  | TYPE   | FLAGS  | PAYLOAD          | CHECKSUM |
+| 2 bytes| 1 byte | 1 byte | variable         | 2 bytes  |
++--------+--------+--------+------------------+----------+
+```
+
+**MAGIC**: Always `0xAB 0xCD` — identifies a valid packet start  
+**TYPE**: Packet type identifier (see below)  
+**FLAGS**: Bit field (see below)  
+**PAYLOAD**: Variable length, format depends on TYPE  
+**CHECKSUM**: CRC-16 of all bytes from MAGIC through end of PAYLOAD  
+
+### Flags Byte
+
+```
+Bit 7 (MSB): COMPRESSED  - payload is zlib compressed
+Bit 6:       ENCRYPTED   - payload is encrypted (not used in this task)
+Bit 5:       FRAGMENTED  - this is part of a multi-packet message
+Bit 4:       LAST_FRAG   - this is the last fragment (only valid if FRAGMENTED=1)
+Bits 3-0:    SEQUENCE    - 4-bit sequence number (0-15)
+```
+
+### Packet Types
+
+#### Type 0x01 — SENSOR_DATA
+
+```
++----------+----------+----------+----------+----------+
+| SENSOR_ID| TIMESTAMP| VALUE    | UNIT     | QUALITY  |
+| 1 byte   | 4 bytes  | 4 bytes  | 1 byte   | 1 byte   |
++----------+----------+----------+----------+----------+
+```
+
+- **SENSOR_ID**: Unique sensor identifier (0x00–0xFF)
+- **TIMESTAMP**: Unix timestamp, big-endian uint32
+- **VALUE**: IEEE 754 float, big-endian
+- **UNIT**: Unit code (0x01=Celsius, 0x02=Humidity%, 0x03=hPa, 0x04=m/s, 0x05=lux)
+- **QUALITY**: Signal quality 0–100
+
+#### Type 0x02 — STATUS_UPDATE
+
+```
++----------+----------+----------+
+| DEVICE_ID| STATUS   | BATTERY  |
+| 2 bytes  | 1 byte   | 1 byte   |
++----------+----------+----------+
+```
+
+- **DEVICE_ID**: Big-endian uint16
+- **STATUS**: 0x00=offline, 0x01=online, 0x02=error, 0x03=maintenance
+- **BATTERY**: Battery percentage 0–100
+
+#### Type 0x03 — CONTROL_CMD
+
+```
++----------+----------+----------+
+| TARGET_ID| COMMAND  | PARAM    |
+| 2 bytes  | 1 byte   | 2 bytes  |
++----------+----------+----------+
+```
+
+- **TARGET_ID**: Big-endian uint16
+- **COMMAND**: 0x01=reboot, 0x02=set_interval, 0x03=calibrate, 0x04=sleep
+- **PARAM**: Command parameter, big-endian uint16
+
+#### Type 0x04 — ERROR_REPORT
+
+```
++----------+----------+----------+----------+
+| DEVICE_ID| ERROR_CODE| SEVERITY| MESSAGE  |
+| 2 bytes  | 2 bytes   | 1 byte  | variable |
++----------+----------+----------+----------+
+```
+
+- **DEVICE_ID**: Big-endian uint16
+- **ERROR_CODE**: Big-endian uint16
+- **SEVERITY**: 0x01=info, 0x02=warning, 0x03=error, 0x04=critical
+- **MESSAGE**: Remaining bytes as UTF-8 string (no null terminator)
+
+### CRC-16 Calculation
+
+Use CRC-16/CCITT-FALSE:
+- Polynomial: 0x1021

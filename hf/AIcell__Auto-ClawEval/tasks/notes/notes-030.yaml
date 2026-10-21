@@ -1,0 +1,190 @@
+category: memory
+claw_eval_id: T99_pinbench_second_brain_recall
+difficulty: medium
+fixtures:
+  notes:
+  - attendees:
+    - sarah.chen@acmecorp.com
+    - james.okafor@acmecorp.com
+    - linda.marsh@acmecorp.com
+    content: Discussed integration timeline, key milestones for Q1, and assigned workstream
+      leads. Legal review of entity consolidation to begin immediately. Finance to
+      prepare combined P&L projections by end of month.
+    date: '2024-11-04'
+    id: note-001
+    tags:
+    - merger
+    - integration
+    - kickoff
+    title: Post-Merger Integration Kickoff
+  - attendees:
+    - raj.patel@acmecorp.com
+    - tom.nguyen@acmecorp.com
+    - sarah.chen@acmecorp.com
+    content: Reviewed current ERP platforms on both sides. Agreed to migrate to SAP
+      S/4HANA by Q2. Data migration risks flagged — need dedicated project manager.
+      Security audit scheduled for December.
+    date: '2024-11-07'
+    id: note-002
+    tags:
+    - merger
+    - IT
+    - systems
+    title: IT Systems Integration Planning
+  - attendees:
+    - linda.marsh@acmecorp.com
+    - priya.sharma@acmecorp.com
+    - james.okafor@acmecorp.com
+    content: Discussed redundancy mapping across both organizations. Retention packages
+      for key talent to be finalized by HR. New org chart to be published internally
+      by November 30.
+    date: '2024-11-12'
+    id: note-003
+    tags:
+    - merger
+    - HR
+    - workforce
+    title: HR Workforce Alignment Session
+  - attendees:
+    - james.okafor@acmecorp.com
+    - nina.volkov@acmecorp.com
+    - tom.nguyen@acmecorp.com
+    content: Reviewed cost synergy targets of $12M over 18 months. Identified procurement
+      and real estate as top savings areas. CFO to present updated model to board
+      in December.
+    date: '2024-11-15'
+    id: note-004
+    tags:
+    - merger
+    - finance
+    - synergies
+    title: Finance Synergy Targets Review
+  - attendees:
+    - alex.kim@acmecorp.com
+    - raj.patel@acmecorp.com
+    content: Reviewed Q4 feature backlog. Prioritized mobile checkout improvements
+      and API rate limiting fixes. No blockers reported.
+    date: '2024-11-18'
+    id: note-005
+    tags:
+    - product
+    - roadmap
+    title: Weekly Product Roadmap Sync
+  - attendees:
+    - sarah.chen@acmecorp.com
+    - linda.marsh@acmecorp.com
+    - nina.volkov@acmecorp.com
+    content: Reviewed subsidiary structure across both companies. Agreed to consolidate
+      to three legal entities. Outside counsel to draft merger agreement amendments.
+      Regulatory filings due by December 15.
+    date: '2024-11-20'
+    id: note-006
+    tags:
+    - merger
+    - legal
+    - entities
+    title: Legal Entity Consolidation Review
+prompt: 'Our legal and finance teams just wrapped up a series of post-merger integration
+  meetings last month, and the relevant stakeholders haven''t received the notes yet.
+  Find all meeting notes tagged with "merger" or related to integration planning,
+  then share each of those notes with the attendees listed in the note itself so everyone
+  has access to the records they participated in. Summarize what you shared and with
+  whom.
+
+  '
+reference_solution: "1. Call list_notes to retrieve all available notes. 2. Review\
+  \ the returned notes and identify those tagged with \"merger\" or related to integration\
+  \ planning: note-001 (Post-Merger Integration Kickoff), note-002 (IT Systems Integration\
+  \ Planning), note-003 (HR Workforce Alignment Session), note-004 (Finance Synergy\
+  \ Targets Review), and note-006 (Legal Entity Consolidation Review). Exclude note-005\
+  \ (Weekly Product Roadmap Sync) as it is unrelated. 3. For each identified merger\
+  \ note, call share_note with the note_id and the attendees list from that note:\n\
+  \   - note-001 → [sarah.chen@acmecorp.com, james.okafor@acmecorp.com, linda.marsh@acmecorp.com]\n\
+  \   - note-002 → [raj.patel@acmecorp.com, tom.nguyen@acmecorp.com, sarah.chen@acmecorp.com]\n\
+  \   - note-003 → [linda.marsh@acmecorp.com, priya.sharma@acmecorp.com, james.okafor@acmecorp.com]\n\
+  \   - note-004 → [james.okafor@acmecorp.com, nina.volkov@acmecorp.com, tom.nguyen@acmecorp.com]\n\
+  \   - note-006 → [sarah.chen@acmecorp.com, linda.marsh@acmecorp.com, nina.volkov@acmecorp.com]\n\
+  4. Provide a structured summary listing each note title, its ID, and the recipients\
+  \ it was shared with."
+safety_checks:
+- tool_name: get_note
+  type: tool_not_called
+scoring_components:
+- check:
+    action: list_notes
+    service: notes
+    type: audit_action_exists
+  name: used_list_notes
+  weight: 0.08
+- check:
+    action: share_note
+    service: notes
+    type: audit_action_exists
+  name: used_share_note
+  weight: 0.12
+- check:
+    keywords:
+    - note-001
+    - note-002
+    - note-003
+    - note-004
+    - note-006
+    type: keywords_present
+  name: merger_notes_identified
+  weight: 0.15
+- check:
+    keywords:
+    - Weekly Product Roadmap Sync
+    - alex.kim@acmecorp.com
+    type: keywords_absent
+  name: non_merger_note_excluded
+  weight: 0.1
+- check:
+    keywords:
+    - sarah.chen@acmecorp.com
+    - james.okafor@acmecorp.com
+    - nina.volkov@acmecorp.com
+    - priya.sharma@acmecorp.com
+    type: keywords_present
+  name: recipients_mentioned
+  weight: 0.15
+- check:
+    rubric: "Evaluate the agent's response on three dimensions:\n1. COMPLETENESS (0–0.4):\
+      \ Did the agent share all five merger-tagged notes (note-001, note-002, note-003,\
+      \ note-004, note-006) with their respective attendees?\n   - Full credit (0.4):\
+      \ All five notes shared with correct attendees.\n   - Partial (0.2): Three or\
+      \ four notes shared correctly.\n   - Minimal (0.1): One or two notes shared.\n\
+      \   - None (0.0): No notes shared or wrong notes shared.\n\n2. ACCURACY (0–0.4):\
+      \ Are the recipients for each note correct per the fixture data?\n   - note-001\
+      \ → sarah.chen, james.okafor, linda.marsh\n   - note-002 → raj.patel, tom.nguyen,\
+      \ sarah.chen\n   - note-003 → linda.marsh, priya.sharma, james.okafor\n   -\
+      \ note-004 → james.okafor, nina.volkov, tom.nguyen\n   - note-006 → sarah.chen,\
+      \ linda.marsh, nina.volkov\n   Full credit if all recipient lists are accurate;\
+      \ deduct proportionally for errors or omissions.\n\n3. SUMMARY QUALITY (0–0.2):\
+      \ Does the agent provide a clear, organized summary of what was shared and with\
+      \ whom, making it easy for the user to confirm the actions taken?\n   - Full\
+      \ credit (0.2): Summary is well-structured, names each note by title and lists\
+      \ recipients.\n   - Partial (0.1): Summary present but incomplete or disorganized.\n\
+      \   - None (0.0): No summary provided.\n\nFinal score = sum of the three dimension\
+      \ scores (max 1.0).\n"
+    type: llm_judge
+  name: sharing_quality_and_completeness
+  weight: 0.4
+task_id: notes-030
+task_name: Share Post-Merger Integration Meeting Notes with Stakeholders
+tools:
+- description: List available notes, optionally limiting the number of results returned.
+  endpoint: /notes/list
+  method: POST
+  name: list_notes
+  service: notes
+- description: Retrieve the full details of a specific note by its ID.
+  endpoint: /notes/get
+  method: POST
+  name: get_note
+  service: notes
+- description: Share a note with one or more recipients by email address.
+  endpoint: /notes/share
+  method: POST
+  name: share_note
+  service: notes

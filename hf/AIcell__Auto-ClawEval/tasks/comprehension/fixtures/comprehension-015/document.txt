@@ -1,0 +1,151 @@
+SPARSE MIXTURE-OF-EXPERTS TRANSFORMERS WITH DYNAMIC ROUTING FOR LONG-CONTEXT REASONING
+
+Technical Report — Submitted to NeurIPS 2024 Workshop on Efficient Large Language Models
+Authors: Priya Venkataraman, James Okonkwo, Lena Hoffmann, Siddharth Rao
+Affiliation: Meridian AI Research Lab, Cambridge, MA
+Submission Date: September 14, 2024
+
+─────────────────────────────────────────────
+ABSTRACT
+─────────────────────────────────────────────
+
+We introduce DART (Dynamic Adaptive Routing Transformer), a sparse mixture-of-experts architecture designed to improve computational efficiency and reasoning performance on long-context tasks. DART achieves a 34.7% reduction in FLOPs compared to a dense baseline of equivalent parameter count while improving accuracy on the SCROLLS benchmark by 6.2 percentage points. Our model activates an average of 2.3 out of 16 expert modules per token during inference, enabling deployment on a single NVIDIA A100 80GB GPU for sequences up to 32,768 tokens. We release model weights, training code, and evaluation scripts at github.com/meridian-ai/dart.
+
+─────────────────────────────────────────────
+1. INTRODUCTION
+─────────────────────────────────────────────
+
+Scaling transformer-based language models has consistently improved performance across benchmarks, but the computational cost of dense attention and feedforward layers grows quadratically with sequence length and linearly with parameter count. Mixture-of-experts (MoE) architectures partially address this by routing tokens to specialized subnetworks, but prior implementations suffer from load imbalance, training instability, and degraded performance on tasks requiring sustained multi-step reasoning.
+
+Our work builds on Switch Transformer (Fedus et al., 2022) and GLaM (Du et al., 2022) while introducing three novel contributions: (1) a learned dynamic routing mechanism that conditions expert selection on both token identity and positional context, (2) a hierarchical expert grouping strategy that clusters experts by functional specialization during training, and (3) a modified auxiliary loss that penalizes routing entropy collapse without sacrificing expert utilization.
+
+─────────────────────────────────────────────
+2. MODEL ARCHITECTURE
+─────────────────────────────────────────────
+
+2.1 Base Configuration
+
+DART-7B is built on a decoder-only transformer backbone with the following specifications:
+
+- Total parameters: 7.4 billion
+- Active parameters per forward pass: 1.9 billion
+- Number of layers: 32
+- Hidden dimension: 4,096
+- Attention heads: 32
+- Key/value heads: 8 (grouped-query attention)
+- Expert modules per MoE layer: 16
+- MoE layers: every other layer (16 total MoE layers)
+- Non-MoE feedforward layers: 16 standard SwiGLU layers
+- Maximum sequence length: 32,768 tokens
+- Vocabulary size: 65,536 tokens (BPE tokenizer trained on 2.1 trillion tokens)
+
+2.2 Dynamic Routing Mechanism
+
+Unlike top-k static routing used in prior MoE models, DART employs a two-stage routing process. In the first stage, a lightweight 3-layer MLP router (12.6 million parameters) computes a probability distribution over all 16 experts using the current token embedding concatenated with a 64-dimensional positional encoding. In the second stage, the router consults a learned 256-dimensional "context vector" derived from the previous 128 tokens via a sliding window attention operation.
+
+This two-stage design increases routing computation by approximately 4.1% relative to single-stage routing but reduces expert load variance from a Gini coefficient of 0.31 (baseline) to 0.09 (DART), indicating substantially more balanced utilization.
+
+2.3 Hierarchical Expert Grouping
+
+During training, we apply a soft clustering loss that encourages experts to specialize along four functional axes: syntactic processing, factual retrieval, numerical reasoning, and discourse coherence. Cluster assignments are initialized randomly and updated every 5,000 training steps using k-means on expert activation patterns. By step 80,000, cluster purity (fraction of tokens routed to their assigned cluster's experts) stabilizes at 73.4%.
+
+─────────────────────────────────────────────
+3. TRAINING DETAILS
+─────────────────────────────────────────────
+
+DART-7B was trained on a dataset of 1.8 trillion tokens drawn from the following sources:
+
+| Source                  | Tokens (billions) | Percentage |
+|-------------------------|-------------------|------------|
+| Common Crawl (filtered) | 900               | 50.0%      |
+| GitHub code             | 270               | 15.0%      |
+| ArXiv papers            | 180               | 10.0%      |
+| Books3                  | 162               | 9.0%       |
+| Wikipedia (multilingual)| 126               | 7.0%       |
+| StackExchange           | 90                | 5.0%       |
+| PubMed abstracts        | 72                | 4.0%       |
+
+Training was conducted on 512 NVIDIA H100 80GB SXM5 GPUs across 64 nodes connected via 400 Gbps InfiniBand. Total training time was 18 days, completing on August 3, 2024. We used the AdamW optimizer with β₁ = 0.9, β₂ = 0.95, weight decay of 0.1, and a peak learning rate of 3×10⁻⁴ with cosine decay to 3×10⁻⁵. Global batch size was 4,096 sequences of 4,096 tokens each, yielding approximately 16.8 million tokens per step.
+
+The auxiliary load-balancing loss coefficient was set to α = 0.02, lower than the 0.1 used in Switch Transformer, which we found reduced training loss spikes from 47 occurrences (at α = 0.1) to 6 occurrences over the full training run.
+
+─────────────────────────────────────────────
+4. EVALUATION AND KEY RESULTS
+─────────────────────────────────────────────
+
+4.1 Long-Context Benchmarks
+
+We evaluated DART-7B against four comparable baselines: Mistral-7B-v0.2, LLaMA-3-8B, Mixtral-8x7B (using only 7B active parameters for fair comparison), and a dense DART-Dense-7B ablation trained on identical data.
+
+| Model              | SCROLLS | QuALITY | NarrativeQA | QASPER | Avg.  |
+|--------------------|---------|---------|-------------|--------|-------|
+| Mistral-7B-v0.2    | 41.3    | 56.8    | 29.4        | 38.7   | 41.6  |
+| LLaMA-3-8B         | 43.1    | 58.2    | 31.0        | 40.1   | 43.1  |
+| Mixtral-8x7B (7B)  | 44.7    | 59.4    | 32.8        | 41.3   | 44.6  |
+| DART-Dense-7B      | 42.9    | 57.6    | 30.7        | 39.8   | 42.8  |
+| DART-7B (ours)     | 49.3    | 63.1    | 36.2        | 44.9   | 48.4  |
+
+All scores are F1 unless otherwise noted. DART-7B outperforms the next-best model (Mixtral-8x7B at 7B active parameters) by 3.8 points on average, with the largest gain on SCROLLS (+4.6 points).
+
+4.2 Standard Reasoning Benchmarks
+
+| Benchmark          | DART-7B | LLaMA-3-8B | Mistral-7B-v0.2 |
+|--------------------|---------|------------|-----------------|
+| MMLU (5-shot)      | 67.4%   | 66.6%      | 64.2%           |
+| HellaSwag          | 82.1%   | 82.0%      | 81.3%           |
+| ARC-Challenge      | 61.8%   | 60.4%      | 59.7%           |
+| GSM8K (8-shot)     | 74.3%   | 72.1%      | 68.9%           |
+| HumanEval          | 38.4%   | 34.2%      | 32.9%           |
+
+DART-7B achieves the highest score on all five benchmarks, with the most notable improvement on GSM8K (+2.2 points over LLaMA-3-8B), consistent with our hypothesis that numerical reasoning experts improve mathematical performance.
+
+4.3 Efficiency Analysis
+
+| Metric                          | DART-7B     | LLaMA-3-8B  | Reduction |
+|---------------------------------|-------------|-------------|-----------|
+| FLOPs per token (inference)     | 3.82×10¹²   | 5.85×10¹²   | 34.7%     |
+| Latency @ 4K tokens (ms/token)  | 18.4        | 27.1        | 32.1%     |
+| Latency @ 32K tokens (ms/token) | 31.7        | 68.3        | 53.6%     |
+| Peak GPU memory (32K context)   | 71.2 GB     | 79.4 GB     | 10.3%     |
+| Throughput (tokens/sec, A100)   | 847         | 573         | +47.8%    |
+
+Latency measurements were taken on a single NVIDIA A100 80GB GPU with bfloat16 precision, batch size 1, using vLLM v0.4.3 as the inference backend.
+
+─────────────────────────────────────────────
+5. ABLATION STUDIES
+─────────────────────────────────────────────
+
+We conducted ablations on three components of DART's design, evaluating each variant on SCROLLS and GSM8K:
+
+| Variant                              | SCROLLS | GSM8K  |
+|--------------------------------------|---------|--------|
+| Full DART-7B                         | 49.3    | 74.3%  |
+| w/o context vector (single-stage)    | 46.1    | 71.8%  |
+| w/o hierarchical grouping            | 47.4    | 72.6%  |
+| w/o modified auxiliary loss (α=0.1)  | 45.8    | 70.4%  |
+| w/ 8 experts instead of 16          | 47.9    | 73.1%  |
+
+Removing the context vector causes the largest single drop on SCROLLS (−3.2 points), confirming that positional context is critical for long-document tasks. The modified auxiliary loss contributes most to GSM8K performance, likely by preserving expert specialization in numerical reasoning.
+
+─────────────────────────────────────────────
+6. LIMITATIONS AND FUTURE WORK
+─────────────────────────────────────────────
+
+DART-7B has several limitations. First, the two-stage routing mechanism adds 4.1% overhead that partially offsets efficiency gains for very short sequences (under 512 tokens). Second, expert specialization clusters are not fully stable; 26.6% of tokens are routed outside their assigned cluster at convergence. Third, we have not evaluated multilingual performance systematically, though the training data includes 7% multilingual Wikipedia content.
+
+Future work will explore scaling DART to 70B total parameters, extending context length to 131,072 tokens using ring attention, and applying reinforcement learning from human feedback (RLHF) to the instruction-tuned variant, DART-7B-Instruct, which is currently in preparation.
+
+─────────────────────────────────────────────
+7. CONCLUSION
+─────────────────────────────────────────────
+
+We presented DART-7B, a sparse mixture-of-experts transformer that achieves state-of-the-art performance among 7-8B parameter models on long-context reasoning benchmarks while reducing inference FLOPs by 34.7%. The dynamic two-stage routing mechanism and hierarchical expert grouping are the primary drivers of performance gains, as confirmed by ablation studies. We believe DART's design principles offer a practical path toward efficient deployment of capable language models on commodity hardware.
+
+─────────────────────────────────────────────
+REFERENCES
+─────────────────────────────────────────────
+
+Du, N., et al. (2022). GLaM: Efficient Scaling of Language Models with Mixture-of-Experts. ICML 2022.
+Fedus, W., Zoph, B., & Shazeer, N. (2022). Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity. JMLR, 23(120), 1–39.
+Jiang, A.Q., et al. (2024). Mixtral of Experts. arXiv:2401.04088.
+Shaham, U., et al. (2022). SCROLLS: Standardized CompaRison Over Long Language Sequences. EMNLP 2022.

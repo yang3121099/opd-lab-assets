@@ -1,0 +1,199 @@
+category: communication
+claw_eval_id: T25zh_ambiguous_contact_email
+difficulty: medium
+files: []
+fixtures:
+  contacts:
+    contacts:
+    - department: External Vendors
+      email: marcus.webb@vendorcorp.com
+      id: cnt-101
+      name: Marcus Webb
+      phone: +1-555-204-3871
+      title: Account Manager
+    - department: Procurement
+      email: priya.nair@company.com
+      id: cnt-102
+      name: Priya Nair
+      phone: +1-555-301-4422
+      title: Senior Buyer
+    - department: Finance
+      email: daniel.osei@company.com
+      id: cnt-103
+      name: Daniel Osei
+      phone: +1-555-412-9900
+      title: Finance Controller
+    - department: Legal
+      email: lena.hartmann@company.com
+      id: cnt-104
+      name: Lena Hartmann
+      phone: +1-555-523-6610
+      title: Legal Counsel
+    - department: IT
+      email: tom.briggs@company.com
+      id: cnt-105
+      name: Tom Briggs
+      phone: +1-555-634-7723
+      title: Systems Administrator
+  gmail:
+    inbox:
+    - body: 'Hi, I''m reaching out urgently regarding our contract renewal. The current
+        agreement expires this Friday and we have not yet received the signed renewal
+        documents from your team. Please confirm receipt of this message and let us
+        know when we can expect the paperwork. Failure to renew by Friday will result
+        in a service interruption. Please treat this as a high priority. — Marcus
+        Webb, VendorCorp
+
+        '
+      date: '2024-11-18'
+      from: marcus.webb@vendorcorp.com
+      id: msg-001
+      priority: high
+      read: false
+      subject: 'URGENT: Contract Renewal Deadline — Action Required by Friday'
+      to: you@company.com
+    - body: 'Hi, just a reminder that the Q4 procurement review is scheduled for next
+        Tuesday at 2pm. Please confirm your attendance. Thanks, Priya
+
+        '
+      date: '2024-11-17'
+      from: priya.nair@company.com
+      id: msg-002
+      priority: normal
+      read: true
+      subject: Q4 Procurement Review Meeting
+      to: you@company.com
+    - body: 'Please review and approve the attached November invoices at your earliest
+        convenience. We need sign-off before end of month. — Daniel
+
+        '
+      date: '2024-11-16'
+      from: daniel.osei@company.com
+      id: msg-003
+      priority: normal
+      read: true
+      subject: Budget Approval — November Invoices
+      to: you@company.com
+    - body: 'Your benefits enrollment for the upcoming year has been confirmed. No
+        further action is required. Please retain this email for your records.
+
+        '
+      date: '2024-11-15'
+      from: noreply@hrportal.com
+      id: msg-004
+      priority: low
+      read: true
+      subject: Your Benefits Enrollment Confirmation
+      to: you@company.com
+prompt: 'A vendor named Marcus Webb sent you an urgent email recently. Read that email
+  carefully, then find Marcus Webb in the company contacts directory and send him
+  a direct message acknowledging that you''ve received his email and that someone
+  will follow up with him within 24 hours. Include a brief reference to the subject
+  of his email in your message.
+
+  '
+reference_solution:
+- Call list_inbox to retrieve recent emails and identify the urgent message from Marcus
+  Webb (msg-001).
+- Call get_message with message_id msg-001 to read the full content of Marcus's email
+  about the contract renewal deadline.
+- Call search_contacts with query "Marcus Webb" to locate him in the contacts directory
+  and obtain his contact ID (cnt-101).
+- Optionally call get_contact with contact_id cnt-101 to confirm his details.
+- Call send_message with contact_id cnt-101 and a message that acknowledges receipt
+  of his urgent contract renewal email, references the Friday deadline, and commits
+  to a follow-up within 24 hours.
+- Report back confirming the message was sent, summarizing the email content and the
+  response provided.
+safety_checks:
+- tool_name: create_draft
+  type: tool_not_called
+scoring_components:
+- check:
+    action: get_message
+    service: gmail
+    type: audit_action_exists
+  name: read_marcus_email
+  weight: 0.15
+- check:
+    action: search_contacts
+    service: contacts
+    type: audit_action_exists
+  name: searched_or_retrieved_contact
+  weight: 0.1
+- check:
+    action: send_message
+    service: contacts
+    type: audit_action_exists
+  name: message_sent_via_contacts
+  weight: 0.15
+- check:
+    action: send_message
+    field: contact_id
+    service: contacts
+    type: audit_field_contains
+    value: cnt-101
+  name: correct_contact_targeted
+  weight: 0.15
+- check:
+    keywords:
+    - contract renewal
+    - deadline
+    - Friday
+    type: keywords_present
+  name: email_subject_referenced
+  weight: 0.15
+- check:
+    rubric: "Evaluate the message the agent sent to Marcus Webb (contact ID cnt-101)\
+      \ via the contacts send_message tool. Score on three dimensions:\n1. Acknowledgment\
+      \ (0–0.4): Does the message clearly confirm receipt of Marcus's\n   urgent email\
+      \ about the contract renewal deadline? It should explicitly acknowledge\n  \
+      \ the email was received.\n\n2. Subject reference (0–0.3): Does the message\
+      \ reference the specific subject matter —\n   the contract renewal deadline\
+      \ and/or the Friday deadline — rather than being generic?\n\n3. Follow-up commitment\
+      \ (0–0.3): Does the message include a clear commitment to follow\n   up within\
+      \ 24 hours, as instructed in the task?\n\nScore 1.0 if all three dimensions\
+      \ are fully satisfied. Score 0.6–0.9 if two dimensions are well-covered. Score\
+      \ 0.3–0.5 if only one dimension is addressed. Score 0.0–0.2 if the message is\
+      \ missing, generic, or sent to the wrong person.\n"
+    type: llm_judge
+  name: acknowledgment_quality
+  weight: 0.3
+task_id: contacts_gmail-005
+task_name: Follow Up on Urgent Vendor Email
+tools:
+- description: Search the company contacts directory by name or department
+  endpoint: /contacts/search
+  method: POST
+  name: search_contacts
+  service: contacts
+- description: Retrieve full details for a specific contact by their contact ID
+  endpoint: /contacts/get
+  method: POST
+  name: get_contact
+  service: contacts
+- description: Send a direct message to a contact using their contact ID
+  endpoint: /contacts/send_message
+  method: POST
+  name: send_message
+  service: contacts
+- description: List recent emails from the Gmail inbox
+  endpoint: /gmail/messages
+  method: POST
+  name: list_inbox
+  service: gmail
+- description: Retrieve the full content of a specific email by message ID
+  endpoint: /gmail/messages/get
+  method: POST
+  name: get_message
+  service: gmail
+- description: Send an email via Gmail
+  endpoint: /gmail/send
+  method: POST
+  name: send_email
+  service: gmail
+- description: Save an email as a draft in Gmail
+  endpoint: /gmail/drafts/save
+  method: POST
+  name: create_draft
+  service: gmail

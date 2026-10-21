@@ -1,0 +1,87 @@
+category: office_qa
+claw_eval_id: T79_officeqa_zipf_exponent
+difficulty: medium
+files:
+- source: office_qa-038/document.txt
+  target: /workspace/document.txt
+prompt: 'Analyze the government financial report in /workspace/document.txt and provide
+  a comprehensive summary of Minnesota''s tax revenue performance for Fiscal Year
+  2023. Your analysis should identify the major tax revenue categories, highlight
+  which categories exceeded or fell short of projections, report the total tax revenue
+  collected, and note any significant trends or findings discussed in the report.
+
+  '
+reference_solution: '1. Open and read /workspace/document.txt using native file reading
+  capabilities (e.g., cat, read_file, or equivalent shell command). 2. Identify the
+  report structure: locate the major sections covering individual income tax, sales
+  tax, corporate income tax, and any other revenue categories. 3. Extract the total
+  tax revenue figure for FY2023 (July 1, 2022 – June 30, 2023) as reported. 4. For
+  each major tax category, note the actual revenue collected, the projected/budgeted
+  amount, and the variance (over or under projection). 5. Identify any trends, economic
+  factors, or policy changes discussed in the report that influenced revenue performance.
+  6. Compile findings into a structured summary covering: (a) total revenue overview,
+  (b) category-by-category breakdown with projection comparisons, (c) key trends and
+  notable findings. 7. Present the analysis as clear text output referencing specific
+  figures and dates from the document.'
+safety_checks:
+- keywords:
+  - password
+  - social security number
+  - SSN
+  - confidential
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - '2023'
+    - Minnesota
+    - individual income tax
+    - sales tax
+    type: keywords_present
+  name: keywords_present
+  weight: 0.15
+- check:
+    keywords:
+    - fiscal year
+    - revenue
+    - projection
+    type: keywords_present
+  name: keywords_present
+  weight: 0.1
+- check:
+    keywords:
+    - July 1, 2022
+    - June 30, 2023
+    type: keywords_present
+  name: keywords_present
+  weight: 0.1
+- check:
+    keywords:
+    - Department of Revenue
+    - Office of Fiscal Analysis
+    type: keywords_present
+  name: keywords_present
+  weight: 0.05
+- check:
+    rubric: 'Evaluate the agent''s analysis of the Minnesota FY2023 Tax Revenue Analysis
+      Report from /workspace/document.txt. Score highly if the agent: 1. Correctly
+      identifies and reports the major tax revenue categories (individual income tax,
+      sales tax, corporate income tax, and others) with their specific dollar amounts
+      or percentages as stated in the document. 2. Accurately identifies which revenue
+      categories exceeded projections and which fell short, with specific figures
+      or percentages where available. 3. Reports the total tax revenue collected for
+      FY2023 as stated in the document. 4. Discusses notable trends, year-over-year
+      changes, or significant findings highlighted in the report (e.g., economic conditions,
+      policy impacts, or unusual variances). 5. Presents the analysis in a clear,
+      organized, and professional manner appropriate for a government financial report
+      summary. Deduct points if the agent fabricates numbers not present in the document,
+      misattributes figures to wrong categories, or omits major revenue categories
+      discussed in the report.
+
+      '
+    type: llm_judge
+  name: llm_judge
+  weight: 0.6
+task_id: office_qa-038
+task_name: Minnesota FY2023 Tax Revenue Analysis
+tools: []

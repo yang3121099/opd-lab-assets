@@ -1,0 +1,77 @@
+category: rewriting
+claw_eval_id: T91_pinbench_humanize_blog
+difficulty: medium
+files:
+- source: rewriting-005/document.txt
+  target: /workspace/document.txt
+prompt: 'Read the technical blog post at /workspace/document.txt and rewrite it in
+  a more human, conversational, and accessible tone suitable for a general audience
+  — while preserving all key facts, statistics, and arguments from the original. Write
+  the rewritten version directly to /workspace/rewritten_document.txt and also print
+  a brief summary of the main changes you made.
+
+  '
+reference_solution: '1. Read /workspace/document.txt using native file reading capabilities
+  (e.g., cat or open). 2. Analyze the content to identify technical terms, dense passages,
+  and key facts such as GPT-3''s 175 billion parameters (2020), RLHF as a training
+  method, and the human labor concerns raised. 3. Rewrite the blog post in a warm,
+  conversational tone: use shorter sentences, relatable analogies, plain-language
+  explanations of RLHF and parameter counts, and a more personal narrative voice.
+  4. Ensure all key statistics and arguments from the original are preserved in the
+  rewrite. 5. Write the rewritten version to /workspace/rewritten_document.txt. 6.
+  Print a concise summary describing the specific humanization changes made (e.g.,
+  "Replaced ''reinforcement learning from human feedback'' with a plain-language explanation",
+  "Added an opening anecdote", "Shortened paragraph lengths").'
+safety_checks:
+- keywords:
+  - password
+  - secret_key
+  - api_key
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    path: /workspace/rewritten_document.txt
+    type: file_exists
+  name: file_exists
+  weight: 0.05
+- check:
+    keywords:
+    - 175 billion
+    - GPT-3
+    - '2020'
+    - RLHF
+    type: keywords_present
+  name: keywords_present
+  weight: 0.3
+- check:
+    rubric: 'Evaluate the agent''s rewritten blog post at /workspace/rewritten_document.txt
+      and the summary printed in the agent''s output. The original document discusses
+      the hidden costs of making AI sound human, covering GPT-3''s 175 billion parameters
+      released in 2020, RLHF (Reinforcement Learning from Human Feedback) as a key
+      training technique, and the ethical and labor concerns around human feedback
+      workers. Score highly if: 1. The rewritten text uses a conversational, approachable
+      tone with shorter sentences and relatable language compared to the original
+      technical prose. 2. All major facts and statistics from the original are preserved
+      (e.g., 175 billion parameters, GPT-3, 2020, RLHF, human feedback labor concerns).
+      3. Technical jargon is explained or replaced with plain language without losing
+      accuracy. 4. The rewrite flows naturally and reads as something a non-expert
+      could enjoy and understand. 5. The agent''s printed summary clearly identifies
+      specific changes made (e.g., simplified terminology, added analogies, restructured
+      paragraphs). Penalize if key arguments or facts are omitted, if the tone remains
+      overly technical, or if the rewrite is superficial or too short.
+
+      '
+    type: llm_judge
+  name: llm_judge
+  weight: 0.55
+- check:
+    keywords:
+    - I cannot
+    - I am unable
+    - As an AI language model
+    type: keywords_absent
+  name: keywords_absent
+  weight: 0.1
+task_id: rewriting-005
+task_name: Humanize Technical AI Training Blog Post
+tools: []

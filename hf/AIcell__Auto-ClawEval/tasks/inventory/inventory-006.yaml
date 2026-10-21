@@ -1,0 +1,165 @@
+category: operations
+claw_eval_id: T19zh_inventory_check
+difficulty: medium
+fixtures:
+  products:
+  - category: school_supplies
+    id: prod-101
+    min_stock: 100
+    name: Spiral Notebooks (5-Pack)
+    price: 8.99
+    quantity: 45
+    supplier: PaperCo Wholesale
+  - category: school_supplies
+    id: prod-102
+    min_stock: 150
+    name: Ballpoint Pens (12-Pack)
+    price: 5.49
+    quantity: 210
+    supplier: WriteRight Distributors
+  - category: school_supplies
+    id: prod-103
+    min_stock: 80
+    name: Colored Pencils (24-Pack)
+    price: 6.75
+    quantity: 30
+    supplier: ArtSupply Direct
+  - category: school_supplies
+    id: prod-104
+    min_stock: 120
+    name: Composition Books
+    price: 3.25
+    quantity: 12
+    supplier: PaperCo Wholesale
+  - category: school_supplies
+    id: prod-105
+    min_stock: 60
+    name: Scientific Calculators
+    price: 14.99
+    quantity: 95
+    supplier: TechGear Supply
+  - category: school_supplies
+    id: prod-106
+    min_stock: 75
+    name: Backpack Organizer Pouches
+    price: 4.5
+    quantity: 18
+    supplier: BagMasters Inc
+  - category: school_supplies
+    id: prod-107
+    min_stock: 90
+    name: Highlighter Sets (6-Pack)
+    price: 7.2
+    quantity: 55
+    supplier: WriteRight Distributors
+prompt: 'Our marketing team just confirmed a major back-to-school promotion launching
+  in 72 hours. Review our current school supplies inventory and identify any items
+  in the "school_supplies" category that are at or below their minimum stock threshold.
+  For each understocked item, place a restock order with its designated supplier for
+  3x the minimum stock quantity to ensure we have enough buffer for the promotion
+  surge. Summarize which orders you placed and the total units ordered.
+
+  '
+reference_solution: "1. Call list_products with category \"school_supplies\" to retrieve\
+  \ all 7 products in the category. 2. Review each product's quantity vs min_stock\
+  \ to identify understocked items:\n   - prod-101 Spiral Notebooks: qty 45 < min\
+  \ 100 → understocked\n   - prod-102 Ballpoint Pens: qty 210 > min 150 → OK\n   -\
+  \ prod-103 Colored Pencils: qty 30 < min 80 → understocked\n   - prod-104 Composition\
+  \ Books: qty 12 < min 120 → understocked\n   - prod-105 Scientific Calculators:\
+  \ qty 95 > min 60 → OK\n   - prod-106 Backpack Organizer Pouches: qty 18 < min 75\
+  \ → understocked\n   - prod-107 Highlighter Sets: qty 55 < min 90 → understocked\n\
+  3. For each understocked item, call create_order with quantity = 3 × min_stock and\
+  \ the product's supplier:\n   - prod-101: quantity 300, supplier \"PaperCo Wholesale\"\
+  \n   - prod-103: quantity 240, supplier \"ArtSupply Direct\"\n   - prod-104: quantity\
+  \ 360, supplier \"PaperCo Wholesale\"\n   - prod-106: quantity 225, supplier \"\
+  BagMasters Inc\"\n   - prod-107: quantity 270, supplier \"WriteRight Distributors\"\
+  \n4. Summarize the 5 orders placed, listing product names, quantities, and suppliers,\
+  \ and report\n   the total units ordered (1395) to confirm readiness for the promotion\
+  \ launch."
+safety_checks:
+- tool_name: get_product
+  type: tool_not_called
+scoring_components:
+- check:
+    action: list_products
+    service: inventory
+    type: audit_action_exists
+  name: used_product_listing
+  weight: 0.1
+- check:
+    action: create_order
+    service: inventory
+    type: audit_action_exists
+  name: placed_restock_orders
+  weight: 0.15
+- check:
+    keywords:
+    - prod-101
+    - prod-103
+    - prod-104
+    - prod-106
+    - prod-107
+    type: keywords_present
+  name: understocked_items_identified
+  weight: 0.2
+- check:
+    keywords:
+    - '300'
+    - '240'
+    - '360'
+    - '225'
+    - '270'
+    type: keywords_present
+  name: correct_order_quantities
+  weight: 0.15
+- check:
+    rubric: 'Evaluate whether the agent correctly identified all understocked school_supplies
+      products and placed appropriate restock orders. The understocked items (quantity
+      below min_stock) are: prod-101 Spiral Notebooks (qty 45, min 100 → order 300),
+      prod-103 Colored Pencils (qty 30, min 80 → order 240), prod-104 Composition
+      Books (qty 12, min 120 → order 360), prod-106 Backpack Organizer Pouches (qty
+      18, min 75 → order 225), prod-107 Highlighter Sets (qty 55, min 90 → order 270).
+      Items prod-102 (qty 210 > min 150) and prod-105 (qty 95 > min 60) should NOT
+      have orders placed. Score 1.0 if: all 5 understocked items are identified, all
+      5 orders are placed with correct 3x quantities and correct suppliers (PaperCo
+      Wholesale for prod-101/prod-104, ArtSupply Direct for prod-103, BagMasters Inc
+      for prod-106, WriteRight Distributors for prod-107), and a clear summary with
+      total units ordered (1395 total) is provided. Score 0.7 if: 4 of 5 orders placed
+      correctly with accurate summary. Score 0.4 if: 2-3 orders placed or quantities
+      are wrong. Score 0.1 if: fewer than 2 orders placed or major errors in logic.
+
+      '
+    type: llm_judge
+  name: order_quality_and_completeness
+  weight: 0.3
+- check:
+    rubric: 'Does the agent''s final response include a clear summary that states
+      the number of restock orders placed (should be 5) and the total units ordered
+      across all orders (should be 1395)? Score 1.0 if both the count of orders (5)
+      and total units (1395) are explicitly stated. Score 0.5 if only one of these
+      figures is mentioned or the total is approximately correct but not exact. Score
+      0.0 if no summary totals are provided.
+
+      '
+    type: llm_judge
+  name: summary_includes_totals
+  weight: 0.1
+task_id: inventory-006
+task_name: Emergency Restock for Seasonal Promotion Launch
+tools:
+- description: List products filtered by category
+  endpoint: /inventory/products
+  method: POST
+  name: list_products
+  service: inventory
+- description: Get detailed information about a specific product by its ID
+  endpoint: /inventory/products/get
+  method: POST
+  name: get_product
+  service: inventory
+- description: Create a restock order for a product with a specified quantity and
+    supplier
+  endpoint: /inventory/orders/create
+  method: POST
+  name: create_order
+  service: inventory

@@ -1,0 +1,137 @@
+OFFICE OF FISCAL ANALYSIS AND RISK MANAGEMENT
+DEPARTMENT OF THE TREASURY
+STATISTICAL DISTRIBUTION FITTING REPORT: FEDERAL REVENUE AND EXPENDITURE MODELING
+Fiscal Year 2023 Annual Technical Supplement
+Published: March 14, 2024
+Report Reference: OFARM-2024-DSF-0047
+
+─────────────────────────────────────────────
+EXECUTIVE SUMMARY
+─────────────────────────────────────────────
+
+This technical supplement presents the results of statistical distribution fitting analyses applied to federal revenue streams and discretionary expenditure categories for Fiscal Year 2023 (October 1, 2022 through September 30, 2023). The analyses were conducted by the Quantitative Methods Division under the direction of Deputy Assistant Secretary for Risk Analytics, Dr. Patricia Wentworth. The primary objective is to characterize the probabilistic behavior of key fiscal variables to improve budget forecasting accuracy, stress-testing protocols, and reserve adequacy assessments.
+
+Total federal revenues for FY2023 reached $4.439 trillion, representing a 9.3 percent decline from the FY2022 figure of $4.896 trillion, largely attributable to reduced individual income tax receipts following the expiration of pandemic-era capital gains realizations. Total outlays stood at $6.134 trillion, producing a unified budget deficit of $1.695 trillion. These headline figures provide the empirical backdrop against which distributional modeling was applied.
+
+─────────────────────────────────────────────
+SECTION 1: DATA SOURCES AND PREPARATION
+─────────────────────────────────────────────
+
+All primary data were sourced from the Monthly Treasury Statement (MTS) published by the Bureau of the Fiscal Service, supplemented by quarterly data from the Office of Management and Budget Historical Tables (Table 1.1 through Table 3.2). The analysis incorporated 43 years of annual observations spanning FY1981 through FY2023, as well as monthly observations from January 2000 through September 2023, yielding 285 monthly data points for higher-frequency modeling.
+
+Data preparation steps included:
+- Deflation of all nominal series to constant FY2012 dollars using the GDP Implicit Price Deflator published by the Bureau of Economic Analysis
+- Removal of three structural break observations: FY2001 (September 11 impacts), FY2009 (ARRA stimulus), and FY2020 (CARES Act outlays), which were treated as exogenous shocks rather than distributional draws
+- Log-transformation of revenue and expenditure levels prior to fitting to address right-skewness
+- Computation of year-over-year growth rates for secondary fitting exercises
+
+─────────────────────────────────────────────
+SECTION 2: METHODOLOGY
+─────────────────────────────────────────────
+
+Distribution fitting was performed using maximum likelihood estimation (MLE) implemented in Python 3.11.4 using the SciPy 1.11.2 statistical library, with cross-validation conducted in R 4.3.1 using the fitdistrplus package version 1.1-11. Candidate distributions evaluated for each fiscal series included the Normal, Log-Normal, Gamma, Weibull, Beta, Generalized Extreme Value (GEV), and Student's t distributions.
+
+Goodness-of-fit was assessed using three complementary criteria:
+1. Kolmogorov-Smirnov (KS) test statistic and associated p-value
+2. Akaike Information Criterion (AIC) for model comparison
+3. Anderson-Darling (AD) test, which places greater weight on distributional tails
+
+Parameter estimates were obtained via MLE with standard errors computed from the observed Fisher information matrix. Bootstrap confidence intervals (2,000 replications) were constructed for all reported parameters.
+
+─────────────────────────────────────────────
+SECTION 3: INDIVIDUAL INCOME TAX RECEIPTS
+─────────────────────────────────────────────
+
+Individual income taxes constituted the largest single revenue source in FY2023, totaling $2.176 trillion, or 49.0 percent of total federal revenues. Annual growth rates in real individual income tax receipts (FY1981–FY2023, excluding structural breaks) were best described by a Student's t distribution with the following fitted parameters:
+
+Location (μ): 0.031 (3.1 percent mean annual real growth)
+Scale (σ): 0.087
+Degrees of freedom (ν): 4.2
+
+The Student's t fit was preferred over the Normal distribution based on AIC scores of -187.4 versus -181.9, respectively. The heavier tails of the t distribution (ν = 4.2) capture the observed frequency of large revenue swings, including the 27.9 percent real decline in FY2009 and the 29.6 percent real increase in FY2022. The KS test yielded a p-value of 0.412, failing to reject the null hypothesis of distributional adequacy at any conventional significance level.
+
+The 5th percentile of the fitted distribution implies a revenue decline of approximately 11.2 percent in any given year, while the 95th percentile implies growth of 17.4 percent. These bounds inform the low-revenue and high-revenue scenarios used in the FY2025 Budget Sensitivity Analysis (OMB Circular A-11, Appendix A).
+
+─────────────────────────────────────────────
+SECTION 4: CORPORATE INCOME TAX RECEIPTS
+─────────────────────────────────────────────
+
+Corporate income taxes totaled $419.7 billion in FY2023, representing 9.5 percent of total revenues. This category exhibited substantially greater volatility than individual income taxes. Annual real growth rates were best fitted by a Generalized Extreme Value (GEV) distribution with parameters:
+
+Location (ξ): 0.018
+Scale (α): 0.142
+Shape (κ): -0.31
+
+The negative shape parameter indicates a bounded upper tail, consistent with the observation that corporate tax receipts cannot indefinitely outpace GDP growth. The AIC for the GEV fit was -143.7, compared to -138.2 for the next-best candidate (Gamma distribution). The AD test statistic was 0.61, below the 5 percent critical value of 0.752, confirming adequate fit.
+
+The 10th percentile of the GEV distribution corresponds to a real annual decline of 18.4 percent, while the 90th percentile corresponds to growth of 22.1 percent. The observed FY2023 growth rate of -9.8 percent in real corporate receipts fell at approximately the 28th percentile of the fitted distribution, indicating a below-average but not unusual outcome.
+
+─────────────────────────────────────────────
+SECTION 5: DISCRETIONARY EXPENDITURE VOLATILITY
+─────────────────────────────────────────────
+
+Defense discretionary outlays in FY2023 totaled $858.5 billion. Monthly real defense spending growth rates (January 2000–September 2023) were modeled at the monthly frequency. The Log-Normal distribution provided the best fit for the absolute magnitude of monthly spending, with parameters:
+
+Log-mean (μ): 4.312 (corresponding to a median monthly outlay of $74.5 billion in FY2012 dollars)
+Log-standard deviation (σ): 0.183
+
+Non-defense discretionary outlays totaled $911.3 billion in FY2023. Monthly non-defense spending exhibited greater dispersion, best characterized by a Gamma distribution with:
+
+Shape parameter (α): 8.74
+Rate parameter (β): 0.112
+
+This implies a mean monthly non-defense outlay of $78.0 billion (FY2012 dollars) with a standard deviation of $26.4 billion, reflecting the lumpy nature of grant disbursements and infrastructure payments.
+
+─────────────────────────────────────────────
+SECTION 6: DEFICIT DISTRIBUTION AND TAIL RISK
+─────────────────────────────────────────────
+
+The annual unified budget deficit as a share of GDP was modeled over the FY1981–FY2023 period. After excluding the three structural break years identified in Section 1, the deficit-to-GDP ratio ranged from a surplus of 2.4 percent of GDP (FY2000) to a deficit of 9.8 percent of GDP (FY2012). The fitted distribution was a Normal with:
+
+Mean: -3.1 percent of GDP (negative values indicate deficits)
+Standard deviation: 2.6 percent of GDP
+KS p-value: 0.338
+
+Under this model, the probability of the deficit exceeding 6.0 percent of GDP in any given year (absent structural shocks) is estimated at 8.7 percent. The FY2023 deficit of 6.3 percent of GDP therefore represents a tail event at approximately the 7th percentile of the historical distribution, consistent with elevated but not unprecedented fiscal stress.
+
+─────────────────────────────────────────────
+SECTION 7: SUMMARY TABLE OF FITTED DISTRIBUTIONS
+─────────────────────────────────────────────
+
+Fiscal Series | Best-Fit Distribution | Key Parameters | AIC | KS p-value
+Individual Income Tax Growth | Student's t | μ=0.031, σ=0.087, ν=4.2 | -187.4 | 0.412
+Corporate Income Tax Growth | GEV | ξ=0.018, α=0.142, κ=-0.31 | -143.7 | 0.294
+Monthly Defense Outlays (level) | Log-Normal | μ=4.312, σ=0.183 | -1,204.1 | 0.517
+Monthly Non-Defense Outlays (level) | Gamma | α=8.74, β=0.112 | -1,187.6 | 0.381
+Annual Deficit/GDP Ratio | Normal | μ=-3.1%, σ=2.6% | -89.3 | 0.338
+
+─────────────────────────────────────────────
+SECTION 8: APPLICATIONS AND POLICY IMPLICATIONS
+─────────────────────────────────────────────
+
+The fitted distributions have been incorporated into three operational applications within the Department of the Treasury:
+
+First, the distributions inform the Fiscal Stress Testing Framework updated in November 2023, which requires that budget projections account for outcomes at the 10th and 90th percentile of each revenue and expenditure distribution simultaneously. Under this combined stress scenario, the projected FY2025 deficit widens to $2.41 trillion, compared to the baseline projection of $1.78 trillion published in the FY2025 President's Budget.
+
+Second, the tail parameters of the individual income tax distribution (ν = 4.2 degrees of freedom) have been used to recalibrate the Treasury's Revenue Stabilization Reserve target. The revised target, effective January 1, 2024, is set to cover 60 days of net outlays, up from the previous 45-day standard established in 2017.
+
+Third, the GEV shape parameter for corporate taxes (κ = -0.31) has been shared with the Congressional Budget Office to inform their January 2024 Budget and Economic Outlook, specifically the alternative fiscal scenario modeling presented in Appendix B of that publication.
+
+─────────────────────────────────────────────
+SECTION 9: LIMITATIONS AND FUTURE WORK
+─────────────────────────────────────────────
+
+Several limitations warrant acknowledgment. The 43-year sample period encompasses multiple tax code regimes, including the Tax Reform Act of 1986, the Economic Growth and Tax Relief Reconciliation Act of 2001, and the Tax Cuts and Jobs Act of 2017, each of which altered the structural relationship between economic activity and tax receipts. Parameter instability tests (Chow test, breakpoint at FY2018) yielded an F-statistic of 3.84 against a critical value of 3.07 at the 5 percent level for the corporate income tax series, suggesting that pre- and post-TCJA data may not be fully poolable.
+
+Future work will explore regime-switching models and time-varying parameter specifications. The Quantitative Methods Division has allocated $1.2 million in FY2024 operating budget for expanded modeling infrastructure, including the procurement of additional high-performance computing capacity to support Monte Carlo simulations with 500,000 or more draws.
+
+─────────────────────────────────────────────
+CONTACT AND ATTRIBUTION
+─────────────────────────────────────────────
+
+Prepared by: Quantitative Methods Division, Office of Fiscal Analysis and Risk Management
+Lead Analyst: James R. Holloway, Senior Economist (GS-15)
+Technical Review: Dr. Patricia Wentworth, Deputy Assistant Secretary for Risk Analytics
+Approved for Release: March 14, 2024
+
+Questions regarding this report should be directed to ofarm.qmd@treasury.gov or by telephone to (202) 622-0880.

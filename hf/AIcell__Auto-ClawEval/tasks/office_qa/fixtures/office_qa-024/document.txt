@@ -1,0 +1,145 @@
+OFFICE OF FISCAL ANALYSIS AND RISK MANAGEMENT
+DEPARTMENT OF THE TREASURY
+STATISTICAL DISTRIBUTION FITTING ANALYSIS OF FEDERAL REVENUE STREAMS
+Fiscal Year 2022–2023 Technical Report
+
+Report Number: OFARM-TR-2024-07
+Publication Date: March 14, 2024
+Prepared by: Quantitative Methods Division, Bureau of Economic and Statistical Analysis
+Lead Analyst: Dr. Patricia Holloway, Senior Econometrician
+Contributing Analysts: James Rutherford, CFA; Mei-Ling Okafor, Ph.D.
+
+---
+
+EXECUTIVE SUMMARY
+
+This technical report presents the findings of a comprehensive statistical distribution fitting exercise conducted on federal revenue data spanning fiscal years 2013 through 2023. The analysis was commissioned following the Government Accountability Office's recommendation (GAO-23-105897, issued September 2023) that Treasury improve its probabilistic forecasting models for budgetary planning. The primary objective was to identify the best-fitting statistical distributions for six major revenue categories, enabling more accurate confidence interval construction for the President's Budget proposals and mid-session reviews.
+
+Total federal revenues for FY2023 reached $4.439 trillion, representing a 9.3 percent decline from the FY2022 peak of $4.896 trillion. This decline, driven primarily by reduced individual income tax receipts following the expiration of pandemic-era economic conditions, underscored the need for robust distributional modeling rather than reliance on point estimates alone.
+
+---
+
+SECTION 1: BACKGROUND AND MOTIVATION
+
+Federal budget forecasting has historically relied on deterministic models that produce single-point revenue estimates. The Congressional Budget Office's January 2023 Budget and Economic Outlook acknowledged forecast errors averaging $312 billion per year over the preceding decade, with individual income tax receipts showing the highest volatility. The Office of Management and Budget's FY2024 budget submission similarly noted that revenue projections carry uncertainty bands that are rarely communicated transparently to policymakers.
+
+The Quantitative Methods Division was tasked in October 2023 with fitting statistical distributions to monthly revenue data from October 2012 through September 2023, comprising 132 monthly observations per revenue category. The six categories analyzed were:
+
+1. Individual Income Taxes
+2. Corporate Income Taxes
+3. Social Insurance and Retirement Receipts (Payroll Taxes)
+4. Excise Taxes
+5. Estate and Gift Taxes
+6. Customs Duties
+
+---
+
+SECTION 2: DATA SOURCES AND PREPARATION
+
+All revenue data were sourced from the Monthly Treasury Statement (MTS), published by the Bureau of the Fiscal Service. Nominal dollar figures were converted to constant FY2017 dollars using the GDP implicit price deflator published by the Bureau of Economic Analysis. Seasonal adjustment was performed using the X-13ARIMA-SEATS procedure maintained by the U.S. Census Bureau.
+
+After seasonal adjustment and deflation, each series was tested for stationarity using the Augmented Dickey-Fuller test and the Kwiatkowski-Phillips-Schmidt-Shin (KPSS) test. Individual income taxes and payroll taxes required first-differencing to achieve stationarity, while excise taxes and customs duties were stationary in levels. Corporate income taxes exhibited structural breaks in March 2018 (Tax Cuts and Jobs Act implementation) and April 2020 (COVID-19 pandemic onset), which were addressed through dummy variable inclusion.
+
+---
+
+SECTION 3: CANDIDATE DISTRIBUTIONS AND FITTING METHODOLOGY
+
+Seven candidate distributions were evaluated for each revenue category:
+
+- Normal (Gaussian)
+- Log-Normal
+- Gamma
+- Weibull
+- Generalized Extreme Value (GEV)
+- Beta (applied to normalized series)
+- Skew-Normal
+
+Parameters were estimated using Maximum Likelihood Estimation (MLE). Goodness-of-fit was assessed using three complementary criteria:
+
+1. Kolmogorov-Smirnov (KS) test statistic
+2. Anderson-Darling (AD) test statistic, which places greater weight on distribution tails
+3. Akaike Information Criterion (AIC), penalizing for parameter count
+
+Visual diagnostics including Q-Q plots and probability-probability plots were generated for each candidate distribution. Final distribution selection required passing the KS test at the 5 percent significance level and achieving the lowest AIC among passing candidates.
+
+---
+
+SECTION 4: RESULTS BY REVENUE CATEGORY
+
+4.1 Individual Income Taxes
+
+Annual receipts ranged from $1.394 trillion (FY2013) to $2.632 trillion (FY2022) in nominal terms. After adjustment to FY2017 dollars and first-differencing, the monthly change series was best described by a Skew-Normal distribution with location parameter μ = $2.14 billion, scale parameter σ = $38.7 billion, and skewness parameter α = 1.83. The positive skew reflects the asymmetric upside risk during strong labor market periods. The KS statistic was 0.071 (critical value at 5% significance: 0.118), and the AIC was −847.3.
+
+4.2 Corporate Income Taxes
+
+Corporate receipts showed the highest coefficient of variation among all six categories at 0.41, reflecting sensitivity to business cycle conditions and legislative changes. The best-fitting distribution was the Gamma distribution with shape parameter k = 5.92 and scale parameter θ = $7.8 billion per month. Annual corporate receipts ranged from $273.5 billion (FY2020) to $424.9 billion (FY2022). The KS statistic was 0.089, and the AIC was −612.7. The Log-Normal distribution was a close competitor (AIC = −608.1) but was rejected due to heavier-than-observed left tail behavior.
+
+4.3 Social Insurance and Retirement Receipts
+
+Payroll taxes demonstrated the lowest volatility of all categories, with a coefficient of variation of 0.08 after seasonal adjustment. FY2023 payroll tax receipts totaled $1.614 trillion. The Normal distribution provided the best fit, with mean monthly receipts of $134.5 billion and standard deviation of $10.7 billion. The KS statistic was 0.052, the lowest among all categories, confirming the near-Gaussian behavior of this revenue stream. AIC was −1,024.6.
+
+4.4 Excise Taxes
+
+Excise tax receipts, totaling $87.0 billion in FY2023, were best modeled by a Weibull distribution with shape parameter β = 3.41 and scale parameter η = $7.6 billion per month. The Weibull fit captured the slight left skew observed in excise receipts, attributable to periodic legislative suspensions of certain aviation and highway trust fund taxes. The KS statistic was 0.094, and the AIC was −489.2.
+
+4.5 Estate and Gift Taxes
+
+Estate and gift taxes, the smallest category analyzed at $34.1 billion in FY2023, exhibited the most pronounced non-normality. The Generalized Extreme Value distribution provided the best fit, with location parameter μ = $2.6 billion, scale parameter σ = $0.9 billion, and shape parameter ξ = 0.22 (indicating a heavy right tail consistent with Fréchet-type behavior). This finding reflects the lumpy nature of large estate settlements. The KS statistic was 0.103, and the AIC was −341.8.
+
+4.6 Customs Duties
+
+Customs duties receipts, totaling $80.0 billion in FY2023, were best described by a Log-Normal distribution with log-mean μ = 2.01 (in units of billions of dollars) and log-standard deviation σ = 0.31. The Log-Normal fit was consistent with the multiplicative effects of tariff rate changes on an underlying trade volume base. The KS statistic was 0.081, and the AIC was −402.5.
+
+---
+
+SECTION 5: AGGREGATE REVENUE DISTRIBUTION
+
+To construct a distribution for total federal revenues, Monte Carlo simulation was employed using 100,000 iterations. Pairwise correlations between revenue categories were estimated from the historical data and incorporated using a Gaussian copula. The highest correlation observed was between individual income taxes and payroll taxes (Pearson r = 0.74), reflecting their common dependence on labor market conditions. The lowest correlation was between estate taxes and excise taxes (r = 0.09).
+
+The resulting aggregate annual revenue distribution for a forward projection year exhibited the following characteristics:
+
+- Mean: $4.52 trillion
+- Standard deviation: $387 billion
+- 5th percentile: $3.87 trillion
+- 25th percentile: $4.26 trillion
+- Median: $4.51 trillion
+- 75th percentile: $4.78 trillion
+- 95th percentile: $5.19 trillion
+
+The distribution showed mild positive skew (skewness coefficient = 0.31), indicating that upside revenue surprises are somewhat more probable than symmetric assumptions would suggest.
+
+---
+
+SECTION 6: POLICY IMPLICATIONS AND RECOMMENDATIONS
+
+The fitted distributions support three specific improvements to federal budget practice:
+
+First, the President's Budget and Mid-Session Review should report 80 percent confidence intervals alongside point estimates for each major revenue category. Based on this analysis, the 80 percent interval for total revenues in FY2025 spans approximately $4.1 trillion to $4.9 trillion.
+
+Second, the corporate income tax category warrants heightened monitoring given its Gamma-distributed behavior and coefficient of variation of 0.41. A dedicated early-warning indicator should be established, triggering supplemental analysis when monthly corporate receipts deviate more than 1.5 standard deviations from the rolling 24-month mean.
+
+Third, the GEV distribution identified for estate and gift taxes suggests that tail-risk scenarios involving concentrated wealth transfers could produce revenue windfalls or shortfalls of $8 to $12 billion in a single fiscal year, a range not captured by conventional sensitivity analysis.
+
+---
+
+SECTION 7: LIMITATIONS
+
+This analysis is subject to several limitations. The 132-month sample period, while substantial, encompasses only one complete business cycle and two major legislative shocks. Distribution parameters may shift materially following future tax code changes. Additionally, the Gaussian copula assumption for inter-category dependence may understate tail dependence during economic stress periods; future work should evaluate Clayton or Gumbel copulas for this purpose.
+
+---
+
+REFERENCES
+
+Bureau of the Fiscal Service. Monthly Treasury Statement, October 2012–September 2023. U.S. Department of the Treasury.
+
+Congressional Budget Office. The Budget and Economic Outlook: 2023 to 2033. January 2023.
+
+Government Accountability Office. Improvements Needed in Treasury Revenue Forecasting Methodology. GAO-23-105897. September 2023.
+
+Office of Management and Budget. Analytical Perspectives, Budget of the U.S. Government, Fiscal Year 2024. March 2023.
+
+---
+
+Document Classification: Unclassified — For Official Use
+Distribution: Unrestricted
+Contact: ofarm.quantitative@treasury.gov

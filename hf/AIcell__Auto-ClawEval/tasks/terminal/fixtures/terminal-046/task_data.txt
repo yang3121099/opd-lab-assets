@@ -1,0 +1,124 @@
+```yaml
+id: sqlite-wal-recovery
+title: SQLite Database Recovery from WAL Journal
+description: |
+  A critical SQLite database used by a web application has become corrupted after
+  an unexpected system crash. The database was operating in WAL (Write-Ahead Log)
+  mode when the server lost power. Your task is to recover the database, merge the
+  WAL journal, verify data integrity, and restore full database functionality.
+
+  WAL (Write-Ahead Log) mode is SQLite's default journaling mode for concurrent
+  access. When a crash occurs, the WAL file may contain committed transactions
+  that haven't been checkpointed back to the main database file. Recovery involves
+  merging these changes and ensuring consistency.
+
+type: challenge
+difficulty: intermediate
+
+environment:
+  image: ubuntu:22.04
+  packages:
+    - sqlite3
+    - python3
+    - python3-pip
+    - hexdump
+    - xxd
+    - file
+    - binutils
+
+setup:
+  script: |
+    #!/bin/bash
+    set -e
+
+    # Install Python SQLite tools
+    pip3 install -q apsw 2>/dev/null || true
+
+    # Create working directory
+    mkdir -p /opt/recovery/backup
+    mkdir -p /opt/recovery/tools
+    mkdir -p /var/app/data
+
+    # Create the original database with realistic data
+    python3 << 'PYEOF'
+    import sqlite3
+    import os
+    import shutil
+    import struct
+    import time
+
+    db_path = "/var/app/data/inventory.db"
+
+    # Create and populate the database
+    conn = sqlite3.connect(db_path)
+    conn.execute("PRAGMA journal_mode=WAL")
+    conn.execute("PRAGMA page_size=4096")
+    conn.execute("PRAGMA synchronous=NORMAL")
+
+    # Create schema
+    conn.executescript("""
+        CREATE TABLE IF NOT EXISTS products (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            sku TEXT UNIQUE NOT NULL,
+            name TEXT NOT NULL,
+            category TEXT NOT NULL,
+            price REAL NOT NULL,
+            stock_quantity INTEGER NOT NULL DEFAULT 0,
+            reorder_level INTEGER NOT NULL DEFAULT 10,
+            supplier_id INTEGER,
+            created_at TEXT DEFAULT (datetime('now')),
+            updated_at TEXT DEFAULT (datetime('now')),
+            is_active INTEGER DEFAULT 1
+        );
+
+        CREATE TABLE IF NOT EXISTS suppliers (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            contact_email TEXT,
+            contact_phone TEXT,
+            address TEXT,
+            country TEXT,
+            payment_terms TEXT,
+            is_active INTEGER DEFAULT 1
+        );
+
+        CREATE TABLE IF NOT EXISTS orders (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            order_number TEXT UNIQUE NOT NULL,
+            customer_name TEXT NOT NULL,
+            customer_email TEXT NOT NULL,
+            status TEXT NOT NULL DEFAULT 'pending',
+            total_amount REAL NOT NULL,
+            created_at TEXT DEFAULT (datetime('now')),
+            shipped_at TEXT,
+            notes TEXT
+        );
+
+        CREATE TABLE IF NOT EXISTS order_items (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            order_id INTEGER NOT NULL,
+            product_id INTEGER NOT NULL,
+            quantity INTEGER NOT NULL,
+            unit_price REAL NOT NULL,
+            discount REAL DEFAULT 0,
+            FOREIGN KEY (order_id) REFERENCES orders(id),
+            FOREIGN KEY (product_id) REFERENCES products(id)
+        );
+
+        CREATE TABLE IF NOT EXISTS audit_log (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            table_name TEXT NOT NULL,
+            record_id INTEGER NOT NULL,
+            action TEXT NOT NULL,
+            changed_by TEXT NOT NULL,
+            changed_at TEXT DEFAULT (datetime('now')),
+            old_values TEXT,
+            new_values TEXT
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_products_sku ON products(sku);
+        CREATE INDEX IF NOT EXISTS idx_products_category ON products(category);
+        CREATE INDEX IF NOT EXISTS idx_orders_status ON orders(status);
+        CREATE INDEX IF NOT EXISTS idx_orders_customer ON orders(customer_email);
+        CREATE INDEX IF NOT EXISTS idx_order_items_order ON order_items(order_id);
+    

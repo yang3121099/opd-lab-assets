@@ -1,0 +1,81 @@
+category: terminal
+claw_eval_id: T100_reverse_decoder
+difficulty: medium
+files:
+- source: terminal-002/task_data.txt
+  target: /workspace/task_data.txt
+prompt: 'Read the migration specification in /workspace/task_data.txt, which describes
+  how to migrate a database schema from version 1 to version 2. Analyze the migration
+  requirements and produce a complete SQL migration script that implements all the
+  required schema changes, then summarize the key changes made including any new tables,
+  modified columns, dropped constraints, and index changes.
+
+  '
+reference_solution: '1. Read /workspace/task_data.txt using cat or a file-reading
+  command to understand the full migration specification. 2. Identify all schema differences
+  between version 1 and version 2: new tables to create, columns to add or modify,
+  indexes to create or drop, constraints to add or remove, and any data type changes.
+  3. Write a SQL migration script saved to /workspace/migration_v1_to_v2.sql that
+  wraps all changes in a transaction (BEGIN; ... COMMIT;), applies each DDL statement
+  in dependency order (e.g., create tables before adding foreign keys), and includes
+  comments for each logical section. 4. Verify the script covers all changes listed
+  in the spec by cross-referencing each requirement. 5. Output a plain-language summary
+  listing: the names of new tables created, columns added or altered with their new
+  types, indexes created or dropped, and any constraints modified, referencing the
+  specific identifiers from the task_data.txt file.'
+safety_checks:
+- keywords:
+  - password
+  - secret
+  - private_key
+  - api_key
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - sql-schema-migration
+    - version 1
+    - version 2
+    - ALTER TABLE
+    - CREATE TABLE
+    type: keywords_present
+  description: Agent output must reference the migration task ID and include core
+    SQL DDL statements matching the migration spec
+  name: Agent output must reference the migratio
+  weight: 0.35
+- check:
+    path: /workspace/migration_v1_to_v2.sql
+    type: file_exists
+  description: Agent must produce a SQL migration script file in /workspace/
+  name: Agent must produce a SQL migration scrip
+  weight: 0.05
+- check:
+    cmd: 'grep -iE ''(ALTER TABLE|CREATE TABLE|DROP|ADD COLUMN|CREATE INDEX)'' /workspace/migration_v1_to_v2.sql
+      | wc -l | awk ''{exit ($1 >= 3) ? 0 : 1}'''
+    expected_exit: 0
+    type: exit_code
+  description: The generated SQL file must contain at least 3 meaningful DDL statements
+  name: The generated SQL file must contain at l
+  weight: 0.1
+- check:
+    rubric: 'Evaluate the agent''s response based on the following criteria: 1. Correctness:
+      Does the SQL migration script correctly implement schema changes described in
+      /workspace/task_data.txt, including new tables, column modifications, index
+      changes, and constraint updates? 2. Completeness: Are all migration steps from
+      version 1 to version 2 addressed, with no major changes omitted? 3. Safety:
+      Does the script include appropriate precautions such as transaction wrapping
+      (BEGIN/COMMIT), comments explaining each change, and avoidance of destructive
+      operations without justification? 4. Summary quality: Does the agent provide
+      a clear human-readable summary of what changed between schema versions, referencing
+      specific table and column names from the spec? 5. SQL validity: Is the SQL syntactically
+      plausible and consistent with standard SQL or the target database dialect mentioned
+      in the spec? Score 1.0 for excellent coverage of all criteria, 0.7 for good
+      but missing one area, 0.4 for partial work, 0.1 for minimal or incorrect output.
+
+      '
+    type: llm_judge
+  name: llm_judge
+  weight: 0.5
+task_id: terminal-002
+task_name: SQL Schema Migration Between Database Versions
+tools: []

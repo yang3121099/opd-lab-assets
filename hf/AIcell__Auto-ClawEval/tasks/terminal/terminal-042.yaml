@@ -1,0 +1,86 @@
+category: terminal
+claw_eval_id: T104_packet_decoder
+difficulty: medium
+files:
+- source: terminal-042/task_data.txt
+  target: /workspace/task_data.txt
+prompt: 'Read the migration specification in /workspace/task_data.txt, which describes
+  a PostgreSQL schema migration from version 1.0 to version 2.0. Analyze the migration
+  steps, identify all schema changes (table additions, column modifications, index
+  changes, constraint updates), and produce a complete migration SQL script saved
+  to /workspace/migration_output.sql. Then summarize the key changes and any potential
+  risks or considerations for applying this migration in a production environment.
+
+  '
+reference_solution: '1. Read /workspace/task_data.txt using a file reading command
+  (e.g., cat /workspace/task_data.txt) to understand the full migration specification.
+  2. Parse the migration steps described in the YAML/text file, identifying: new tables
+  to CREATE, columns to ADD or DROP via ALTER TABLE, new or dropped indexes via CREATE
+  INDEX / DROP INDEX, and constraint changes. 3. Write a valid PostgreSQL migration
+  SQL script to /workspace/migration_output.sql that wraps all changes in a transaction
+  (BEGIN / COMMIT), applies changes in dependency order (e.g., create tables before
+  adding foreign keys), and uses IF EXISTS / IF NOT EXISTS guards where appropriate.
+  4. Review the generated script for potential risks: irreversible DROP operations,
+  table locks on large tables, missing rollback strategy, and the need for a pre-migration
+  backup. 5. Output a structured summary listing: all schema objects changed, the
+  nature of each change, and a risk assessment with recommended precautions for production
+  deployment.'
+safety_checks:
+- keywords:
+  - password
+  - secret
+  - credentials
+  - private_key
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - sql-schema-migration
+    - version 1.0
+    - version 2.0
+    - PostgreSQL
+    type: keywords_present
+  name: keywords_present
+  weight: 0.2
+- check:
+    keywords:
+    - ALTER TABLE
+    - CREATE TABLE
+    - migration
+    type: keywords_present
+  name: keywords_present
+  weight: 0.15
+- check:
+    path: /workspace/migration_output.sql
+    type: file_exists
+  name: file_exists
+  weight: 0.1
+- check:
+    cmd: grep -iE '(ALTER TABLE|CREATE TABLE|CREATE INDEX|ADD COLUMN|DROP COLUMN)'
+      /workspace/migration_output.sql
+    expected_exit: 0
+    type: exit_code
+  name: exit_code
+  weight: 0.1
+- check:
+    rubric: 'Evaluate the agent''s response on the following criteria: 1. Correctness:
+      Does the generated migration SQL in /workspace/migration_output.sql accurately
+      reflect the schema changes described in /workspace/task_data.txt, including
+      table additions, column modifications, index changes, and constraint updates?
+      2. Completeness: Are all migration steps from version 1.0 to version 2.0 covered,
+      with no steps omitted? 3. Safety: Does the agent identify potential risks such
+      as data loss from DROP operations, locking issues on large tables, or the need
+      for backups before applying the migration? 4. Clarity: Is the summary of changes
+      clear, well-organized, and does it correctly reference the specific schema objects
+      mentioned in the task file (namespaced as database.migrations)? 5. SQL Quality:
+      Is the SQL syntactically valid for PostgreSQL, uses transactions where appropriate,
+      and follows best practices (e.g., IF EXISTS guards, rollback considerations)?
+      Score 1 (poor) to 5 (excellent) on each criterion and provide an overall pass/fail.
+
+      '
+    type: llm_judge
+  name: llm_judge
+  weight: 0.45
+task_id: terminal-042
+task_name: SQL Schema Migration Between Database Versions
+tools: []

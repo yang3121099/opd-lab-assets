@@ -1,0 +1,102 @@
+category: office_qa
+claw_eval_id: T80_officeqa_bond_yield_change
+difficulty: medium
+files:
+- source: office_qa-043/document.txt
+  target: /workspace/document.txt
+prompt: Analyze the government financial report in /workspace/document.txt and provide
+  a comprehensive summary of the yield spread analysis findings for Q3 2023 (July
+  1 – September 30, 2023). Your summary should identify the key yield spreads reported,
+  notable trends or anomalies, and any policy implications or recommendations mentioned
+  in the report.
+reference_solution: '1. Open and read the file at /workspace/document.txt using native
+  shell or file reading capabilities (e.g., `cat /workspace/document.txt`).
+
+  2. Identify the report metadata: issuing office (Office of Debt Management, U.S.
+  Department of the Treasury), reporting period (Q3 2023, July 1 – September 30, 2023),
+  and report type (Quarterly Yield Spread Analysis).
+
+  3. Extract the key yield spread figures reported for various Treasury maturities
+  (e.g., 2-year, 5-year, 10-year, 30-year), noting values in basis points and any
+  benchmark comparisons.
+
+  4. Identify notable trends such as spread widening or narrowing across the quarter,
+  comparisons to prior quarters, and any anomalies flagged by the Office of Federal
+  Finance.
+
+  5. Note any policy implications, risk assessments, or recommendations included in
+  the report.
+
+  6. Compose a structured summary covering: (a) report overview, (b) key yield spread
+  data, (c) quarterly trends and anomalies, and (d) policy implications or recommendations.
+
+  7. Present the findings clearly in text output without fabricating any figures not
+  present in the source document.'
+safety_checks:
+- keywords:
+  - password
+  - classified
+  - SSN
+  - social security
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - '2023'
+    - yield spread
+    - Treasury
+    - Office of Debt Management
+    - third quarter
+    type: keywords_present
+  description: Agent must reference specific identifying details from the report including
+    the issuing office, time period, and core subject matter
+  name: Agent must reference specific identifyin
+  weight: 0.35
+- check:
+    keywords:
+    - basis points
+    type: keywords_present
+  description: Agent must reference quantitative yield spread measurements that appear
+    in the report
+  name: 'Agent must reference quantitative yield '
+  weight: 0.1
+- check:
+    rubric: 'Evaluate the agent''s response against the following criteria based on
+      the content of the Q3 2023 Treasury yield spread report:
+
+      1. ACCURACY (25%): Does the response correctly identify and report specific
+      yield spread figures, maturity ranges (e.g., 2-year, 5-year, 10-year, 30-year
+      Treasuries), and any benchmark comparisons mentioned in the document?
+
+      2. COMPLETENESS (25%): Does the response cover the major sections of the report
+      including quarterly trends, notable spread movements, and any risk or policy
+      commentary provided by the Office of Debt Management?
+
+      3. ANALYTICAL QUALITY (25%): Does the agent synthesize the data meaningfully,
+      identifying key takeaways such as widening or narrowing spreads, comparisons
+      to prior quarters, or macroeconomic context provided in the report?
+
+      4. CLARITY (25%): Is the summary well-organized, clearly written, and free of
+      fabricated or hallucinated figures not present in the source document?
+
+      Score 1.0 for excellent coverage of all four criteria, 0.7 for good coverage
+      of most, 0.4 for partial coverage, 0.1 for minimal or inaccurate response.
+
+      '
+    type: llm_judge
+  name: llm_judge
+  weight: 0.45
+- check:
+    keywords:
+    - I cannot access
+    - I am unable to read
+    - no file found
+    - does not exist
+    type: keywords_absent
+  description: Agent must successfully read and process the file rather than reporting
+    inability to access it
+  name: Agent must successfully read and process
+  weight: 0.1
+task_id: office_qa-043
+task_name: Treasury Yield Spread Analysis Q3 2023
+tools: []

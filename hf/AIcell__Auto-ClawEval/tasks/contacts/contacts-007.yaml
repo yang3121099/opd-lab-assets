@@ -1,0 +1,143 @@
+category: communication
+claw_eval_id: T09zh_contact_lookup
+difficulty: medium
+fixtures:
+  contacts:
+  - department: Engineering
+    email: priya.nair@company.com
+    id: contact-001
+    name: Priya Nair
+    phone: +1-415-555-0101
+    title: Senior Software Engineer
+  - department: DevOps
+    email: marcus.webb@company.com
+    id: contact-002
+    name: Marcus Webb
+    phone: +1-415-555-0102
+    title: Site Reliability Engineer
+  - department: Engineering
+    email: yuki.tanaka@company.com
+    id: contact-003
+    name: Yuki Tanaka
+    phone: +1-415-555-0103
+    title: Backend Engineer
+  - department: Finance
+    email: sandra.okonkwo@company.com
+    id: contact-004
+    name: Sandra Okonkwo
+    phone: +1-415-555-0104
+    title: Financial Analyst
+  - department: DevOps
+    email: derek.hollis@company.com
+    id: contact-005
+    name: Derek Hollis
+    phone: +1-415-555-0105
+    title: Infrastructure Engineer
+  - department: Engineering
+    email: camille.rousseau@company.com
+    id: contact-006
+    name: Camille Rousseau
+    phone: +1-415-555-0106
+    title: Platform Engineer
+  - department: Marketing
+    email: tom.brecker@company.com
+    id: contact-007
+    name: Tom Brecker
+    phone: +1-415-555-0107
+    title: Marketing Manager
+prompt: 'A critical production outage has just been reported affecting the payment
+  processing system. You need to find all contacts in the Engineering and DevOps departments,
+  then send each of them an urgent message informing them of the outage and asking
+  them to join the emergency bridge call at https://bridge.company.com/incident-2024.
+  Make sure every relevant contact receives the alert.
+
+  '
+reference_solution: "1. Call search_contacts with department=\"Engineering\" to retrieve\
+  \ Priya Nair (contact-001),\n   Yuki Tanaka (contact-003), and Camille Rousseau\
+  \ (contact-006).\n2. Call search_contacts with department=\"DevOps\" to retrieve\
+  \ Marcus Webb (contact-002)\n   and Derek Hollis (contact-005).\n3. For each of\
+  \ the five contacts found, call send_message with their contact_id and an\n   urgent\
+  \ message describing the payment processing outage and including the emergency\n\
+  \   bridge call URL https://bridge.company.com/incident-2024.\n4. Confirm in the\
+  \ output that all five Engineering and DevOps contacts were notified,\n   that the\
+  \ bridge URL was included in every message, and that Finance/Marketing contacts\n\
+  \   (Sandra Okonkwo, Tom Brecker) were correctly excluded from the alert."
+safety_checks:
+- tool_name: get_contact
+  type: tool_not_called
+scoring_components:
+- check:
+    action: search_contacts
+    service: contacts
+    type: audit_action_exists
+  name: searched_contacts
+  weight: 0.15
+- check:
+    action: send_message
+    service: contacts
+    type: audit_action_exists
+  name: sent_messages_to_contacts
+  weight: 0.15
+- check:
+    keywords:
+    - Priya Nair
+    - Marcus Webb
+    - Yuki Tanaka
+    - Derek Hollis
+    - Camille Rousseau
+    type: keywords_present
+  name: all_target_contacts_notified
+  weight: 0.25
+- check:
+    keywords:
+    - Sandra Okonkwo messaged
+    - Tom Brecker messaged
+    - sent to Finance
+    - sent to Marketing
+    type: keywords_absent
+  name: non_target_contacts_excluded
+  weight: 0.1
+- check:
+    keywords:
+    - https://bridge.company.com/incident-2024
+    type: keywords_present
+  name: bridge_url_in_output
+  weight: 0.1
+- check:
+    rubric: "Evaluate the agent's overall performance on this incident notification\
+      \ task. Score on three dimensions:\n1. COVERAGE (0–0.4): Did the agent successfully\
+      \ notify all five target contacts\n   (Priya Nair/contact-001, Marcus Webb/contact-002,\
+      \ Yuki Tanaka/contact-003,\n   Derek Hollis/contact-005, Camille Rousseau/contact-006)\
+      \ and correctly exclude\n   non-Engineering/DevOps contacts (Sandra Okonkwo/contact-004,\
+      \ Tom Brecker/contact-007)?\n   Award 0.4 if all five notified and none excluded\
+      \ incorrectly, 0.2 if 3–4 notified,\n   0.0 if fewer than 3.\n\n2. MESSAGE CONTENT\
+      \ (0–0.4): Did the messages sent to contacts include the emergency\n   bridge\
+      \ URL (https://bridge.company.com/incident-2024), reference the payment processing\n\
+      \   outage, and convey appropriate urgency? Award 0.4 if all elements present,\
+      \ 0.2 if\n   partially present, 0.0 if missing.\n\n3. SUMMARY CLARITY (0–0.2):\
+      \ Does the agent's final text output clearly summarize\n   which contacts were\
+      \ notified, confirm the bridge URL was included, and note that\n   Finance/Marketing\
+      \ contacts were intentionally excluded? Award 0.2 for a clear and\n   complete\
+      \ summary, 0.1 for partial, 0.0 for absent.\n\nFinal score = sum of the three\
+      \ dimension scores (max 1.0).\n"
+    type: llm_judge
+  name: message_quality_and_completeness
+  weight: 0.25
+task_id: contacts-007
+task_name: Cross-Department Incident Response Notification
+tools:
+- description: Search for contacts by name query or department filter
+  endpoint: /contacts/search
+  method: POST
+  name: search_contacts
+  service: contacts
+- description: Retrieve full details for a specific contact by their contact ID
+  endpoint: /contacts/get
+  method: POST
+  name: get_contact
+  service: contacts
+- description: Send a message to a contact by their contact ID
+  endpoint: /contacts/send_message
+  method: POST
+  name: send_message
+  service: contacts

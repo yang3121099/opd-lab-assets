@@ -1,0 +1,163 @@
+UNITED STATES DEPARTMENT OF THE TREASURY
+Office of Debt Management
+
+QUARTERLY BOND YIELD CHANGE ANALYSIS REPORT
+Fiscal Year 2024, Third Quarter (April 1 – June 30, 2024)
+
+Prepared by: Office of Debt Management, Bureau of the Fiscal Service
+Report Date: July 22, 2024
+Classification: Public Release
+
+─────────────────────────────────────────────
+
+EXECUTIVE SUMMARY
+
+This report presents the methodology, calculations, and findings related to changes in U.S. Treasury bond yields during the third quarter of Fiscal Year 2024. The analysis covers yield movements across the 2-year, 5-year, 10-year, and 30-year benchmark maturities, examines the factors driving those changes, and quantifies the associated impact on federal debt service costs. During the period under review, the 10-year Treasury yield rose from 4.20 percent on April 1, 2024, to 4.36 percent on June 28, 2024, representing an increase of 16 basis points. This movement, combined with shifts across other maturities, contributed to an estimated $3.4 billion increase in projected annual interest expense on newly issued and refinanced debt.
+
+─────────────────────────────────────────────
+
+SECTION 1: BACKGROUND AND PURPOSE
+
+The Office of Debt Management publishes quarterly yield change analyses to support congressional oversight, inform Federal Reserve coordination, and provide transparency to market participants. Bond yield changes affect the cost of financing the federal deficit, the valuation of outstanding Treasury securities held by the public and foreign governments, and the broader interest rate environment for consumer and business borrowing.
+
+As of June 30, 2024, total federal debt held by the public stood at $27.43 trillion. Of this amount, approximately $8.9 trillion is scheduled for refinancing within the next 12 months, making yield fluctuations a material fiscal concern. A sustained 25-basis-point increase in average borrowing rates across all maturities translates to approximately $22.25 billion in additional annual interest expense on that refinancing volume alone.
+
+─────────────────────────────────────────────
+
+SECTION 2: YIELD DATA AND OBSERVED CHANGES
+
+Table 1: U.S. Treasury Benchmark Yields — Q3 FY2024
+
+Maturity | April 1, 2024 Yield | June 28, 2024 Yield | Change (bps) | Change (%)
+2-Year   |       4.62%         |        4.71%         |    +9 bps    |   +1.95%
+5-Year   |       4.21%         |        4.33%         |   +12 bps    |   +2.85%
+10-Year  |       4.20%         |        4.36%         |   +16 bps    |   +3.81%
+30-Year  |       4.34%         |        4.51%         |   +17 bps    |   +3.92%
+
+Source: U.S. Treasury Daily Yield Curve, H.15 Statistical Release, Federal Reserve Board of Governors.
+
+The yield curve steepened modestly during the quarter. The spread between the 2-year and 10-year Treasury yields moved from negative 42 basis points on April 1 to negative 35 basis points on June 28, indicating a partial normalization of the inverted yield curve that has persisted since July 2022.
+
+─────────────────────────────────────────────
+
+SECTION 3: YIELD CHANGE CALCULATION METHODOLOGY
+
+3.1 Basis Point Calculation
+
+A basis point (bps) is defined as one one-hundredth of one percentage point (0.01%). The change in yield expressed in basis points is calculated as follows:
+
+Yield Change (bps) = (Ending Yield − Beginning Yield) × 100
+
+For the 10-year Treasury:
+Yield Change = (4.36% − 4.20%) × 100 = 16 basis points
+
+For the 30-year Treasury:
+Yield Change = (4.51% − 4.34%) × 100 = 17 basis points
+
+3.2 Percentage Change in Yield Level
+
+The percentage change in the yield level itself (not in price) is calculated as:
+
+Percentage Change = [(Ending Yield − Beginning Yield) / Beginning Yield] × 100
+
+For the 10-year Treasury:
+Percentage Change = [(4.36 − 4.20) / 4.20] × 100 = 3.81%
+
+3.3 Price Impact Estimation Using Modified Duration
+
+Bond price sensitivity to yield changes is estimated using modified duration. For a 10-year Treasury note with a coupon rate of 4.25 percent and a modified duration of approximately 8.3 years, the estimated price change resulting from a 16-basis-point yield increase is:
+
+Estimated Price Change (%) = −Modified Duration × Yield Change (decimal)
+= −8.3 × 0.0016
+= −1.328%
+
+On a $1,000 face value security, this represents a price decline of approximately $13.28, moving the market price from approximately $998.50 to $985.22.
+
+3.4 Dollar Value of a Basis Point (DV01)
+
+The DV01, or dollar value of one basis point, measures the change in the dollar price of a bond for a one-basis-point move in yield. For the benchmark 10-year Treasury note issued on May 15, 2024 (CUSIP: 91282CKH4), with a face value of $1,000 and modified duration of 8.3:
+
+DV01 = (Modified Duration / 100) × Price × Face Value / 100
+= (8.3 / 100) × 99.85 × 10
+= $0.829 per $1,000 face value
+
+For the $42.0 billion 10-year note auction conducted on May 8, 2024, the aggregate DV01 is:
+$0.829 × 42,000,000 = $34.8 million per basis point
+
+This means that for every additional basis point of yield at issuance, the federal government incurs approximately $34.8 million in additional interest expense over the life of that single issuance.
+
+─────────────────────────────────────────────
+
+SECTION 4: AUCTION RESULTS AND YIELD COMPARISON
+
+During Q3 FY2024, the Treasury conducted 13 coupon security auctions. Key results are summarized below.
+
+Table 2: Selected Treasury Auction Results — Q3 FY2024
+
+Auction Date | Security | Size ($B) | High Yield | Bid-to-Cover | Prior Auction Yield | Change (bps)
+April 10     | 3-Year   |   58.0    |   4.540%   |     2.61     |       4.460%        |    +8 bps
+May 8        | 10-Year  |   42.0    |   4.483%   |     2.49     |       4.235%        |   +25 bps
+May 9        | 30-Year  |   25.0    |   4.635%   |     2.41     |       4.432%        |   +20 bps
+June 12      | 10-Year  |   39.0    |   4.438%   |     2.67     |       4.483%        |    −5 bps
+
+Source: TreasuryDirect.gov, Auction Results Archive.
+
+The May 8 10-year note auction drew particular attention from market participants. The high yield of 4.483 percent came in 2.5 basis points above the pre-auction when-issued yield of 4.458 percent, signaling weaker-than-expected demand. The bid-to-cover ratio of 2.49 was below the trailing six-auction average of 2.58, and indirect bidders — a proxy for foreign central bank demand — took 63.2 percent of the offering, down from 68.4 percent at the prior auction.
+
+─────────────────────────────────────────────
+
+SECTION 5: FACTORS DRIVING YIELD CHANGES
+
+5.1 Federal Reserve Policy Signals
+
+The Federal Open Market Committee maintained the federal funds target rate at 5.25 to 5.50 percent throughout Q3 FY2024, a level in place since July 26, 2023. However, the June 12, 2024 FOMC statement revised the median projection for year-end 2024 rate cuts from three reductions (as projected in March 2024) to one reduction, contributing to upward pressure on intermediate and long-term yields.
+
+5.2 Inflation Data
+
+The Consumer Price Index for All Urban Consumers (CPI-U) registered 3.4 percent year-over-year in April 2024, 3.3 percent in May 2024, and 3.0 percent in June 2024. The Personal Consumption Expenditures (PCE) price index, the Federal Reserve's preferred inflation gauge, stood at 2.6 percent year-over-year in May 2024. The gradual but incomplete progress toward the 2.0 percent inflation target kept real yields elevated.
+
+5.3 Supply Dynamics
+
+The Treasury announced on May 1, 2024, that it would maintain elevated auction sizes through at least the end of calendar year 2024 to finance a projected fiscal year 2024 deficit of $1.915 trillion. Gross issuance of Treasury coupon securities during Q3 FY2024 totaled $621 billion, compared to $578 billion in Q3 FY2023, an increase of 7.4 percent.
+
+─────────────────────────────────────────────
+
+SECTION 6: DEBT SERVICE COST IMPACT
+
+6.1 Incremental Cost Calculation
+
+The 16-basis-point increase in the 10-year yield observed during Q3 FY2024 affects the cost of all new 10-year issuances priced after April 1, 2024. The Treasury issued $81.0 billion in 10-year notes during the quarter (combining the May and June auctions and the April reopening). The incremental annual interest cost attributable to the yield increase is calculated as:
+
+Incremental Annual Cost = Principal × Yield Change (decimal)
+= $81,000,000,000 × 0.0016
+= $129.6 million per year
+
+Over the 10-year life of these securities, the cumulative additional interest expense is approximately $1.296 billion.
+
+6.2 Portfolio-Wide Impact
+
+Applying observed yield changes across all maturities and all $621 billion in coupon issuance during the quarter, the Office of Debt Management estimates total incremental annual interest expense of $3.4 billion attributable to yield increases during Q3 FY2024 relative to Q2 FY2024 yield levels.
+
+─────────────────────────────────────────────
+
+SECTION 7: OUTLOOK AND RISK FACTORS
+
+The Office of Debt Management projects that if the 10-year Treasury yield averages 4.50 percent during fiscal year 2025 — compared to the 4.28 percent average recorded in fiscal year 2024 — net interest costs will increase by approximately $31.4 billion relative to the FY2024 baseline of $892 billion in gross interest payments. Net interest expense, after subtracting interest income earned on Treasury operating balances, is projected to reach $870 billion in FY2025 under the baseline scenario.
+
+Key upside risks to yields include persistent services inflation, continued strong labor market data, and potential sovereign credit rating actions. Moody's Investors Service placed the United States Aaa rating on review for downgrade on March 14, 2024, citing fiscal deterioration. A formal downgrade could widen Treasury yield spreads relative to other sovereign benchmarks by an estimated 10 to 20 basis points based on historical precedent from the 2011 S&P downgrade event.
+
+─────────────────────────────────────────────
+
+SECTION 8: CONCLUSION
+
+During Q3 FY2024, U.S. Treasury yields rose across all benchmark maturities, with the 30-year bond experiencing the largest increase of 17 basis points and the 2-year note the smallest increase of 9 basis points. These movements reflect the combined influence of Federal Reserve policy recalibration, above-target inflation, and elevated Treasury supply. The calculated DV01 for the May 8 10-year auction alone reached $34.8 million per basis point, illustrating the scale of fiscal sensitivity to yield movements at current debt levels. Total incremental annual interest expense attributable to Q3 yield changes is estimated at $3.4 billion.
+
+This report will be updated following the close of Q4 FY2024 on September 30, 2024.
+
+─────────────────────────────────────────────
+
+Prepared by:
+Jonathan R. Whitfield, Deputy Assistant Secretary for Federal Finance
+Office of Debt Management, U.S. Department of the Treasury
+1500 Pennsylvania Avenue NW, Washington, D.C. 20220
+Contact: debt.management@fiscal.treasury.gov

@@ -1,0 +1,148 @@
+UNITED STATES DEPARTMENT OF THE TREASURY
+Office of Debt Management
+
+QUARTERLY BOND YIELD CHANGE ANALYSIS
+Fiscal Year 2024, Third Quarter (April 1 – June 30, 2024)
+
+Report Reference: ODM-2024-Q3-BYC-047
+Publication Date: July 22, 2024
+Prepared by: Office of Debt Management, Bureau of Fiscal Service
+
+─────────────────────────────────────────────
+
+EXECUTIVE SUMMARY
+
+This report presents a detailed analysis of yield changes across U.S. Treasury securities during the third quarter of fiscal year 2024. The period from April 1 through June 30, 2024, was characterized by persistent inflationary pressures, revised Federal Open Market Committee (FOMC) guidance, and elevated demand from foreign central banks. The 10-year Treasury note yield rose from 4.20 percent on April 1 to 4.36 percent by June 28, representing an increase of 16 basis points over the quarter. This document outlines the methodology used to calculate yield changes, presents security-specific data, and provides contextual analysis for policymakers and public stakeholders.
+
+─────────────────────────────────────────────
+
+SECTION 1: METHODOLOGY
+
+1.1 Data Sources
+
+Yield data are sourced from the Treasury's Daily Yield Curve Rates, published each business day by the Bureau of the Fiscal Service. Secondary verification is performed using data from the Federal Reserve H.15 Statistical Release. All yields are expressed as annualized percentages based on the bond-equivalent yield (BEY) convention, calculated from the closing bid prices of actively traded Treasury securities in the over-the-counter market.
+
+1.2 Yield Change Calculation Formula
+
+The primary metric used in this report is the basis point change (BPC), defined as:
+
+BPC = (Yield_End – Yield_Start) × 100
+
+Where yields are expressed as decimals. For example, a yield movement from 4.20% to 4.36% is calculated as:
+
+BPC = (0.0436 – 0.0420) × 100 = 0.16 × 100 = 16 basis points
+
+Duration-adjusted price sensitivity is also calculated using the modified duration formula:
+
+ΔP/P ≈ –D_mod × Δy
+
+Where D_mod is the modified duration of the security and Δy is the change in yield expressed as a decimal. For the 10-year note with a modified duration of approximately 8.4 years, a 16-basis-point yield increase implies an approximate price decline of 1.34 percent.
+
+1.3 Benchmark Dates
+
+Opening yields are recorded as of the close of business on April 1, 2024. Closing yields are recorded as of the close of business on June 28, 2024, the final business day of the quarter. Intra-quarter peak and trough values are also identified for each maturity segment.
+
+─────────────────────────────────────────────
+
+SECTION 2: QUARTERLY YIELD CHANGE BY MATURITY
+
+The following table summarizes yield levels and changes across the Treasury yield curve for Q3 FY2024.
+
+TABLE 1: U.S. TREASURY YIELD CHANGES, Q3 FY2024
+
+Security          April 1, 2024    June 28, 2024    Change (bps)    Intra-Qtr High    Intra-Qtr Low
+3-Month T-Bill        5.38%            5.41%            +3             5.44% (May 9)     5.33% (Apr 3)
+6-Month T-Bill        5.32%            5.35%            +3             5.38% (May 14)    5.28% (Apr 2)
+1-Year T-Bill         5.10%            5.08%            –2             5.18% (Apr 22)    5.04% (Jun 12)
+2-Year T-Note         4.62%            4.71%            +9             4.84% (Apr 25)    4.57% (Jun 4)
+5-Year T-Note         4.31%            4.38%            +7             4.52% (Apr 25)    4.26% (Jun 7)
+10-Year T-Note        4.20%            4.36%            +16            4.74% (Apr 25)    4.13% (Jun 14)
+20-Year T-Bond        4.51%            4.63%            +12            4.98% (Apr 25)    4.44% (Jun 14)
+30-Year T-Bond        4.34%            4.48%            +14            4.84% (Apr 25)    4.28% (Jun 14)
+
+Key observations from Table 1:
+
+- The 10-year note experienced the largest net increase among coupon-bearing securities, rising 16 basis points over the quarter.
+- The 1-year bill was the only maturity to register a net decline, falling 2 basis points, consistent with market expectations that the Federal Reserve's next policy action would be a rate reduction.
+- April 25, 2024, marked the intra-quarter yield peak across nearly all maturities, coinciding with the release of the Bureau of Economic Analysis advance estimate showing first-quarter GDP growth of 1.6 percent, below the consensus forecast of 2.4 percent, which paradoxically drove yields higher as investors reassessed stagflation risks.
+- The yield curve remained inverted throughout the quarter, with the 2-year note yielding 35 basis points above the 10-year note as of June 28, compared to an inversion of 42 basis points on April 1.
+
+─────────────────────────────────────────────
+
+SECTION 3: PRICE IMPACT ANALYSIS
+
+3.1 Duration-Adjusted Price Changes
+
+Using the modified duration approximation, the following price impacts were estimated for each security assuming a $1,000 par value holding:
+
+TABLE 2: ESTIMATED PRICE IMPACT PER $1,000 PAR VALUE
+
+Security          Modified Duration    Yield Change (bps)    Estimated Price Change
+2-Year T-Note         1.87 years             +9                   –$1.68
+5-Year T-Note         4.41 years             +7                   –$3.09
+10-Year T-Note        8.40 years             +16                  –$13.44
+20-Year T-Bond        12.63 years            +12                  –$15.16
+30-Year T-Bond        17.21 years            +14                  –$24.09
+
+The 30-year bond experienced the largest dollar price decline per $1,000 par value at approximately $24.09, reflecting its high duration sensitivity despite a smaller basis point move than the 10-year note.
+
+3.2 Aggregate Portfolio Impact
+
+The Treasury's publicly held marketable debt outstanding as of June 30, 2024, totaled approximately $27.4 trillion. Of this amount, approximately $4.1 trillion was held in 10-year notes. Applying the 16-basis-point yield increase to this segment, the estimated mark-to-market decline in the 10-year note portfolio was approximately $55.1 billion. This figure is presented for analytical purposes only and does not affect the Treasury's cash obligations, which are fixed at issuance.
+
+─────────────────────────────────────────────
+
+SECTION 4: CONTRIBUTING FACTORS
+
+4.1 Federal Reserve Policy Signals
+
+At its May 1, 2024, meeting, the FOMC voted unanimously to maintain the federal funds rate target range at 5.25 to 5.50 percent, where it had been held since July 26, 2023. Federal Reserve Chair Jerome Powell's post-meeting statement indicated that the committee did not expect it would be appropriate to reduce the target range until it had gained greater confidence that inflation was moving sustainably toward the 2 percent objective. This guidance contributed to upward pressure on intermediate and long-term yields during April and May.
+
+4.2 Inflation Data
+
+The Consumer Price Index for All Urban Consumers (CPI-U) rose 3.5 percent year-over-year in March 2024, reported on April 10, 2024, exceeding the consensus estimate of 3.4 percent. The core CPI, excluding food and energy, rose 3.8 percent year-over-year. These readings reinforced market expectations that rate cuts would be delayed, contributing to the yield increases observed in April.
+
+4.3 Treasury Issuance Activity
+
+During Q3 FY2024, the Treasury issued $967 billion in new coupon securities, including $386 billion in 2-year notes, $219 billion in 5-year notes, $183 billion in 10-year notes, and $54 billion in 30-year bonds. The May quarterly refunding announcement, released May 1, 2024, maintained auction sizes at levels established in the February 2024 refunding, signaling no immediate plans for further increases. This stability in issuance guidance provided modest support to prices in May and June.
+
+4.4 Foreign Demand
+
+Foreign and international investors held approximately $8.1 trillion in Treasury securities as of April 2024, according to the Treasury International Capital (TIC) data released June 17, 2024. Japan remained the largest foreign holder at $1.15 trillion, followed by China at $767 billion. Net foreign purchases of long-term Treasury securities totaled $68.4 billion in April 2024, providing a partial offset to domestic selling pressure.
+
+─────────────────────────────────────────────
+
+SECTION 5: YEAR-OVER-YEAR COMPARISON
+
+TABLE 3: 10-YEAR TREASURY YIELD COMPARISON
+
+Period                    Opening Yield    Closing Yield    Net Change (bps)
+Q3 FY2023 (Apr–Jun 2023)     3.96%            3.84%             –12
+Q3 FY2024 (Apr–Jun 2024)     4.20%            4.36%             +16
+
+The contrast between Q3 FY2023 and Q3 FY2024 is notable. One year prior, the 10-year yield declined 12 basis points over the same calendar period as banking sector stress following the failures of Silicon Valley Bank on March 10, 2023, and Signature Bank on March 12, 2023, drove flight-to-safety demand. In Q3 FY2024, no comparable risk-off event occurred, and yields drifted higher in response to resilient economic data and sustained inflation.
+
+─────────────────────────────────────────────
+
+SECTION 6: OUTLOOK AND RISK FACTORS
+
+The Office of Debt Management identifies the following factors as material to yield movements in Q4 FY2024 (July 1 – September 30, 2024):
+
+- Federal Reserve rate decisions at the July 30–31 and September 17–18, 2024, FOMC meetings
+- Monthly CPI releases scheduled for July 11 and August 14, 2024
+- The August quarterly refunding announcement, expected August 7, 2024
+- U.S. presidential election developments and associated fiscal policy uncertainty
+- Continued monitoring of foreign central bank reserve management activity
+
+The Office projects that the 10-year yield will trade within a range of 4.10 to 4.65 percent during Q4 FY2024, contingent on inflation data remaining near current levels and the absence of significant geopolitical disruptions.
+
+─────────────────────────────────────────────
+
+CONTACTS AND DISTRIBUTION
+
+This report is prepared by the Office of Debt Management, Bureau of Fiscal Service, U.S. Department of the Treasury, 1500 Pennsylvania Avenue NW, Washington, D.C. 20220. Inquiries may be directed to the Debt Management Division at (202) 622-2960.
+
+This document is approved for public release. Distribution is unlimited.
+
+─────────────────────────────────────────────
+END OF REPORT ODM-2024-Q3-BYC-047

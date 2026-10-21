@@ -1,0 +1,134 @@
+OFFICE OF DEBT MANAGEMENT
+U.S. DEPARTMENT OF THE TREASURY
+FISCAL YEAR 2024 QUARTERLY YIELD SPREAD ANALYSIS
+Third Quarter Report | July 1 – September 30, 2024
+
+Prepared by the Office of Federal Finance
+Released: October 18, 2024
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EXECUTIVE SUMMARY
+
+This report presents the Office of Debt Management's analysis of yield spreads across U.S. Treasury securities for the third quarter of fiscal year 2024. The analysis covers the period from July 1 through September 30, 2024, and examines spread dynamics between short-duration and long-duration instruments, the evolution of the yield curve inversion that has persisted since October 2022, and comparative spread data relative to prior fiscal quarters. This document is intended to inform congressional oversight committees, the Federal Open Market Committee liaison office, and registered primary dealers operating under the terms of the Primary Dealer Agreement with the Federal Reserve Bank of New York.
+
+Key findings indicate that the 2-year/10-year Treasury spread narrowed significantly during Q3 FY2024, moving from -68 basis points on July 1 to -22 basis points by September 30, 2024. This narrowing represents the most substantial single-quarter compression of the inversion since Q1 FY2023 and signals evolving market expectations regarding Federal Reserve monetary policy normalization.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 1: BACKGROUND AND METHODOLOGY
+
+1.1 Scope of Analysis
+
+The Office of Debt Management conducts yield spread analysis on a quarterly basis pursuant to the requirements established under the Treasury and General Government Appropriations Act. This report draws on daily closing yield data sourced from the Federal Reserve H.15 Statistical Release, Bloomberg Government Bond Index feeds, and internal Treasury auction settlement records maintained by the Bureau of the Fiscal Service.
+
+Yield spreads are calculated as the arithmetic difference between benchmark maturities, expressed in basis points (bps), where 1 basis point equals 0.01 percentage point. The primary spread benchmarks examined in this report are:
+
+- 2-year vs. 10-year Treasury note spread (the "2s10s" spread)
+- 3-month Treasury bill vs. 10-year Treasury note spread (the "3m10y" spread)
+- 5-year vs. 30-year Treasury bond spread (the "5s30s" spread)
+- 10-year Treasury note vs. 10-year German Bund spread (the "transatlantic spread")
+
+1.2 Data Sources and Verification
+
+All yield data was cross-referenced against the CME Group's Treasury futures settlement prices and the ICE BofA U.S. Treasury Index series. Auction-specific yield data was drawn from TreasuryDirect.gov official auction results. The analysis team, led by Deputy Assistant Secretary for Federal Finance William Daley, verified all figures against the Federal Reserve Bank of New York's primary dealer survey responses collected on a weekly basis throughout the quarter.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 2: YIELD CURVE CONDITIONS — Q3 FY2024
+
+2.1 Overview of the Inversion
+
+The U.S. Treasury yield curve has remained inverted since October 25, 2022, when the 2s10s spread first turned negative in the current cycle, reaching -7 basis points on that date. The inversion deepened substantially through calendar year 2023, reaching its most extreme point of -108 basis points on July 3, 2023. As of the beginning of Q3 FY2024 (July 1, 2024), the 2s10s spread stood at -68 basis points, with the 2-year yield at 4.75% and the 10-year yield at 4.07%.
+
+By September 30, 2024, the 2-year yield had declined to 3.64% while the 10-year yield stood at 3.78%, producing a spread of -14 basis points. This represents a 54-basis-point narrowing over the 92-day quarter, the fastest rate of inversion compression since the post-pandemic normalization period of Q2 FY2021.
+
+2.2 Quarterly Spread Data Table
+
+BENCHMARK SPREAD SUMMARY — Q3 FY2024
+
+Spread Pair | July 1, 2024 | Aug 1, 2024 | Sep 1, 2024 | Sep 30, 2024 | Qtr Change
+2s10s | -68 bps | -52 bps | -31 bps | -14 bps | +54 bps
+3m10y | -124 bps | -109 bps | -88 bps | -61 bps | +63 bps
+5s30s | +18 bps | +22 bps | +27 bps | +34 bps | +16 bps
+10yr vs. Bund | +178 bps | +171 bps | +163 bps | +158 bps | -20 bps
+
+Note: Positive values indicate normal (upward-sloping) curve; negative values indicate inversion. Bund spread reflects U.S. premium over German sovereign debt.
+
+2.3 Drivers of Spread Compression
+
+The primary catalyst for the observed inversion compression was the Federal Open Market Committee's September 18, 2024 decision to reduce the federal funds target rate by 50 basis points, lowering the target range from 5.25%-5.50% to 4.75%-5.00%. This represented the first rate reduction since March 16, 2020, when the Committee cut rates to the effective lower bound in response to the COVID-19 pandemic.
+
+Markets had begun pricing in this easing cycle as early as mid-July 2024, following the release of the June 2024 Consumer Price Index report on July 11, 2024, which showed headline CPI at 3.0% year-over-year, down from 3.3% in May. The 2-year Treasury yield, which is highly sensitive to near-term Federal Reserve policy expectations, fell 111 basis points over the course of the quarter, while the 10-year yield declined only 29 basis points, producing the net narrowing of the inversion.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 3: AUCTION PERFORMANCE AND SPREAD IMPLICATIONS
+
+3.1 Q3 FY2024 Treasury Auction Results
+
+The Department conducted 47 scheduled public debt auctions during Q3 FY2024, raising a total of $2.847 trillion in gross proceeds. Net new borrowing after maturing debt retirement totaled $386 billion for the quarter. Auction-specific yield data provides additional context for spread dynamics:
+
+- July 10, 2024: 10-year note auction settled at a yield of 4.276%, with a bid-to-cover ratio of 2.67 and indirect bidder participation of 67.3%
+- August 7, 2024: 10-year note auction settled at 3.980%, bid-to-cover of 2.49, indirect bidder participation of 65.1%
+- September 11, 2024: 10-year note auction settled at 3.648%, bid-to-cover of 2.59, indirect bidder participation of 70.2%
+
+The declining auction yields across the three 10-year reopenings reflect the broader market rally in longer-duration instruments. The increase in indirect bidder participation at the September auction, which includes foreign central banks and sovereign wealth funds, suggests continued international demand for U.S. sovereign debt despite the narrowing transatlantic spread.
+
+3.2 Term Premium Estimates
+
+The Office of Debt Management utilizes the Adrian-Crump-Moench (ACM) term premium model maintained by the Federal Reserve Bank of New York to assess the compensation investors require for holding longer-duration Treasury securities. As of September 30, 2024, the ACM 10-year term premium estimate stood at +0.12%, compared to -0.31% on July 1, 2024. This 43-basis-point increase in term premium partially offset the decline in rate expectations embedded in the 10-year yield, explaining why the 10-year yield did not fall as sharply as the 2-year yield during the quarter.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 4: HISTORICAL CONTEXT AND RECESSION INDICATOR ANALYSIS
+
+4.1 Predictive Record of the 2s10s Spread
+
+The 2s10s spread has historically preceded U.S. recessions by an average of 12 to 18 months when sustained inversion exceeds 30 basis points. The current inversion cycle has now persisted for 24 consecutive months as of September 30, 2024, making it the longest sustained inversion since the 1978-1980 episode, which lasted 26 months and preceded the double-dip recessions of 1980 and 1981-1982.
+
+However, the National Bureau of Economic Research has not designated any recession period beginning in 2022 or 2023, and real GDP growth remained positive throughout, with Q2 2024 GDP growth revised to 3.0% annualized by the Bureau of Economic Analysis on August 29, 2024.
+
+4.2 Comparison to Prior Inversion Cycles
+
+Inversion Cycle | Peak Inversion | Duration | Subsequent Recession
+1978-1980 | -199 bps (Sep 1980) | 26 months | Yes (Jan 1980)
+1988-1990 | -66 bps (Mar 1989) | 14 months | Yes (Jul 1990)
+2000-2001 | -52 bps (Feb 2000) | 7 months | Yes (Mar 2001)
+2006-2007 | -19 bps (Feb 2006) | 10 months | Yes (Dec 2007)
+2022-2024 | -108 bps (Jul 2023) | 24+ months | Not designated (as of report date)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 5: OUTLOOK AND RISK FACTORS
+
+5.1 Forward Projections
+
+Based on federal funds futures pricing as of September 30, 2024, market participants anticipate an additional 50 basis points of Federal Reserve rate reductions through December 2024, with the median projection placing the terminal rate at 3.00%-3.25% by end of calendar year 2025. If these expectations materialize, the Office of Debt Management projects the 2s10s spread will return to positive territory, likely in the range of +25 to +50 basis points, by Q2 FY2025.
+
+5.2 Key Risk Factors
+
+The following factors could materially alter the projected spread trajectory:
+
+- Resurgence of inflation above the Federal Reserve's 2.0% target, which could slow or reverse the easing cycle
+- Deterioration in fiscal outlook requiring increased long-duration issuance, which would pressure 10-year and 30-year yields higher
+- Geopolitical disruptions affecting global demand for U.S. Treasury securities as a safe-haven asset
+- Credit rating actions: Fitch Ratings downgraded U.S. long-term debt to AA+ on August 1, 2023, and Moody's Investors Service maintained a negative outlook on its Aaa rating as of the report date
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 6: CONCLUSION
+
+The third quarter of fiscal year 2024 marked a significant inflection point in the U.S. Treasury yield curve inversion that has characterized the interest rate environment since late 2022. The 54-basis-point narrowing of the 2s10s spread, driven primarily by the Federal Reserve's September 18, 2024 rate cut and shifting inflation expectations, represents meaningful progress toward yield curve normalization. The Office of Debt Management will continue to monitor spread dynamics on a daily basis and will publish updated analysis in the Q4 FY2024 report, scheduled for release on January 17, 2025.
+
+Questions regarding this report should be directed to the Office of Federal Finance at (202) 622-2960 or via the secure Treasury portal at fiscal.treasury.gov/debt-management.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Approved for release:
+Office of Debt Management
+U.S. Department of the Treasury
+1500 Pennsylvania Avenue NW, Washington, D.C. 20220
+
+Document Reference: ODM-Q3FY2024-YSA-001
+Classification: Unclassified / Public Release

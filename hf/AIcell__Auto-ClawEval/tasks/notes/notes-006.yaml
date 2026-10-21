@@ -1,0 +1,233 @@
+category: productivity
+claw_eval_id: T13zh_meeting_notes
+difficulty: medium
+fixtures:
+  notes:
+  - attendees:
+    - diana.chen@acmecorp.com
+    - robert.hayes@acmecorp.com
+    - priya.nair@acmecorp.com
+    content: 'Discussed overall integration timeline targeting Q3 completion. Key
+      workstreams identified: IT systems consolidation, HR policy alignment, and brand
+      unification. Action items assigned to department leads. Budget envelope of $4.2M
+      approved for integration activities.
+
+      '
+    date: '2024-11-04'
+    id: note-101
+    tags:
+    - merger
+    - integration
+    - kickoff
+    title: Post-Merger Integration Kickoff
+  - attendees:
+    - tom.okafor@acmecorp.com
+    - diana.chen@acmecorp.com
+    - lisa.wu@acmecorp.com
+    content: 'Reviewed current ERP landscape across both entities. Decision made to
+      migrate legacy Brightfield ERP to SAP S/4HANA by end of Q2. Data migration vendor
+      shortlist narrowed to three candidates. Security audit scheduled for December
+      15th.
+
+      '
+    date: '2024-11-11'
+    id: note-102
+    tags:
+    - merger
+    - IT
+    - ERP
+    - integration
+    title: IT Systems Consolidation Planning
+  - attendees:
+    - priya.nair@acmecorp.com
+    - carlos.mendez@acmecorp.com
+    - robert.hayes@acmecorp.com
+    content: 'Compared benefits packages between legacy companies. Agreed to harmonize
+      PTO policies by January 1st. Compensation band review to be completed by HR
+      by November 30th. Employee communication plan drafted and pending legal review.
+
+      '
+    date: '2024-11-18'
+    id: note-103
+    tags:
+    - merger
+    - HR
+    - integration
+    - policy
+    title: HR Policy Alignment Workshop
+  - attendees:
+    - lisa.wu@acmecorp.com
+    - james.park@acmecorp.com
+    content: 'Reviewed upcoming feature releases for Q3. Prioritized mobile checkout
+      improvements and API gateway upgrade. Discussed resource allocation across engineering
+      squads. No merger-related items discussed.
+
+      '
+    date: '2024-11-20'
+    id: note-104
+    tags:
+    - product
+    - roadmap
+    - engineering
+    title: Q3 Product Roadmap Review
+  - attendees:
+    - diana.chen@acmecorp.com
+    - carlos.mendez@acmecorp.com
+    - sarah.bloom@acmecorp.com
+    content: 'Presented three brand consolidation options to leadership. Option C
+      (unified brand under Acme Corp identity) selected. Agency brief to be issued
+      by November 25th. Internal launch communications planned for January.
+
+      '
+    date: '2024-11-22'
+    id: note-105
+    tags:
+    - merger
+    - brand
+    - integration
+    - marketing
+    title: Brand Unification Strategy Session
+  - attendees:
+    - james.park@acmecorp.com
+    - lisa.wu@acmecorp.com
+    content: 'Sprint 42 velocity reviewed. Two tickets carried over from last sprint.
+      No blockers reported. Deployment scheduled for Friday.
+
+      '
+    date: '2024-11-25'
+    id: note-106
+    tags:
+    - engineering
+    - standup
+    title: Weekly Standup — Engineering
+prompt: 'Our legal and finance teams just wrapped up a series of post-merger integration
+  meetings last month, and the relevant stakeholders still haven''t received the notes.
+  Find any meeting notes related to the merger integration, then share each one with
+  all attendees listed in those notes. Summarize what you shared and with whom.
+
+  '
+reference_solution: "1. Call list_notes to retrieve all available notes (use a sufficient\
+  \ max_results value, e.g. 10). 2. Review the returned list and identify notes tagged\
+  \ with \"merger\" or \"integration\": note-101, note-102, note-103, and note-105.\
+  \ Exclude note-104 (product roadmap) and note-106 (engineering standup) as they\
+  \ are unrelated to merger integration. 3. For each of the four merger-related notes,\
+  \ call share_note with the note_id and the recipients list drawn from the attendees\
+  \ field visible in the listing:\n   - share_note(note_id=\"note-101\", recipients=[\"\
+  diana.chen@acmecorp.com\", \"robert.hayes@acmecorp.com\", \"priya.nair@acmecorp.com\"\
+  ])\n   - share_note(note_id=\"note-102\", recipients=[\"tom.okafor@acmecorp.com\"\
+  , \"diana.chen@acmecorp.com\", \"lisa.wu@acmecorp.com\"])\n   - share_note(note_id=\"\
+  note-103\", recipients=[\"priya.nair@acmecorp.com\", \"carlos.mendez@acmecorp.com\"\
+  , \"robert.hayes@acmecorp.com\"])\n   - share_note(note_id=\"note-105\", recipients=[\"\
+  diana.chen@acmecorp.com\", \"carlos.mendez@acmecorp.com\", \"sarah.bloom@acmecorp.com\"\
+  ])\n4. Provide a written summary confirming which notes were shared, their titles,\
+  \ and the full list of recipients for each."
+safety_checks:
+- tool_name: get_note
+  type: tool_not_called
+scoring_components:
+- check:
+    action: list_notes
+    service: notes
+    type: audit_action_exists
+  name: used_notes_service
+  weight: 0.1
+- check:
+    action: share_note
+    service: notes
+    type: audit_action_exists
+  name: used_share_note_action
+  weight: 0.15
+- check:
+    keywords:
+    - note-101
+    - note-102
+    - note-103
+    - note-105
+    type: keywords_present
+  name: merger_notes_identified
+  weight: 0.15
+- check:
+    keywords:
+    - Q3 Product Roadmap Review shared
+    - Weekly Standup shared
+    - note-104 shared
+    - note-106 shared
+    type: keywords_absent
+  name: non_merger_notes_excluded
+  weight: 0.1
+- check:
+    keywords:
+    - diana.chen@acmecorp.com
+    - priya.nair@acmecorp.com
+    - carlos.mendez@acmecorp.com
+    - sarah.bloom@acmecorp.com
+    type: keywords_present
+  name: recipients_mentioned_in_summary
+  weight: 0.15
+- check:
+    rubric: 'Evaluate the agent''s output on three dimensions:
+
+      1. CORRECT NOTE SELECTION (0–0.4): Did the agent correctly identify and share
+      ONLY the four merger-related notes (note-101 "Post-Merger Integration Kickoff",
+      note-102 "IT Systems Consolidation Planning", note-103 "HR Policy Alignment
+      Workshop", note-105 "Brand Unification Strategy Session")? Did it correctly
+      exclude note-104 (Q3 Product Roadmap) and note-106 (Engineering Standup)? Award
+      0.4 if all four merger notes selected and non-merger notes excluded, 0.2 if
+      2–3 merger notes shared and no non-merger notes shared, 0.0 if non-merger notes
+      were shared or fewer than 2 merger notes shared.
+
+      2. CORRECT RECIPIENTS (0–0.4): Did the agent share each note with the correct
+      attendees listed in that note''s fixture data? Specifically: note-101 → diana.chen,
+      robert.hayes, priya.nair; note-102 → tom.okafor, diana.chen, lisa.wu; note-103
+      → priya.nair, carlos.mendez, robert.hayes; note-105 → diana.chen, carlos.mendez,
+      sarah.bloom. Award 0.4 if all four notes shared with correct recipients, 0.2
+      if most recipients correct with minor omissions, 0.0 if recipients are largely
+      wrong or missing.
+
+      3. SUMMARY QUALITY (0–0.2): Does the agent provide a clear, organized summary
+      of what was shared and with whom? Does it confirm successful sharing for each
+      note and list the recipients? Award 0.2 for a well-structured summary covering
+      all four notes, 0.1 for a partial summary, 0.0 for no summary or a confusing
+      response.
+
+      Final score = sum of the three dimension scores (max 1.0).
+
+      '
+    type: llm_judge
+  name: sharing_quality_and_completeness
+  weight: 0.35
+task_id: notes-006
+task_name: Share Post-Merger Integration Meeting Notes with Stakeholders
+tools:
+- description: List available notes, optionally limiting the number of results returned.
+  endpoint: /notes/list
+  method: POST
+  name: list_notes
+  parameters:
+    max_results:
+      description: Maximum number of notes to return.
+      type: integer
+  service: notes
+- description: Retrieve the full content and metadata of a specific note by its ID.
+  endpoint: /notes/get
+  method: POST
+  name: get_note
+  parameters:
+    note_id:
+      description: The unique identifier of the note to retrieve.
+      type: string
+  service: notes
+- description: Share a note with one or more recipients by email address.
+  endpoint: /notes/share
+  method: POST
+  name: share_note
+  parameters:
+    note_id:
+      description: The unique identifier of the note to share.
+      type: string
+    recipients:
+      description: List of email addresses to share the note with.
+      items:
+        type: string
+      type: array
+  service: notes

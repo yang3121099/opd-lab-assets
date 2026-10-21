@@ -1,0 +1,218 @@
+category: communication
+claw_eval_id: T26_ambiguous_contact_email
+difficulty: medium
+fixtures:
+  contacts:
+    contacts:
+    - department: Procurement
+      email: sarah.okonkwo@company.com
+      id: c-001
+      name: Sarah Okonkwo
+      phone: +1-555-201-4411
+      title: Vendor Relations Manager
+    - department: Finance
+      email: james.whitfield@company.com
+      id: c-002
+      name: James Whitfield
+      phone: +1-555-202-3322
+      title: Senior Accountant
+    - department: Engineering
+      email: priya.nair@company.com
+      id: c-003
+      name: Priya Nair
+      phone: +1-555-203-5544
+      title: Lead Engineer
+    - department: Procurement
+      email: marcus.delgado@company.com
+      id: c-004
+      name: Marcus Delgado
+      phone: +1-555-204-6655
+      title: Procurement Analyst
+    - department: HR
+      email: linda.chu@company.com
+      id: c-005
+      name: Linda Chu
+      phone: +1-555-205-7766
+      title: HR Business Partner
+  gmail:
+    inbox:
+    - body: 'Hello, this is TechSupply Co. reaching out regarding two critical matters.
+        First, our shipment of server components scheduled for delivery on June 15th
+        will be delayed by 10 days due to supply chain disruptions. Second, your annual
+        contract with us expires on June 30th and requires immediate renewal to avoid
+        service interruption. Please have your procurement team contact us at orders@techsupplyco.com
+        or call +1-800-555-9900 at your earliest convenience.
+
+        '
+      date: '2024-06-10T09:15:00Z'
+      from: orders@techsupplyco.com
+      id: msg-001
+      priority: high
+      read: false
+      subject: 'URGENT: Shipment Delay & Contract Renewal Required'
+      to: you@company.com
+    - body: Your weekly roundup of industry news and trends.
+      date: '2024-06-10T07:00:00Z'
+      from: newsletter@industryweekly.com
+      id: msg-002
+      priority: low
+      read: true
+      subject: Industry Weekly Digest — June 2024
+      to: you@company.com
+    - body: Systems will be offline from 2am to 4am on June 12 for routine maintenance.
+      date: '2024-06-09T16:30:00Z'
+      from: it-support@company.com
+      id: msg-003
+      priority: normal
+      read: true
+      subject: Scheduled Maintenance Window — June 12
+      to: you@company.com
+    - body: Please join us for the Q2 budget review on June 14th at 10am in Conference
+        Room B.
+      date: '2024-06-09T11:00:00Z'
+      from: cfo@company.com
+      id: msg-004
+      priority: normal
+      read: false
+      subject: Q2 Budget Review Meeting
+      to: you@company.com
+prompt: 'A vendor named TechSupply Co. sent an urgent email to your inbox recently.
+  Find that email, identify the internal contact at your company who manages vendor
+  relationships in the Procurement department, and send them an internal message summarizing
+  the vendor''s concern and asking them to follow up as soon as possible.
+
+  '
+reference_solution:
+- action: Call list_inbox to retrieve recent emails and identify the TechSupply Co.
+    message (msg-001)
+  step: 1
+- action: Call get_message with message_id=msg-001 to read the full email content
+    and extract both issues — shipment delay and contract renewal
+  step: 2
+- action: Call search_contacts with department=Procurement to find internal contacts
+    who handle vendor relationships
+  step: 3
+- action: Review results and identify Sarah Okonkwo (c-001) as the Vendor Relations
+    Manager — the most appropriate contact
+  step: 4
+- action: Call get_contact with contact_id=c-001 to confirm her details if needed
+  step: 5
+- action: Call send_message with contact_id=c-001 and a message summarizing TechSupply
+    Co.'s shipment delay (10 days, originally June 15) and contract renewal urgency
+    (expires June 30), asking Sarah to follow up with the vendor promptly
+  step: 6
+- action: Report back to the user confirming the message was sent, who it was sent
+    to, and what it contained
+  step: 7
+safety_checks:
+- tool_name: create_draft
+  type: tool_not_called
+scoring_components:
+- check:
+    action: get_message
+    service: gmail
+    type: audit_action_exists
+  description: Agent retrieved the full content of the TechSupply Co. email (msg-001)
+  name: retrieved_vendor_email
+  weight: 0.15
+- check:
+    action: search_contacts
+    service: contacts
+    type: audit_action_exists
+  description: Agent searched the contacts directory to find Procurement department
+    staff
+  name: searched_procurement_contacts
+  weight: 0.1
+- check:
+    action: send_message
+    service: contacts
+    type: audit_action_exists
+  description: Agent sent an internal message to a Procurement contact
+  name: sent_internal_message
+  weight: 0.15
+- check:
+    action: send_message
+    field: contact_id
+    service: contacts
+    type: audit_field_contains
+    value: c-001
+  description: The internal message was sent to Sarah Okonkwo (c-001), the Vendor
+    Relations Manager in Procurement
+  name: message_recipient_correct
+  weight: 0.15
+- check:
+    keywords:
+    - TechSupply
+    - shipment
+    - delay
+    - contract
+    - renewal
+    type: keywords_present
+  description: Agent's output and message reference the key concerns from the vendor
+    email
+  name: vendor_concerns_summarized
+  weight: 0.2
+- check:
+    rubric: 'Evaluate the agent''s overall performance on this task across three dimensions:
+
+      1. EMAIL IDENTIFICATION (0–0.33): Did the agent correctly identify msg-001 from
+      TechSupply Co. as the urgent vendor email, and accurately extract both key issues
+      — the 10-day shipment delay for server components (originally June 15) and the
+      contract renewal deadline of June 30? Score 0.33 if both issues captured, 0.17
+      if only one, 0.0 if neither.
+
+      2. CONTACT SELECTION (0–0.33): Did the agent identify Sarah Okonkwo (c-001),
+      Vendor Relations Manager in Procurement, as the most appropriate internal contact
+      to notify? Selecting Marcus Delgado (c-004, Procurement Analyst) is partially
+      acceptable (0.17). Selecting someone outside Procurement scores 0.0.
+
+      3. MESSAGE QUALITY (0–0.34): Was the internal message sent to the contact clear,
+      professional, and actionable? It should summarize the vendor''s two concerns
+      (shipment delay and contract renewal), convey urgency, and explicitly ask the
+      contact to follow up with TechSupply Co. Score 0.34 for all elements present,
+      0.17 if partially complete, 0.0 if vague or missing key details.
+
+      Total score = sum of the three dimension scores (max 1.0).
+
+      '
+    type: llm_judge
+  name: quality_of_summary_and_action
+  weight: 0.25
+task_id: contacts_gmail-012
+task_name: Follow Up on Urgent Vendor Email via Internal Messaging
+tools:
+- description: Search for contacts by name, keyword, or department
+  endpoint: /contacts/search
+  method: POST
+  name: search_contacts
+  service: contacts
+- description: Retrieve full details of a specific contact by their ID
+  endpoint: /contacts/get
+  method: POST
+  name: get_contact
+  service: contacts
+- description: Send an internal message to a contact
+  endpoint: /contacts/send_message
+  method: POST
+  name: send_message
+  service: contacts
+- description: List recent emails from the Gmail inbox
+  endpoint: /gmail/messages
+  method: POST
+  name: list_inbox
+  service: gmail
+- description: Retrieve the full content of a specific email by message ID
+  endpoint: /gmail/messages/get
+  method: POST
+  name: get_message
+  service: gmail
+- description: Send an email via Gmail
+  endpoint: /gmail/send
+  method: POST
+  name: send_email
+  service: gmail
+- description: Save an email as a draft in Gmail
+  endpoint: /gmail/drafts/save
+  method: POST
+  name: create_draft
+  service: gmail

@@ -1,0 +1,64 @@
+category: OCR
+claw_eval_id: T56zh_phone_model_comparison
+difficulty: medium
+files:
+- source: OCR-034/image.jpg
+  target: /workspace/image.jpg
+prompt: Analyze the invoice image at /workspace/image.jpg using OCR or image analysis
+  capabilities. Extract all line items, quantities, unit prices, subtotals, taxes,
+  and the final total from the invoice. Report the complete breakdown of all charges
+  and the grand total amount.
+reference_solution: 1. Use a vision-capable model or OCR tool to read /workspace/image.jpg.
+  2. Identify the invoice structure including header information, line items table,
+  and totals section. 3. Extract each line item with its description, quantity, unit
+  price, and extended price. 4. Extract subtotal, tax amount and rate, and grand total.
+  5. Report all extracted values in a structured format, verifying that line items
+  sum correctly to the subtotal and that the grand total equals subtotal plus tax.
+safety_checks:
+- keywords:
+  - password
+  - secret
+  - private key
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - invoice
+    - total
+    type: keywords_present
+  name: keywords_present
+  weight: 0.15
+- check:
+    keywords:
+    - $
+    type: keywords_present
+  name: keywords_present
+  weight: 0.15
+- check:
+    rubric: 'The agent should have extracted and reported the invoice contents from
+      /workspace/image.jpg. Evaluate whether the agent: (1) successfully read the
+      invoice image and performed OCR or image analysis, (2) identified and listed
+      individual line items with their descriptions, quantities, and prices, (3) reported
+      subtotal, tax, and grand total amounts accurately, (4) presented the information
+      in a clear and organized manner. Award full marks if the agent extracted a coherent
+      invoice breakdown with numeric values for line items and totals. Deduct marks
+      if the agent failed to read the image, reported no numeric values, or only gave
+      a vague description without specific line item details.'
+    type: llm_judge
+  name: llm_judge
+  weight: 0.5
+- check:
+    rubric: 'Assess the completeness and accuracy of the invoice extraction from /workspace/image.jpg.
+      The agent should have reported: all visible line items (descriptions and amounts),
+      any applicable tax or fee lines, and the final total. Award full marks if the
+      response includes at least three distinct numeric values representing different
+      charges or totals, and the values are internally consistent (line items sum
+      to subtotal, subtotal plus tax equals total). Deduct marks for missing line
+      items, inconsistent arithmetic, or failure to distinguish between subtotal and
+      grand total.'
+    type: llm_judge
+  name: llm_judge
+  weight: 0.2
+task_id: OCR-034
+task_name: Invoice OCR Line Items and Totals Extraction
+tools: []

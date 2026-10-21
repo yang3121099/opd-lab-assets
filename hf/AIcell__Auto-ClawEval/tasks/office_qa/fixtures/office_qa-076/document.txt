@@ -1,0 +1,189 @@
+UNITED STATES DEPARTMENT OF THE TREASURY
+Office of Fiscal Service — Trust Fund Analysis Division
+
+FEDERAL HIGHWAY TRUST FUND
+Compound Annual Growth Rate Analysis and Long-Term Financial Outlook
+Fiscal Years 2014 Through 2024
+
+Report Reference: TFA-HTF-2024-0047
+Publication Date: November 15, 2024
+Prepared by: Trust Fund Analysis Division, Bureau of the Fiscal Service
+Authorized by: Deputy Assistant Secretary for Fiscal Operations and Policy
+
+---
+
+EXECUTIVE SUMMARY
+
+This report presents a comprehensive Compound Annual Growth Rate (CAGR) analysis of the Federal Highway Trust Fund (HTF) for the ten-year period spanning fiscal year 2014 through fiscal year 2024. The analysis covers both the Highway Account and the Mass Transit Account, examining revenue inflows, expenditure patterns, and net balance trajectories. The findings are intended to inform congressional budget deliberations, support the Federal Highway Administration's long-range planning activities, and provide transparency to the American public regarding the financial condition of one of the federal government's most significant dedicated transportation funding mechanisms.
+
+The Highway Trust Fund was established under the Federal Aid Highway Act of 1956 and is primarily funded through federal excise taxes on motor fuels and related transportation products. As of September 30, 2024, the combined balance of the Highway Trust Fund stood at $57.4 billion, reflecting a decade of legislative interventions, general fund transfers, and evolving revenue dynamics.
+
+---
+
+SECTION 1: BACKGROUND AND FUND STRUCTURE
+
+The Federal Highway Trust Fund comprises two distinct accounts:
+
+1. Highway Account — funds construction, maintenance, and improvement of the Interstate Highway System and other federal-aid highways.
+2. Mass Transit Account — funds capital and operating assistance to public transportation systems nationwide.
+
+Primary revenue sources include:
+- Federal gasoline tax of 18.4 cents per gallon (unchanged since 1993)
+- Federal diesel fuel tax of 24.4 cents per gallon
+- Taxes on tires, trucks, and trailers
+- Interest earnings on invested balances
+
+Between fiscal year 2014 and fiscal year 2024, Congress authorized six separate general fund transfers totaling $143.7 billion to prevent the Highway Account from falling below minimum operating thresholds. The most recent transfer of $118 billion was authorized under the Infrastructure Investment and Jobs Act (IIJA), signed into law on November 15, 2021, providing guaranteed funding through fiscal year 2026.
+
+---
+
+SECTION 2: REVENUE ANALYSIS AND CAGR COMPUTATION
+
+Table 1: Highway Trust Fund — Total Annual Receipts, FY2014–FY2024
+(All figures in billions of dollars)
+
+Fiscal Year | Highway Account | Mass Transit Account | Total Receipts
+FY2014      |   34.2          |   8.6                |   42.8
+FY2015      |   35.1          |   8.9                |   44.0
+FY2016      |   36.8          |   9.3                |   46.1
+FY2017      |   37.4          |   9.5                |   46.9
+FY2018      |   38.2          |   9.7                |   47.9
+FY2019      |   39.6          |   10.0               |   49.6
+FY2020      |   31.4          |   7.9                |   39.3
+FY2021      |   35.8          |   9.0                |   44.8
+FY2022      |   40.3          |   10.2               |   50.5
+FY2023      |   41.7          |   10.5               |   52.2
+FY2024      |   43.1          |   10.9               |   54.0
+
+Source: Bureau of the Fiscal Service, Monthly Treasury Statement; Federal Highway Administration Revenue Data Series
+
+CAGR Methodology:
+
+The Compound Annual Growth Rate is calculated using the standard formula:
+
+CAGR = (Ending Value / Beginning Value) ^ (1 / Number of Years) - 1
+
+For total HTF receipts from FY2014 to FY2024:
+CAGR = ($54.0B / $42.8B) ^ (1/10) - 1
+CAGR = (1.2617) ^ (0.10) - 1
+CAGR = 1.02355 - 1
+CAGR = 2.36%
+
+Highway Account CAGR (FY2014–FY2024):
+CAGR = ($43.1B / $34.2B) ^ (1/10) - 1 = 2.34%
+
+Mass Transit Account CAGR (FY2014–FY2024):
+CAGR = ($10.9B / $8.6B) ^ (1/10) - 1 = 2.40%
+
+Notable Observation: The fiscal year 2020 anomaly reflects a 20.7% decline in total receipts attributable to the COVID-19 pandemic, which caused a significant reduction in vehicle miles traveled beginning in March 2020. The Federal Highway Administration reported that vehicle miles traveled fell by 13.2% in calendar year 2020 compared to 2019 levels, directly suppressing fuel tax collections.
+
+---
+
+SECTION 3: EXPENDITURE ANALYSIS
+
+Table 2: Highway Trust Fund — Total Annual Outlays, FY2014–FY2024
+(All figures in billions of dollars)
+
+Fiscal Year | Highway Account | Mass Transit Account | Total Outlays
+FY2014      |   40.1          |   10.2               |   50.3
+FY2015      |   41.3          |   10.5               |   51.8
+FY2016      |   43.7          |   11.1               |   54.8
+FY2017      |   44.9          |   11.4               |   56.3
+FY2018      |   46.2          |   11.7               |   57.9
+FY2019      |   47.8          |   12.1               |   59.9
+FY2020      |   44.3          |   11.2               |   55.5
+FY2021      |   46.1          |   11.7               |   57.8
+FY2022      |   52.4          |   13.3               |   65.7
+FY2023      |   55.8          |   14.1               |   69.9
+FY2024      |   58.6          |   14.8               |   73.4
+
+CAGR for Total Outlays (FY2014–FY2024):
+CAGR = ($73.4B / $50.3B) ^ (1/10) - 1 = 3.85%
+
+The expenditure CAGR of 3.85% substantially exceeds the revenue CAGR of 2.36%, producing a structural gap of 1.49 percentage points annually. This divergence underscores the long-standing fiscal imbalance within the Highway Trust Fund and explains the necessity of repeated general fund transfers.
+
+---
+
+SECTION 4: FUND BALANCE TRAJECTORY
+
+Table 3: Highway Trust Fund — End-of-Year Combined Balance, FY2014–FY2024
+(All figures in billions of dollars)
+
+FY2014: $8.1B
+FY2015: $11.7B (post-FAST Act authorization)
+FY2016: $19.4B
+FY2017: $17.6B
+FY2018: $16.3B
+FY2019: $14.8B
+FY2020: $13.6B
+FY2021: $46.2B (post-IIJA transfer)
+FY2022: $52.9B
+FY2023: $55.1B
+FY2024: $57.4B
+
+CAGR for Fund Balance (FY2014–FY2024):
+CAGR = ($57.4B / $8.1B) ^ (1/10) - 1 = 21.6%
+
+Important Caveat: The fund balance CAGR of 21.6% is not representative of organic revenue growth. It is heavily distorted by the $118 billion IIJA general fund transfer credited in FY2021. Analysts should interpret this figure in the context of legislatively authorized infusions rather than as an indicator of self-sustaining revenue performance.
+
+---
+
+SECTION 5: COMPARATIVE ANALYSIS — PRE- AND POST-IIJA PERIODS
+
+Sub-period Analysis (FY2014–FY2020):
+- Revenue CAGR: -1.36% (reflecting pandemic impact)
+- Expenditure CAGR: +1.63%
+- Net balance declined from $8.1B to $13.6B only due to interim general fund transfers
+
+Sub-period Analysis (FY2021–FY2024):
+- Revenue CAGR: +6.44%
+- Expenditure CAGR: +8.27%
+- Net balance grew from $46.2B to $57.4B, representing a 3-year CAGR of 7.5%
+
+The post-IIJA period demonstrates improved revenue performance driven by economic recovery and increased vehicle miles traveled, which reached 3.19 trillion miles in calendar year 2023 according to the Federal Highway Administration's Traffic Volume Trends report published in February 2024.
+
+---
+
+SECTION 6: ELECTRIC VEHICLE REVENUE RISK ASSESSMENT
+
+A critical long-term concern for Highway Trust Fund revenue sustainability involves the accelerating adoption of electric vehicles (EVs), which do not pay federal fuel excise taxes. The U.S. Energy Information Administration projects that EVs will represent 19% of new vehicle sales by 2030 and 40% by 2040. The Congressional Budget Office, in its July 2023 report "The Highway Trust Fund and the Treatment of Surface Transportation Programs in the Federal Budget," estimated that EV adoption could reduce annual fuel tax receipts by $6.8 billion by fiscal year 2032 relative to a baseline scenario.
+
+The CAGR of EV registrations in the United States from 2014 to 2023 was approximately 38.4%, rising from approximately 286,000 registered EVs in 2014 to an estimated 4.1 million in 2023, according to the Department of Energy's Alternative Fuels Data Center.
+
+---
+
+SECTION 7: KEY FINDINGS AND CONCLUSIONS
+
+1. The ten-year CAGR for total Highway Trust Fund receipts from FY2014 to FY2024 was 2.36%, insufficient to cover expenditure growth of 3.85% annually.
+
+2. The Highway Account generated $43.1 billion in receipts in FY2024, up from $34.2 billion in FY2014.
+
+3. The Mass Transit Account generated $10.9 billion in FY2024, representing a 10-year CAGR of 2.40%.
+
+4. Total outlays reached $73.4 billion in FY2024, exceeding total organic receipts of $54.0 billion by $19.4 billion.
+
+5. The federal gasoline tax of 18.4 cents per gallon has not been adjusted since October 1, 1993, representing a loss of approximately 47% of purchasing power in inflation-adjusted terms as of 2024.
+
+6. Six general fund transfers totaling $143.7 billion were authorized between FY2014 and FY2024 to maintain fund solvency.
+
+7. The IIJA transfer of $118 billion in FY2021 represents the single largest infusion in Highway Trust Fund history.
+
+8. The combined fund balance as of September 30, 2024 was $57.4 billion.
+
+9. Vehicle miles traveled declined 13.2% in calendar year 2020, causing a $10.3 billion shortfall in projected fuel tax receipts.
+
+10. Without legislative action to address the structural revenue-expenditure gap, the Congressional Budget Office projects the Highway Account will face a funding shortfall of approximately $22 billion annually by fiscal year 2028.
+
+---
+
+SECTION 8: RECOMMENDATIONS
+
+The Trust Fund Analysis Division recommends that the Office of Management and Budget and the Congressional Budget Office jointly commission a comprehensive revenue modernization study by March 31, 2025, examining vehicle miles traveled fee structures, EV road usage charges, and inflation indexing of existing fuel tax rates. Any replacement mechanism should target a minimum revenue CAGR of 4.0% to align with projected expenditure growth and eliminate dependence on general fund transfers beyond the IIJA authorization period ending September 30, 2026.
+
+---
+
+Prepared by: James R. Whitfield, Senior Financial Analyst, Trust Fund Analysis Division
+Reviewed by: Patricia L. Okonkwo, Director, Bureau of the Fiscal Service — Transportation Accounts
+Approved by: Deputy Assistant Secretary Marcus T. Hendricks, Office of Fiscal Operations and Policy
+
+For questions regarding this report, contact the Trust Fund Analysis Division at (202) 874-6950 or tfa.htf@fiscal.treasury.gov.

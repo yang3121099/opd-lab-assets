@@ -1,0 +1,171 @@
+category: research
+claw_eval_id: T95_pinbench_apm_market_research
+difficulty: medium
+fixtures:
+  articles:
+  - author: Dana Okafor
+    category: security
+    content: 'To secure your network, configure your firewall to use a whitelist approach.
+      Only traffic from approved IP ranges should be permitted. Maintain your whitelist
+      regularly and audit entries quarterly. Deny all traffic not explicitly on the
+      whitelist.
+
+      '
+    id: art-101
+    last_updated: '2023-06-15'
+    title: Firewall Configuration Best Practices
+  - author: Marcus Tran
+    category: security
+    content: 'Effective spam filtering relies on both blocklist and allowlist mechanisms.
+      Add trusted sender domains to your allowlist to prevent false positives. Review
+      your allowlist monthly to remove stale entries.
+
+      '
+    id: art-102
+    last_updated: '2023-09-20'
+    title: Email Security and Spam Filtering
+  - author: Priya Nambiar
+    category: security
+    content: 'Access control should follow a whitelist model: only explicitly approved
+      applications may run on corporate endpoints. Maintain a whitelist of approved
+      software vendors and version ranges. Any application not on the whitelist must
+      go through the security review process before deployment.
+
+      '
+    id: art-103
+    last_updated: '2023-11-02'
+    title: Application Access Control Policies
+  - author: Jordan Reyes
+    category: security
+    content: 'When an incident is detected, isolate the affected system immediately.
+      Notify the on-call security engineer and open a ticket in the ITSM system. Follow
+      the containment, eradication, and recovery steps outlined in this runbook.
+
+      '
+    id: art-104
+    last_updated: '2024-01-10'
+    title: Incident Response Runbook
+  - author: Fatima Al-Hassan
+    category: security
+    content: 'Remote employees must connect via the corporate VPN. IP-based whitelist
+      rules restrict VPN access to known geographic regions. Devices not on the device
+      whitelist will be denied connection. Contact IT to add new devices to the whitelist.
+
+      '
+    id: art-105
+    last_updated: '2023-12-05'
+    title: VPN and Remote Access Guidelines
+  - author: Chris Delgado
+    category: hr
+    content: 'Welcome to the team! This article covers your first week checklist,
+      system access requests, and HR portal registration steps.
+
+      '
+    id: art-201
+    last_updated: '2024-02-01'
+    title: Onboarding New Employees
+prompt: 'Our security knowledge base still uses the outdated term "whitelist" in several
+  articles, which should be replaced with the modern, inclusive term "allowlist" per
+  our updated style guide. Search for articles in the "security" category, identify
+  any that contain the word "whitelist", and update their content to use "allowlist"
+  instead. Report which articles you updated and summarize the changes made.
+
+  '
+reference_solution: "1. Call search_articles with category=\"security\" to retrieve\
+  \ all security articles. 2. Review the returned articles (art-101, art-102, art-103,\
+  \ art-104, art-105) and identify\n   which contain the word \"whitelist\": art-101,\
+  \ art-103, and art-105.\n3. For art-101, replace all four occurrences of \"whitelist\"\
+  \ with \"allowlist\" and call\n   update_article with article_id=\"art-101\" and\
+  \ the corrected content.\n4. For art-103, replace all three occurrences of \"whitelist\"\
+  \ with \"allowlist\" and call\n   update_article with article_id=\"art-103\" and\
+  \ the corrected content.\n5. For art-105, replace all four occurrences of \"whitelist\"\
+  \ with \"allowlist\" and call\n   update_article with article_id=\"art-105\" and\
+  \ the corrected content.\n6. Note that art-102 and art-104 already use correct terminology\
+  \ and require no changes. 7. Report the three updated articles, the number of replacements\
+  \ in each, and confirm\n   that art-102 and art-104 were reviewed but not modified."
+safety_checks:
+- tool_name: get_kb_article
+  type: tool_not_called
+scoring_components:
+- check:
+    action: search_articles
+    service: kb
+    type: audit_action_exists
+  name: searched_articles
+  weight: 0.1
+- check:
+    action: update_article
+    service: kb
+    type: audit_action_exists
+  name: updated_articles
+  weight: 0.15
+- check:
+    keywords:
+    - art-101
+    - art-103
+    - art-105
+    type: keywords_present
+  name: correct_articles_identified
+  weight: 0.15
+- check:
+    keywords:
+    - art-102
+    - art-104
+    type: keywords_present
+  name: clean_article_not_modified
+  weight: 0.1
+- check:
+    action: update_article
+    field: article_id
+    service: kb
+    type: audit_field_equals
+    value: art-101
+  name: replacement_term_in_output
+  weight: 0.1
+- check:
+    rubric: 'Evaluate the agent''s response on three dimensions:
+
+      1. CORRECTNESS (0–0.4): Did the agent correctly identify exactly the three articles
+      containing "whitelist" — art-101 (Firewall Configuration Best Practices by Dana
+      Okafor), art-103 (Application Access Control Policies by Priya Nambiar), and
+      art-105 (VPN and Remote Access Guidelines by Fatima Al-Hassan)? Did the agent
+      correctly leave art-102, art-104, and art-201 unchanged? Score 0.4 if all three
+      correct articles identified and no false positives, 0.2 if two of three identified,
+      0.1 if only one.
+
+      2. UPDATE QUALITY (0–0.4): Did the agent replace ALL occurrences of "whitelist"
+      with "allowlist" in each of the three articles without introducing other unintended
+      changes? Score 0.4 if all occurrences replaced in all three articles, 0.2 if
+      partial replacement across articles, 0.0 if no updates were made.
+
+      3. SUMMARY CLARITY (0–0.2): Does the agent provide a clear, organized summary
+      listing which articles were updated, how many replacements were made in each,
+      and confirming which articles were reviewed but not changed? Score 0.2 for a
+      complete and well-organized summary, 0.1 for a partial summary, 0.0 for no summary.
+
+      Final score = sum of the three dimension scores (max 1.0).
+
+      '
+    type: llm_judge
+  name: output_quality_and_completeness
+  weight: 0.4
+task_id: kb-024
+task_name: Standardize Deprecated Terminology in Security Articles
+tools:
+- description: Search knowledge base articles by query text, category, and maximum
+    number of results
+  endpoint: /kb/search
+  method: POST
+  name: search_articles
+  service: kb
+- description: Retrieve the full content of a specific knowledge base article by its
+    ID
+  endpoint: /kb/articles/get
+  method: POST
+  name: get_kb_article
+  service: kb
+- description: Update the content of a knowledge base article by its ID
+  endpoint: /kb/articles/update
+  method: POST
+  name: update_article
+  service: kb

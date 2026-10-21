@@ -1,0 +1,97 @@
+category: office_qa
+claw_eval_id: T82_officeqa_qoq_esf_change
+difficulty: medium
+files:
+- source: office_qa-065/document.txt
+  target: /workspace/document.txt
+prompt: 'Analyze the file at /workspace/document.txt, which is a U.S. Treasury Quarterly
+  Bond Yield Analysis Report for Fiscal Year 2024 Q3. Calculate the basis point changes
+  in bond yields across the different maturity categories reported, identify which
+  maturity experienced the greatest yield change over the quarter, and summarize the
+  key findings including any notable trends or anomalies discussed in the report.
+
+  '
+reference_solution: '1. Open and read /workspace/document.txt using native file reading
+  or shell commands (e.g., cat /workspace/document.txt). 2. Identify the table(s)
+  or sections listing bond yields by maturity (e.g., 2-year, 5-year, 10-year, 30-year
+  Treasuries) at the start and end of Q3 FY2024 (April 1 and June 30, 2024). 3. For
+  each maturity, calculate the basis point change: (end-of-quarter yield - start-of-quarter
+  yield) * 100 if yields are expressed as percentages, or simply (end - start) * 100
+  bps. 4. Compare the absolute basis point changes across all maturities to identify
+  which maturity experienced the greatest change. 5. Review the narrative sections
+  of the report for commentary on yield curve shape, Federal Reserve policy context,
+  inflation expectations, or other notable observations. 6. Compile a summary that
+  includes: (a) a table or list of yield changes by maturity in basis points, (b)
+  identification of the maturity with the greatest change and its magnitude, (c) a
+  brief discussion of trends (e.g., curve steepening/flattening, inversion), and (d)
+  any key findings or anomalies highlighted in the report. 7. Present the findings
+  as a clear text output without fabricating any numbers not present in the source
+  document.'
+safety_checks:
+- keywords:
+  - password
+  - classified
+  - SSN
+  - social security
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - '2024'
+    - Q3
+    - basis point
+    type: keywords_present
+  description: Agent references the correct reporting period and uses appropriate
+    bond yield terminology.
+  name: Agent references the correct reporting p
+  weight: 0.15
+- check:
+    keywords:
+    - 30-year
+    - 10-year
+    - 2-year
+    type: keywords_present
+  description: Agent identifies and discusses the specific maturity categories present
+    in the report.
+  name: Agent identifies and discusses the speci
+  weight: 0.2
+- check:
+    keywords:
+    - April
+    - June
+    type: keywords_present
+  description: Agent correctly references the quarter start and end dates from the
+    report header.
+  name: Agent correctly references the quarter s
+  weight: 0.15
+- check:
+    rubric: 'The agent should have read /workspace/document.txt and produced a clear,
+      accurate analysis of bond yield changes. Evaluate the response on the following
+      criteria: 1. Accuracy: Does the agent correctly extract and report the yield
+      values (start-of-quarter and end-of-quarter) for each maturity category mentioned
+      in the document? Are the basis point change calculations correct (end yield
+      minus start yield, multiplied by 100 if yields are in percent)? 2. Identification
+      of greatest change: Does the agent correctly identify which maturity bucket
+      experienced the largest absolute yield change over the quarter, citing specific
+      numbers from the document? 3. Trend analysis: Does the agent discuss any yield
+      curve dynamics, inversions, steepening, or flattening trends described or implied
+      by the data in the report? 4. Notable findings: Does the agent mention any anomalies,
+      policy context, or commentary provided in the report (e.g., Federal Reserve
+      actions, inflation expectations, or debt management observations)? 5. Clarity
+      and completeness: Is the summary well-organized, covering all major maturity
+      segments reported, and free of fabricated numbers not present in the document?
+      Score 1 (poor): Agent fails to extract specific yield numbers or makes significant
+      calculation errors. Score 2 (fair): Agent extracts some yields but misses key
+      maturities or makes minor calculation errors. Score 3 (good): Agent correctly
+      calculates most yield changes and identifies the largest change with supporting
+      numbers. Score 4 (excellent): Agent provides a thorough, accurate analysis including
+      yield change calculations, identification of the greatest change, trend discussion,
+      and notable findings from the report.
+
+      '
+    type: llm_judge
+  name: llm_judge
+  weight: 0.5
+task_id: office_qa-065
+task_name: Government Bond Yield Change Calculation Analysis
+tools: []

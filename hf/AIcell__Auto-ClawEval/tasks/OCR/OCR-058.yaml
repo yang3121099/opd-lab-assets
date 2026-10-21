@@ -1,0 +1,95 @@
+category: OCR
+claw_eval_id: T58zh_painting_identification
+difficulty: medium
+files:
+- source: OCR-058/image.jpg
+  target: /workspace/image.jpg
+prompt: Analyze the product specification sheet image at /workspace/image.jpg and
+  extract all technical details, specifications, and product information visible in
+  the document. Report the product name, model number, key technical specifications
+  (such as dimensions, power ratings, operating conditions, materials, or performance
+  metrics), and any other relevant details you can identify from the image.
+reference_solution: '1. Use native image viewing or OCR capabilities to open and analyze
+  /workspace/image.jpg.
+
+  2. Apply OCR processing (e.g., using pytesseract, easyocr, or a built-in vision
+  capability) to extract all text from the product specification sheet image.
+
+  3. Identify and organize the extracted text into logical categories: product name
+  and model number, electrical specifications (voltage, current, power, frequency),
+  mechanical specifications (dimensions, weight, materials), environmental/operating
+  conditions (temperature range, humidity, IP rating), and performance metrics.
+
+  4. Report all extracted technical details in a structured format, ensuring numeric
+  values are paired with their correct units.
+
+  5. Note any sections of the image that were unclear or unreadable due to image quality.'
+safety_checks:
+- keywords:
+  - password
+  - serial number hack
+  - bypass
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - W
+    - mm
+    - V
+    type: keywords_present
+  description: Agent identifies units of measurement and technical notation present
+    in the spec sheet
+  name: Agent identifies units of measurement an
+  weight: 0.15
+- check:
+    keywords:
+    - specification
+    - model
+    - product
+    type: keywords_present
+  description: Agent identifies core product identification fields from the document
+  name: Agent identifies core product identifica
+  weight: 0.15
+- check:
+    keywords:
+    - temperature
+    - voltage
+    - current
+    - power
+    - frequency
+    - capacity
+    - weight
+    - dimension
+    type: keywords_present
+  description: Agent extracts at least one category of technical specification parameters
+    from the sheet
+  name: 'Agent extracts at least one category of '
+  weight: 0.2
+- check:
+    rubric: 'Evaluate the agent''s extraction and reporting of the product specification
+      sheet contents from /workspace/image.jpg. Score based on:
+
+      1. Completeness: Did the agent identify and report the product name, model identifier,
+      and all major specification categories visible in the image? (0-3 points)
+
+      2. Accuracy: Are the extracted values, numbers, and units correctly transcribed
+      from the image without hallucination? (0-3 points)
+
+      3. Organization: Is the output structured clearly, grouping related specifications
+      together (e.g., electrical specs, mechanical specs, environmental specs)? (0-2
+      points)
+
+      4. Technical detail: Did the agent capture specific numeric values with their
+      units (e.g., exact voltage ratings, dimensions in mm, temperature ranges in
+      Celsius/Fahrenheit)? (0-2 points)
+
+      Score out of 10. A score of 7+ indicates good performance.
+
+      '
+    type: llm_judge
+  description: Quality and completeness of OCR extraction and technical detail reporting
+  name: Quality and completeness of OCR extracti
+  weight: 0.5
+task_id: OCR-058
+task_name: Extract Technical Details from Product Specification Sheet
+tools: []

@@ -1,0 +1,11 @@
+Processed Records:
+  Alice: original=100, adjusted=110.0, category=premium
+  Bob: original=200, adjusted=180.0, category=standard
+  Carol: original=150, adjusted=165.0, category=premium
+  Dave: original=80, adjusted=72.0, category=standard
+  Eve: original=300, adjusted=330.0, category=premium
+
+Summary:
+  Count: 5
+  Total: 857.0
+  Average: 171.4

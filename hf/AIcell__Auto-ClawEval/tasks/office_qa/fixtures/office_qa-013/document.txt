@@ -1,0 +1,146 @@
+OFFICE OF DEBT MANAGEMENT
+U.S. DEPARTMENT OF THE TREASURY
+FISCAL YEAR 2024 QUARTERLY YIELD SPREAD ANALYSIS
+Third Quarter Report | Period Ending September 30, 2024
+
+Prepared by the Office of Federal Finance
+Division of Debt Policy and Analysis
+Released: October 18, 2024
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EXECUTIVE SUMMARY
+
+This report presents a comprehensive analysis of yield spreads across U.S. Treasury securities for the third quarter of fiscal year 2024, covering the period from July 1, 2024 through September 30, 2024. The analysis examines term premiums, credit spreads relative to comparable sovereign instruments, and the implications of current spread dynamics for federal borrowing costs and debt management strategy.
+
+During Q3 FY2024, the 10-year to 2-year Treasury yield spread, commonly referred to as the 2s10s spread, moved from negative 36 basis points on July 1 to negative 14 basis points on September 30, representing a steepening of 22 basis points over the quarter. This narrowing of the inversion reflects evolving market expectations regarding Federal Reserve monetary policy and near-term economic conditions.
+
+Total federal debt subject to limit stood at $35.46 trillion as of September 30, 2024. The weighted average interest rate on total outstanding debt reached 3.32 percent, up from 2.97 percent recorded at the close of fiscal year 2023. Net interest costs for the first three quarters of FY2024 totaled $843 billion, placing the United States on track to exceed $1.1 trillion in annual interest expense for the full fiscal year.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 1: TREASURY YIELD CURVE OVERVIEW
+
+1.1 Benchmark Rates as of September 30, 2024
+
+The following table presents on-the-run Treasury yields across the maturity spectrum at the close of the reporting period:
+
+Maturity          Yield (%)     Change from June 30, 2024 (bps)
+1-Month           5.21          -8
+3-Month           5.03          -12
+6-Month           4.87          -19
+1-Year            4.62          -27
+2-Year            3.64          -41
+5-Year            3.57          -38
+7-Year            3.65          -33
+10-Year           3.78          -29
+20-Year           4.14          -22
+30-Year           4.12          -18
+
+The data above reflects a pronounced bull steepening dynamic during Q3 2024, wherein short-duration yields declined more sharply than long-duration yields. This pattern is consistent with market repricing of Federal Reserve rate cut expectations following the Federal Open Market Committee's decision on September 18, 2024 to reduce the federal funds target rate by 50 basis points to a range of 4.75 to 5.00 percent.
+
+1.2 Historical Spread Comparison
+
+The 2s10s spread has been in negative territory continuously since July 5, 2022, representing the longest sustained yield curve inversion since the period preceding the 1980 recession. The spread reached its most deeply inverted level of negative 108 basis points on March 8, 2023. The current reading of negative 14 basis points as of September 30, 2024 suggests the inversion is approaching resolution, consistent with historical patterns observed in 1989, 2000, and 2006 prior to economic slowdowns.
+
+The 3-month to 10-year spread, which the Federal Reserve Bank of New York uses in its recession probability model, stood at negative 125 basis points on July 1, 2024, narrowing to negative 25 basis points by September 30, 2024.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 2: TERM PREMIUM ANALYSIS
+
+2.1 ACM Term Premium Estimates
+
+The Adrian, Crump, and Moench (ACM) term premium model, maintained by the Federal Reserve Bank of New York, provides the primary framework for decomposing 10-year Treasury yields into expectations and term premium components. As of September 30, 2024, the ACM model estimated the 10-year term premium at positive 22 basis points, compared to negative 41 basis points recorded on September 30, 2023.
+
+This 63 basis point increase in the term premium over twelve months reflects several contributing factors:
+
+- Elevated Treasury issuance volumes, with gross issuance of coupon-bearing securities totaling $9.8 trillion in FY2024 through September
+- Reduced Federal Reserve balance sheet holdings, with the System Open Market Account declining from $7.4 trillion in April 2022 to $7.1 trillion as of September 30, 2024
+- Increased uncertainty regarding the long-run neutral rate of interest
+- Heightened fiscal sustainability concerns following Congressional Budget Office projections released in June 2024 showing cumulative deficits of $22.1 trillion over the 2025-2034 budget window
+
+2.2 Implications for Borrowing Costs
+
+A sustained increase in the term premium has direct implications for federal borrowing costs. Treasury's Office of Debt Management estimates that each 10 basis point increase in the term premium on 10-year securities translates to approximately $31 billion in additional interest expense over a 10-year horizon, assuming current debt composition and rollover schedules.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 3: SOVEREIGN SPREAD COMPARISONS
+
+3.1 G7 Sovereign Yield Differentials
+
+The following table presents yield differentials between 10-year U.S. Treasury securities and comparable sovereign instruments as of September 30, 2024:
+
+Country           10-Year Yield (%)     Spread vs. UST (bps)
+United States     3.78                  —
+Germany           2.12                  +166
+France            2.97                  +81
+United Kingdom    4.00                  -22
+Japan             0.85                  +293
+Canada            3.21                  +57
+Italy             3.52                  +26
+
+The positive spread of U.S. Treasuries relative to German Bunds of 166 basis points reflects the differential in monetary policy stances between the Federal Reserve and the European Central Bank, as well as differing fiscal trajectories. The ECB reduced its deposit facility rate to 3.50 percent on September 12, 2024, while the Fed's September cut brought the U.S. policy rate to 4.75-5.00 percent.
+
+The negative spread versus United Kingdom gilts of 22 basis points is notable, as U.S. Treasuries have traded at a premium to gilts for most of the post-2016 period. This reversal reflects persistent inflation pressures in the United Kingdom, where the Bank of England maintained its policy rate at 5.00 percent through the end of the reporting period.
+
+3.2 Emerging Market Spread Dynamics
+
+Emerging market sovereign spreads, as measured by the JPMorgan EMBI Global Diversified Index, tightened by 47 basis points during Q3 2024, ending the quarter at 368 basis points over comparable U.S. Treasuries. This tightening reflects improved risk appetite following the Fed's September rate reduction and a modest weakening of the U.S. dollar index, which declined 4.8 percent during the quarter to close at 100.4.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 4: TIPS BREAKEVEN INFLATION ANALYSIS
+
+4.1 Breakeven Rates
+
+Treasury Inflation-Protected Securities breakeven rates provide a market-based measure of inflation expectations embedded in nominal Treasury yields. As of September 30, 2024:
+
+- 5-year breakeven inflation rate: 2.14 percent
+- 10-year breakeven inflation rate: 2.19 percent
+- 30-year breakeven inflation rate: 2.28 percent
+
+The 10-year breakeven rate declined from 2.33 percent on July 1, 2024, reflecting moderation in near-term inflation expectations following Consumer Price Index data showing headline inflation of 2.5 percent year-over-year in August 2024, down from 3.0 percent in June 2024.
+
+The 5-year/5-year forward breakeven rate, which measures expected inflation over the five-year period beginning five years from now, stood at 2.24 percent, suggesting that long-run inflation expectations remain reasonably well-anchored near the Federal Reserve's 2.0 percent target.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 5: DEBT MANAGEMENT IMPLICATIONS
+
+5.1 Issuance Strategy Considerations
+
+The current yield curve configuration presents specific considerations for Treasury's debt management objectives. The Office of Debt Management, under the leadership of Deputy Assistant Secretary Brian Smith, has maintained a strategy of extending the weighted average maturity of the debt portfolio while balancing cost and risk objectives.
+
+As of September 30, 2024, the weighted average maturity of marketable Treasury debt stood at 5 years and 10 months, compared to 6 years and 2 months in January 2020. The decline reflects the significant issuance of short-duration bills during the COVID-19 fiscal response period and subsequent rollover requirements.
+
+Treasury bill outstanding balances totaled $6.24 trillion as of September 30, 2024, representing 22.1 percent of total marketable debt. The Office of Debt Management's stated preference is to maintain bill share within a range of 15 to 20 percent of total marketable debt, suggesting gradual reduction in bill issuance relative to coupon securities over coming quarters.
+
+5.2 Rollover Risk Assessment
+
+Approximately $8.9 trillion in Treasury securities are scheduled to mature within the next 12 months, representing 31.6 percent of total marketable debt outstanding of $28.2 trillion. At current market yields, refinancing this maturing debt at higher rates will contribute materially to the projected increase in net interest costs.
+
+The Congressional Budget Office projects net interest payments will reach $1.14 trillion in FY2025, representing 3.9 percent of projected gross domestic product of approximately $29.3 trillion. This would mark the first time in U.S. history that net interest costs have exceeded defense discretionary spending, which is projected at $895 billion for FY2025.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 6: OUTLOOK AND RISK FACTORS
+
+Market participants surveyed in the September 2024 Primary Dealer Survey anticipate the 10-year Treasury yield will range between 3.50 and 4.25 percent through the end of calendar year 2024, with a median expectation of 3.85 percent. The 2s10s spread is expected to return to positive territory by the first quarter of 2025 in the median forecast.
+
+Key risk factors that could alter the yield spread outlook include:
+
+- Pace and magnitude of Federal Reserve rate reductions beyond the September 50 basis point cut
+- Fiscal year 2025 deficit outcomes relative to the CBO baseline of $1.9 trillion
+- Foreign official sector demand for U.S. Treasuries, with China's holdings declining to $774.6 billion as of July 2024 from a peak of $1.32 trillion in November 2013
+- Potential volatility associated with the November 2024 federal election and subsequent fiscal policy uncertainty
+- Geopolitical developments affecting global safe-haven demand
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+CONTACT INFORMATION
+
+This report was prepared by the Office of Federal Finance, Division of Debt Policy and Analysis. Inquiries regarding this report should be directed to the Office of Debt Management at (202) 622-2960 or via the Treasury Department's public affairs office. Additional data supporting this analysis is available through the Treasury's TreasuryDirect platform and the Federal Reserve's H.15 statistical release.
+
+Next quarterly report covering Q4 FY2024 is scheduled for release on January 17, 2025.

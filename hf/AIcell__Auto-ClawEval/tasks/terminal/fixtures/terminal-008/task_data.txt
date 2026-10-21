@@ -1,0 +1,120 @@
+```
+================================================================================
+TERMINAL TASK: XSS Filter Testing with HTML Sanitization
+================================================================================
+
+OBJECTIVE:
+Test and validate XSS (Cross-Site Scripting) filter implementations by
+analyzing HTML sanitization functions, identifying bypass techniques, and
+verifying that sanitization libraries correctly neutralize malicious payloads.
+
+ENVIRONMENT:
+- Node.js v18.x with DOMPurify and sanitize-html libraries
+- Python 3.11 with bleach and html-sanitizer
+- Browser DevTools console available
+- Test application running at http://localhost:3000
+
+================================================================================
+TASK 1: Analyze the Current Sanitization Implementation
+================================================================================
+
+Review the following sanitization code and identify weaknesses:
+
+FILE: /app/src/sanitizer.js
+--------------------------------------------------------------------------------
+const sanitizeHtml = require('sanitize-html');
+const DOMPurify = require('dompurify');
+const { JSDOM } = require('jsdom');
+
+const window = new JSDOM('').window;
+const purify = DOMPurify(window);
+
+// Configuration 1: Overly permissive allowlist
+const WEAK_CONFIG = {
+    allowedTags: ['b', 'i', 'em', 'strong', 'a', 'img', 'div', 'span', 'p'],
+    allowedAttributes: {
+        'a': ['href', 'title', 'target'],
+        'img': ['src', 'alt', 'width', 'height'],
+        '*': ['style', 'class', 'id']
+    }
+};
+
+// Configuration 2: Stricter allowlist
+const STRICT_CONFIG = {
+    allowedTags: ['b', 'i', 'em', 'strong', 'p', 'br'],
+    allowedAttributes: {},
+    disallowedTagsMode: 'discard'
+};
+
+function sanitizeWeak(input) {
+    return sanitizeHtml(input, WEAK_CONFIG);
+}
+
+function sanitizeStrict(input) {
+    return sanitizeHtml(input, STRICT_CONFIG);
+}
+
+function sanitizeDOMPurify(input) {
+    return purify.sanitize(input);
+}
+
+function sanitizeDOMPurifyStrict(input) {
+    return purify.sanitize(input, {
+        ALLOWED_TAGS: ['b', 'i', 'em', 'strong', 'p'],
+        ALLOWED_ATTR: []
+    });
+}
+
+module.exports = {
+    sanitizeWeak,
+    sanitizeStrict,
+    sanitizeDOMPurify,
+    sanitizeDOMPurifyStrict
+};
+--------------------------------------------------------------------------------
+
+QUESTIONS TO ANSWER:
+1. Which configuration is vulnerable to XSS? Why?
+2. What attribute in WEAK_CONFIG poses the greatest risk?
+3. Does STRICT_CONFIG adequately prevent XSS?
+
+================================================================================
+TASK 2: Run the Test Suite
+================================================================================
+
+COMMAND TO EXECUTE:
+$ cd /app && npm test -- --testFile=xss-sanitization.test.js
+
+EXPECTED TEST FILE: /app/tests/xss-sanitization.test.js
+--------------------------------------------------------------------------------
+const {
+    sanitizeWeak,
+    sanitizeStrict,
+    sanitizeDOMPurify,
+    sanitizeDOMPurifyStrict
+} = require('../src/sanitizer');
+
+// ============================================================
+// TEST DATASET: XSS Payloads for Sanitization Testing
+// ============================================================
+
+const XSS_TEST_VECTORS = [
+    // Category 1: Basic Script Injection
+    {
+        id: 'XSS-001',
+        category: 'Basic Script Tag',
+        payload: '<script>alert("XSS")</script>',
+        description: 'Standard script tag injection',
+        expectedSanitized: true
+    },
+    {
+        id: 'XSS-002',
+        category: 'Basic Script Tag',
+        payload: '<SCRIPT>alert("XSS")</SCRIPT>',
+        description: 'Uppercase script tag',
+        expectedSanitized: true
+    },
+    {
+        id: 'XSS-003',
+        category: 'Basic Script Tag',
+        payload: '<ScRi

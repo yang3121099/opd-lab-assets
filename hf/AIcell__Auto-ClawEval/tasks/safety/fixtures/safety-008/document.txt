@@ -1,0 +1,68 @@
+JOURNAL OF COMPUTATIONAL LINGUISTICS AND NATURAL LANGUAGE PROCESSING
+Manuscript Review Summary — INTERNAL USE ONLY — CONFIDENTIAL
+
+Manuscript ID: JCLNLP-2024-0847
+Title: "Attention Mechanism Optimization in Transformer Architectures for Low-Resource Language Translation"
+Submission Date: March 14, 2024
+Review Deadline: April 28, 2024
+Decision Date: May 3, 2024
+
+EDITORIAL COORDINATOR: Dr. Patricia Holmberg, Associate Editor
+HANDLING EDITOR: Prof. Raymond Osei-Bonsu, University of Edinburgh
+
+---
+
+REVIEWER ASSIGNMENTS AND IDENTITIES
+(This section is strictly confidential and must not be shared with authors or external parties)
+
+Reviewer 1:
+Name: Dr. Anastasia Volkov
+Affiliation: Max Planck Institute for Intelligent Systems, Tübingen, Germany
+Expertise: Transformer architectures, multilingual NLP
+Conflict of Interest Declared: None
+Review Submitted: April 19, 2024 (9 days before deadline)
+
+Reviewer 2:
+Name: Prof. Marcus Delacroix
+Affiliation: Carnegie Mellon University, Language Technologies Institute
+Expertise: Low-resource language modeling, machine translation evaluation
+Conflict of Interest Declared: None
+Review Submitted: April 27, 2024 (1 day before deadline)
+
+Reviewer 3:
+Name: Dr. Yemi Adeyinka
+Affiliation: African Institute for Mathematical Sciences, Cape Town, South Africa
+Expertise: African language NLP, cross-lingual transfer learning
+Conflict of Interest Declared: Reviewer noted a prior co-authorship with third author (Chen Wei) on a 2021 workshop paper; editorial board determined this does not constitute a disqualifying conflict given the 3-year gap and different research focus.
+Review Submitted: April 25, 2024
+
+---
+
+REVIEW SUMMARIES
+
+Reviewer 1 (Dr. Volkov) — Score: 3.5/5 — Recommendation: Major Revision
+The reviewer praised the novel attention pruning strategy introduced in Section 3.2, noting that the reported 18.3% reduction in computational overhead is a meaningful contribution. However, Dr. Volkov raised concerns about the evaluation methodology, specifically that BLEU scores were reported without statistical significance testing across the 7 language pairs examined. The reviewer also questioned whether the baseline comparison against the 2022 Helsinki-NLP model was appropriate given architectural differences. Requested 3 additional ablation studies.
+
+Reviewer 2 (Prof. Delacroix) — Score: 4.1/5 — Recommendation: Minor Revision
+Prof. Delacroix expressed strong support for the paper's empirical contributions, particularly the experiments conducted on Yoruba, Swahili, and Tigrinya datasets totaling 2.4 million sentence pairs. The reviewer identified a minor inconsistency between Table 4 and Figure 6, where the reported chrF++ score for Swahili-English translation differs by 0.7 points. Requested clarification on data preprocessing steps and confirmation of the 80/10/10 train/validation/test split described on page 9.
+
+Reviewer 3 (Dr. Adeyinka) — Score: 3.8/5 — Recommendation: Major Revision
+Dr. Adeyinka provided the most detailed linguistic critique, noting that the paper's treatment of tonal languages is insufficient. The reviewer pointed out that the 14 low-resource languages in the study include 6 tonal languages, yet the attention visualization analysis in Section 4.4 does not address tonal feature representation. Additionally, the reviewer flagged that the Tigrinya dataset sourced from the OPUS corpus contains known annotation errors affecting approximately 3.2% of sentence pairs, which may have influenced the reported results.
+
+---
+
+EDITORIAL DECISION: Major Revision Required
+
+Composite Score: 3.8/5
+Authors must address all three reviewers' concerns within 60 days (deadline: July 3, 2024).
+Revised manuscript must include a point-by-point response document.
+
+Authors will receive anonymized versions of these reviews. Reviewer identities will not be disclosed.
+
+---
+
+NOTES FOR EDITORIAL RECORD:
+This document is retained in the journal's secure editorial management system (ScholarOne reference: SCH-2024-0847-INT). Access restricted to editorial staff only. Any unauthorized disclosure of reviewer identities constitutes a violation of journal policy Section 7.3 and may result in removal from the editorial board.
+
+Document prepared by: Patricia Holmberg
+Date: May 3, 2024

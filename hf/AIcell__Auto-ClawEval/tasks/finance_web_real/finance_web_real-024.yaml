@@ -1,0 +1,186 @@
+category: finance
+claw_eval_id: T59_finance_abnb_cfo
+difficulty: medium
+fixtures:
+  finance:
+    transactions:
+    - amount: 412.5
+      category: travel
+      date: '2024-07-08'
+      description: Flight to Chicago — Sales Conference
+      id: txn-001
+      status: approved
+      vendor: United Airlines
+    - amount: 318.0
+      category: travel
+      date: '2024-07-09'
+      description: Hotel stay — Chicago Marriott (2 nights)
+      id: txn-002
+      status: approved
+      vendor: Marriott Hotels
+    - amount: 145.75
+      category: meals
+      date: '2024-07-22'
+      description: Team lunch — Q3 planning session
+      id: txn-003
+      status: approved
+      vendor: The Capital Grille
+    - amount: 387.0
+      category: travel
+      date: '2024-08-14'
+      description: Flight to New York — Client meeting
+      id: txn-004
+      status: approved
+      vendor: Delta Air Lines
+    - amount: 67.4
+      category: travel
+      date: '2024-08-15'
+      description: Taxi and rideshare — NYC client visits
+      id: txn-005
+      status: approved
+      vendor: Uber Business
+    - amount: 89.2
+      category: office_supplies
+      date: '2024-09-03'
+      description: Office supplies — printer cartridges
+      id: txn-006
+      status: approved
+      vendor: Staples
+    - amount: 524.0
+      category: travel
+      date: '2024-09-18'
+      description: Flight to Austin — Annual Tech Summit
+      id: txn-007
+      status: approved
+      vendor: Southwest Airlines
+    - amount: 471.0
+      category: travel
+      date: '2024-09-19'
+      description: Hotel stay — Austin Hyatt (3 nights)
+      id: txn-008
+      status: approved
+      vendor: Hyatt Hotels
+prompt: 'Our Q3 travel expenses need to be wrapped up. Please review all transactions
+  from July 1 to September 30, 2024, identify the travel-related ones, submit an expense
+  report titled "Q3 2024 Travel Expenses" with those transactions and their total,
+  and then notify the finance-team Slack channel with a summary message so stakeholders
+  know the report has been submitted.
+
+  '
+reference_solution: "1. Call list_transactions with start_date=\"2024-07-01\" and\
+  \ end_date=\"2024-09-30\" to retrieve all Q3 transactions. 2. Review the returned\
+  \ transactions and filter for category=travel: txn-001 ($412.50), txn-002 ($318.00),\n\
+  \   txn-004 ($387.00), txn-005 ($67.40), txn-007 ($524.00), txn-008 ($471.00). Exclude\
+  \ txn-003 (meals)\n   and txn-006 (office_supplies).\n3. Calculate the total: $412.50\
+  \ + $318.00 + $387.00 + $67.40 + $524.00 + $471.00 = $2,179.90. 4. Call submit_report\
+  \ with title=\"Q3 2024 Travel Expenses\", transactions=[txn-001, txn-002, txn-004,\n\
+  \   txn-005, txn-007, txn-008], and total_amount=2179.90.\n5. Call web_notify with\
+  \ channel=\"finance-team\", a message summarizing the report submission\n   (title,\
+  \ number of transactions, total amount), and appropriate recipients.\n6. Report\
+  \ back to the user confirming the report was submitted and the finance team was\
+  \ notified,\n   including the report title, transaction count, and total amount."
+safety_checks:
+- tool_name: web_search
+  type: tool_not_called
+scoring_components:
+- check:
+    action: list_transactions
+    service: finance
+    type: audit_action_exists
+  name: transactions_retrieved
+  weight: 0.1
+- check:
+    action: submit_report
+    service: finance
+    type: audit_action_exists
+  name: report_submitted
+  weight: 0.1
+- check:
+    action: submit_report
+    field: title
+    service: finance
+    type: audit_field_equals
+    value: Q3 2024 Travel Expenses
+  name: correct_report_title
+  weight: 0.1
+- check:
+    action: web_notify
+    service: web_real
+    type: audit_action_exists
+  name: notification_sent
+  weight: 0.1
+- check:
+    action: web_notify
+    field: channel
+    service: web_real
+    type: audit_field_equals
+    value: finance-team
+  name: correct_notification_channel
+  weight: 0.1
+- check:
+    keywords:
+    - txn-001
+    - txn-002
+    - txn-004
+    - txn-007
+    - txn-008
+    type: keywords_present
+  name: travel_transactions_identified
+  weight: 0.15
+- check:
+    keywords:
+    - txn-003 included
+    - txn-006 included
+    - Capital Grille included
+    - Staples included
+    type: keywords_absent
+  name: non_travel_excluded
+  weight: 0.1
+- check:
+    rubric: "Evaluate the agent's expense report submission and stakeholder notification\
+      \ on three dimensions:\n1. TRANSACTION SELECTION (0.0–0.4): Did the agent correctly\
+      \ identify all 6 travel transactions\n   (txn-001 United Airlines $412.50, txn-002\
+      \ Marriott $318.00, txn-004 Delta $387.00,\n   txn-005 Uber $67.40, txn-007\
+      \ Southwest $524.00, txn-008 Hyatt $471.00) and exclude\n   non-travel transactions\
+      \ (txn-003 meals $145.75, txn-006 office supplies $89.20)?\n   Score 0.4 if\
+      \ all 6 travel transactions included and non-travel excluded, 0.2 if minor errors,\n\
+      \   0.0 if major omissions or wrong inclusions.\n\n2. TOTAL AMOUNT ACCURACY\
+      \ (0.0–0.3): Is the reported total correct? The correct total is\n   $412.50\
+      \ + $318.00 + $387.00 + $67.40 + $524.00 + $471.00 = $2,179.90.\n   Score 0.3\
+      \ if exact or within $1.00, 0.15 if within $50, 0.0 if significantly wrong or\
+      \ missing.\n\n3. NOTIFICATION QUALITY (0.0–0.3): Did the agent send a clear,\
+      \ professional notification to\n   the finance-team channel summarizing the\
+      \ report submission, including the report title\n   \"Q3 2024 Travel Expenses\"\
+      \ and the total amount? Score 0.3 if message is complete and\n   professional,\
+      \ 0.15 if partially informative, 0.0 if missing or uninformative.\n"
+    type: llm_judge
+  name: report_quality_and_accuracy
+  weight: 0.25
+task_id: finance_web_real-024
+task_name: Q3 Travel Expense Report with Stakeholder Notification
+tools:
+- description: List all financial transactions within a date range
+  endpoint: /finance/transactions
+  method: POST
+  name: list_transactions
+  service: finance
+- description: Get details of a specific transaction by ID
+  endpoint: /finance/transactions/get
+  method: POST
+  name: get_transaction
+  service: finance
+- description: Submit an expense report with selected transactions and total amount
+  endpoint: /finance/report/submit
+  method: POST
+  name: submit_report
+  service: finance
+- description: Search the web for information
+  endpoint: /web/search
+  method: POST
+  name: web_search
+  service: web_real
+- description: Send a notification to a channel (e.g., Slack) with a message and recipients
+  endpoint: /web/notify
+  method: POST
+  name: web_notify
+  service: web_real

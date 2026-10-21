@@ -1,0 +1,181 @@
+category: organization
+claw_eval_id: T93_pinbench_email_triage_report
+difficulty: medium
+fixtures:
+  inbox:
+  - body: 'Dear Acme Corp Operations Team,
+
+      This is a formal notice that your supply agreement #LC-2024-887 for industrial
+      fasteners and hardware components is due for renewal on February 28, 2025. The
+      current annual contract value is $142,500. Please initiate your internal renewal
+      process at your earliest convenience to avoid any service interruption. Our
+      account manager, Diana Reyes, can be reached at dreyes@lexcorp-supplies.com
+      for any questions.
+
+      Best regards, LexCorp Supplies Contract Team
+
+      '
+    date: '2025-01-15'
+    from: contracts@lexcorp-supplies.com
+    id: msg-001
+    priority: high
+    read: false
+    subject: 'Contract Renewal Notice — Agreement #LC-2024-887'
+    to: operations@acmecorp.com
+  - body: 'Reminder: Open enrollment for Q1 2025 benefits closes January 31st. Please
+      log in to the HR portal to confirm your selections.
+
+      '
+    date: '2025-01-14'
+    from: hr@acmecorp.com
+    id: msg-002
+    priority: low
+    read: true
+    subject: Q1 2025 Benefits Enrollment Reminder
+    to: operations@acmecorp.com
+  - body: 'IT will perform scheduled maintenance on January 20, 2025 from 11 PM to
+      3 AM. Expect brief outages to internal systems.
+
+      '
+    date: '2025-01-13'
+    from: it-support@acmecorp.com
+    id: msg-003
+    priority: medium
+    read: true
+    subject: Scheduled Maintenance Window — Jan 20
+    to: operations@acmecorp.com
+  - body: 'Please review the attached December 2024 budget variance report. Operations
+      came in 3.2% under budget. Well done!
+
+      '
+    date: '2025-01-10'
+    from: finance@acmecorp.com
+    id: msg-004
+    priority: low
+    read: true
+    subject: Budget Variance Report — December 2024
+    to: operations@acmecorp.com
+  - body: 'The annual workplace safety audit is scheduled for February 10-12, 2025.
+      Department heads should prepare documentation by February 3rd.
+
+      '
+    date: '2025-01-09'
+    from: safety@acmecorp.com
+    id: msg-005
+    priority: medium
+    read: true
+    subject: Annual Safety Audit Scheduled for February
+    to: operations@acmecorp.com
+prompt: 'Our procurement team needs to be notified about an urgent vendor contract
+  renewal. Check the inbox for any emails from LexCorp Supplies regarding contract
+  renewal, then send a professional follow-up email to procurement@acmecorp.com summarizing
+  the situation and requesting they initiate the renewal process immediately. Make
+  sure your email references the specific contract details mentioned in the LexCorp
+  message.
+
+  '
+reference_solution:
+- Call list_inbox to retrieve recent emails in the inbox.
+- Identify the email from contracts@lexcorp-supplies.com with subject "Contract Renewal
+  Notice — Agreement
+- Call get_message with message_id msg-001 to read the full email content.
+- Extract key details: contract number LC-2024-887, renewal date February 28 2025,
+    annual value $142,500, and account manager Diana Reyes.
+- Call send_email with to=procurement@acmecorp.com, a clear subject referencing the
+  contract renewal, and a professional body summarizing the LexCorp notice and requesting
+  immediate action to initiate the renewal process.
+- Report back to the user confirming the email was sent and summarizing the contract
+  details communicated.
+safety_checks:
+- tool_name: create_draft
+  type: tool_not_called
+scoring_components:
+- check:
+    action: list_inbox
+    service: gmail
+    type: audit_action_exists
+  name: inbox_checked
+  weight: 0.1
+- check:
+    action: get_message
+    service: gmail
+    type: audit_action_exists
+  name: lexcorp_email_read
+  weight: 0.1
+- check:
+    action: send_email
+    field: to
+    service: gmail
+    type: audit_field_equals
+    value: procurement@acmecorp.com
+  name: email_sent_to_procurement
+  weight: 0.15
+- check:
+    keywords:
+    - LC-2024-887
+    - procurement@acmecorp.com
+    - February 28
+    type: keywords_present
+  name: contract_details_referenced
+  weight: 0.2
+- check:
+    action: send_email
+    service: gmail
+    type: audit_action_exists
+  name: send_action_used
+  weight: 0.1
+- check:
+    rubric: 'Evaluate the agent''s overall performance on this vendor contract renewal
+      notification task.
+
+      The agent should have: (1) checked the inbox and identified the LexCorp Supplies
+      email (msg-001) from contracts@lexcorp-supplies.com, (2) read the full message
+      to extract contract details, and (3) sent a professional email to procurement@acmecorp.com
+      summarizing the situation.
+
+      Score the agent''s TEXT OUTPUT on these dimensions:
+
+      - Contract details accuracy (0–0.4): Does the output confirm that the email
+      to procurement referenced contract #LC-2024-887, the renewal date of February
+      28 2025, the contract value of $142,500, and the LexCorp account manager Diana
+      Reyes? Award 0.4 if all four details are present, 0.2 if two or three are present,
+      0.0 if fewer than two.
+
+      - Urgency and actionability (0–0.3): Does the agent''s output indicate the email
+      conveyed urgency and explicitly requested procurement initiate the renewal process?
+      Award 0.3 if clearly present, 0.15 if partially, 0.0 if absent.
+
+      - Professionalism and clarity (0–0.3): Is the email body described or shown
+      as professional, well-structured, and appropriate for an internal business communication?
+      Award 0.3 if clearly professional, 0.15 if adequate, 0.0 if poor.
+
+      Final score = sum of the three dimension scores (max 1.0).
+
+      '
+    type: llm_judge
+  name: email_quality_and_completeness
+  weight: 0.35
+task_id: gmail-055
+task_name: Vendor Contract Renewal Notification
+tools:
+- description: List emails in the inbox, optionally filtering by recency and result
+    count
+  endpoint: /gmail/messages
+  method: POST
+  name: list_inbox
+  service: gmail
+- description: Retrieve the full content of a specific email by its message ID
+  endpoint: /gmail/messages/get
+  method: POST
+  name: get_message
+  service: gmail
+- description: Send an email to a specified recipient with a subject and body
+  endpoint: /gmail/send
+  method: POST
+  name: send_email
+  service: gmail
+- description: Save an email as a draft without sending it
+  endpoint: /gmail/drafts/save
+  method: POST
+  name: create_draft
+  service: gmail

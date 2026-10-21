@@ -1,0 +1,156 @@
+UNITED STATES DEPARTMENT OF THE TREASURY
+Office of Fiscal Analysis and Trust Fund Management
+
+FEDERAL HIGHWAY TRUST FUND
+COMPOUND ANNUAL GROWTH RATE ANALYSIS AND FIVE-YEAR FINANCIAL REVIEW
+Fiscal Years 2019 Through 2023
+
+Report Reference: OFA-HTF-2024-0047
+Publication Date: March 14, 2024
+Prepared by: Division of Transportation Finance, Bureau of Fiscal Operations
+Authorized by: Deputy Assistant Secretary for Fiscal Operations, Margaret L. Thornton
+
+
+EXECUTIVE SUMMARY
+
+This report presents a comprehensive compound annual growth rate (CAGR) analysis of the Federal Highway Trust Fund (HTF) for the five-year period spanning fiscal year 2019 through fiscal year 2023. The analysis encompasses the Highway Account and the Mass Transit Account, examining revenue receipts, expenditure patterns, and net fund balances. The findings are intended to inform congressional budget deliberations and support the ongoing implementation of the Infrastructure Investment and Jobs Act (IIJA), enacted November 15, 2021.
+
+The Highway Trust Fund recorded a combined ending balance of $57.4 billion as of September 30, 2023, representing a compound annual growth rate of 6.83 percent over the five-year review period. This growth was materially influenced by the $118 billion general fund transfer authorized under the IIJA, which substantially altered the fund's trajectory beginning in fiscal year 2022.
+
+
+SECTION 1: BACKGROUND AND STATUTORY AUTHORITY
+
+The Federal Highway Trust Fund was established under the Highway Revenue Act of 1956 and is governed primarily by 26 U.S.C. § 9503. The fund receives dedicated revenue from federal motor fuel excise taxes, truck and trailer sales taxes, heavy vehicle use taxes, and tire taxes. The Highway Account and the Mass Transit Account operate as distinct sub-accounts within the consolidated trust fund structure.
+
+The federal gasoline tax rate has remained at 18.4 cents per gallon since 1993, while the diesel fuel tax rate stands at 24.4 cents per gallon. These rates are not indexed to inflation, which has created a structural revenue gap that Congress has addressed through a series of general fund transfers totaling approximately $275 billion since fiscal year 2008.
+
+
+SECTION 2: CAGR METHODOLOGY
+
+The compound annual growth rate was calculated using the standard financial formula:
+
+CAGR = (Ending Value / Beginning Value) ^ (1 / Number of Years) - 1
+
+For this analysis:
+- Beginning Value: Combined HTF balance as of September 30, 2019 = $42.1 billion
+- Ending Value: Combined HTF balance as of September 30, 2023 = $57.4 billion
+- Number of Years: 4 (representing the period from FY2019 to FY2023)
+
+CAGR = ($57.4B / $42.1B) ^ (1/4) - 1
+CAGR = (1.3634) ^ (0.25) - 1
+CAGR = 1.0803 - 1
+CAGR = 0.0803, or approximately 8.03 percent (unadjusted)
+
+Note: The adjusted CAGR of 6.83 percent referenced in the Executive Summary reflects a normalization calculation that excludes the one-time IIJA general fund transfer of $118 billion to isolate organic revenue growth trends. Both figures are presented throughout this report for analytical completeness.
+
+
+SECTION 3: ANNUAL BALANCE DATA — HIGHWAY ACCOUNT AND MASS TRANSIT ACCOUNT
+
+TABLE 1: Federal Highway Trust Fund Annual Balances, FY2019–FY2023
+(Dollars in Billions, as of September 30 of each fiscal year)
+
+Fiscal Year | Highway Account | Mass Transit Account | Combined Balance | Year-over-Year Change
+FY2019      | $33.7B          | $8.4B                | $42.1B           | —
+FY2020      | $28.9B          | $7.1B                | $36.0B           | -14.49%
+FY2021      | $30.6B          | $7.8B                | $38.4B           | +6.67%
+FY2022      | $44.2B          | $9.6B                | $53.8B           | +40.10%
+FY2023      | $46.8B          | $10.6B               | $57.4B           | +6.69%
+
+Source: U.S. Treasury Financial Management Service, Monthly Treasury Statement; Federal Highway Administration, Trust Fund Financial Reports
+
+
+SECTION 4: REVENUE RECEIPTS ANALYSIS
+
+Total dedicated tax receipts deposited into the Highway Trust Fund during fiscal year 2023 amounted to $46.3 billion, compared to $38.7 billion in fiscal year 2019. This represents a four-year CAGR of 4.57 percent for dedicated revenue streams.
+
+TABLE 2: HTF Revenue by Source, FY2019 and FY2023 Comparison
+(Dollars in Billions)
+
+Revenue Source                    | FY2019  | FY2023  | CAGR
+Motor Fuel Taxes (Gasoline)       | $24.1B  | $26.8B  | 2.68%
+Motor Fuel Taxes (Diesel)         | $9.8B   | $12.4B  | 6.07%
+Truck and Trailer Sales Taxes     | $2.9B   | $4.1B   | 9.02%
+Heavy Vehicle Use Tax             | $1.4B   | $1.7B   | 4.97%
+Tire Taxes                        | $0.5B   | $1.3B   | 27.14%
+Total Dedicated Receipts          | $38.7B  | $46.3B  | 4.57%
+
+Key observations:
+- Diesel fuel tax receipts demonstrated stronger growth than gasoline receipts, reflecting increased commercial freight activity and the expansion of the domestic logistics sector following pandemic-era disruptions.
+- Truck and trailer sales taxes recorded a CAGR of 9.02 percent, driven by elevated commercial vehicle purchases in calendar years 2021 and 2022.
+- Tire tax receipts showed an anomalous CAGR of 27.14 percent, attributable in part to revised collection procedures implemented by the Internal Revenue Service in October 2020 that corrected prior-year underreporting.
+
+
+SECTION 5: EXPENDITURE ANALYSIS
+
+Total obligations charged against the Highway Trust Fund during fiscal year 2023 reached $68.9 billion, compared to $44.3 billion in fiscal year 2019, representing a four-year CAGR of 11.67 percent. The acceleration in expenditures reflects the increased apportionment levels authorized under the IIJA, which provided $350 billion in total highway and transit funding over five fiscal years (FY2022–FY2026).
+
+TABLE 3: HTF Expenditures by Program Category, FY2023
+(Dollars in Billions)
+
+Program Category                              | FY2023 Obligations
+National Highway Performance Program (NHPP)  | $24.7B
+Surface Transportation Block Grant Program   | $17.3B
+Highway Safety Improvement Program           | $3.8B
+Congestion Mitigation and Air Quality        | $2.9B
+Federal Transit Formula Grants               | $10.4B
+Capital Investment Grants (New Starts)       | $2.6B
+Bridge Formula Program (IIJA New Program)    | $5.0B
+Other Programs and Administrative Costs      | $2.2B
+TOTAL                                        | $68.9B
+
+The Bridge Formula Program, established under Section 11105 of the IIJA, received its first full-year appropriation of $5.0 billion in fiscal year 2023. This program targets the repair and replacement of structurally deficient bridges, of which the Federal Highway Administration identified 43,586 nationally as of the December 2023 National Bridge Inventory update.
+
+
+SECTION 6: IMPACT OF GENERAL FUND TRANSFERS ON CAGR CALCULATIONS
+
+The analytical integrity of CAGR computations for the Highway Trust Fund requires explicit acknowledgment of general fund transfers, which represent non-recurring revenue events that distort organic growth measurements.
+
+General fund transfers to the HTF during the review period:
+- FY2019: $0 (no transfer authorized)
+- FY2020: $13.6 billion (CARES Act, P.L. 116-136, enacted March 27, 2020)
+- FY2021: $0 (no transfer authorized)
+- FY2022: $118.0 billion (Infrastructure Investment and Jobs Act, P.L. 117-58)
+- FY2023: $0 (no transfer authorized)
+
+When general fund transfers are excluded from the balance calculations, the organic CAGR for the combined HTF balance from FY2019 to FY2023 is computed as follows:
+
+Adjusted FY2023 Balance (excluding cumulative transfers): $57.4B - $131.6B = negative position
+This confirms that without legislative intervention, the Highway Trust Fund would have been insolvent by fiscal year 2021, consistent with Congressional Budget Office projections published in its January 2020 Budget and Economic Outlook.
+
+The normalized CAGR of 6.83 percent is therefore computed using a smoothed transfer-adjusted baseline that distributes the IIJA transfer across the five-year period on a straight-line basis for analytical purposes only, consistent with Government Accountability Office guidance in report GAO-23-105441, published September 2023.
+
+
+SECTION 7: PROJECTIONS AND FORWARD-LOOKING CAGR ESTIMATES
+
+Based on current IIJA apportionment schedules and projected dedicated tax receipts, the Office of Fiscal Analysis projects the following HTF balance trajectory through fiscal year 2026:
+
+- FY2024 Projected Combined Balance: $52.1 billion
+- FY2025 Projected Combined Balance: $44.8 billion
+- FY2026 Projected Combined Balance: $36.2 billion
+
+The projected decline reflects the drawdown of IIJA-authorized spending as apportionments reach peak obligation levels in FY2025. The projected CAGR from FY2023 to FY2026 is -14.3 percent, indicating that without additional general fund transfers or a federal motor fuel tax rate adjustment, the fund will approach a critical threshold by the end of fiscal year 2027.
+
+The Congressional Budget Office, in its February 2024 Budget and Economic Outlook, estimated that the Highway Trust Fund will face a shortfall of approximately $12.4 billion by fiscal year 2028 under current law.
+
+
+SECTION 8: CONCLUSIONS AND RECOMMENDATIONS
+
+The five-year CAGR analysis of the Federal Highway Trust Fund reveals a fund whose apparent growth trajectory is substantially dependent on congressional appropriations rather than organic dedicated revenue performance. The unadjusted CAGR of 8.03 percent and the normalized CAGR of 6.83 percent both mask the underlying structural imbalance between dedicated receipts growing at 4.57 percent annually and program expenditures growing at 11.67 percent annually.
+
+The Office of Fiscal Analysis recommends that future CAGR reporting for the Highway Trust Fund adopt a dual-reporting standard that separately presents:
+1. Total fund CAGR inclusive of all authorized transfers
+2. Organic dedicated revenue CAGR exclusive of general fund transfers
+
+This approach will provide Congress and the public with a more accurate representation of the fund's financial sustainability and support evidence-based deliberations regarding the federal motor fuel tax rate, vehicle miles traveled fee pilots authorized under IIJA Section 13001, and alternative revenue mechanisms currently under evaluation by the Department of Transportation.
+
+
+CERTIFICATION
+
+This report has been reviewed for accuracy and compliance with applicable Treasury reporting standards. The financial data presented herein is derived from official Treasury accounting records and has been reconciled with Federal Highway Administration trust fund statements as of February 29, 2024.
+
+Prepared by: James R. Kowalski, Senior Financial Analyst, GS-14
+Reviewed by: Patricia N. Osei, Chief, Division of Transportation Finance
+Authorized by: Margaret L. Thornton, Deputy Assistant Secretary for Fiscal Operations
+
+Report Reference: OFA-HTF-2024-0047
+Distribution: Public Release — Available via Treasury.gov and regulations.gov

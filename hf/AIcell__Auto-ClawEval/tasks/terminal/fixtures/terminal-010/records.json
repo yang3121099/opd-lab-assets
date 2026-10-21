@@ -1,0 +1,7 @@
+[
+  {"name": "Alpha", "value": 100, "category": "premium"},
+  {"name": "Beta", "value": 200, "category": "standard"},
+  {"name": "Gamma", "value": 150, "category": "premium"},
+  {"name": "Delta", "value": 80, "category": "misc"},
+  {"name": "Epsilon", "value": 300, "category": "standard"}
+]

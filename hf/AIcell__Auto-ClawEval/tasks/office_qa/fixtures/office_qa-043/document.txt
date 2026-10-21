@@ -1,0 +1,124 @@
+OFFICE OF DEBT MANAGEMENT
+U.S. DEPARTMENT OF THE TREASURY
+FISCAL YEAR 2023 QUARTERLY YIELD SPREAD ANALYSIS
+Third Quarter Report | July 1 – September 30, 2023
+
+Prepared by the Office of Federal Finance
+Released: October 18, 2023
+
+─────────────────────────────────────────────
+
+EXECUTIVE SUMMARY
+
+This report presents the Office of Debt Management's analysis of yield spreads across U.S. Treasury securities for the third quarter of fiscal year 2023. The analysis covers spread dynamics between short-duration and long-duration instruments, comparisons with corporate and municipal benchmarks, and implications for federal borrowing costs. During the reporting period, the 2-year/10-year Treasury spread remained inverted, averaging negative 68 basis points, reflecting continued monetary tightening by the Federal Reserve and persistent investor uncertainty regarding the medium-term economic outlook. Total federal interest outlays for the quarter reached $246.8 billion, representing a 37.4 percent increase over the same quarter in fiscal year 2022.
+
+─────────────────────────────────────────────
+
+SECTION 1: BACKGROUND AND METHODOLOGY
+
+The Office of Debt Management conducts quarterly yield spread analyses to inform Treasury's debt issuance strategy, assess borrowing cost trajectories, and provide transparency to Congress and the public regarding the cost of financing the federal debt. This report draws on daily closing yields published by the Federal Reserve H.15 statistical release, auction results from TreasuryDirect, and secondary market data sourced from Bloomberg Terminal feeds as of September 29, 2023.
+
+Yield spreads are calculated as the arithmetic difference between yields on two instruments at a given point in time. The primary benchmark spread examined in this report is the 2-year/10-year Treasury spread, which serves as a widely recognized indicator of market expectations for future interest rates and economic growth. Secondary analyses examine the 3-month/10-year spread, the 5-year/30-year spread, and spreads between Treasury securities and investment-grade corporate bonds as measured by the ICE BofA U.S. Corporate Index.
+
+─────────────────────────────────────────────
+
+SECTION 2: TREASURY YIELD CURVE CONDITIONS
+
+2.1 Yield Levels as of September 29, 2023
+
+The following table presents closing yields for key Treasury maturities on the final trading day of the quarter:
+
+Maturity         Yield (%)    Change from June 30, 2023 (bps)
+3-Month          5.53         +18
+6-Month          5.54         +14
+1-Year           5.44         +9
+2-Year           5.03         +3
+5-Year           4.61         +22
+10-Year          4.57         +73
+20-Year          4.95         +81
+30-Year          4.70         +78
+
+The 10-year Treasury yield rose 73 basis points over the quarter, closing at 4.57 percent on September 29, 2023 — its highest closing level since October 2007. This sharp rise in long-duration yields was the dominant market development of the quarter and significantly affected spread relationships across the curve.
+
+2.2 The 2-Year/10-Year Spread
+
+The 2-year/10-year spread began the quarter at negative 109 basis points on July 3, 2023, narrowed to negative 40 basis points by August 21, 2023, and closed the quarter at negative 46 basis points on September 29, 2023. The quarterly average spread was negative 68 basis points. This marks the sixth consecutive quarter in which this spread has remained in negative territory, the longest sustained inversion since the period spanning March 2006 through June 2007.
+
+The narrowing of the inversion during August reflected a faster rise in 10-year yields relative to 2-year yields, driven in part by the August 1, 2023 announcement by Fitch Ratings downgrading the U.S. long-term credit rating from AAA to AA+, which placed upward pressure on term premiums.
+
+2.3 The 3-Month/10-Year Spread
+
+The 3-month/10-year spread, an alternative recession indicator preferred by researchers at the Federal Reserve Bank of New York, averaged negative 96 basis points during the quarter. The spread stood at negative 88 basis points as of September 29, 2023, compared to negative 148 basis points on March 31, 2023. The New York Fed's recession probability model, based on this spread, estimated a 60.8 percent probability of recession within the next 12 months as of the September 2023 reading.
+
+2.4 The 5-Year/30-Year Spread
+
+The 5-year/30-year spread, which reflects the slope of the intermediate-to-long end of the curve, turned positive during the quarter, averaging positive 7 basis points. This segment of the curve briefly re-inverted on July 18, 2023, reaching negative 4 basis points, before steepening through September. The spread closed the quarter at positive 9 basis points.
+
+─────────────────────────────────────────────
+
+SECTION 3: FEDERAL BORROWING COSTS
+
+3.1 Interest Outlays
+
+Federal net interest outlays for the third quarter of fiscal year 2023 totaled $246.8 billion, compared to $179.6 billion in the third quarter of fiscal year 2022. This $67.2 billion increase represents a 37.4 percent year-over-year rise and reflects both higher outstanding debt balances and substantially higher interest rates on newly issued and rolled-over securities.
+
+For the first three quarters of fiscal year 2023 combined (October 2022 through June 2023), net interest outlays totaled $652.7 billion. The Congressional Budget Office projected in its May 2023 Budget and Economic Outlook that full-year fiscal year 2023 net interest outlays would reach $663 billion, a figure that appeared likely to be exceeded given third-quarter outturns.
+
+3.2 Weighted Average Interest Rate on Marketable Debt
+
+The weighted average interest rate on all outstanding marketable Treasury securities rose to 2.92 percent as of September 30, 2023, up from 1.99 percent as of September 30, 2022. This 93 basis point increase over twelve months represents the fastest annual rise in the weighted average cost of the federal debt portfolio since 1981.
+
+3.3 Auction Results: Selected Third-Quarter Issuances
+
+The following table summarizes selected Treasury auction results during the quarter:
+
+Auction Date     Security          Amount Issued     High Yield (%)    Bid-to-Cover
+July 11, 2023    10-Year Note      $32 billion       3.999%            2.51
+August 9, 2023   10-Year Note      $38 billion       4.189%            2.56
+September 6, 2023 10-Year Note     $35 billion       4.289%            2.50
+August 22, 2023  20-Year Bond      $13 billion       4.450%            2.63
+September 21, 2023 30-Year Bond    $20 billion       4.837%            2.35
+
+The September 21, 2023 30-year bond auction produced a high yield of 4.837 percent, the highest yield at a 30-year auction since February 2011. The bid-to-cover ratio of 2.35 was below the trailing 12-auction average of 2.42, indicating modestly softer demand.
+
+─────────────────────────────────────────────
+
+SECTION 4: TREASURY-CORPORATE SPREAD ANALYSIS
+
+4.1 Investment-Grade Corporate Spreads
+
+The option-adjusted spread (OAS) on the ICE BofA U.S. Corporate Index averaged 124 basis points during the third quarter of 2023, compared to an average of 151 basis points during the third quarter of 2022. The tightening of corporate spreads despite rising Treasury yields reflects resilient corporate earnings and low default rates in the investment-grade segment. As of September 29, 2023, the OAS stood at 130 basis points.
+
+4.2 High-Yield Spreads
+
+The OAS on the ICE BofA U.S. High Yield Index averaged 398 basis points during the quarter, compared to 547 basis points in the same period of 2022. The spread closed the quarter at 415 basis points on September 29, 2023. The compression in high-yield spreads relative to the prior year reflects improved corporate balance sheets and a lower-than-anticipated default rate of 2.1 percent for the trailing twelve months ending September 2023, according to Moody's Investors Service.
+
+4.3 Municipal Bond Spreads
+
+The ratio of 10-year AAA-rated municipal bond yields to 10-year Treasury yields — a standard measure of relative value in the municipal market — averaged 67 percent during the quarter, compared to a long-run average of approximately 85 percent. This ratio, which stood at 64 percent as of September 29, 2023, indicates that municipal bonds were trading at historically rich valuations relative to Treasuries, driven by strong demand from tax-sensitive investors and constrained new issuance supply.
+
+─────────────────────────────────────────────
+
+SECTION 5: TERM PREMIUM ESTIMATES
+
+The Adrian-Crump-Moench (ACM) term premium model, maintained by the Federal Reserve Bank of New York, estimated the 10-year term premium at positive 20 basis points as of September 29, 2023. This represents a significant shift from the negative 60 basis points estimated as of December 30, 2022, and reflects growing investor demands for compensation against duration risk, fiscal uncertainty, and reduced Federal Reserve balance sheet holdings. The ACM model attributed approximately 35 basis points of the 73 basis point rise in 10-year yields during the quarter to term premium expansion, with the remainder attributable to upward revisions in expected short-term rates.
+
+─────────────────────────────────────────────
+
+SECTION 6: OUTLOOK AND POLICY IMPLICATIONS
+
+The sustained inversion of the yield curve, combined with rising term premiums and elevated short-term rates, presents a challenging environment for federal debt management. The Office of Debt Management notes the following considerations for the fourth quarter of fiscal year 2023 and beyond:
+
+- The Federal Open Market Committee raised the federal funds target range to 5.25–5.50 percent at its July 26, 2023 meeting and held rates unchanged at its September 20, 2023 meeting. Market-implied probabilities as of September 29, 2023 assigned a 28 percent likelihood of an additional 25 basis point hike before year-end.
+
+- Treasury's announced increase in auction sizes for longer-dated securities, communicated in the August 2, 2023 Quarterly Refunding Statement, is expected to add approximately $1 trillion in net new issuance over the subsequent four quarters, placing additional upward pressure on term premiums.
+
+- The weighted average maturity of the federal debt portfolio stood at 73 months as of September 30, 2023, down from 76 months as of September 30, 2021, reflecting the relative growth of short-term bill issuance. The Office of Debt Management continues to evaluate opportunities to extend portfolio duration when market conditions are favorable.
+
+─────────────────────────────────────────────
+
+CONTACTS
+
+This report was prepared by the Office of Federal Finance, Debt Management Division. Inquiries may be directed to the Office of Public Affairs at the U.S. Department of the Treasury, 1500 Pennsylvania Avenue NW, Washington, D.C. 20220.
+
+Next quarterly report covering October 1 – December 31, 2023 is scheduled for release on January 17, 2024.

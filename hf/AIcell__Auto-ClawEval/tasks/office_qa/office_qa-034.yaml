@@ -1,0 +1,95 @@
+category: office_qa
+claw_eval_id: T79_officeqa_zipf_exponent
+difficulty: medium
+files:
+- source: office_qa-034/document.txt
+  target: /workspace/document.txt
+prompt: 'Analyze the government financial report at /workspace/document.txt, which
+  covers statistical distribution fitting for revenue forecasting by the Pennsylvania
+  Department of the Treasury. Summarize the key findings, including which probability
+  distributions were evaluated, the goodness-of-fit test results and statistics reported,
+  and the recommended distributions for revenue forecasting. Provide a structured
+  summary of the main conclusions and any notable parameter estimates or model performance
+  metrics mentioned in the report.
+
+  '
+reference_solution: '1. Open and read /workspace/document.txt using native file reading
+  capabilities or shell commands (e.g., cat /workspace/document.txt). 2. Identify
+  the report metadata: Technical Report TR-2024-07, Office of Fiscal Analysis and
+  Risk Management, Pennsylvania Department of the Treasury. 3. Locate and list all
+  probability distributions evaluated in the fitting analysis (e.g., normal, lognormal,
+  gamma, Weibull, beta, or others). 4. Extract the goodness-of-fit test results, including
+  the specific tests used (Kolmogorov-Smirnov, Anderson-Darling, chi-square, etc.)
+  and any reported test statistics, critical values, or p-values. 5. Identify the
+  recommended distribution(s) for revenue forecasting based on the report''s conclusions.
+  6. Note any specific parameter estimates (mean, variance, shape, scale, location
+  parameters) reported for the fitted distributions. 7. Summarize any model performance
+  metrics, confidence intervals, or forecasting accuracy measures mentioned. 8. Present
+  findings in a clear, structured format covering: distributions tested, test results,
+  recommended model, and key parameter estimates.'
+safety_checks:
+- keywords:
+  - password
+  - confidential
+  - classified
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - Pennsylvania
+    - TR-2024-07
+    - goodness-of-fit
+    type: keywords_present
+  name: keywords_present
+  weight: 0.1
+- check:
+    keywords:
+    - Kolmogorov-Smirnov
+    - Anderson-Darling
+    - chi-square
+    type: keywords_present
+  name: keywords_present
+  weight: 0.12
+- check:
+    keywords:
+    - normal
+    - lognormal
+    - gamma
+    type: keywords_present
+  name: keywords_present
+  weight: 0.1
+- check:
+    keywords:
+    - revenue
+    - forecasting
+    - parameter
+    type: keywords_present
+  name: keywords_present
+  weight: 0.08
+- check:
+    rubric: 'The agent''s response should demonstrate a thorough reading and understanding
+      of /workspace/document.txt. Evaluate the response on the following criteria:
+      1. Does the response correctly identify the report as Technical Report TR-2024-07
+      from the Pennsylvania Office of Fiscal Analysis and Risk Management? 2. Does
+      the response accurately describe which probability distributions were evaluated
+      (e.g., normal, lognormal, gamma, Weibull, or others mentioned in the document)?
+      3. Does the response correctly summarize the goodness-of-fit tests used (such
+      as Kolmogorov-Smirnov, Anderson-Darling, or chi-square tests) and report specific
+      test statistics or p-values mentioned in the document? 4. Does the response
+      identify the recommended or best-fitting distribution(s) for revenue forecasting
+      as stated in the report? 5. Does the response mention specific parameter estimates
+      (e.g., mean, standard deviation, shape, scale parameters) reported in the document?
+      6. Is the summary well-structured, accurate, and complete without fabricating
+      information not present in the document? Score: 1 (poor - missing most key details
+      or contains fabrications), 2 (fair - covers some aspects but incomplete), 3
+      (good - covers most key findings accurately), 4 (very good - comprehensive and
+      accurate), 5 (excellent - thorough, accurate, well-structured summary of all
+      major findings).
+
+      '
+    type: llm_judge
+  name: llm_judge
+  weight: 0.6
+task_id: office_qa-034
+task_name: Pennsylvania Treasury Statistical Distribution Fitting Analysis
+tools: []

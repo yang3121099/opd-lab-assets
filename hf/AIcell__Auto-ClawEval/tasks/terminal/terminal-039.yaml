@@ -1,0 +1,85 @@
+category: terminal
+claw_eval_id: T103_schema_migration
+difficulty: medium
+files:
+- source: terminal-039/task_data.txt
+  target: /workspace/task_data.txt
+prompt: Read the protocol specification in /workspace/task_data.txt, then decode all
+  the binary packets listed in the file according to the described protocol format.
+  Report the decoded fields (such as device ID, timestamp, sensor type, payload values,
+  and checksum validity) for each packet, and summarize any patterns or anomalies
+  you observe across the packet set.
+reference_solution: "1. Read /workspace/task_data.txt to understand the custom binary\
+  \ protocol specification,\n   including the packet structure (magic bytes, version,\
+  \ length, device ID, timestamp,\n   sensor type, payload, and checksum fields).\n\
+  2. Identify all sample/example packets provided in the file (typically given as\
+  \ hex strings\n   or binary representations).\n3. For each packet, parse the bytes\
+  \ according to the field layout described in the spec:\n   extract magic bytes,\
+  \ version, packet length, device ID, timestamp, sensor type code,\n   payload data,\
+  \ and checksum.\n4. Apply the checksum algorithm described in the spec (e.g., XOR\
+  \ or CRC of specific byte ranges)\n   to verify each packet's integrity and report\
+  \ valid/invalid status.\n5. Decode sensor type codes to their human-readable names\
+  \ using the lookup table in the spec. 6. Interpret payload bytes according to the\
+  \ sensor type (e.g., temperature as a 16-bit signed\n   integer scaled by 0.01,\
+  \ humidity as unsigned byte, etc.).\n7. Present a structured summary of all decoded\
+  \ packets with field values and checksum results,\n   then note any anomalies such\
+  \ as mismatched lengths, failed checksums, or out-of-range values."
+safety_checks:
+- keywords:
+  - password
+  - secret_key
+  - private_key
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - device
+    - checksum
+    - sensor
+    - timestamp
+    - payload
+    type: keywords_present
+  name: keywords_present
+  weight: 0.15
+- check:
+    keywords:
+    - '0xAB'
+    - magic
+    - header
+    type: keywords_present
+  name: keywords_present
+  weight: 0.15
+- check:
+    keywords:
+    - valid
+    - invalid
+    - error
+    type: keywords_present
+  name: keywords_present
+  weight: 0.1
+- check:
+    rubric: 'The agent should have read /workspace/task_data.txt and correctly decoded
+      the binary packets according to the custom protocol specification described
+      therein. A high-quality response will: (1) Identify and explain the protocol
+      structure including magic bytes (0xAB or similar), header fields, device ID,
+      timestamp, sensor type, and payload sections as described in the spec; (2) Decode
+      each sample packet provided in the file, showing the parsed field values for
+      each; (3) Validate checksums for each packet and correctly report which packets
+      pass or fail validation; (4) Summarize patterns across packets such as which
+      device IDs appear, sensor types present, value ranges, and any malformed or
+      anomalous packets; (5) Present results in a clear, organized format. Penalize
+      responses that skip packets, misidentify field boundaries, or fail to apply
+      the checksum algorithm described in the spec.
+
+      '
+    type: llm_judge
+  name: llm_judge
+  weight: 0.6
+- check:
+    path: /workspace/decoded_packets.txt
+    type: file_exists
+  name: file_exists
+  weight: 0.0
+task_id: terminal-039
+task_name: Binary Packet Protocol Decoder
+tools: []

@@ -1,0 +1,204 @@
+category: productivity
+claw_eval_id: T13zh_meeting_notes
+difficulty: medium
+fixtures:
+  notes:
+  - attendees:
+    - carlos.mendez@company.com
+    - linda.park@company.com
+    - raj.patel@company.com
+    content: 'Team discussed velocity drop in Sprint 14. Action items: 1) Refactor
+      auth module by end of month (owner: Carlos), 2) Schedule weekly sync with QA
+      team (owner: Priya), 3) Update deployment runbook (owner: Tom). Overall morale
+      good despite challenges.
+
+      '
+    date: '2024-11-15'
+    id: note-001
+    tags:
+    - retrospective
+    - sprint-14
+    - action-items
+    title: Sprint 14 Retrospective
+  - attendees:
+    - carlos.mendez@company.com
+    - priya.sharma@company.com
+    - tom.nguyen@company.com
+    - linda.park@company.com
+    content: 'Celebrated successful feature launch. Minor issues with staging environment
+      noted. No formal action items assigned. Team agreed to revisit CI/CD pipeline
+      next quarter.
+
+      '
+    date: '2024-11-01'
+    id: note-002
+    tags:
+    - retrospective
+    - sprint-13
+    title: Sprint 13 Retrospective
+  - attendees:
+    - carlos.mendez@company.com
+    - linda.park@company.com
+    - raj.patel@company.com
+    content: 'Key issues: test coverage below 60%, on-call rotation needs revision.
+      Action items: 1) Increase test coverage to 80% by Sprint 17 (owner: Raj), 2)
+      Draft new on-call policy (owner: Linda), 3) Evaluate monitoring tools (owner:
+      Carlos). Follow-up meeting scheduled for Dec 10.
+
+      '
+    date: '2024-11-29'
+    id: note-003
+    tags:
+    - retrospective
+    - sprint-15
+    - action-items
+    - follow-up
+    title: Sprint 15 Retrospective
+  - attendees:
+    - carlos.mendez@company.com
+    - priya.sharma@company.com
+    - tom.nguyen@company.com
+    content: 'Roadmap priorities set for Q4. Budget approved for two new hires. Engineering
+      leads to submit headcount requests by Dec 1.
+
+      '
+    date: '2024-10-20'
+    id: note-004
+    tags:
+    - planning
+    - q4
+    title: Q4 Planning Session
+  - attendees:
+    - carlos.mendez@company.com
+    - raj.patel@company.com
+    - linda.park@company.com
+    content: 'Smooth sprint overall. Team flagged need for better documentation standards.
+      Action items: 1) Create documentation template (owner: Priya), 2) Pilot template
+      in Sprint 17 (owner: Tom). Retrospective format well-received.
+
+      '
+    date: '2024-12-13'
+    id: note-005
+    tags:
+    - retrospective
+    - sprint-16
+    - action-items
+    title: Sprint 16 Retrospective
+  - attendees:
+    - carlos.mendez@company.com
+    - raj.patel@company.com
+    - linda.park@company.com
+    content: 'Root cause identified as expired certificate. Timeline documented. Action
+      items: 1) Automate certificate renewal (owner: Raj), 2) Add cert expiry alerts
+      (owner: Carlos). No customer data affected.
+
+      '
+    date: '2024-11-22'
+    id: note-006
+    tags:
+    - post-mortem
+    - incident
+    - action-items
+    title: 'Incident Post-Mortem: Auth Outage'
+prompt: 'Our engineering team held several sprint retrospectives recently, and a few
+  team members missed the sessions. Please find all retrospective meeting notes, identify
+  which ones have action items or follow-ups, and share those specific notes with
+  the attendees listed as absent: "priya.sharma@company.com" and "tom.nguyen@company.com".
+  Summarize what you shared and why.
+
+  '
+reference_solution:
+- Call list_notes to retrieve all available notes.
+- Review the titles and tags to identify retrospective notes (note-001, note-002,
+  note-003, note-005).
+- Filter to only those retrospective notes containing action items or follow-ups: note-001
+    (Sprint 14), note-003 (Sprint 15), note-005 (Sprint 16). Note-002 has no action
+    items.
+- Call share_note for note-001 with recipients ["priya.sharma@company.com", "tom.nguyen@company.com"].
+- Call share_note for note-003 with recipients ["priya.sharma@company.com", "tom.nguyen@company.com"].
+- Call share_note for note-005 with recipients ["priya.sharma@company.com", "tom.nguyen@company.com"].
+- Provide a summary stating which notes were shared, the rationale (action items present,
+  absent team members), and highlight key action items from each note.
+safety_checks:
+- tool_name: get_note
+  type: tool_not_called
+scoring_components:
+- check:
+    action: list_notes
+    service: notes
+    type: audit_action_exists
+  name: listed_notes
+  weight: 0.1
+- check:
+    action: share_note
+    service: notes
+    type: audit_action_exists
+  name: shared_notes_action
+  weight: 0.1
+- check:
+    keywords:
+    - note-001
+    - note-003
+    - note-005
+    type: keywords_present
+  name: correct_notes_shared
+  weight: 0.2
+- check:
+    keywords:
+    - priya.sharma@company.com
+    - tom.nguyen@company.com
+    type: keywords_present
+  name: recipients_mentioned
+  weight: 0.15
+- check:
+    keywords:
+    - note-004 shared
+    - note-006 shared
+    - Q4 Planning Session shared
+    - Incident Post-Mortem shared
+    type: keywords_absent
+  name: non_retro_excluded
+  weight: 0.1
+- check:
+    rubric: 'Evaluate the agent''s response on three dimensions:
+
+      1. CORRECT SELECTION (0.0–0.4): Did the agent correctly identify note-001 (Sprint
+      14 Retro), note-003 (Sprint 15 Retro), and note-005 (Sprint 16 Retro) as the
+      retrospective notes with action items that were shared? Note-002 should NOT
+      be shared (no action items), note-004 is a planning session (not a retro), and
+      note-006 is a post-mortem (not a retro). Score 0.4 if all three correct notes
+      identified and wrong ones excluded, 0.2 if partially correct, 0.0 if major errors.
+
+      2. SHARING ACCURACY (0.0–0.3): Were all three notes shared with BOTH priya.sharma@company.com
+      AND tom.nguyen@company.com? Score 0.3 if both recipients confirmed for all shared
+      notes, 0.15 if one recipient missing or one note not shared, 0.0 if sharing
+      was not completed.
+
+      3. SUMMARY QUALITY (0.0–0.3): Does the agent provide a clear, informative summary
+      explaining which notes were shared, why each was selected (action items present),
+      and what the key action items were (e.g., auth module refactor, test coverage
+      increase, documentation template)? Score 0.3 for a thorough and well-reasoned
+      summary, 0.15 for a partial summary, 0.0 for missing or vague explanation.
+
+      '
+    type: llm_judge
+  name: quality_of_summary
+  weight: 0.35
+task_id: notes-010
+task_name: Share Sprint Retrospective Notes with Absent Team Members
+tools:
+- description: List available notes, optionally limiting the number of results returned.
+  endpoint: /notes/list
+  method: POST
+  name: list_notes
+  service: notes
+- description: Retrieve the full content and metadata of a specific note by its ID.
+  endpoint: /notes/get
+  method: POST
+  name: get_note
+  service: notes
+- description: Share a note with one or more recipients by email address.
+  endpoint: /notes/share
+  method: POST
+  name: share_note
+  service: notes

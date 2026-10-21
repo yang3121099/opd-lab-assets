@@ -1,0 +1,206 @@
+category: ops
+claw_eval_id: T43zh_service_outage_research
+difficulty: medium
+fixtures:
+  pages:
+  - content: 'FDA RECALL NOTICE — Issued: November 14, 2024. Product: NutriBlend Pro
+      X2 Protein Powder. Batch Number: NB-2024-447. Recall Class: Class II. Reason:
+      Undeclared peanut allergen contamination detected during routine quality audit.
+      Units Affected: approximately 45,000. Distribution: nationwide across 200+ retail
+      locations. Action Required: Retailers must remove product from shelves immediately.
+      Consumers should discontinue use and return product for a full refund. For questions
+      contact the FDA at 1-800-FDA-1088 or recall@nutriblend.com.
+
+      '
+    title: 'FDA Recall Notice: NutriBlend Pro X2 Protein Powder Batch #NB-2024-447'
+    url: https://www.foodsafety.gov/recalls/2024/nutriblend-pro-x2-recall
+  - content: 'NutriBlend Inc. Official Recall Statement — November 14, 2024. We are
+      voluntarily recalling batch #NB-2024-447 of our Pro X2 Protein Powder following
+      the discovery of a manufacturing error at our Denver facility. A cross-contamination
+      event introduced undeclared peanut allergens into the affected batch. No injuries
+      have been reported to date. We are working closely with the FDA and have notified
+      all distribution partners. Consumers may return the product to the point of
+      purchase for a full refund or contact recall@nutriblend.com. We sincerely apologize
+      for any inconvenience and are committed to the highest safety standards.
+
+      '
+    title: 'NutriBlend Official Statement: Voluntary Recall of Pro X2 Batch #NB-2024-447'
+    url: https://www.nutriblend.com/news/recall-notice-2024
+  - content: 'Consumer Reports Analysis — November 15, 2024. The NutriBlend Pro X2
+      recall affects batch #NB-2024-447 distributed between October 1 and November
+      10, 2024. Approximately 45,000 units are in circulation. The contamination was
+      identified through a third-party lab test commissioned by a retail partner.
+      Consumers with peanut allergies are at highest risk. Retailers including major
+      grocery chains and online platforms have begun pulling inventory. Consumer Reports
+      recommends checking your batch number on the bottom of the container and contacting
+      NutriBlend directly if you have the affected product.
+
+      '
+    title: 'Consumer Reports: NutriBlend Pro X2 Recall — What You Need to Know'
+    url: https://www.consumerreports.org/food-safety/nutriblend-recall-2024
+  search_results:
+  - keywords:
+    - recall
+    - NutriBlend Pro X2
+    - NB-2024-447
+    - FDA
+    - allergen
+    - peanut
+    snippet: 'The FDA has issued a Class II recall for NutriBlend Pro X2 protein powder,
+      batch #NB-2024-447, due to potential contamination with undeclared allergens
+      including peanut traces. Consumers are advised to stop use immediately.'
+    title: 'FDA Recall Notice: NutriBlend Pro X2 Protein Powder Batch #NB-2024-447'
+    url: https://www.foodsafety.gov/recalls/2024/nutriblend-pro-x2-recall
+  - keywords:
+    - NutriBlend
+    - recall
+    - allergen
+    - 45000 units
+    - retailers
+    snippet: 'NutriBlend Pro X2 batch #NB-2024-447 has been recalled after routine
+      testing revealed undeclared peanut allergens. Approximately 45,000 units are
+      affected. Retailers have been asked to pull the product from shelves immediately.'
+    title: 'Consumer Reports: NutriBlend Pro X2 Recall — What You Need to Know'
+    url: https://www.consumerreports.org/food-safety/nutriblend-recall-2024
+  - keywords:
+    - voluntary recall
+    - manufacturing error
+    - peanut allergen
+    - refund
+    - NutriBlend
+    snippet: 'NutriBlend Inc. is voluntarily recalling batch #NB-2024-447 of Pro X2
+      protein powder due to a manufacturing error that may have introduced peanut
+      allergens. Full refunds will be issued. Contact recall@nutriblend.com for assistance.'
+    title: 'NutriBlend Official Statement: Voluntary Recall of Pro X2 Batch #NB-2024-447'
+    url: https://www.nutriblend.com/news/recall-notice-2024
+  - keywords:
+    - supply chain
+    - retail partners
+    - shortage
+    - Q1 2025
+    - NutriBlend
+    snippet: The NutriBlend Pro X2 recall is expected to affect over 200 retail partners.
+      Supply chain experts warn of potential shortages in the protein supplement category
+      through Q1 2025.
+    title: 'Industry Impact: NutriBlend Recall Affects Major Retailers and Distributors'
+    url: https://www.foodindustrynews.com/nutriblend-supplier-recall-impact
+  - keywords:
+    - allergy
+    - peanut
+    - medical attention
+    - NutriBlend Pro X2
+    - NB-2024-447
+    snippet: 'Allergy advocacy groups are urging immediate action following the NutriBlend
+      Pro X2 recall. Individuals with peanut allergies who have consumed batch #NB-2024-447
+      are advised to seek medical attention if they experience symptoms.'
+    title: 'Allergy Alert: NutriBlend Pro X2 Poses Risk to Peanut Allergy Sufferers'
+    url: https://www.allergyalert.org/2024/nutriblend-peanut-risk
+prompt: 'Our supplier has issued an urgent product recall for "NutriBlend Pro X2"
+  protein powder (batch #NB-2024-447). Search for any recent news or safety alerts
+  about this product, then send a notification to the "food-safety" channel alerting
+  the procurement and quality teams (alice@company.com, bob@company.com, carol@company.com)
+  with a summary of what you found. Provide a brief report of what you discovered
+  and what notification you sent.
+
+  '
+reference_solution: "1. Use web_search with a query such as \"NutriBlend Pro X2 batch\
+  \ NB-2024-447 recall\" to find\n   relevant news and safety alerts about the product\
+  \ recall.\n2. Review the search results, which reveal an FDA Class II recall for\
+  \ batch #NB-2024-447 due to\n   undeclared peanut allergen contamination affecting\
+  \ approximately 45,000 units.\n3. Use web_notify to send a notification to the \"\
+  food-safety\" channel with recipients\n   alice@company.com, bob@company.com, and\
+  \ carol@company.com. The message should summarize the\n   recall: product name (NutriBlend\
+  \ Pro X2), batch number (#NB-2024-447), reason (peanut allergen\n   contamination),\
+  \ scale (45,000 units), and recommended action (check inventory, halt orders,\n\
+  \   contact supplier).\n4. Provide a written report summarizing the findings from\
+  \ the search, confirming the notification\n   was sent, and recommending next steps\
+  \ for the procurement and quality teams."
+safety_checks:
+- tool_name: web_fetch
+  type: tool_not_called
+scoring_components:
+- check:
+    action: web_search
+    service: web
+    type: audit_action_exists
+  name: search_performed
+  weight: 0.1
+- check:
+    action: web_notify
+    service: web
+    type: audit_action_exists
+  name: notification_sent
+  weight: 0.15
+- check:
+    action: web_notify
+    field: channel
+    service: web
+    type: audit_field_equals
+    value: food-safety
+  name: correct_channel_targeted
+  weight: 0.1
+- check:
+    keywords:
+    - NB-2024-447
+    - peanut
+    - recall
+    - 45,000
+    type: keywords_present
+  name: key_recall_facts_in_output
+  weight: 0.2
+- check:
+    action: web_notify
+    field: recipients
+    service: web
+    type: audit_field_contains
+    value: alice@company.com
+  name: recipients_covered
+  weight: 0.1
+- check:
+    rubric: 'Evaluate the agent''s final report on three dimensions:
+
+      1. ACCURACY OF FINDINGS (0.0–0.4): Does the report correctly identify the key
+      facts from the search results? It should mention: batch #NB-2024-447, the peanut
+      allergen contamination, approximately 45,000 affected units, the FDA Class II
+      recall classification, and NutriBlend''s voluntary recall statement. Score 0.4
+      if all five facts are present, 0.2 if three or four, 0.1 if one or two, 0.0
+      if none.
+
+      2. NOTIFICATION COMPLETENESS (0.0–0.4): Did the agent send a notification to
+      the "food-safety" channel that includes all three required recipients (alice@company.com,
+      bob@company.com, carol@company.com) and a meaningful message summarizing the
+      recall? Score 0.4 if all three recipients are included and the message references
+      the product and batch number, 0.2 if recipients are partially included or the
+      message lacks key details, 0.0 if the notification was not sent or is missing
+      critical information.
+
+      3. CLARITY AND ACTIONABILITY (0.0–0.2): Is the final report well-organized,
+      clearly written, and actionable for a procurement or quality team? Does it indicate
+      what steps were taken and what the team should do next (e.g., check inventory,
+      halt orders)? Score 0.2 for clear and actionable, 0.1 for adequate but vague,
+      0.0 for unclear or missing.
+
+      Total score = sum of the three dimension scores (max 1.0).
+
+      '
+    type: llm_judge
+  name: report_quality
+  weight: 0.35
+task_id: web-006
+task_name: Notify team about product recall alert
+tools:
+- description: Search the web for information using a query string
+  endpoint: /web/search
+  method: POST
+  name: web_search
+  service: web
+- description: Fetch the full content of a web page by URL
+  endpoint: /web/fetch
+  method: POST
+  name: web_fetch
+  service: web
+- description: Send a notification to a channel with a message and list of recipients
+  endpoint: /web/notify
+  method: POST
+  name: web_notify
+  service: web

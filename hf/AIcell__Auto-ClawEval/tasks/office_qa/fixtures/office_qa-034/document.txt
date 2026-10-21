@@ -1,0 +1,142 @@
+OFFICE OF FISCAL ANALYSIS AND RISK MANAGEMENT
+DEPARTMENT OF THE TREASURY
+COMMONWEALTH OF PENNSYLVANIA
+
+TECHNICAL REPORT TR-2024-07
+Statistical Distribution Fitting Analysis for Revenue Forecasting and Expenditure Risk Assessment
+Fiscal Year 2023–2024
+
+Prepared by: Division of Quantitative Methods
+Lead Analyst: Dr. Margaret Holloway, Senior Econometrician
+Review Date: March 14, 2024
+Publication Date: April 2, 2024
+
+─────────────────────────────────────────────
+EXECUTIVE SUMMARY
+─────────────────────────────────────────────
+
+This report presents the findings of a comprehensive statistical distribution fitting exercise conducted on Pennsylvania's general fund revenue streams and major expenditure categories for fiscal year 2023–2024. The analysis was commissioned following the Governor's Budget Office directive of September 5, 2023, which mandated enhanced probabilistic forecasting methods for all revenue categories exceeding $500 million annually. The primary objective was to identify the probability distributions that best characterize observed financial data, enabling more accurate confidence intervals for budget projections and improved risk quantification for the Commonwealth's $45.3 billion general fund.
+
+Key findings indicate that personal income tax revenues are best modeled by a log-normal distribution, that lottery fund transfers exhibit characteristics consistent with a gamma distribution, and that Medicaid expenditure volatility is most accurately captured by a negative binomial distribution when modeled at the monthly claim level.
+
+─────────────────────────────────────────────
+1. BACKGROUND AND MOTIVATION
+─────────────────────────────────────────────
+
+Pennsylvania's general fund received $45.3 billion in total revenues during fiscal year 2022–2023, representing a 2.1 percent decline from the record $46.3 billion collected in fiscal year 2021–2022. The Office of the Budget's traditional point-estimate forecasting methodology, while adequate for stable economic environments, demonstrated a mean absolute percentage error (MAPE) of 4.7 percent across major revenue categories during the period from July 2020 through June 2023—a period marked by pandemic-related volatility, federal stimulus effects, and labor market disruption.
+
+Secretary of the Budget Uri Monson formally requested this distributional analysis in a memorandum dated October 18, 2023, citing the need to provide the General Assembly with 80 percent and 95 percent confidence intervals alongside point estimates beginning with the fiscal year 2024–2025 executive budget submission.
+
+─────────────────────────────────────────────
+2. DATA SOURCES AND PREPARATION
+─────────────────────────────────────────────
+
+The analysis drew on the following primary data sources:
+
+- Monthly General Fund Revenue Reports published by the Pennsylvania Department of Revenue, covering January 2010 through December 2023 (168 monthly observations per revenue category)
+- Quarterly Medicaid claims data from the Department of Human Services, covering fiscal years 2015–2016 through 2022–2023 (32 quarterly observations)
+- Pennsylvania Lottery Fund annual transfer records from fiscal year 2000–2001 through 2022–2023 (23 annual observations)
+- Corporate net income tax quarterly filings, covering Q1 2012 through Q3 2023 (47 quarterly observations)
+
+Data cleaning procedures removed three outlier observations from the personal income tax series corresponding to April 2020, May 2020, and July 2021, which reflected extraordinary pandemic-era withholding disruptions and one-time federal conformity adjustments totaling $1.87 billion in combined anomalous variance. These observations were retained in a separate sensitivity analysis.
+
+─────────────────────────────────────────────
+3. METHODOLOGY
+─────────────────────────────────────────────
+
+3.1 Candidate Distributions
+
+For each revenue and expenditure category, the following eight candidate distributions were evaluated: normal, log-normal, gamma, beta, Weibull, exponential, negative binomial, and Poisson. Selection of candidates was guided by the theoretical properties of each revenue type and prior literature on government revenue modeling, including the Congressional Budget Office's 2019 technical paper "Probabilistic Budget Projections: Methods and Applications."
+
+3.2 Fitting Procedure
+
+Maximum likelihood estimation (MLE) was used as the primary fitting method for all continuous distributions. The method of moments was applied as a secondary check for the gamma and log-normal families. Goodness-of-fit was assessed using three complementary tests:
+
+- Kolmogorov-Smirnov (KS) test at the 5 percent significance level
+- Anderson-Darling (AD) test, which weights tail behavior more heavily
+- Akaike Information Criterion (AIC) for model comparison across non-nested distributions
+
+All computations were performed using R version 4.3.1 with the fitdistrplus package (version 1.1-11) and the MASS library. Monte Carlo simulation for confidence interval generation used 100,000 iterations per revenue category.
+
+3.3 Validation
+
+Out-of-sample validation was conducted by fitting distributions on data through June 2022 and comparing predicted distributions against actual observations from July 2022 through December 2023 (18 months). Coverage rates for the resulting 80 percent and 95 percent prediction intervals were computed for each category.
+
+─────────────────────────────────────────────
+4. RESULTS BY REVENUE CATEGORY
+─────────────────────────────────────────────
+
+4.1 Personal Income Tax
+
+Personal income tax (PIT) is Pennsylvania's largest single revenue source, generating $16.8 billion in fiscal year 2022–2023, representing 37.1 percent of total general fund revenues. Monthly PIT receipts over the 168-month sample period had a mean of $1.04 billion and a standard deviation of $312 million, with a coefficient of variation of 0.30 and a positive skewness of 1.43.
+
+The log-normal distribution provided the best fit, with MLE parameters μ = 20.76 and σ = 0.29. The KS test statistic was 0.048 (p-value = 0.412), and the AD statistic was 0.61, both indicating failure to reject the null hypothesis of log-normal fit at the 5 percent level. The AIC for the log-normal model was −1,847.3, compared to −1,791.6 for the normal distribution and −1,823.1 for the gamma distribution.
+
+Out-of-sample coverage for the 80 percent prediction interval was 83.3 percent (15 of 18 months within bounds), and coverage for the 95 percent interval was 94.4 percent (17 of 18 months).
+
+4.2 Corporate Net Income Tax
+
+Corporate net income tax (CNIT) generated $5.6 billion in fiscal year 2022–2023. Quarterly CNIT receipts exhibited substantially higher volatility than PIT, with a coefficient of variation of 0.52 and skewness of 2.17. The gamma distribution provided the best fit, with shape parameter α = 3.71 and rate parameter β = 0.0041. The KS p-value was 0.287 and the AIC was −312.4. The normal distribution was decisively rejected (KS p-value = 0.031).
+
+4.3 Sales and Use Tax
+
+Sales and use tax revenues of $13.1 billion in fiscal year 2022–2023 exhibited near-symmetric monthly distributions. The normal distribution fit was not rejected (KS p-value = 0.503), with fitted mean $1.092 billion and standard deviation $87.4 million. This finding is consistent with the relatively stable consumption base underlying sales tax collections.
+
+4.4 Lottery Fund Transfers
+
+Annual transfers from the Pennsylvania Lottery Fund to the Department of Aging averaged $1.31 billion over the 23-year sample, with a standard deviation of $148 million. The gamma distribution fit was preferred (shape α = 78.4, rate β = 59.8), with AIC = −142.7 versus −139.1 for the log-normal. The practical difference between these two distributions was minimal, and the gamma was selected based on its superior performance in the lower tail, which is more consequential for budget risk assessment.
+
+─────────────────────────────────────────────
+5. MEDICAID EXPENDITURE ANALYSIS
+─────────────────────────────────────────────
+
+Pennsylvania's Medicaid program, administered jointly with the federal government, represented $35.4 billion in total expenditures in fiscal year 2022–2023, of which the Commonwealth's share was approximately $14.2 billion. Monthly claim counts over the analysis period ranged from 2.84 million to 3.71 million, with a mean of 3.19 million and variance of 4.82 million—a variance-to-mean ratio of 1.51, indicating overdispersion relative to the Poisson distribution.
+
+The negative binomial distribution was selected for monthly claim counts, with estimated parameters r = 18.4 and p = 0.0058. The Poisson distribution was formally rejected by the chi-square goodness-of-fit test (χ² = 47.3, df = 8, p < 0.001). The negative binomial fit was not rejected (χ² = 9.2, df = 7, p = 0.238).
+
+For expenditure amounts conditional on claim counts, a log-normal distribution with μ = 6.84 and σ = 0.18 provided the best fit to per-claim cost data.
+
+─────────────────────────────────────────────
+6. CONFIDENCE INTERVAL IMPLICATIONS FOR FY 2024–2025 BUDGET
+─────────────────────────────────────────────
+
+Using the fitted distributions and 100,000-iteration Monte Carlo simulation, the following confidence intervals were generated for total general fund revenues in fiscal year 2024–2025, anchored to the executive budget point estimate of $47.1 billion:
+
+TABLE 1: GENERAL FUND REVENUE CONFIDENCE INTERVALS, FY 2024–2025
+
+Revenue Category | Point Estimate | 80% CI Lower | 80% CI Upper | 95% CI Lower | 95% CI Upper
+Personal Income Tax | $17.4B | $15.9B | $18.9B | $15.1B | $19.8B
+Corporate Net Income Tax | $5.2B | $4.3B | $6.2B | $3.8B | $6.9B
+Sales and Use Tax | $13.6B | $13.2B | $14.0B | $12.9B | $14.3B
+Lottery Fund Transfer | $1.38B | $1.24B | $1.52B | $1.17B | $1.60B
+All Other Revenues | $9.52B | $8.81B | $10.23B | $8.44B | $10.71B
+TOTAL | $47.1B | $43.5B | $50.9B | $41.4B | $53.3B
+
+The width of the 95 percent confidence interval for total revenues—$11.9 billion—reflects the substantial uncertainty embedded in corporate income tax projections and the sensitivity of personal income tax to capital gains realizations, which are themselves modeled using a separate Pareto distribution with tail index α = 2.31.
+
+─────────────────────────────────────────────
+7. LIMITATIONS AND RECOMMENDATIONS
+─────────────────────────────────────────────
+
+Several limitations warrant acknowledgment. First, the 23-observation sample for lottery fund transfers is insufficient for robust tail estimation; the Division recommends expanding this analysis as additional years accumulate. Second, structural breaks associated with the 2017 federal Tax Cuts and Jobs Act and the 2021 American Rescue Plan Act may render pre-2018 observations less informative for forward-looking projections; a sensitivity analysis excluding pre-2018 data is provided in Appendix C.
+
+The Division recommends the following actions:
+
+- Adopt log-normal distribution assumptions for PIT forecasting beginning with the FY 2024–2025 executive budget, replacing the current normal distribution assumption
+- Present 80 percent confidence intervals in all budget documents submitted to the General Assembly after July 1, 2024
+- Commission a separate distributional analysis of inheritance and estate tax revenues, which were excluded from this study due to data quality concerns identified by the Department of Revenue in its November 2023 audit
+- Update distribution parameters annually using a rolling 10-year window to maintain relevance as economic conditions evolve
+
+─────────────────────────────────────────────
+CONTACT INFORMATION
+─────────────────────────────────────────────
+
+Dr. Margaret Holloway
+Division of Quantitative Methods
+Office of Fiscal Analysis and Risk Management
+Pennsylvania Department of the Treasury
+613 North Street, Harrisburg, PA 17120
+mholloway@patreasury.gov
+(717) 787-2465
+
+This report is available to the public under the Pennsylvania Right-to-Know Law. Requests for underlying datasets should be directed to the Office of Open Records.

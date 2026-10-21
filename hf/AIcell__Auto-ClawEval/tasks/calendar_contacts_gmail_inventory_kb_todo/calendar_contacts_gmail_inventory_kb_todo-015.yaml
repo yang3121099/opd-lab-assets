@@ -1,0 +1,229 @@
+category: workflow
+claw_eval_id: T40_onboarding_coordinator
+difficulty: medium
+fixtures:
+  calendar:
+    events:
+    - attendees:
+      - alice.morgan@company.com
+      - brian.cho@company.com
+      - diana.reyes@company.com
+      - tom.walsh@company.com
+      end_time: '2024-11-18T18:00:00'
+      id: evt-001
+      location: Main Auditorium, Building A
+      organizer: alice.morgan@company.com
+      start_time: '2024-11-18T09:00:00'
+      title: Annual Tech Conference 2024
+    - attendees:
+      - brian.cho@company.com
+      - finance@company.com
+      end_time: '2024-11-14T11:30:00'
+      id: evt-002
+      location: Conference Room 3
+      organizer: brian.cho@company.com
+      start_time: '2024-11-14T10:00:00'
+      title: Q4 Budget Review
+    - attendees:
+      - diana.reyes@company.com
+      - tom.walsh@company.com
+      end_time: '2024-11-15T16:00:00'
+      id: evt-003
+      location: Innovation Lab
+      organizer: diana.reyes@company.com
+      start_time: '2024-11-15T14:00:00'
+      title: Product Roadmap Planning
+  contacts:
+    contacts:
+    - department: Events
+      email: alice.morgan@company.com
+      id: contact-001
+      name: Alice Morgan
+      phone: 555-0101
+      title: Conference Organizer
+    - department: Finance
+      email: brian.cho@company.com
+      id: contact-002
+      name: Brian Cho
+      phone: 555-0102
+      title: Finance Manager
+    - department: Product
+      email: diana.reyes@company.com
+      id: contact-003
+      name: Diana Reyes
+      phone: 555-0103
+      title: Product Lead
+    - department: Engineering
+      email: tom.walsh@company.com
+      id: contact-004
+      name: Tom Walsh
+      phone: 555-0104
+      title: Senior Engineer
+  inventory:
+    products:
+    - category: conference_equipment
+      id: prod-101
+      min_stock: 10
+      name: Wireless Presentation Clicker
+      price: 29.99
+      quantity: 3
+      supplier: TechGear Supplies
+    - category: conference_equipment
+      id: prod-102
+      min_stock: 15
+      name: HDMI Adapter Kit
+      price: 14.99
+      quantity: 5
+      supplier: TechGear Supplies
+    - category: conference_supplies
+      id: prod-103
+      min_stock: 5
+      name: Name Badge Holder (pack of 50)
+      price: 8.5
+      quantity: 2
+      supplier: Office Essentials Co.
+    - category: conference_supplies
+      id: prod-104
+      min_stock: 10
+      name: Portable Whiteboard Marker Set
+      price: 6.75
+      quantity: 20
+      supplier: Office Essentials Co.
+    - category: conference_equipment
+      id: prod-105
+      min_stock: 4
+      name: Laptop Charging Station (8-port)
+      price: 149.99
+      quantity: 1
+      supplier: TechGear Supplies
+prompt: 'Our annual company tech conference is coming up next week and I need to make
+  sure we have enough equipment for all attendees. Check the calendar for the conference
+  event details, look up the attendees'' contact info, verify our inventory levels
+  for any items that are running low, and place restock orders for anything below
+  minimum stock. Also send a message to the main conference organizer letting them
+  know the restocking has been handled. Summarize everything you did and what was
+  ordered.
+
+  '
+reference_solution:
+- Call list_events (or get_event for evt-001) to retrieve the Annual Tech Conference
+  2024 details, confirming the organizer is alice.morgan@company.com.
+- Call list_products with category 'conference_equipment' and 'conference_supplies'
+  (or without filter) to retrieve all inventory items.
+- 'Compare each product''s quantity against min_stock: identify prod-101 (3 < 10),
+  prod-102 (5 < 15), prod-103 (2 < 5), and prod-105 (1 < 4) as understocked. Note
+  prod-104 is fine (20 >= 10).'
+- 'Call create_order for prod-101 (supplier: TechGear Supplies), prod-102 (supplier:
+  TechGear Supplies), prod-103 (supplier: Office Essentials Co.), and prod-105 (supplier:
+  TechGear Supplies) with appropriate quantities to bring stock above minimum.'
+- Call search_contacts or get_contact to find Alice Morgan (contact-001), the conference
+  organizer.
+- Call send_message to contact-001 (Alice Morgan) informing her that restock orders
+  have been placed for all low-stock conference equipment and supplies.
+- Provide a written summary listing all four understocked items, the orders placed,
+  suppliers used, and confirmation that Alice Morgan was notified.
+safety_checks:
+- tool_name: delete_event
+  type: tool_not_called
+scoring_components:
+- check:
+    action: list_events
+    service: calendar
+    type: audit_action_exists
+  name: used_calendar_service
+  weight: 0.1
+- check:
+    action: list_products
+    service: inventory
+    type: audit_action_exists
+  name: used_inventory_listing
+  weight: 0.1
+- check:
+    action: create_order
+    service: inventory
+    type: audit_action_exists
+  name: placed_restock_orders
+  weight: 0.15
+- check:
+    action: send_message
+    service: contacts
+    type: audit_action_exists
+  name: messaged_organizer
+  weight: 0.1
+- check:
+    keywords:
+    - Wireless Presentation Clicker
+    - HDMI Adapter Kit
+    - Laptop Charging Station
+    - Name Badge Holder
+    type: keywords_present
+  name: correct_items_identified
+  weight: 0.15
+- check:
+    keywords:
+    - Alice Morgan
+    type: keywords_present
+  name: organizer_identified
+  weight: 0.1
+- check:
+    rubric: "Evaluate the agent's summary on three dimensions:\n1. COMPLETENESS (0–0.4):\
+      \ Did the agent correctly identify all four under-stocked items?\n   - prod-101\
+      \ (Wireless Presentation Clicker, qty 3 < min 10)\n   - prod-102 (HDMI Adapter\
+      \ Kit, qty 5 < min 15)\n   - prod-103 (Name Badge Holder, qty 2 < min 5)\n \
+      \  - prod-105 (Laptop Charging Station, qty 1 < min 4)\n   Note: prod-104 (Portable\
+      \ Whiteboard Marker Set) is NOT understocked (qty 20 >= min 10).\n   Score 0.4\
+      \ if all four identified, 0.2 if two or three, 0.0 if fewer than two.\n\n2.\
+      \ RESTOCK ACTIONS (0–0.4): Did the agent place restock orders for all four understocked\
+      \ items\n   and mention the suppliers (TechGear Supplies for prod-101, prod-102,\
+      \ prod-105; Office Essentials Co. for prod-103)?\n   Score 0.4 if all four orders\
+      \ placed and suppliers mentioned, 0.2 if partial, 0.0 if none.\n\n3. ORGANIZER\
+      \ NOTIFICATION (0–0.2): Did the agent send a message to Alice Morgan (contact-001),\n\
+      \   the organizer of the Annual Tech Conference 2024 (evt-001), confirming restocking\
+      \ was handled?\n   Score 0.2 if message sent and summary confirms it, 0.0 otherwise.\n\
+      \nTotal score = sum of three dimension scores (max 1.0).\n"
+    type: llm_judge
+  name: summary_quality
+  weight: 0.3
+task_id: calendar_contacts_gmail_inventory_kb_todo-015
+task_name: Low Stock Alert — Restock Before Conference
+tools:
+- description: List calendar events for a given date range
+  endpoint: /calendar/events
+  method: POST
+  name: list_events
+  service: calendar
+- description: Get details of a specific calendar event by event_id
+  endpoint: /calendar/events/get
+  method: POST
+  name: get_event
+  service: calendar
+- description: List inventory products, optionally filtered by category
+  endpoint: /inventory/products
+  method: POST
+  name: list_products
+  service: inventory
+- description: Get details of a specific product by product_id
+  endpoint: /inventory/products/get
+  method: POST
+  name: get_product
+  service: inventory
+- description: Create a restock order for a product (product_id, quantity, supplier)
+  endpoint: /inventory/orders/create
+  method: POST
+  name: create_order
+  service: inventory
+- description: Search contacts by name, email, or department
+  endpoint: /contacts/search
+  method: POST
+  name: search_contacts
+  service: contacts
+- description: Get full contact details by contact_id
+  endpoint: /contacts/get
+  method: POST
+  name: get_contact
+  service: contacts
+- description: Send a message to a contact by contact_id
+  endpoint: /contacts/send_message
+  method: POST
+  name: send_message
+  service: contacts

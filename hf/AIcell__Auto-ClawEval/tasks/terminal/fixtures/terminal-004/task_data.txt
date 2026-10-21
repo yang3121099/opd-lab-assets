@@ -1,0 +1,101 @@
+# Binary Packet Decoder
+
+## Overview
+
+You are working on a network diagnostics tool that needs to decode binary packets according to a custom protocol specification. Your task is to implement a packet decoder that can parse raw binary data and extract structured information from it.
+
+## Protocol Specification
+
+### Packet Structure
+
+Every packet follows this fixed structure:
+
+```
++--------+--------+--------+--------+--------+--------+--------+--------+
+| Byte 0 | Byte 1 | Byte 2 | Byte 3 | Byte 4 | Byte 5 | Byte 6 | Byte 7 |
++--------+--------+--------+--------+--------+--------+--------+--------+
+| MAGIC  | VER|TYP|  SEQ (16-bit)   |  LEN (16-bit)   |  CHECKSUM      |
++--------+--------+--------+--------+--------+--------+--------+--------+
+| PAYLOAD (variable length, up to 255 bytes)                            |
++--------+--------+--------+--------+--------+--------+--------+--------+
+```
+
+### Field Definitions
+
+| Field    | Bytes  | Description                                                  |
+|----------|--------|--------------------------------------------------------------|
+| MAGIC    | 0      | Always `0xAB` — identifies a valid packet start              |
+| VER\|TYP | 1      | Upper 4 bits = version, Lower 4 bits = packet type           |
+| SEQ      | 2–3    | 16-bit sequence number (big-endian)                          |
+| LEN      | 4–5    | 16-bit payload length in bytes (big-endian)                  |
+| CHECKSUM | 6–7    | 16-bit checksum: sum of all payload bytes, modulo 65536      |
+| PAYLOAD  | 8–8+LEN| Raw payload bytes                                            |
+
+### Version Values
+
+| Value | Meaning  |
+|-------|----------|
+| 1     | v1       |
+| 2     | v2       |
+| 3     | v3-beta  |
+
+### Packet Types
+
+| Value | Type        | Payload Format                                                  |
+|-------|-------------|-----------------------------------------------------------------|
+| 0     | HEARTBEAT   | No payload (LEN=0)                                              |
+| 1     | DATA        | Raw bytes, interpret as UTF-8 string                            |
+| 2     | COMMAND     | First byte = command ID, remaining bytes = command args (UTF-8) |
+| 3     | ACK         | 2 bytes: acknowledged sequence number (big-endian)              |
+| 4     | ERROR       | First byte = error code, remaining bytes = error message (UTF-8)|
+| 5     | CONFIG      | Key-value pairs: each pair is `[1-byte key][1-byte len][data]`  |
+
+### Error Codes
+
+| Code | Meaning          |
+|------|------------------|
+| 0x01 | Timeout          |
+| 0x02 | Checksum mismatch|
+| 0x03 | Unknown command  |
+| 0x04 | Buffer overflow  |
+| 0xFF | Generic error    |
+
+### Command IDs
+
+| ID   | Command  |
+|------|----------|
+| 0x01 | RESET    |
+| 0x02 | STATUS   |
+| 0x03 | SYNC     |
+| 0x04 | SHUTDOWN |
+
+---
+
+## Your Task
+
+Implement a Python script called `decoder.py` that:
+
+1. Reads a binary file passed as a command-line argument
+2. Parses each packet sequentially from the file
+3. Validates each packet (magic byte, checksum)
+4. Prints a structured summary of each packet to stdout
+
+### Usage
+
+```bash
+python decoder.py <binary_file>
+```
+
+### Output Format
+
+For each packet, print:
+
+```
+--- Packet <N> ---
+Offset:   <byte offset in file>
+Valid:    <Yes/No>
+Version:  <version string or "Unknown (X)">
+Type:     <type name or "Unknown (X)">
+Sequence: <decimal number>
+Length:   <decimal number>
+Checksum: <hex> (<OK/MISMATCH>)

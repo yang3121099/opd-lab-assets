@@ -1,0 +1,148 @@
+OFFICE OF DEBT MANAGEMENT
+U.S. DEPARTMENT OF THE TREASURY
+FISCAL YEAR 2024 QUARTERLY YIELD SPREAD ANALYSIS
+Third Quarter Report | July 1 – September 30, 2024
+
+Prepared by the Office of Federal Finance
+Released: October 18, 2024
+
+─────────────────────────────────────────────
+
+EXECUTIVE SUMMARY
+
+This report presents the Office of Debt Management's analysis of yield spreads across U.S. Treasury securities for the third quarter of fiscal year 2024. The analysis covers movements in the 2-year/10-year spread, the 3-month/10-year spread, credit spreads relative to investment-grade corporate benchmarks, and international sovereign comparisons. The findings reflect continued normalization in the yield curve following the Federal Reserve's rate adjustment cycle, with the 2-year/10-year spread narrowing from -68 basis points at the start of Q3 to -22 basis points by September 30, 2024.
+
+─────────────────────────────────────────────
+
+SECTION 1: BACKGROUND AND METHODOLOGY
+
+The Office of Debt Management conducts quarterly yield spread analyses to inform Treasury's debt issuance strategy, assess market conditions, and provide transparency to Congress and the public. This report draws on daily closing yields published by the Federal Reserve H.15 statistical release, Bloomberg terminal data, and the ICE BofA U.S. Corporate Index for credit spread comparisons.
+
+Yield spreads are calculated as the arithmetic difference between two benchmark yields, expressed in basis points (bps), where 1 basis point equals 0.01 percentage points. All yields referenced are nominal, on-the-run Treasury securities unless otherwise noted. The analysis period runs from July 1, 2024 through September 30, 2024, with select comparisons to Q3 2023 and Q3 2022 for historical context.
+
+The primary analyst team for this report includes Deputy Assistant Secretary for Federal Finance Brian Smith, Senior Economist Dr. Carla Nguyen, and Financial Analyst Marcus Delgado of the Debt Management Analytics Division.
+
+─────────────────────────────────────────────
+
+SECTION 2: TREASURY YIELD CURVE OVERVIEW
+
+As of September 30, 2024, the on-the-run Treasury yield curve reflected the following benchmark rates:
+
+TREASURY BENCHMARK YIELDS — SEPTEMBER 30, 2024
+
+Maturity | Yield (%) | Change from July 1, 2024 (bps)
+3-Month | 5.02 | -14
+6-Month | 4.89 | -18
+1-Year | 4.61 | -27
+2-Year | 4.28 | -31
+5-Year | 4.05 | -19
+10-Year | 4.06 | -12
+20-Year | 4.38 | -8
+30-Year | 4.34 | -7
+
+The curve's overall shift downward during Q3 2024 was driven primarily by the Federal Open Market Committee's September 18, 2024 decision to reduce the federal funds target rate by 50 basis points, bringing the target range to 4.75–5.00 percent. This represented the first rate reduction since March 2020 and had an immediate flattening effect on short-duration yields.
+
+─────────────────────────────────────────────
+
+SECTION 3: 2-YEAR / 10-YEAR SPREAD ANALYSIS
+
+The 2-year/10-year Treasury spread is the most widely monitored indicator of yield curve shape and is frequently cited as a leading economic indicator. A negative spread (inversion) has historically preceded recessions by 12 to 18 months.
+
+Key Observations:
+
+- July 1, 2024: Spread stood at -68 basis points, with the 2-year yielding 4.59% and the 10-year yielding 3.91%.
+- August 5, 2024: The spread reached its Q3 trough of -72 basis points, coinciding with a global equity selloff triggered by the Bank of Japan's unexpected rate increase to 0.25% on July 31, 2024.
+- September 18, 2024: Following the FOMC rate cut announcement, the spread narrowed sharply to -28 basis points intraday.
+- September 30, 2024: Spread closed at -22 basis points.
+
+This 46-basis-point narrowing over the quarter represents the fastest single-quarter normalization since Q1 2019, when the spread moved from -18 bps to +16 bps over a comparable 90-day window.
+
+HISTORICAL COMPARISON — 2Y/10Y SPREAD (END OF Q3)
+
+Year | 2Y Yield (%) | 10Y Yield (%) | Spread (bps)
+2022 | 4.22 | 3.83 | -39
+2023 | 5.03 | 4.57 | -46
+2024 | 4.28 | 4.06 | -22
+
+─────────────────────────────────────────────
+
+SECTION 4: 3-MONTH / 10-YEAR SPREAD ANALYSIS
+
+The 3-month/10-year spread, preferred by Federal Reserve economists including those cited in the 2018 paper by Michael Bauer and Thomas Mertens, has demonstrated stronger predictive power for recessions than the 2-year/10-year spread in several academic studies.
+
+- As of July 1, 2024, the 3-month/10-year spread was -116 basis points, the deepest inversion recorded since October 2023.
+- By September 30, 2024, the spread had narrowed to -96 basis points, as the 10-year yield rose modestly while the 3-month yield declined 14 basis points.
+- The spread averaged -109 basis points across Q3 2024, compared to an average of -138 basis points in Q3 2023.
+
+The persistence of this inversion, now entering its 26th consecutive month as of September 2024, is the longest sustained inversion of the 3-month/10-year spread since the 1978–1980 period. The Office of Debt Management notes that while the inversion has persisted, real GDP growth for Q2 2024 was reported at 3.0 percent annualized by the Bureau of Economic Analysis, suggesting the traditional recessionary signal has been delayed relative to historical patterns.
+
+─────────────────────────────────────────────
+
+SECTION 5: CREDIT SPREAD ANALYSIS
+
+To assess the relative attractiveness of Treasury securities and gauge broader financial conditions, this section compares Treasury yields to investment-grade and high-yield corporate benchmarks.
+
+OPTION-ADJUSTED SPREADS (OAS) — SEPTEMBER 30, 2024
+
+Index | OAS (bps) | Change from July 1, 2024 (bps) | 5-Year Average OAS (bps)
+ICE BofA U.S. Corp (IG) | 93 | -11 | 118
+ICE BofA U.S. HY | 321 | -28 | 412
+Bloomberg U.S. Agg Corp | 97 | -9 | 122
+
+Key findings:
+
+- Investment-grade corporate spreads at 93 bps represent the tightest level since January 2022, when spreads briefly touched 87 bps before widening sharply during the Fed's tightening cycle.
+- High-yield spreads at 321 bps remain well below the 5-year average of 412 bps, indicating strong risk appetite and limited stress in credit markets as of quarter-end.
+- The tightening of credit spreads during Q3 2024 occurred despite $847 billion in new investment-grade corporate bond issuance year-to-date through September 30, a record pace that surpassed the prior full-year record of $1.23 trillion set in 2020.
+
+─────────────────────────────────────────────
+
+SECTION 6: INTERNATIONAL SOVEREIGN SPREAD COMPARISONS
+
+The Office of Debt Management monitors spreads between U.S. Treasuries and comparable sovereign debt instruments to assess relative value and capital flow dynamics.
+
+10-YEAR SOVEREIGN YIELD SPREADS vs. U.S. TREASURY — SEPTEMBER 30, 2024
+
+Country | 10Y Yield (%) | Spread vs. UST (bps)
+Germany (Bund) | 2.12 | +194
+United Kingdom (Gilt) | 4.00 | +6
+Japan (JGB) | 0.85 | +321
+Canada | 3.21 | +85
+France (OAT) | 2.97 | +109
+Italy (BTP) | 3.52 | +54
+
+Notable developments during Q3 2024:
+
+- The U.S.-Germany 10-year spread widened by 22 basis points during the quarter, as the European Central Bank cut its deposit facility rate by 25 basis points on September 12, 2024, to 3.50 percent, while U.S. long-end yields remained relatively stable.
+- The U.S.-Japan spread narrowed by 31 basis points following the Bank of Japan's July 31 rate increase, the most significant narrowing in the U.S.-Japan spread since Q2 2006.
+- The U.K. gilt spread versus Treasuries remained near parity, reflecting synchronized monetary policy trajectories between the Federal Reserve and the Bank of England.
+
+─────────────────────────────────────────────
+
+SECTION 7: IMPLICATIONS FOR DEBT ISSUANCE STRATEGY
+
+The narrowing of the 2-year/10-year spread and the persistence of curve inversion have direct implications for Treasury's debt management objectives. The Office of Debt Management's primary goal remains financing the federal government at the lowest cost over time while managing rollover risk.
+
+Total federal debt subject to the limit stood at $35.46 trillion as of September 30, 2024. Of this, $27.73 trillion represents debt held by the public, with the remainder held in intragovernmental accounts. The weighted average maturity of the public debt portfolio was 70.2 months (approximately 5.85 years) as of September 30, 2024, compared to 72.8 months one year prior.
+
+Treasury issued $2.14 trillion in net new marketable debt during fiscal year 2024 through September 30. The composition of issuance shifted modestly toward longer maturities during Q3, with 10-year and 30-year auction sizes held steady at $42 billion and $25 billion respectively, while 2-year auction sizes were reduced from $69 billion to $66 billion beginning with the August 2024 cycle.
+
+─────────────────────────────────────────────
+
+SECTION 8: OUTLOOK
+
+The Office of Debt Management projects that the 2-year/10-year spread will return to positive territory by Q1 2025, contingent on the FOMC executing two additional 25-basis-point rate reductions at its November and December 2024 meetings, consistent with the median projection in the September 2024 Summary of Economic Projections. Under this baseline scenario, the 2-year yield is expected to decline to approximately 3.85 percent by December 31, 2024, while the 10-year yield is projected to remain in the 4.00–4.20 percent range.
+
+Risks to this outlook include a reacceleration of inflation that delays further Fed easing, geopolitical disruptions affecting global capital flows, and potential fiscal pressures associated with the federal deficit, which totaled $1.833 trillion for fiscal year 2024.
+
+─────────────────────────────────────────────
+
+CONTACTS
+
+Office of Debt Management
+U.S. Department of the Treasury
+1500 Pennsylvania Avenue NW, Washington, D.C. 20220
+Phone: (202) 622-2000
+Website: home.treasury.gov/policy-issues/financing-the-government
+
+This report is available to the public in accordance with the Treasury's commitment to fiscal transparency. Data sources include the Federal Reserve H.15 release, Bloomberg L.P., ICE Data Services, and the Bureau of Economic Analysis.

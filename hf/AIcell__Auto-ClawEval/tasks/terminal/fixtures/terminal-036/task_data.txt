@@ -1,0 +1,118 @@
+```yaml
+id: sqlite-wal-recovery
+title: SQLite Database Recovery from WAL Journal
+description: |
+  A production SQLite database has become corrupted after an unexpected system
+  crash. The main database file is damaged, but the Write-Ahead Log (WAL) file
+  and its shared-memory index (SHM) are intact. Your task is to recover the
+  database by properly checkpointing the WAL journal and restoring data integrity.
+
+  The database belongs to a small e-commerce application tracking orders,
+  customers, and inventory. Critical transaction data exists only in the WAL
+  file and must be recovered before it is lost.
+
+category: database
+difficulty: hard
+time_limit: 3600
+
+environment:
+  image: ubuntu:22.04
+  packages:
+    - sqlite3
+    - python3
+    - python3-pip
+    - xxd
+    - hexedit
+    - file
+    - binutils
+
+setup_script: |
+  #!/bin/bash
+  set -e
+
+  mkdir -p /opt/ecommerce/db
+  mkdir -p /opt/ecommerce/backups
+  mkdir -p /opt/ecommerce/scripts
+
+  # Create the initial database with schema and seed data
+  python3 << 'PYEOF'
+  import sqlite3
+  import os
+  import struct
+  import shutil
+
+  db_path = "/opt/ecommerce/db/shop.db"
+
+  conn = sqlite3.connect(db_path)
+  conn.execute("PRAGMA journal_mode=WAL")
+  conn.execute("PRAGMA synchronous=NORMAL")
+  conn.execute("PRAGMA page_size=4096")
+
+  conn.executescript("""
+  CREATE TABLE customers (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      email TEXT UNIQUE NOT NULL,
+      name TEXT NOT NULL,
+      phone TEXT,
+      address TEXT,
+      city TEXT,
+      country TEXT,
+      created_at TEXT DEFAULT (datetime('now')),
+      loyalty_points INTEGER DEFAULT 0
+  );
+
+  CREATE TABLE products (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      sku TEXT UNIQUE NOT NULL,
+      name TEXT NOT NULL,
+      description TEXT,
+      price REAL NOT NULL,
+      stock_quantity INTEGER DEFAULT 0,
+      category TEXT,
+      weight_kg REAL,
+      active INTEGER DEFAULT 1
+  );
+
+  CREATE TABLE orders (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      customer_id INTEGER NOT NULL,
+      status TEXT DEFAULT 'pending',
+      total_amount REAL NOT NULL,
+      shipping_address TEXT,
+      created_at TEXT DEFAULT (datetime('now')),
+      updated_at TEXT DEFAULT (datetime('now')),
+      notes TEXT,
+      FOREIGN KEY (customer_id) REFERENCES customers(id)
+  );
+
+  CREATE TABLE order_items (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      order_id INTEGER NOT NULL,
+      product_id INTEGER NOT NULL,
+      quantity INTEGER NOT NULL,
+      unit_price REAL NOT NULL,
+      discount REAL DEFAULT 0,
+      FOREIGN KEY (order_id) REFERENCES orders(id),
+      FOREIGN KEY (product_id) REFERENCES products(id)
+  );
+
+  CREATE TABLE inventory_log (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      product_id INTEGER NOT NULL,
+      change_amount INTEGER NOT NULL,
+      reason TEXT,
+      logged_at TEXT DEFAULT (datetime('now')),
+      FOREIGN KEY (product_id) REFERENCES products(id)
+  );
+
+  CREATE INDEX idx_orders_customer ON orders(customer_id);
+  CREATE INDEX idx_order_items_order ON order_items(order_id);
+  CREATE INDEX idx_order_items_product ON order_items(product_id);
+  CREATE INDEX idx_products_sku ON products(sku);
+  CREATE INDEX idx_customers_email ON customers(email);
+  """)
+
+  customers = [
+      ("alice@example.com", "Alice Johnson", "+1-555-0101", "123 Maple St", "Portland", "US"),
+      ("bob@example.com", "Bob Martinez", "+1-555-0102", "456 Oak Ave", "Seattle", "US"),
+      ("carol@example.com", "Carol White", "+44-20-7946-0958", "10 Baker St",

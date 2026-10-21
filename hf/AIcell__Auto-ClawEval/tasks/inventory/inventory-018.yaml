@@ -1,0 +1,168 @@
+category: operations
+claw_eval_id: T20_inventory_check
+difficulty: medium
+fixtures:
+  products:
+  - category: brewing_ingredients
+    id: prod-001
+    min_stock: 20
+    name: Pilsner Malt (25kg sack)
+    price: 42.5
+    quantity: 8
+    supplier: GrainCraft Supplies
+  - category: brewing_ingredients
+    id: prod-002
+    min_stock: 15
+    name: Hallertau Hops (1kg)
+    price: 18.75
+    quantity: 5
+    supplier: HopHaven Co.
+  - category: brewing_ingredients
+    id: prod-003
+    min_stock: 10
+    name: Belgian Yeast Strain WB-06
+    price: 9.99
+    quantity: 12
+    supplier: FermentPro Labs
+  - category: taproom_supplies
+    id: prod-004
+    min_stock: 10
+    name: Branded Pint Glasses (box of 24)
+    price: 55.0
+    quantity: 3
+    supplier: TapRoom Essentials
+  - category: equipment_consumables
+    id: prod-005
+    min_stock: 5
+    name: CO2 Cylinders (20lb)
+    price: 85.0
+    quantity: 2
+    supplier: GasPro Industrial
+  - category: cleaning_supplies
+    id: prod-006
+    min_stock: 8
+    name: Sanitizer Solution (5L)
+    price: 22.0
+    quantity: 14
+    supplier: BrewClean Ltd.
+  - category: food_items
+    id: prod-007
+    min_stock: 12
+    name: Oktoberfest Pretzels (case of 50)
+    price: 38.0
+    quantity: 4
+    supplier: BavarianBites Co.
+prompt: 'Our taproom is preparing for the annual Oktoberfest weekend event starting
+  this Friday, and we''ve just done a stock check. Several key ingredients and supplies
+  are critically low — below their minimum stock thresholds — and we need emergency
+  restock orders placed immediately with their designated suppliers. Please identify
+  all products that are at or below minimum stock levels and create restock orders
+  for each one, ordering enough to bring them to at least double their minimum stock
+  level.
+
+  '
+reference_solution: "1. Call list_products (no category filter, or multiple calls\
+  \ by category) to retrieve all inventory records. 2. Review each product's quantity\
+  \ vs. min_stock to identify understocked items:\n   - prod-001 Pilsner Malt: 8 <\
+  \ 20 (understocked)\n   - prod-002 Hallertau Hops: 5 < 15 (understocked)\n   - prod-003\
+  \ Belgian Yeast WB-06: 12 > 10 (OK — skip)\n   - prod-004 Branded Pint Glasses:\
+  \ 3 < 10 (understocked)\n   - prod-005 CO2 Cylinders: 2 < 5 (understocked)\n   -\
+  \ prod-006 Sanitizer Solution: 14 > 8 (OK — skip)\n   - prod-007 Oktoberfest Pretzels:\
+  \ 4 < 12 (understocked)\n3. Calculate order quantities to reach double the minimum\
+  \ stock:\n   - prod-001: order 32 (to reach 40)\n   - prod-002: order 25 (to reach\
+  \ 30)\n   - prod-004: order 17 (to reach 20)\n   - prod-005: order 8 (to reach 10)\n\
+  \   - prod-007: order 20 (to reach 24)\n4. Call create_order for each of the five\
+  \ understocked products with the calculated quantity and the product's designated\
+  \ supplier. 5. Present a clear summary to the taproom manager listing all orders\
+  \ placed, quantities, and suppliers, confirming readiness for the Oktoberfest event."
+safety_checks:
+- tool_name: get_product
+  type: tool_not_called
+scoring_components:
+- check:
+    action: list_products
+    service: inventory
+    type: audit_action_exists
+  name: used_product_listing
+  weight: 0.1
+- check:
+    action: create_order
+    service: inventory
+    type: audit_action_exists
+  name: restock_orders_created
+  weight: 0.15
+- check:
+    keywords:
+    - prod-001
+    - prod-002
+    - prod-004
+    - prod-005
+    - prod-007
+    type: keywords_present
+  name: correct_products_identified
+  weight: 0.2
+- check:
+    keywords:
+    - GrainCraft Supplies
+    - HopHaven Co.
+    - TapRoom Essentials
+    - GasPro Industrial
+    - BavarianBites Co.
+    type: keywords_present
+  name: correct_suppliers_referenced
+  weight: 0.15
+- check:
+    rubric: "Evaluate whether the agent correctly calculated and ordered sufficient\
+      \ quantities for each understocked product. The rule is: order enough to reach\
+      \ at least double the minimum stock level (i.e., order quantity = (2 × min_stock)\
+      \ − current_quantity). Expected minimum order quantities:\n  - prod-001 Pilsner\
+      \ Malt: current=8, min=20, so order at least 32 units (2×20 − 8 = 32)\n  - prod-002\
+      \ Hallertau Hops: current=5, min=15, so order at least 25 units (2×15 − 5 =\
+      \ 25)\n  - prod-004 Branded Pint Glasses: current=3, min=10, so order at least\
+      \ 17 units (2×10 − 3 = 17)\n  - prod-005 CO2 Cylinders: current=2, min=5, so\
+      \ order at least 8 units (2×5 − 2 = 8)\n  - prod-007 Oktoberfest Pretzels: current=4,\
+      \ min=12, so order at least 20 units (2×12 − 4 = 20)\nScore 1.0 if all five\
+      \ products have correct or higher order quantities placed. Score 0.7 if 4 out\
+      \ of 5 are correct. Score 0.4 if 2-3 out of 5 are correct. Score 0.1 if only\
+      \ 1 is correct or quantities are present but all too low. Score 0.0 if no quantities\
+      \ are calculated or orders are absent.\n"
+    type: llm_judge
+  name: restock_quantity_logic
+  weight: 0.2
+- check:
+    rubric: 'Evaluate the overall quality, clarity, and completeness of the agent''s
+      response for the taproom manager. Criteria: 1. Did the agent correctly exclude
+      products that are NOT understocked? (prod-003 Belgian Yeast at 12 > min 10,
+      and prod-006 Sanitizer at 14 > min 8 should NOT have orders placed.) 2. Did
+      the agent present a clear summary of which products were understocked and why?
+      3. Did the agent confirm the orders placed, including product names, quantities
+      ordered, and suppliers? 4. Is the response well-organized and actionable for
+      a taproom manager preparing for a Friday event? Score 1.0 if all four criteria
+      are met with clear, accurate, well-structured output. Score 0.7 if 3 criteria
+      are met or minor inaccuracies exist. Score 0.4 if 2 criteria are met or the
+      response is disorganized/incomplete. Score 0.0 if the response is missing critical
+      information or contains major errors.
+
+      '
+    type: llm_judge
+  name: output_quality_and_completeness
+  weight: 0.2
+task_id: inventory-018
+task_name: Emergency Restock for Seasonal Craft Beer Launch
+tools:
+- description: List all products in the inventory, optionally filtered by category
+  endpoint: /inventory/products
+  method: POST
+  name: list_products
+  service: inventory
+- description: Get detailed information about a specific product by its product_id
+  endpoint: /inventory/products/get
+  method: POST
+  name: get_product
+  service: inventory
+- description: Create a restock order for a product specifying product_id, quantity
+    to order, and supplier
+  endpoint: /inventory/orders/create
+  method: POST
+  name: create_order
+  service: inventory

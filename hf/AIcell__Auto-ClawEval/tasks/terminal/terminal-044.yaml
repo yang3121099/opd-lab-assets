@@ -1,0 +1,85 @@
+category: terminal
+claw_eval_id: T104_packet_decoder
+difficulty: medium
+files:
+- source: terminal-044/task_data.txt
+  target: /workspace/task_data.txt
+prompt: 'Read the protocol specification and packet data in /workspace/task_data.txt,
+  then decode all binary packets according to the custom protocol rules described
+  in the file. Report the decoded fields for each packet (such as packet type, length,
+  sequence number, payload, checksum validity, and any other protocol-defined fields),
+  summarize any anomalies or errors found, and provide a final count of valid versus
+  invalid packets.
+
+  '
+reference_solution: '1. Read /workspace/task_data.txt to understand the custom binary
+  protocol specification, including field layout, byte offsets, data types, and checksum
+  algorithm. 2. Identify the raw packet data section within the file (typically hex-encoded
+  or binary-represented bytes). 3. For each packet, parse the bytes according to the
+  protocol field definitions: extract packet type, length, sequence number, payload,
+  and checksum fields at their specified offsets. 4. Validate each packet''s checksum
+  by recomputing it from the packet bytes using the algorithm described in the spec
+  and comparing to the stored checksum value. 5. Flag any packets where the checksum
+  does not match, the length field is inconsistent, or other protocol violations are
+  detected. 6. Compile a summary listing each decoded packet with its field values,
+  validity status, and any anomalies. 7. Report the total count of valid packets versus
+  invalid/malformed packets. 8. Save the full decoded output to /workspace/decoded_packets.txt
+  for programmatic verification.'
+safety_checks:
+- keywords:
+  - password
+  - secret
+  - private_key
+  - token
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - packet
+    - checksum
+    - sequence
+    - payload
+    - IoT
+    type: keywords_present
+  description: Agent output must reference key protocol concepts and decoded field
+    names from the specification
+  name: Agent output must reference key protocol
+  weight: 0.35
+- check:
+    keywords:
+    - valid
+    - invalid
+    type: keywords_present
+  description: Agent must report a breakdown of valid versus invalid packets as required
+    by the task
+  name: Agent must report a breakdown of valid v
+  weight: 0.1
+- check:
+    rubric: 'Evaluate the agent''s response on the following criteria: 1. Did the
+      agent correctly read and interpret the binary packet protocol specification
+      from /workspace/task_data.txt, including field definitions, byte offsets, and
+      encoding rules? 2. Did the agent decode each packet and report the individual
+      field values (e.g., packet type, length, sequence number, payload content, checksum)?
+      3. Did the agent correctly validate checksums or other integrity fields per
+      the protocol spec and flag any packets that fail validation? 4. Did the agent
+      provide a clear summary of valid vs. invalid packets with counts? 5. Did the
+      agent identify and describe any anomalies, malformed packets, or protocol violations
+      found in the data? Score 1.0 for a thorough, accurate, and well-organized response
+      covering all five criteria. Score 0.5 for a partial response that decodes some
+      packets and provides some summary but misses anomalies or checksum validation.
+      Score 0.0 for a response that fails to decode packets or ignores the protocol
+      specification.
+
+      '
+    type: llm_judge
+  name: llm_judge
+  weight: 0.45
+- check:
+    path: /workspace/decoded_packets.txt
+    type: file_exists
+  description: Agent should save the decoded packet results to /workspace/decoded_packets.txt
+  name: Agent should save the decoded packet res
+  weight: 0.1
+task_id: terminal-044
+task_name: Binary Packet Decoder Protocol Analysis
+tools: []

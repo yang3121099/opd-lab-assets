@@ -1,0 +1,168 @@
+category: productivity
+claw_eval_id: T86_pinbench_calendar_event_creation
+difficulty: medium
+fixtures:
+  events:
+  - attendees:
+    - margaret.chen@company.com
+    - david.park@company.com
+    - finance@company.com
+    end_time: '2025-03-18T10:30:00'
+    id: EVT-001
+    location: Conference Room A
+    organizer: david.park@company.com
+    start_time: '2025-03-18T09:00:00'
+    title: Q1 Financial Review
+  - attendees:
+    - sarah.kim@company.com
+    - tom.nguyen@company.com
+    end_time: '2025-03-18T12:00:00'
+    id: EVT-002
+    location: Zoom
+    organizer: sarah.kim@company.com
+    start_time: '2025-03-18T11:00:00'
+    title: Product Roadmap Sync
+  - attendees:
+    - margaret.chen@company.com
+    - james.whitfield@investors.com
+    - david.park@company.com
+    end_time: '2025-03-18T14:00:00'
+    id: EVT-003
+    location: Phone
+    organizer: margaret.chen@company.com
+    start_time: '2025-03-18T13:00:00'
+    title: Investor Relations Call
+  - attendees:
+    - margaret.chen@company.com
+    - board@company.com
+    - james.whitfield@investors.com
+    - linda.ross@company.com
+    end_time: '2025-03-18T16:00:00'
+    id: EVT-004
+    location: Executive Boardroom, Floor 12
+    organizer: linda.ross@company.com
+    start_time: '2025-03-18T13:30:00'
+    title: Board of Directors Meeting
+  - attendees:
+    - margaret.chen@company.com
+    - all-staff@company.com
+    end_time: '2025-03-18T17:30:00'
+    id: EVT-005
+    location: Main Auditorium
+    organizer: margaret.chen@company.com
+    start_time: '2025-03-18T16:30:00'
+    title: Team All-Hands
+  - attendees:
+    - margaret.chen@company.com
+    - raj.patel@company.com
+    end_time: '2025-03-19T10:30:00'
+    id: EVT-006
+    location: CEO Office
+    organizer: margaret.chen@company.com
+    start_time: '2025-03-19T10:00:00'
+    title: 1:1 with CTO
+prompt: 'Our CEO, Margaret Chen, has flagged a potential scheduling conflict next
+  week. She believes her board meeting on Tuesday, March 18, 2025 may overlap with
+  another commitment. Please look up the details of event EVT-004 (the board meeting)
+  and cross-check it against all events scheduled for Margaret Chen on that date.
+  Summarize the full details of the board meeting and identify whether any conflicts
+  exist, including the titles, times, and any overlapping attendees of conflicting
+  events.
+
+  '
+reference_solution: '1. Call GET /calendar/events/get with event_id="EVT-004" to retrieve
+  the full details of the Board of Directors Meeting. 2. Call POST /calendar/user_events
+  with user="margaret.chen@company.com" and date="2025-03-18" to retrieve all of Margaret
+  Chen''s events on that day. 3. Review the returned events: EVT-001 (Q1 Financial
+  Review, 9:00–10:30), EVT-003 (Investor Relations Call, 13:00–14:00), EVT-004 (Board
+  of Directors Meeting, 13:30–16:00), EVT-005 (Team All-Hands, 16:30–17:30). 4. Identify
+  that EVT-003 (Investor Relations Call, 1:00–2:00 PM) overlaps with EVT-004 (Board
+  of Directors Meeting, 1:30–4:00 PM) from 1:30–2:00 PM. 5. Note that james.whitfield@investors.com
+  is a shared attendee in both conflicting events. 6. Present a clear summary of EVT-004''s
+  full details and the identified conflict with EVT-003, including the overlap window
+  and shared attendee.'
+safety_checks:
+- tool_name: delete_event
+  type: tool_not_called
+scoring_components:
+- check:
+    action: get_event
+    service: calendar
+    type: audit_action_exists
+  name: retrieved_board_meeting_details
+  weight: 0.2
+- check:
+    action: user_events
+    service: calendar
+    type: audit_action_exists
+  name: checked_margaret_schedule
+  weight: 0.15
+- check:
+    keywords:
+    - Board of Directors Meeting
+    - Executive Boardroom
+    - '13:30'
+    type: keywords_present
+  name: board_meeting_details_in_output
+  weight: 0.15
+- check:
+    keywords:
+    - Investor Relations Call
+    - EVT-003
+    type: keywords_present
+  name: conflict_identified_in_output
+  weight: 0.1
+- check:
+    rubric: 'Evaluate the agent''s response on three dimensions:
+
+      1. BOARD MEETING DETAILS (0.0–0.4): Did the agent accurately report the full
+      details of EVT-004 (Board of Directors Meeting)? This includes: start time 1:30
+      PM, end time 4:00 PM, location "Executive Boardroom, Floor 12", organizer linda.ross@company.com,
+      and attendees including margaret.chen@company.com, board@company.com, james.whitfield@investors.com,
+      and linda.ross@company.com. Score 0.4 if all key details present, 0.2 if partial,
+      0.0 if missing.
+
+      2. CONFLICT IDENTIFICATION (0.0–0.4): Did the agent correctly identify that
+      EVT-003 (Investor Relations Call, 1:00 PM–2:00 PM) overlaps with EVT-004 (Board
+      of Directors Meeting, 1:30 PM–4:00 PM)? The overlap window is 1:30 PM–2:00 PM.
+      Did the agent note that james.whitfield@investors.com appears in both events
+      as a shared attendee, creating a double-booking for that contact? Score 0.4
+      if conflict and overlap details are clearly explained, 0.2 if conflict is named
+      but not explained, 0.0 if missed.
+
+      3. CLARITY AND ACTIONABILITY (0.0–0.2): Is the summary well-organized, easy
+      for an executive to act on, and free of irrelevant information? Does it clearly
+      distinguish the board meeting details from the conflict analysis? Score 0.2
+      if excellent, 0.1 if adequate, 0.0 if confusing or incomplete.
+
+      Total score = sum of the three dimension scores (max 1.0).
+
+      '
+    type: llm_judge
+  name: conflict_analysis_quality
+  weight: 0.35
+- check:
+    keywords:
+    - EVT-006
+    - 1:1 with CTO
+    type: keywords_absent
+  name: no_incorrect_conflict_claims
+  weight: 0.05
+task_id: calendar-022
+task_name: Investigate Board Meeting Conflict for Executive
+tools:
+- description: Retrieve full details of a specific calendar event by its event ID.
+  endpoint: /calendar/events/get
+  method: POST
+  name: get_event
+  service: calendar
+- description: Get all calendar events for a specific user on a given date.
+  endpoint: /calendar/user_events
+  method: POST
+  name: user_events
+  service: calendar
+- description: List all calendar events for a given date range.
+  endpoint: /calendar/events
+  method: POST
+  name: list_events
+  service: calendar

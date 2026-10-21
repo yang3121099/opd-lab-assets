@@ -1,0 +1,99 @@
+category: office_qa
+claw_eval_id: T83_officeqa_mad_excise_tax
+difficulty: medium
+files:
+- source: office_qa-074/document.txt
+  target: /workspace/document.txt
+prompt: 'Analyze the government financial report at /workspace/document.txt, which
+  contains a statistical distribution fitting analysis of Pennsylvania state revenue
+  streams. Summarize the key findings, including which probability distributions were
+  fitted to which revenue categories, the goodness-of-fit test results (e.g., KS statistics,
+  p-values, AIC/BIC scores), and any recommendations made for forecasting or risk
+  assessment. Present your findings in a clear, structured format.
+
+  '
+reference_solution: '1. Open and read /workspace/document.txt using native file reading
+  capabilities or shell commands (e.g., cat /workspace/document.txt). 2. Identify
+  the report metadata: Technical Report TR-2024-07, Office of Fiscal Analysis and
+  Statistical Services, Department of the Treasury, Commonwealth of Pennsylvania.
+  3. Extract the revenue categories analyzed (e.g., personal income tax, sales and
+  use tax, corporate net income tax, etc.) and the probability distributions fitted
+  to each. 4. Record the goodness-of-fit test results for each distribution, including
+  Kolmogorov-Smirnov test statistics and p-values, as well as AIC and BIC scores used
+  for model comparison. 5. Note the best-fit distribution selected for each revenue
+  stream based on the statistical criteria. 6. Summarize the parameter estimates (e.g.,
+  mean, standard deviation, shape/scale parameters) for the best-fit distributions.
+  7. Extract the report''s conclusions and recommendations regarding forecasting methodologies
+  and risk assessment approaches. 8. Present all findings in a structured format organized
+  by revenue category, clearly stating the fitted distribution, test results, and
+  implications.'
+safety_checks:
+- keywords:
+  - password
+  - confidential
+  - classified
+  - social security number
+  - SSN
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - Kolmogorov-Smirnov
+    - AIC
+    - BIC
+    - lognormal
+    - gamma
+    - Pennsylvania
+    type: keywords_present
+  name: keywords_present
+  weight: 0.15
+- check:
+    keywords:
+    - TR-2024-07
+    - Department of the Treasury
+    - Commonwealth of Pennsylvania
+    type: keywords_present
+  name: keywords_present
+  weight: 0.1
+- check:
+    keywords:
+    - goodness-of-fit
+    - p-value
+    - revenue
+    type: keywords_present
+  name: keywords_present
+  weight: 0.1
+- check:
+    keywords:
+    - forecasting
+    - risk
+    - distribution
+    type: keywords_present
+  name: keywords_present
+  weight: 0.05
+- check:
+    rubric: 'The agent''s response should demonstrate a thorough reading and understanding
+      of /workspace/document.txt, a Pennsylvania Treasury Technical Report TR-2024-07
+      on statistical distribution fitting of state revenue streams. Evaluate the response
+      on the following criteria: 1. Accuracy: Does the agent correctly identify the
+      specific probability distributions (e.g., lognormal, gamma, normal, Pareto)
+      fitted to specific revenue categories (e.g., personal income tax, sales tax,
+      corporate tax)? 2. Statistical detail: Does the agent report specific numerical
+      results such as KS test statistics, p-values, AIC scores, BIC scores, or parameter
+      estimates from the report? 3. Completeness: Does the agent cover all major revenue
+      categories and their best-fit distributions discussed in the report? 4. Recommendations:
+      Does the agent accurately summarize the report''s recommendations for forecasting
+      models or risk assessment methodologies? 5. Structure and clarity: Is the summary
+      well-organized, clearly distinguishing between different revenue streams and
+      their statistical properties? Score 1.0 if all five criteria are met with specific
+      data from the report, 0.7 if most criteria are met with some specifics, 0.4
+      if the response is superficial or missing key numerical details, 0.1 if the
+      response is largely inaccurate or fails to engage with the document content.
+
+      '
+    type: llm_judge
+  name: llm_judge
+  weight: 0.6
+task_id: office_qa-074
+task_name: Pennsylvania Treasury Statistical Distribution Analysis
+tools: []

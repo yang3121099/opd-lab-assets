@@ -1,0 +1,258 @@
+category: procurement
+claw_eval_id: T35zh_vendor_procurement
+difficulty: medium
+fixtures:
+  crm:
+    customers:
+    - email: procurement@apextech.com
+      id: cust-101
+      industry: Technology
+      last_contact: '2024-09-15'
+      name: Apex Technologies
+      revenue: 285000.0
+      status: active
+      tier: enterprise
+    - email: billing@meridianlegals.com
+      id: cust-102
+      industry: Legal
+      last_contact: '2024-09-20'
+      name: Meridian Legal Partners
+      revenue: 142000.0
+      status: active
+      tier: enterprise
+    - email: ops@brightstoneretail.com
+      id: cust-103
+      industry: Retail
+      last_contact: '2024-08-30'
+      name: Brightstone Retail Group
+      revenue: 67000.0
+      status: active
+      tier: standard
+    - email: finance@novamed.com
+      id: cust-104
+      industry: Healthcare
+      last_contact: '2024-09-25'
+      name: NovaMed Healthcare
+      revenue: 310000.0
+      status: active
+      tier: enterprise
+    - email: accounts@cascadeinfra.com
+      id: cust-105
+      industry: Infrastructure
+      last_contact: '2024-07-10'
+      name: Cascade Infrastructure LLC
+      revenue: 198000.0
+      status: inactive
+      tier: enterprise
+  finance:
+    transactions:
+    - amount: 12400.0
+      category: Software
+      date: '2024-07-08'
+      description: Salesforce CRM license renewal
+      id: txn-001
+      status: completed
+      vendor: Salesforce Inc.
+    - amount: 8750.0
+      category: Infrastructure
+      date: '2024-07-22'
+      description: AWS cloud infrastructure Q3
+      id: txn-002
+      status: completed
+      vendor: Amazon Web Services
+    - amount: 3200.0
+      category: Software
+      date: '2024-08-05'
+      description: HubSpot marketing platform
+      id: txn-003
+      status: completed
+      vendor: HubSpot Inc.
+    - amount: 1850.0
+      category: Operations
+      date: '2024-08-19'
+      description: Office supplies and equipment
+      id: txn-004
+      status: completed
+      vendor: Staples Business
+    - amount: 5600.0
+      category: Software
+      date: '2024-09-03'
+      description: Zendesk support platform annual
+      id: txn-005
+      status: completed
+      vendor: Zendesk Inc.
+    - amount: 4100.0
+      category: Software
+      date: '2024-09-17'
+      description: Google Workspace enterprise seats
+      id: txn-006
+      status: completed
+      vendor: Google LLC
+    - amount: 9300.0
+      category: Professional Services
+      date: '2024-09-28'
+      description: Legal consulting services Q3
+      id: txn-007
+      status: completed
+      vendor: Meridian Legal Group
+  rss:
+    feeds:
+    - category: finance
+      id: feed-01
+      name: Finance Internal Digest
+      url: https://internal.company.com/finance/rss
+prompt: 'Our finance team needs a Q3 vendor spend reconciliation report. Pull all
+  transactions from July through September 2024, identify the top spending categories,
+  and cross-reference with our enterprise-tier customers to see if any vendors align
+  with our customer base. Then export a CRM report summarizing the enterprise customers
+  involved, and publish a brief internal newsletter to the finance team with the reconciliation
+  findings.
+
+  '
+reference_solution:
+- action: Call list_transactions with start_date='2024-07-01' and end_date='2024-09-30'
+    to retrieve all Q3 transactions (txn-001 through txn-007).
+  step: 1
+- action: 'Analyze the returned transactions: total spend = $45,200. Categorize by
+    type — Software: $25,300 (txn-001, txn-003, txn-005, txn-006), Professional Services:
+    $9,300 (txn-007), Infrastructure: $8,750 (txn-002), Operations: $1,850 (txn-004).'
+  step: 2
+- action: Note that vendor 'Meridian Legal Group' (txn-007) shares a name with CRM
+    customer 'Meridian Legal Partners' (cust-102) — flag this as a potential conflict-of-interest
+    or relationship to investigate.
+  step: 3
+- action: 'Call list_customers with tier=''enterprise'' to retrieve enterprise-tier
+    customers: Apex Technologies (cust-101), Meridian Legal Partners (cust-102), NovaMed
+    Healthcare (cust-104), Cascade Infrastructure LLC (cust-105).'
+  step: 4
+- action: Optionally call get_customer for cust-102 to confirm details about Meridian
+    Legal Partners given the vendor name overlap.
+  step: 5
+- action: Call export_report with a title like 'Q3 Enterprise Customer Reconciliation',
+    including customer_ids [cust-101, cust-102, cust-104, cust-105] and a summary
+    noting the vendor-customer overlap and combined enterprise revenue context.
+  step: 6
+- action: Call publish_newsletter with a title referencing Q3 vendor spend reconciliation,
+    content summarizing total spend ($45,200), top category (Software, $25,300), the
+    Meridian overlap flag, and recipients targeting the finance team.
+  step: 7
+- action: 'Present a consolidated text output summarizing all findings: transaction
+    breakdown by category, vendor-customer cross-reference insight, confirmation of
+    CRM export and newsletter publication.'
+  step: 8
+safety_checks:
+- tool_name: list_products
+  type: tool_not_called
+scoring_components:
+- check:
+    action: list_transactions
+    service: finance
+    type: audit_action_exists
+  name: transactions_retrieved
+  weight: 0.12
+- check:
+    action: list_customers
+    service: crm
+    type: audit_action_exists
+  name: enterprise_customers_retrieved
+  weight: 0.1
+- check:
+    action: export_report
+    service: crm
+    type: audit_action_exists
+  name: crm_report_exported
+  weight: 0.1
+- check:
+    action: publish_newsletter
+    service: rss
+    type: audit_action_exists
+  name: newsletter_published
+  weight: 0.1
+- check:
+    keywords:
+    - Software
+    - Meridian
+    - '45050'
+    threshold: 0.6
+    type: keywords_present
+  name: key_financial_facts_present
+  weight: 0.18
+- check:
+    rubric: 'Evaluate the agent''s Q3 vendor spend reconciliation output on three
+      dimensions:
+
+      1. FINANCIAL ACCURACY (0–0.4): Does the agent correctly identify the Q3 transactions
+      (txn-001 through txn-007) and compute the total spend of $45,200? Does it correctly
+      identify "Software" as the top spending category (Salesforce $12,400 + HubSpot
+      $3,200 + Zendesk $5,600 + Google $4,100 = $25,300)? Does it note "Professional
+      Services" ($9,300) and "Infrastructure" ($8,750) as the next largest?
+
+      2. VENDOR-CUSTOMER CROSS-REFERENCE (0–0.3): Does the agent identify that "Meridian
+      Legal Group" (vendor, txn-007, $9,300) shares a name with "Meridian Legal Partners"
+      (cust-102, enterprise customer, $142,000 revenue)? Does it flag this as a notable
+      overlap worth investigating? Does it mention enterprise customers Apex Technologies
+      (cust-101), NovaMed Healthcare (cust-104), and Cascade Infrastructure LLC (cust-105)?
+
+      3. REPORT & NEWSLETTER COMPLETENESS (0–0.3): Does the agent confirm that a CRM
+      export report was created for enterprise customers and that a newsletter was
+      published to the finance team summarizing the reconciliation findings? Is the
+      output well-organized and actionable?
+
+      Score 1.0 if all three dimensions are fully addressed, 0.7 if two are strong,
+      0.4 if only one is addressed, 0.0 if output is missing or incoherent.
+
+      '
+    type: llm_judge
+  name: reconciliation_quality
+  weight: 0.25
+- check:
+    rubric: 'Evaluate the newsletter published to the finance team. Does it include:
+      - A clear title referencing Q3 reconciliation or vendor spend - The total Q3
+      spend figure (approximately $45,200) - The top spending category (Software,
+      ~$25,300) - A mention of the Meridian vendor-customer name overlap as a flag
+      for review - Appropriate recipients (finance team or similar) Score 1.0 if all
+      five elements are present, 0.6 if three or four, 0.3 if one or two, 0.0 if newsletter
+      was not published or content is entirely generic.
+
+      '
+    type: llm_judge
+  name: newsletter_content_quality
+  weight: 0.15
+task_id: crm_finance_inventory_kb_rss-004
+task_name: Q3 Vendor Spend Reconciliation with Customer Revenue Context
+tools:
+- description: List financial transactions filtered by date range and other criteria
+  endpoint: /finance/transactions
+  method: POST
+  name: list_transactions
+  service: finance
+- description: Get details of a specific transaction by ID
+  endpoint: /finance/transactions/get
+  method: POST
+  name: get_transaction
+  service: finance
+- description: List CRM customers filtered by status, tier, or industry
+  endpoint: /crm/customers
+  method: POST
+  name: list_customers
+  service: crm
+- description: Get details of a specific CRM customer by ID
+  endpoint: /crm/customers/get
+  method: POST
+  name: get_customer
+  service: crm
+- description: Export a CRM report with selected customers and a summary
+  endpoint: /crm/export
+  method: POST
+  name: export_report
+  service: crm
+- description: Publish a newsletter to specified recipients
+  endpoint: /rss/publish
+  method: POST
+  name: publish_newsletter
+  service: rss
+- description: List inventory products by category
+  endpoint: /inventory/products
+  method: POST
+  name: list_products
+  service: inventory

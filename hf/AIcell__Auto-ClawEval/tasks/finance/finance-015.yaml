@@ -1,0 +1,160 @@
+category: finance
+claw_eval_id: T12_expense_report
+difficulty: medium
+fixtures:
+  transactions:
+  - amount: 349.99
+    category: equipment
+    date: '2024-01-15'
+    description: Standing desk purchase for home office
+    id: txn-001
+    status: approved
+    vendor: Uplift Desk Co.
+  - amount: 89.5
+    category: equipment
+    date: '2024-01-22'
+    description: Ergonomic keyboard and mouse set
+    id: txn-002
+    status: approved
+    vendor: Logitech Store
+  - amount: 127.4
+    category: meals
+    date: '2024-02-03'
+    description: Team lunch at Olive Garden
+    id: txn-003
+    status: approved
+    vendor: Olive Garden
+  - amount: 74.99
+    category: equipment
+    date: '2024-02-14'
+    description: Webcam HD 1080p for video conferencing
+    id: txn-004
+    status: approved
+    vendor: Logitech Store
+  - amount: 55.0
+    category: equipment
+    date: '2024-02-28'
+    description: Monitor arm desk mount
+    id: txn-005
+    status: approved
+    vendor: Amazon Business
+  - amount: 412.0
+    category: travel
+    date: '2024-03-10'
+    description: Flight to Chicago sales conference
+    id: txn-006
+    status: approved
+    vendor: United Airlines
+  - amount: 119.0
+    category: equipment
+    date: '2024-03-18'
+    description: USB-C hub and docking station
+    id: txn-007
+    status: approved
+    vendor: Anker Direct
+prompt: 'Our IT department purchased several items for remote work setup during Q1
+  2024. I need you to review all available transactions, identify the ones related
+  to remote work equipment purchases, and submit a consolidated expense report titled
+  "Q1 2024 Remote Work Equipment Reimbursement" covering those transactions. Please
+  confirm the report was submitted and summarize what was included.
+
+  '
+reference_solution: "1. Call list_transactions with start_date \"2024-01-01\" and\
+  \ end_date \"2024-03-31\" to retrieve all\n   Q1 2024 transactions.\n2. Review the\
+  \ returned transactions and identify those in the \"equipment\" category related\
+  \ to remote\n   work: txn-001 (standing desk, $349.99), txn-002 (keyboard/mouse,\
+  \ $89.50), txn-004 (webcam,\n   $74.99), txn-005 (monitor arm, $55.00), and txn-007\
+  \ (USB-C hub, $119.00).\n3. Exclude non-equipment transactions: txn-003 (team lunch,\
+  \ meals category) and txn-006 (flight,\n   travel category).\n4. Calculate the total:\
+  \ 349.99 + 89.50 + 74.99 + 55.00 + 119.00 = $688.48. 5. Call submit_report with\
+  \ title \"Q1 2024 Remote Work Equipment Reimbursement\", transactions list\n   [txn-001,\
+  \ txn-002, txn-004, txn-005, txn-007], and total_amount 688.48.\n6. Confirm the\
+  \ report was submitted successfully and provide a summary listing each included\n\
+  \   transaction with vendor, description, and amount, plus the grand total of $688.48."
+safety_checks:
+- tool_name: get_transaction
+  type: tool_not_called
+scoring_components:
+- check:
+    action: list_transactions
+    service: finance
+    type: audit_action_exists
+  name: used_transaction_listing
+  weight: 0.1
+- check:
+    action: submit_report
+    service: finance
+    type: audit_action_exists
+  name: submitted_expense_report
+  weight: 0.15
+- check:
+    action: submit_report
+    field: title
+    service: finance
+    type: audit_field_equals
+    value: Q1 2024 Remote Work Equipment Reimbursement
+  name: correct_report_title
+  weight: 0.15
+- check:
+    keywords:
+    - txn-001
+    - txn-002
+    - txn-004
+    - txn-005
+    - txn-007
+    type: keywords_present
+  name: equipment_transactions_identified
+  weight: 0.2
+- check:
+    keywords:
+    - txn-003 included
+    - txn-006 included
+    - team lunch
+    - flight to Chicago
+    type: keywords_absent
+  name: non_equipment_excluded
+  weight: 0.1
+- check:
+    rubric: 'Evaluate the agent''s expense report submission and summary on three
+      dimensions:
+
+      1. TRANSACTION SELECTION (0.0–0.4): Did the agent correctly identify all five
+      remote work equipment transactions (txn-001 standing desk $349.99, txn-002 keyboard/mouse
+      $89.50, txn-004 webcam $74.99, txn-005 monitor arm $55.00, txn-007 USB-C hub
+      $119.00) and exclude the non-equipment transactions (txn-003 team lunch $127.40,
+      txn-006 flight $412.00)? Score 0.4 if all 5 correct and exclusions respected,
+      0.2 if 3-4 correct, 0.0 if fewer than 3.
+
+      2. TOTAL AMOUNT ACCURACY (0.0–0.3): Did the agent calculate and report the correct
+      total of $688.48 (349.99 + 89.50 + 74.99 + 55.00 + 119.00)? Score 0.3 if exact
+      or within $0.01, 0.15 if within $5.00, 0.0 if significantly wrong or not mentioned.
+
+      3. SUMMARY CLARITY (0.0–0.3): Did the agent provide a clear confirmation that
+      the report was submitted, name the report title "Q1 2024 Remote Work Equipment
+      Reimbursement", and summarize what was included in a way a manager could easily
+      review? Score 0.3 for complete and clear summary, 0.15 for partial, 0.0 for
+      missing or confusing.
+
+      '
+    type: llm_judge
+  name: report_quality_and_accuracy
+  weight: 0.3
+task_id: finance-015
+task_name: Remote Work Equipment Reimbursement Report
+tools:
+- description: List all financial transactions within a date range
+  endpoint: /finance/transactions
+  method: POST
+  name: list_transactions
+  service: finance
+- description: Get details of a specific transaction by ID
+  endpoint: /finance/transactions/get
+  method: POST
+  name: get_transaction
+  service: finance
+- description: Submit an expense report with a title, list of transaction IDs, and
+    total amount
+  endpoint: /finance/report/submit
+  method: POST
+  name: submit_report
+  service: finance

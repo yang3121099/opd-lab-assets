@@ -1,0 +1,137 @@
+SPARSE MIXTURE-OF-EXPERTS TRANSFORMERS WITH DYNAMIC ROUTING FOR EFFICIENT LONG-CONTEXT REASONING
+
+Submitted to NeurIPS 2024 | Received March 14, 2024 | Accepted September 2, 2024
+
+Authors: Priya Nambiar¹, Jonas Weissberg², Tomoko Arai¹, Rafael Mendez-Castillo³
+¹ Stanford AI Lab, Stanford University
+² Max Planck Institute for Intelligent Systems, Tübingen
+³ Google DeepMind, London
+
+ABSTRACT
+
+We introduce SparseReason-7B, a 7.3-billion parameter sparse mixture-of-experts language model designed for long-context reasoning tasks. Our architecture employs 64 expert feed-forward networks per layer with a learned top-4 routing mechanism, achieving 94.7% of the performance of dense 13B parameter models while requiring only 38% of the active compute during inference. On the SCROLLS benchmark, SparseReason-7B achieves a mean score of 71.4, outperforming the previous state-of-the-art sparse model by 6.2 points. We further demonstrate that our dynamic routing strategy reduces expert collapse to 3.1% of experts across all layers, compared to 18.7% in standard MoE implementations using fixed auxiliary losses.
+
+1. INTRODUCTION
+
+The scaling of large language models has produced remarkable capabilities, but the computational costs of dense transformer architectures remain prohibitive for many deployment scenarios. Mixture-of-experts (MoE) approaches offer a promising alternative by activating only a subset of parameters for each input token, yet existing implementations suffer from two persistent problems: load imbalance across experts and degraded performance on tasks requiring coherent reasoning over extended contexts exceeding 8,192 tokens.
+
+Previous work by Fedus et al. (2022) demonstrated that Switch Transformer could scale to 1.6 trillion parameters with sparse activation, but reported expert utilization rates as low as 12% for certain expert groups. Similarly, Mixtral-8x7B (Mistral AI, January 2024) achieved strong benchmark performance but showed a 14.3% performance drop on tasks requiring context windows beyond 16,384 tokens compared to its performance on shorter sequences.
+
+Our work addresses both limitations through three primary contributions:
+
+1. A dynamic routing mechanism we call Contextual Load-Aware Routing (CLAR) that conditions expert selection on both token representations and a running estimate of expert utilization across the current sequence.
+
+2. A modified positional encoding scheme combining Rotary Position Embeddings (RoPE) with learned long-range bias terms, enabling stable performance up to 131,072 tokens.
+
+3. A training curriculum that progressively increases sequence length from 2,048 to 131,072 tokens over 180,000 training steps.
+
+2. MODEL ARCHITECTURE
+
+2.1 Overall Design
+
+SparseReason-7B consists of 32 transformer layers. Each layer contains a multi-head attention module with 32 attention heads of dimension 128, followed by a sparse MoE feed-forward block. The model uses a vocabulary of 65,536 tokens with a learned embedding dimension of 4,096.
+
+The MoE feed-forward block in each layer contains 64 expert networks. Each expert is a two-layer MLP with an intermediate dimension of 14,336, using SwiGLU activation. During a forward pass, the router selects the top-4 experts for each token, meaning only 4 of 64 experts are active per token per layer. The total parameter count is 7.3 billion, of which approximately 2.1 billion are active during inference for any given token.
+
+2.2 Contextual Load-Aware Routing (CLAR)
+
+Standard top-k routing computes expert scores as:
+
+g(x) = Softmax(W_r · x)
+
+where W_r is a learned routing weight matrix and x is the token representation. The top-k experts by score are selected.
+
+CLAR modifies this by incorporating a utilization penalty:
+
+g_CLAR(x) = Softmax(W_r · x − λ · u_t)
+
+where u_t is a vector tracking the fraction of tokens routed to each expert over the preceding 512 tokens in the current sequence, and λ = 0.08 is a fixed penalty coefficient determined through ablation studies on the validation set. This soft penalty discourages routing all tokens to the same small set of experts without requiring the auxiliary load-balancing losses that can interfere with primary task optimization.
+
+2.3 Positional Encoding
+
+We use RoPE with a base frequency of 500,000, following the approach of LLaMA-3 (Meta AI, April 2024), combined with 16 learned scalar bias terms applied at fixed logarithmically-spaced distance intervals between 1,024 and 65,536 tokens. These bias terms are added to attention logits and allow the model to learn distinct attention patterns for short-range versus long-range dependencies.
+
+3. TRAINING DETAILS
+
+SparseReason-7B was trained on a dataset of 2.4 trillion tokens drawn from the following sources:
+
+- Web text (Common Crawl, filtered): 1.44 trillion tokens (60%)
+- Code (GitHub, Stack Overflow): 480 billion tokens (20%)
+- Scientific papers (Semantic Scholar Open Research Corpus): 240 billion tokens (10%)
+- Books and long-form documents: 192 billion tokens (8%)
+- Curated reasoning datasets (MATH, GSM8K, BIG-Bench Hard): 48 billion tokens (2%)
+
+Training used the AdamW optimizer with β₁ = 0.9, β₂ = 0.95, weight decay of 0.1, and a peak learning rate of 3×10⁻⁴ with cosine decay to 3×10⁻⁵. Gradient clipping was applied at a norm of 1.0. Training ran for 240,000 steps on 512 NVIDIA H100 80GB GPUs across 64 nodes, completing in approximately 23 days between October 8 and October 31, 2023. Total compute was approximately 4.7×10²³ FLOPs.
+
+The sequence length curriculum proceeded as follows:
+- Steps 0–60,000: maximum sequence length 2,048 tokens
+- Steps 60,001–120,000: maximum sequence length 8,192 tokens
+- Steps 120,001–180,000: maximum sequence length 32,768 tokens
+- Steps 180,001–240,000: maximum sequence length 131,072 tokens
+
+4. EVALUATION AND RESULTS
+
+4.1 Long-Context Benchmarks
+
+Table 1: Performance on SCROLLS benchmark (higher is better, max score 100)
+
+Model | Params | Active Params | SCROLLS Score
+GPT-4 (OpenAI, 2023) | ~1.8T (est.) | ~220B (est.) | 78.3
+Claude 2.1 (Anthropic, 2023) | undisclosed | undisclosed | 76.1
+Mixtral-8x7B | 46.7B | 12.9B | 65.2
+LLaMA-3-13B (dense) | 13B | 13B | 69.8
+SparseReason-7B (ours) | 7.3B | 2.1B | 71.4
+
+SparseReason-7B achieves a SCROLLS score of 71.4, surpassing LLaMA-3-13B by 1.6 points despite having 43.8% fewer total parameters and 83.8% fewer active parameters per token.
+
+4.2 Standard Reasoning Benchmarks
+
+Table 2: Performance on standard benchmarks
+
+Benchmark | SparseReason-7B | Mixtral-8x7B | LLaMA-3-13B
+GSM8K (8-shot) | 82.3% | 74.4% | 77.6%
+MATH (4-shot) | 43.7% | 40.2% | 38.9%
+HumanEval | 61.0% | 56.1% | 62.2%
+MMLU (5-shot) | 72.8% | 70.6% | 71.9%
+BIG-Bench Hard | 58.4% | 54.7% | 56.3%
+
+4.3 Expert Utilization Analysis
+
+A critical failure mode in MoE models is expert collapse, where a small number of experts receive the majority of routing decisions. We measured the fraction of experts receiving fewer than 5% of the expected uniform load across all 32 layers on a held-out evaluation set of 50,000 sequences.
+
+Standard top-4 routing with auxiliary loss (λ_aux = 0.01): 18.7% collapsed experts
+CLAR (ours): 3.1% collapsed experts
+Oracle balanced routing (upper bound): 0.0% collapsed experts
+
+The 15.6 percentage point reduction in expert collapse directly correlates with improved performance on tasks requiring diverse reasoning strategies, as measured by a 4.8-point improvement on BIG-Bench Hard compared to an ablated version of our model using standard routing.
+
+4.4 Inference Efficiency
+
+On a single NVIDIA A100 80GB GPU, SparseReason-7B generates tokens at 47.3 tokens per second for sequences of 8,192 tokens, compared to 31.6 tokens per second for LLaMA-3-13B under identical conditions. This represents a 49.7% throughput improvement. Memory footprint at inference is 14.8 GB in bfloat16 precision, compared to 26.0 GB for LLaMA-3-13B.
+
+5. ABLATION STUDIES
+
+We conducted ablations on a 1.1B parameter version of our architecture trained on 200 billion tokens to isolate the contribution of each component:
+
+- Removing CLAR (reverting to standard top-4 routing): −4.8 points on SCROLLS
+- Removing long-range positional bias terms: −3.2 points on SCROLLS
+- Removing sequence length curriculum (training at fixed 131,072 from start): −6.7 points on SCROLLS, training instability observed after step 40,000
+- Reducing experts from 64 to 16 per layer: −2.9 points on SCROLLS, 22% reduction in inference latency
+
+6. LIMITATIONS
+
+SparseReason-7B underperforms on tasks requiring precise numerical computation, achieving only 43.7% on MATH compared to GPT-4's reported 72.6%. The model also shows degraded coherence on generation tasks exceeding 8,192 output tokens, suggesting that our positional encoding improvements primarily benefit the attention mechanism rather than autoregressive generation quality over very long outputs.
+
+7. CONCLUSION
+
+We have presented SparseReason-7B, demonstrating that sparse mixture-of-experts architectures with dynamic load-aware routing can achieve competitive long-context reasoning performance at substantially reduced computational cost. Our CLAR routing mechanism reduces expert collapse from 18.7% to 3.1%, and our combined architectural improvements yield a SCROLLS score of 71.4, surpassing dense models with nearly twice the parameter count. Model weights and training code will be released at github.com/stanfordailab/sparsereason upon publication.
+
+REFERENCES
+
+Fedus, W., Zoph, B., & Shazeer, N. (2022). Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity. JMLR, 23(120), 1–39.
+
+Jiang, A. Q., et al. (2024). Mixtral of Experts. arXiv:2401.04088.
+
+Meta AI. (2024). Meta Llama 3 Technical Report. April 2024.
+
+Su, J., et al. (2021). RoFormer: Enhanced Transformer with Rotary Position Embedding. arXiv:2104.09864.

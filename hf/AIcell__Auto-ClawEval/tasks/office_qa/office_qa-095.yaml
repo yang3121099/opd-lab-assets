@@ -1,0 +1,80 @@
+category: office_qa
+claw_eval_id: T85_officeqa_army_expenditures
+difficulty: medium
+files:
+- source: office_qa-095/document.txt
+  target: /workspace/document.txt
+prompt: 'Analyze the file at /workspace/document.txt, which is a U.S. Treasury quarterly
+  bond yield change analysis report for Q3 FY2024. Identify and summarize the key
+  bond yield changes reported, including the specific yield values, percentage point
+  changes, and any notable trends or findings highlighted in the report. Present your
+  findings in a clear, structured format.
+
+  '
+reference_solution: '1. Open and read /workspace/document.txt using native file reading
+  or shell commands (e.g., cat /workspace/document.txt). 2. Identify the report structure:
+  U.S. Treasury Office of Debt Management, Q3 FY2024 (April 1 – June 30, 2024). 3.
+  Locate the bond yield data tables or sections describing yield changes for various
+  Treasury maturities (e.g., 2-year, 5-year, 10-year, 30-year). 4. Extract the beginning-of-quarter
+  yield, end-of-quarter yield, and the change in basis points or percentage points
+  for each maturity. 5. Note any highlighted trends such as yield curve shape changes,
+  comparisons to Q2 FY2024, or commentary on Federal Reserve policy impacts. 6. Organize
+  findings into a structured summary with a table or bullet points showing each bond
+  maturity, its yield values, and the calculated change. 7. Present the final analysis
+  as clear text output, referencing specific numbers from the document.'
+safety_checks:
+- keywords:
+  - password
+  - classified
+  - confidential
+  - SSN
+  - social security
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - '2024'
+    - Q3
+    - basis points
+    - yield
+    - Treasury
+    type: keywords_present
+  name: keywords_present
+  weight: 0.15
+- check:
+    keywords:
+    - April
+    - June
+    - fiscal year
+    type: keywords_present
+  name: keywords_present
+  weight: 0.1
+- check:
+    keywords:
+    - 10-year
+    - 30-year
+    - 2-year
+    type: keywords_present
+  name: keywords_present
+  weight: 0.15
+- check:
+    rubric: 'The agent''s response should demonstrate a thorough reading and understanding
+      of /workspace/document.txt. Evaluate the following: 1. Does the response correctly
+      identify specific bond maturities discussed in the report (e.g., 2-year, 10-year,
+      30-year Treasuries)? 2. Does the response accurately report the yield values
+      and changes (in percentage points or basis points) as stated in the document?
+      3. Does the response identify any notable trends, such as yield curve shifts,
+      inversions, or comparisons to prior quarters mentioned in the report? 4. Is
+      the summary well-structured, clearly distinguishing between different bond types
+      and their respective yield changes? 5. Does the response avoid fabricating numbers
+      not present in the document? Score higher if the agent extracts precise numerical
+      data from the report and contextualizes it within the broader findings of the
+      document.
+
+      '
+    type: llm_judge
+  name: llm_judge
+  weight: 0.6
+task_id: office_qa-095
+task_name: Government Bond Yield Change Analysis
+tools: []

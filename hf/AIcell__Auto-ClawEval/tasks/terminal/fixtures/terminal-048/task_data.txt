@@ -1,0 +1,115 @@
+```python
+#!/usr/bin/env python3
+"""
+XSS Filter Testing with HTML Sanitization
+Terminal Task: Security Testing Module
+"""
+
+import re
+import html
+import json
+from typing import Optional
+
+
+# ============================================================
+# HTML SANITIZER IMPLEMENTATION (with intentional bugs to fix)
+# ============================================================
+
+class HTMLSanitizer:
+    """
+    A basic HTML sanitizer that attempts to prevent XSS attacks.
+    Contains several bugs that need to be identified and fixed.
+    """
+    
+    ALLOWED_TAGS = {
+        'p', 'br', 'strong', 'em', 'u', 'ol', 'ul', 'li',
+        'h1', 'h2', 'h3', 'blockquote', 'code', 'pre'
+    }
+    
+    ALLOWED_ATTRIBUTES = {
+        'href': ['a'],
+        'title': ['a', 'abbr'],
+        'class': ['code', 'pre'],
+    }
+    
+    DANGEROUS_PATTERNS = [
+        r'javascript\s*:',
+        r'vbscript\s*:',
+        r'data\s*:',
+        r'on\w+\s*=',
+    ]
+
+    def sanitize(self, input_html: str) -> str:
+        """
+        Sanitize HTML input to prevent XSS attacks.
+        
+        BUG #1: This method does not handle None input
+        BUG #2: Case sensitivity issue in tag stripping
+        BUG #3: Dangerous pattern check is incomplete
+        """
+        # BUG #1: Missing None/empty check - should return '' for None input
+        result = input_html
+        
+        # Strip disallowed tags
+        result = self._strip_disallowed_tags(result)
+        
+        # BUG #3: Only checks lowercase patterns, misses mixed case like "Javascript:"
+        for pattern in self.DANGEROUS_PATTERNS:
+            result = re.sub(pattern, '', result)
+        
+        # Encode remaining special characters
+        result = self._encode_special_chars(result)
+        
+        return result
+
+    def _strip_disallowed_tags(self, html_input: str) -> str:
+        """
+        Remove HTML tags that are not in the allowed list.
+        
+        BUG #2: Uses case-sensitive matching, so <SCRIPT> won't be stripped
+        """
+        def replace_tag(match):
+            tag_name = match.group(1)
+            # BUG #2: Should be: tag_name.lower() not in self.ALLOWED_TAGS
+            if tag_name not in self.ALLOWED_TAGS:
+                return ''
+            return match.group(0)
+        
+        return re.sub(r'<(/?)(\w+)([^>]*)>', 
+                      lambda m: replace_tag_full(m, self.ALLOWED_TAGS), 
+                      html_input)
+
+    def _encode_special_chars(self, text: str) -> str:
+        """Encode special HTML characters."""
+        # Only encodes < and >, misses quotes which can break attributes
+        text = text.replace('<', '&lt;')
+        text = text.replace('>', '&gt;')
+        # BUG: Missing encoding for & " '
+        return text
+
+    def is_safe_url(self, url: str) -> bool:
+        """
+        Check if a URL is safe to use in href attributes.
+        Returns True if safe, False if potentially dangerous.
+        """
+        if not url:
+            return False
+        
+        url_lower = url.lower().strip()
+        
+        dangerous_schemes = ['javascript:', 'vbscript:', 'data:']
+        for scheme in dangerous_schemes:
+            if url_lower.startswith(scheme):
+                return False
+        
+        # Allow relative URLs and http/https
+        if url_lower.startswith(('http://', 'https://', '/', '#', './')):
+            return True
+            
+        return False
+
+
+def replace_tag_full(match, allowed_tags: set) -> str:
+    """Helper function for tag replacement with full match groups."""
+    slash = match.group(1)
+    tag_name =

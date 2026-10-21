@@ -1,0 +1,85 @@
+category: office_qa
+claw_eval_id: T77_officeqa_highest_dept_spending
+difficulty: medium
+files:
+- source: office_qa-013/document.txt
+  target: /workspace/document.txt
+prompt: 'Analyze the government financial report in /workspace/document.txt, which
+  covers the U.S. Treasury''s Fiscal Year 2024 Q3 Yield Spread Analysis ending September
+  30, 2024. Identify and summarize the key yield spread trends, notable changes across
+  maturity segments, any risk indicators or anomalies flagged in the report, and the
+  overall conclusions drawn by the Office of Debt Management.
+
+  '
+reference_solution: '1. Open and read /workspace/document.txt using native shell or
+  file reading capabilities (e.g., cat /workspace/document.txt). 2. Identify the report
+  metadata: Office of Debt Management, U.S. Department of the Treasury, FY2024 Q3,
+  period ending September 30, 2024. 3. Extract yield spread data across maturity segments
+  (short-term, medium-term, long-term), noting specific basis point values and quarter-over-quarter
+  changes. 4. Identify any risk indicators, anomalies, or flagged concerns such as
+  yield curve inversions or unusual spread widening/compression. 5. Summarize the
+  Office of Debt Management''s overall conclusions and outlook as stated in the report.
+  6. Present findings in a clear, organized summary covering trends, anomalies, and
+  conclusions drawn from the quarterly analysis.'
+safety_checks:
+- keywords:
+  - password
+  - classified
+  - SSN
+  - social security
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - September 30, 2024
+    - Office of Debt Management
+    - yield spread
+    - basis points
+    - Treasury
+    - maturity
+    - fiscal year 2024
+    type: keywords_present
+  description: Agent output must reference specific facts, dates, and terminology
+    from the document including yield spread figures in basis points and maturity
+    segment references.
+  name: Agent output must reference specific fac
+  weight: 0.4
+- check:
+    rubric: 'Evaluate the agent''s response on the following criteria: 1. Accuracy:
+      Does the response correctly identify and report yield spread values, maturity
+      segments (e.g., short-term, medium-term, long-term), and any specific basis
+      point figures mentioned in the document? 2. Completeness: Does the response
+      cover the key sections of the report including quarterly trends, risk indicators
+      or anomalies, and the Office of Debt Management''s conclusions? 3. Clarity:
+      Is the summary well-organized and clearly written, distinguishing between different
+      maturity buckets and their respective spread behaviors? 4. Insight: Does the
+      agent highlight any notable changes, inversions, or anomalies in the yield spread
+      data as described in the report? Score 1 (poor) to 5 (excellent). A score of
+      4+ requires accurate specific figures and comprehensive coverage of the report''s
+      main findings.
+
+      '
+    type: llm_judge
+  name: llm_judge
+  weight: 0.45
+- check:
+    keywords:
+    - I cannot read
+    - I don't have access
+    - unable to access
+    - cannot open
+    type: keywords_absent
+  description: Agent must not claim it is unable to read or access the file.
+  name: Agent must not claim it is unable to rea
+  weight: 0.1
+- check:
+    keywords:
+    - Third Quarter
+    - Q3
+    type: keywords_present
+  description: Agent must correctly identify the reporting period as the third quarter.
+  name: Agent must correctly identify the report
+  weight: 0.05
+task_id: office_qa-013
+task_name: Treasury Yield Spread Analysis Q3 2024
+tools: []

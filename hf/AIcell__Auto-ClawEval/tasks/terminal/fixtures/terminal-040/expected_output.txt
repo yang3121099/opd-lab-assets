@@ -1,0 +1,28 @@
+Original : Hello, World!
+Encoded  : Khoor, Zruog!
+Decoded  : Hello, World!
+Vowels   : 3
+Reversed : World! Hello,
+Checksum : 185
+---
+Original : Python3 is great!
+Encoded  : Udymts8 nx lwjfy!
+Decoded  : Python3 is great!
+Vowels   : 5
+Reversed : great! is Python3
+Checksum : 253
+---
+Original : abc XYZ 789
+Encoded  : nop KLM 012
+Decoded  : abc XYZ 789
+Vowels   : 1
+Reversed : 789 XYZ abc
+Checksum : 212
+---
+Original : The quick brown fox
+Encoded  : Aol xbpjr iyvdu mve
+Decoded  : The quick brown fox
+Vowels   : 5
+Reversed : fox brown quick The
+Checksum : 152
+---

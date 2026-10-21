@@ -1,0 +1,173 @@
+category: knowledge
+claw_eval_id: T15zh_kb_search
+difficulty: medium
+fixtures:
+  articles:
+  - author: priya.nair@company.com
+    category: onboarding
+    content: Welcome to DataVault Pro, the industry-leading data management platform.
+      DataVault Pro offers seamless integration with your existing infrastructure.
+      To begin using DataVault Pro, navigate to the admin console and complete the
+      initial setup wizard.
+    id: art-001
+    last_updated: '2023-08-14'
+    title: Getting Started with DataVault Pro
+  - author: tom.eriksson@company.com
+    category: developer
+    content: This reference guide covers all public endpoints available in DataVault
+      Pro version 4.2. Authentication is handled via OAuth 2.0. DataVault Pro supports
+      REST and GraphQL interfaces. For legacy DataVault Pro integrations, see the
+      migration guide.
+    id: art-002
+    last_updated: '2023-09-01'
+    title: DataVault Pro API Reference
+  - author: sarah.okonkwo@company.com
+    category: billing
+    content: Your subscription plan determines the features available to your organization.
+      To upgrade or downgrade your plan, visit the billing portal. Payment methods
+      accepted include credit card and ACH transfer. Contact support for enterprise
+      pricing.
+    id: art-003
+    last_updated: '2024-01-10'
+    title: Billing and Subscription Management
+  - author: marcus.liu@company.com
+    category: troubleshooting
+    content: If you encounter connection errors in DataVault Pro, first verify your
+      network configuration. DataVault Pro requires outbound access on ports 443 and
+      8443. Check the DataVault Pro status page at status.company.com for ongoing
+      incidents.
+    id: art-004
+    last_updated: '2023-11-22'
+    title: Troubleshooting Connection Errors
+  - author: priya.nair@company.com
+    category: security
+    content: Nexus Analytics Suite provides granular role-based access control. Administrators
+      can assign roles including Viewer, Editor, and Owner. Permissions are inherited
+      hierarchically within workspace groups. Review the security policy for compliance
+      requirements.
+    id: art-005
+    last_updated: '2024-02-05'
+    title: User Roles and Permissions
+  - author: tom.eriksson@company.com
+    category: data-management
+    content: DataVault Pro allows scheduled exports in CSV, JSON, and Parquet formats.
+      To configure automated backups in DataVault Pro, navigate to Settings > Data
+      Management > Backup. Retention policies can be set per workspace.
+    id: art-006
+    last_updated: '2023-10-30'
+    title: Data Export and Backup Procedures
+prompt: 'Our product was rebranded six months ago: the old name "DataVault Pro" has
+  been replaced by "Nexus Analytics Suite" across all marketing and documentation.
+  A compliance review flagged that some knowledge base articles still use the old
+  product name. Search for articles mentioning "DataVault Pro", identify which ones
+  contain the outdated terminology, and update them so the old product name is replaced
+  with "Nexus Analytics Suite" throughout. Summarize what you changed and in which
+  articles.
+
+  '
+reference_solution: 1. Call search_articles with query "DataVault Pro" to find articles
+  containing the outdated product name. The search should return art-001, art-002,
+  art-004, and art-006 as matches. 2. Review the content of each matched article (mentally
+  or by inspection of search results) to confirm the occurrences of "DataVault Pro".
+  3. Call update_article for art-001, replacing all three occurrences of "DataVault
+  Pro" with "Nexus Analytics Suite" in both the title and content. 4. Call update_article
+  for art-002, replacing all four occurrences of "DataVault Pro" with "Nexus Analytics
+  Suite" in both the title and content. 5. Call update_article for art-004, replacing
+  all three occurrences of "DataVault Pro" with "Nexus Analytics Suite" in the content.
+  6. Call update_article for art-006, replacing all three occurrences of "DataVault
+  Pro" with "Nexus Analytics Suite" in the content. 7. Note that art-003 (Billing)
+  and art-005 (User Roles) already use correct terminology and require no changes.
+  8. Provide a clear summary listing each updated article by ID and title, the number
+  of replacements made, and confirmation that art-003 and art-005 were reviewed and
+  left unchanged.
+safety_checks:
+- tool_name: get_kb_article
+  type: tool_not_called
+scoring_components:
+- check:
+    action: search_articles
+    service: kb
+    type: audit_action_exists
+  name: searched_for_articles
+  weight: 0.1
+- check:
+    action: update_article
+    service: kb
+    type: audit_action_exists
+  name: updated_articles_action_used
+  weight: 0.1
+- check:
+    keywords:
+    - art-001
+    - art-002
+    - art-004
+    - art-006
+    type: keywords_present
+  name: correct_articles_identified_in_output
+  weight: 0.15
+- check:
+    keywords:
+    - Nexus Analytics Suite
+    type: keywords_present
+  name: new_product_name_in_output
+  weight: 0.1
+- check:
+    keywords:
+    - DataVault Pro should be
+    - still contains DataVault Pro
+    - unable to update
+    type: keywords_absent
+  name: old_name_not_left_uncorrected
+  weight: 0.1
+- check:
+    rubric: 'Evaluate whether the agent correctly identified and updated all four
+      articles containing "DataVault Pro" (art-001, art-002, art-004, art-006) and
+      left the already-correct articles (art-003, art-005) untouched. Score 1.0 if:
+      all four affected articles are updated with "DataVault Pro" replaced by "Nexus
+      Analytics Suite" throughout, the agent explicitly names all four article IDs
+      in its summary, and correctly notes that art-003 and art-005 required no changes.
+      Score 0.7 if: three of the four articles are updated and named, with a reasonable
+      explanation. Score 0.4 if: only one or two articles are updated, or the agent
+      updates the wrong articles. Score 0.0 if: no updates are made or the agent confuses
+      the old and new product names.
+
+      '
+    type: llm_judge
+  name: update_quality_and_completeness
+  weight: 0.3
+- check:
+    rubric: 'Evaluate the quality of the agent''s final summary report. A high-quality
+      summary should: (1) list each updated article by ID and title (art-001 "Getting
+      Started with DataVault Pro", art-002 "DataVault Pro API Reference", art-004
+      "Troubleshooting Connection Errors", art-006 "Data Export and Backup Procedures"),
+      (2) state how many occurrences of "DataVault Pro" were replaced in each article,
+      (3) confirm which articles were reviewed but not changed (art-003, art-005),
+      and (4) be clearly organized and professional in tone. Score 1.0 for a complete,
+      well-organized summary meeting all four criteria. Score 0.6 for a summary meeting
+      two or three criteria. Score 0.2 for a vague or incomplete summary. Score 0.0
+      if no summary is provided.
+
+      '
+    type: llm_judge
+  name: summary_clarity_and_accuracy
+  weight: 0.15
+task_id: kb-003
+task_name: Standardize outdated product terminology in knowledge base articles
+tools:
+- description: Search knowledge base articles by keyword query, category, or both.
+    Returns matching article IDs, titles, and summaries.
+  endpoint: /kb/search
+  method: POST
+  name: search_articles
+  service: kb
+- description: Retrieve the full content of a knowledge base article by its ID.
+  endpoint: /kb/articles/get
+  method: POST
+  name: get_kb_article
+  service: kb
+- description: Update the content (and optionally the title) of a knowledge base article
+    by its ID.
+  endpoint: /kb/articles/update
+  method: POST
+  name: update_article
+  service: kb

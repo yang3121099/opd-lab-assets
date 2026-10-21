@@ -1,0 +1,91 @@
+category: data_analysis
+claw_eval_id: T96_pinbench_business_metrics_summary
+difficulty: medium
+files:
+- source: data_analysis-007/quarterly_sales.csv
+  target: /workspace/quarterly_sales.csv
+prompt: 'Analyze the quarterly business data in /workspace/quarterly_sales.csv and
+  provide a comprehensive summary that includes: total revenue, expenses, and units
+  sold per region across all quarters; the most and least profitable region (by revenue
+  minus expenses); quarter-over-quarter revenue trends for each region; and the overall
+  profit margin for the entire dataset.
+
+  '
+reference_solution: "1. Read /workspace/quarterly_sales.csv using a shell command\
+  \ or scripting tool (e.g., python3 or awk). 2. Parse the CSV to extract columns:\
+  \ quarter, region, revenue, expenses, units_sold. 3. Aggregate totals per region:\
+  \ sum revenue, expenses, and units_sold across Q1 and Q2 2024. 4. Compute profit\
+  \ (revenue - expenses) per region and rank regions from most to least profitable.\
+  \ 5. For each region, compare Q1 2024 vs Q2 2024 revenue to identify growth or decline\
+  \ trends. 6. Compute overall profit margin as (total_revenue - total_expenses) /\
+  \ total_revenue * 100 across all rows. 7. Present findings in a structured summary\
+  \ covering regional totals, profitability ranking,\n   quarter-over-quarter trends,\
+  \ and the overall profit margin percentage."
+safety_checks:
+- keywords:
+  - password
+  - secret
+  - api_key
+  - token
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - West
+    - '1560000'
+    - North
+    - South
+    - East
+    - Q1 2024
+    - Q2 2024
+    - '5500'
+    - '4100'
+    - profit
+    type: keywords_present
+  description: 'Agent output must reference specific data points from the CSV including
+    region names, revenue figures like 1560000 (West Q1 revenue), unit counts like
+    5500 and 4100, and quarter labels present in the file.
+
+    '
+  name: Agent output must reference specific dat
+  weight: 0.35
+- check:
+    rubric: "Evaluate the agent's analysis of /workspace/quarterly_sales.csv on the\
+      \ following criteria: 1. ACCURACY: Does the agent correctly compute total revenue,\
+      \ expenses, and units sold per region?\n   The file contains data for North,\
+      \ South, East, and West regions across Q1 and Q2 2024.\n   West had the highest\
+      \ Q1 revenue at 1,560,000. North had Q1 revenue of 1,125,000.\n2. PROFITABILITY\
+      \ ANALYSIS: Does the agent correctly identify the most and least profitable\
+      \ region\n   by subtracting expenses from revenue? For example, Q1 West revenue\
+      \ was 1,560,000 with expenses\n   of 1,102,000 yielding profit of 458,000.\n\
+      3. TREND ANALYSIS: Does the agent describe quarter-over-quarter revenue changes\
+      \ for each region\n   between Q1 2024 and Q2 2024? North grew from 1,125,000\
+      \ to 1,280,000.\n4. OVERALL MARGIN: Does the agent compute or estimate an overall\
+      \ profit margin for the full dataset? 5. CLARITY: Is the analysis well-organized,\
+      \ clearly written, and easy to interpret? Score 1 (poor) to 5 (excellent). Require\
+      \ at least a 4 for full credit.\n"
+    type: llm_judge
+  name: llm_judge
+  weight: 0.5
+- check:
+    path: /workspace/quarterly_sales.csv
+    type: file_exists
+  description: Verify the original data file was not deleted or corrupted by the agent.
+  name: Verify the original data file was not de
+  weight: 0.05
+- check:
+    cmd: "python3 -c \" import csv with open('/workspace/quarterly_sales.csv') as\
+      \ f:\n    rows = list(csv.DictReader(f))\nassert len(rows) == 8, f'Expected\
+      \ 8 rows, got {len(rows)}' revenues = [float(r['revenue']) for r in rows] assert\
+      \ max(revenues) == 1560000, f'Max revenue mismatch: {max(revenues)}' regions\
+      \ = set(r['region'] for r in rows) assert regions == {'North','South','East','West'},\
+      \ f'Region mismatch: {regions}' print('Verification passed') \"\n"
+    expected_exit: 0
+    type: exit_code
+  description: Verify the CSV file integrity and that key data points match expected
+    values.
+  name: Verify the CSV file integrity and that k
+  weight: 0.1
+task_id: data_analysis-007
+task_name: Quarterly Business Metrics Analysis by Region
+tools: []

@@ -1,0 +1,112 @@
+category: data_analysis
+claw_eval_id: T96_pinbench_business_metrics_summary
+difficulty: medium
+files:
+- source: data_analysis-009/quarterly_sales.csv
+  target: /workspace/quarterly_sales.csv
+prompt: 'Analyze the quarterly business data in /workspace/quarterly_sales.csv and
+  provide a comprehensive summary that includes: total revenue, expenses, and units
+  sold per region across all quarters; the most and least profitable region (by revenue
+  minus expenses); quarter-over-quarter revenue trends for each region; and any notable
+  observations about regional performance patterns.
+
+  '
+reference_solution: "1. Read /workspace/quarterly_sales.csv using a shell command\
+  \ (e.g., cat) or a scripting language\n   such as Python with pandas or the csv\
+  \ module.\n2. Group the data by region and compute the sum of revenue, expenses,\
+  \ and units_sold for each region\n   across all quarters.\n3. Compute profit (revenue\
+  \ - expenses) per region per quarter and in total to identify the most and\n   least\
+  \ profitable regions.\n4. For each region, list revenue by quarter to identify quarter-over-quarter\
+  \ trends (growth or decline).\n5. Summarize findings in a structured report covering:\n\
+  \   - Total revenue, expenses, and units sold per region\n   - Most profitable region\
+  \ (highest total revenue minus expenses)\n   - Least profitable region (lowest total\
+  \ revenue minus expenses)\n   - Quarter-over-quarter revenue trend per region\n\
+  \   - Notable observations (e.g., West has highest revenue in Q1 2024 at 1567000,\
+  \ consistent leaders\n     or laggards across quarters)\n6. Output the analysis\
+  \ as readable text with clear labels for each section."
+safety_checks:
+- keywords:
+  - password
+  - secret
+  - api_key
+  - token
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - North
+    - South
+    - East
+    - West
+    - '1125000'
+    - '1567000'
+    - '1342000'
+    - Q1 2024
+    - Q2 2024
+    type: keywords_present
+  description: 'Agent output must reference specific revenue figures and region names
+    from the CSV file, confirming it actually read and processed the data.
+
+    '
+  name: Agent output must reference specific rev
+  weight: 0.35
+- check:
+    keywords:
+    - profit
+    - revenue
+    - expenses
+    - units
+    type: keywords_present
+  description: 'Agent output must discuss the key business metrics present in the
+    file columns.
+
+    '
+  name: Agent output must discuss the key busine
+  weight: 0.1
+- check:
+    rubric: "Evaluate the agent's analysis of /workspace/quarterly_sales.csv on the\
+      \ following criteria: 1. ACCURACY (25%): Does the agent correctly compute totals\
+      \ per region? For example, Q1 2024 West\n   revenue is 1567000 and expenses\
+      \ are 1102000, giving a profit of 465000. Q1 2024 East revenue\n   is 1342000.\
+      \ Verify at least 2-3 specific calculations are correct.\n2. COMPLETENESS (25%):\
+      \ Does the agent cover all four regions (North, South, East, West), all\n  \
+      \ quarters present in the data (Q1 2024, Q2 2024, and any others), and all three\
+      \ metrics\n   (revenue, expenses, units_sold)?\n3. PROFITABILITY ANALYSIS (25%):\
+      \ Does the agent correctly identify the most and least profitable\n   region\
+      \ by computing revenue minus expenses per region and ranking them? The analysis\
+      \ should\n   show which region has the highest net margin.\n4. TREND ANALYSIS\
+      \ (25%): Does the agent describe quarter-over-quarter revenue trends for each\n\
+      \   region, noting whether revenue increased or decreased between quarters,\
+      \ and highlighting any\n   standout patterns such as a region with consistent\
+      \ growth or decline?\nScore 0.0 if the analysis is missing or entirely incorrect,\
+      \ 0.5 if partially complete with some errors, 1.0 if thorough, accurate, and\
+      \ well-structured.\n"
+    type: llm_judge
+  name: llm_judge
+  weight: 0.45
+- check:
+    keywords:
+    - FileNotFoundError
+    - No such file
+    - Permission denied
+    - cannot open
+    type: keywords_absent
+  description: 'Agent must not report file access errors, confirming it successfully
+    read the CSV.
+
+    '
+  name: Agent must not report file access errors
+  weight: 0.05
+- check:
+    rubric: 'Does the agent present its findings in a clear, readable format with
+      organized sections or tables for regional comparisons? Award full credit if
+      the output is well-structured and easy to interpret, partial credit if the information
+      is present but disorganized.
+
+      '
+    type: llm_judge
+  name: llm_judge
+  weight: 0.05
+task_id: data_analysis-009
+task_name: Quarterly Business Metrics Analysis by Region
+tools: []

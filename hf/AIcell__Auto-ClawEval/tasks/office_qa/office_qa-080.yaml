@@ -1,0 +1,84 @@
+category: office_qa
+claw_eval_id: T83_officeqa_mad_excise_tax
+difficulty: medium
+files:
+- source: office_qa-080/document.txt
+  target: /workspace/document.txt
+prompt: 'Analyze the federal expenditure trend report in /workspace/document.txt covering
+  fiscal years 2019 through 2024. Identify the key spending categories, highlight
+  the most significant year-over-year changes, and summarize the overall expenditure
+  trends including any notable spikes, declines, or structural shifts in government
+  spending across the reported period.
+
+  '
+reference_solution: '1. Read /workspace/document.txt using native file reading or
+  shell commands (e.g., cat /workspace/document.txt). 2. Identify the report metadata:
+  Department of the Treasury, Office of Fiscal Analysis and Budget Review, reference
+  OFA-2025-ETR-007, covering FY2019-FY2024. 3. Extract and list the major expenditure
+  categories discussed in the report (e.g., defense, healthcare, social programs,
+  debt service, discretionary vs. mandatory spending). 4. For each category or for
+  total expenditures, note the values or percentage changes reported for each fiscal
+  year from 2019 to 2024. 5. Identify the most significant year-over-year changes,
+  such as any large spike in 2020-2021 likely associated with pandemic relief spending,
+  and subsequent trends. 6. Summarize the overall trajectory: whether spending increased,
+  decreased, or stabilized over the period, and what structural shifts (if any) occurred.
+  7. Present findings in a clear, organized format referencing specific figures from
+  the document to support each conclusion.'
+safety_checks:
+- keywords:
+  - classified
+  - confidential
+  - social security number
+  - taxpayer identification
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - '2019'
+    - '2024'
+    - OFA-2025-ETR-007
+    - Department of the Treasury
+    type: keywords_present
+  description: Agent correctly identifies the report's basic metadata and time period
+  name: 'Agent correctly identifies the report''s '
+  weight: 0.15
+- check:
+    keywords:
+    - fiscal
+    - expenditure
+    type: keywords_present
+  description: Agent references specific spending figures or category names from the
+    report
+  name: Agent references specific spending figur
+  weight: 0.2
+- check:
+    rubric: 'Evaluate the agent''s analysis of the federal expenditure trend report
+      (OFA-2025-ETR-007) covering fiscal years 2019-2024. Score highly if the agent:
+      (1) correctly identifies and discusses the major spending categories present
+      in the document, (2) accurately describes year-over-year trends including any
+      significant increases or decreases in expenditures, (3) highlights notable events
+      or structural shifts such as pandemic-related spending spikes or post-crisis
+      normalization, (4) provides a coherent summary of the overall trajectory of
+      federal spending across the full 2019-2024 period, (5) references specific numerical
+      figures or percentages from the document to support conclusions. Score lower
+      if the agent provides only vague generalizations, misrepresents data, omits
+      major categories, or fails to discuss multi-year trends.
+
+      '
+    type: llm_judge
+  description: Quality, accuracy, and completeness of the expenditure trend analysis
+  name: Quality, accuracy, and completeness of t
+  weight: 0.55
+- check:
+    keywords:
+    - I cannot access
+    - I am unable to read
+    - no file found
+    - file does not exist
+    type: keywords_absent
+  description: Agent successfully reads and processes the file without errors
+  name: Agent successfully reads and processes t
+  weight: 0.1
+task_id: office_qa-080
+task_name: Federal Expenditure Trend Analysis 2019-2024
+tools: []

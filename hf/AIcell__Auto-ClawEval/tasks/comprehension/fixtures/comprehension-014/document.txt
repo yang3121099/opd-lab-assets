@@ -1,0 +1,148 @@
+SOFTWARE PLATFORM ANALYSIS REPORT
+Use Cases and Gap Assessment
+Prepared by: Enterprise Technology Advisory Group
+Date: September 14, 2023
+Version: 2.1 — Final
+
+─────────────────────────────────────────────
+EXECUTIVE SUMMARY
+─────────────────────────────────────────────
+
+This report evaluates the current software platform landscape deployed across Meridian Financial Services, a mid-sized wealth management firm headquartered in Charlotte, North Carolina, with approximately 1,340 employees across 11 regional offices. The assessment was conducted between June 5 and August 31, 2023, and covers the firm's three primary operational platforms: Salesforce Financial Services Cloud (FSC), Microsoft Azure DevOps, and SS&C Advent Geneva for portfolio accounting.
+
+The analysis identified 23 distinct use cases currently supported by these platforms, 9 functional gaps requiring remediation, and 4 critical capability absences that represent material risk to operational continuity and regulatory compliance. Total estimated cost of unaddressed gaps over a 24-month horizon is $2.7 million in productivity loss and compliance exposure.
+
+─────────────────────────────────────────────
+1. SCOPE AND METHODOLOGY
+─────────────────────────────────────────────
+
+The assessment team conducted 47 structured interviews with business stakeholders across Client Services, Portfolio Management, Compliance, IT Infrastructure, and Finance. Additionally, the team reviewed system utilization logs from January 1 through June 30, 2023, covering approximately 6.2 million transaction records and 840,000 user session events.
+
+Platform performance benchmarks were compared against the 2023 Gartner Wealth Management Technology Survey (published April 2023), which sampled 312 firms with assets under management between $5 billion and $50 billion. Meridian's AUM stands at $18.4 billion as of Q2 2023.
+
+Gap severity was rated on a three-tier scale:
+- Tier 1 (Critical): Regulatory or fiduciary risk present
+- Tier 2 (High): Significant productivity or revenue impact
+- Tier 3 (Moderate): Operational inefficiency without immediate risk
+
+─────────────────────────────────────────────
+2. CURRENT PLATFORM USE CASES
+─────────────────────────────────────────────
+
+2.1 Salesforce Financial Services Cloud
+
+Salesforce FSC was implemented in March 2021 at a total project cost of $1.1 million. The platform currently supports the following confirmed use cases:
+
+- Client relationship management for 4,200 active household accounts
+- Advisor activity tracking and pipeline management (used by 87 advisors)
+- Referral network management across 6 strategic banking partners
+- Automated birthday and anniversary client outreach (approximately 14,000 touchpoints annually)
+- Compliance documentation storage for Form ADV disclosures
+- Integration with Orion Advisor Services for performance reporting data sync
+
+Current license utilization rate: 74% of 210 provisioned seats are actively used on a monthly basis, based on login data from Q1 and Q2 2023. This represents a $148,000 annual spend on unused licenses.
+
+2.2 Microsoft Azure DevOps
+
+Azure DevOps was adopted in November 2020 to support the firm's internal software development and IT project management functions. The platform supports:
+
+- Sprint planning and backlog management for the 14-person internal development team
+- CI/CD pipeline management for 6 proprietary internal applications
+- Incident tracking and resolution workflow (average resolution time: 3.4 days as of Q2 2023)
+- Artifact repository management for 38 active code repositories
+- Integration testing coordination with SS&C Geneva API endpoints
+
+The IT team logged 1,247 work items completed in the first half of 2023, with a sprint velocity averaging 42 story points per two-week cycle.
+
+2.3 SS&C Advent Geneva
+
+Geneva serves as the firm's system of record for portfolio accounting and has been in production since February 2018. Active use cases include:
+
+- Daily NAV calculation for 312 separately managed accounts
+- Tax lot accounting and realized/unrealized gain reporting
+- Reconciliation processing against 7 custodians including Schwab, Fidelity, and Pershing
+- Regulatory reporting outputs for Form 13F and Schedule D filings
+- Corporate action processing averaging 340 events per month
+
+─────────────────────────────────────────────
+3. GAP ASSESSMENT FINDINGS
+─────────────────────────────────────────────
+
+3.1 Summary Table
+
+Gap ID | Description | Platform Affected | Tier | Est. Annual Impact
+G-01 | No automated client risk tolerance reassessment workflow | Salesforce FSC | 1 | $420,000
+G-02 | Manual reconciliation fallback for Pershing breaks | Geneva | 1 | $310,000
+G-03 | Absence of real-time compliance alert integration | Salesforce FSC | 1 | Unquantified regulatory risk
+G-04 | No mobile advisory application for field advisors | Salesforce FSC | 2 | $185,000
+G-05 | DevOps pipeline lacks automated security scanning | Azure DevOps | 2 | $95,000
+G-06 | Geneva does not support ESG attribution reporting | Geneva | 2 | $230,000
+G-07 | No unified data warehouse connecting all three platforms | Cross-platform | 2 | $340,000
+G-08 | Salesforce-Geneva data sync runs on 24-hour delay | Cross-platform | 3 | $60,000
+G-09 | Azure DevOps lacks formal change advisory board workflow | Azure DevOps | 3 | $40,000
+
+3.2 Critical Gap Detail: G-01 — Risk Tolerance Reassessment
+
+SEC Regulation Best Interest (Reg BI), effective June 30, 2020, requires that advisors reassess client risk profiles when material life events occur. Currently, Meridian has no automated trigger mechanism within Salesforce FSC to prompt reassessment when client data changes (e.g., age milestone, account value drop exceeding 15%, or documented life event such as divorce or retirement).
+
+A manual audit conducted in July 2023 found that 312 of 4,200 client households (7.4%) had not received a documented risk reassessment within the past 24 months, despite qualifying life events recorded in the CRM. This represents a direct Reg BI compliance exposure. Peer firms in the Gartner survey reported an average non-compliance rate of 2.1% for this metric.
+
+Remediation recommendation: Implement Salesforce Flow automation with custom triggers tied to client record field changes. Estimated implementation cost: $67,000 over 90 days.
+
+3.3 Critical Gap Detail: G-02 — Pershing Reconciliation Breaks
+
+Geneva's automated reconciliation module processes custodian files from Schwab, Fidelity, and five other custodians with a break rate of less than 0.3% per month. However, Pershing's file format changed in January 2023 following their technology migration to BNY Mellon's NetX360+ platform. Since that date, the average monthly break rate for Pershing accounts has risen to 4.8%, requiring an estimated 22 hours of manual analyst time per month to resolve.
+
+Pershing represents 18% of Meridian's custodied assets, or approximately $3.3 billion. The manual reconciliation process introduces a 48-hour reporting delay for affected accounts and has resulted in three client-facing reporting errors since February 2023.
+
+Remediation recommendation: Engage SS&C professional services to update the Geneva custodian mapping configuration. Quoted cost from SS&C: $28,500 with a 6-week delivery timeline.
+
+3.4 High-Priority Gap Detail: G-06 — ESG Attribution Reporting
+
+Meridian launched its ESG-focused model portfolio series in Q4 2022, currently managing $890 million across 14 model strategies. Client demand for ESG attribution reporting — specifically carbon intensity scores, MSCI ESG ratings by holding, and UN SDG alignment percentages — cannot be fulfilled through Geneva's standard reporting module.
+
+As of August 2023, advisors are manually compiling ESG data from MSCI's online portal and appending it to client reports using Excel, consuming an estimated 6.5 hours per advisor per quarter for the 34 advisors managing ESG-allocated accounts. This represents approximately 884 hours of annual advisor time at a blended cost of $260 per hour, totaling $229,840 in productivity loss annually.
+
+Remediation options evaluated:
+Option A: Upgrade to Geneva World Investor module — annual license increase of $112,000, full ESG attribution available
+Option B: Implement Orion ESG reporting module — $48,000 annual cost, partial attribution only
+Option C: Integrate MSCI ESG Manager API directly — $75,000 implementation, $36,000 annual subscription
+
+─────────────────────────────────────────────
+4. PLATFORM UTILIZATION BENCHMARKING
+─────────────────────────────────────────────
+
+Compared against the 2023 Gartner Wealth Management Technology Survey peer group (firms with $10B–$25B AUM):
+
+Metric | Meridian | Peer Median | Delta
+CRM active seat utilization | 74% | 81% | -7 pts
+Reconciliation straight-through rate | 96.1% | 98.4% | -2.3 pts
+Average incident resolution time (days) | 3.4 | 2.1 | +1.3 days
+Client data completeness score | 83% | 91% | -8 pts
+Automated compliance workflow coverage | 61% | 79% | -18 pts
+
+─────────────────────────────────────────────
+5. RECOMMENDATIONS AND PRIORITIZATION
+─────────────────────────────────────────────
+
+The assessment team recommends a phased remediation approach:
+
+Phase 1 (Q4 2023 — 90 days): Address G-01 and G-02 as regulatory and operational priorities. Combined budget: $95,500.
+
+Phase 2 (Q1–Q2 2024 — 180 days): Address G-06 and G-07 to support revenue-generating ESG capabilities and data infrastructure. Combined budget: $310,000–$450,000 depending on vendor selection.
+
+Phase 3 (Q3 2024): Address remaining Tier 2 and Tier 3 gaps, including mobile advisory (G-04) and DevOps security scanning (G-05). Estimated budget: $175,000.
+
+Total recommended investment: $580,500–$720,500 over 12 months, against an estimated $1.68 million in quantified annual impact from current gaps.
+
+─────────────────────────────────────────────
+6. CONCLUSION
+─────────────────────────────────────────────
+
+Meridian Financial Services operates a capable but underleveraged technology stack. The three core platforms collectively support 23 validated use cases but leave 9 documented gaps unaddressed. The most urgent remediation priorities center on Reg BI compliance automation and Pershing reconciliation integrity, both of which carry direct regulatory and fiduciary risk. Immediate action on Phase 1 recommendations is advised prior to the firm's scheduled SEC examination in February 2024.
+
+─────────────────────────────────────────────
+Prepared by: James Whitfield, Senior Technology Advisor; Priya Nambiar, Platform Analyst
+Reviewed by: Chief Operating Officer, Meridian Financial Services
+Distribution: Executive Leadership Team, IT Steering Committee
+─────────────────────────────────────────────

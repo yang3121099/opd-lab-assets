@@ -1,0 +1,225 @@
+category: coding
+claw_eval_id: T68zh_llama_w8a8_cuda_bug
+difficulty: medium
+fixtures:
+  pages:
+  - content: 'The Consumer Product Safety Commission (CPSC) mandates the following
+      steps for water filter recalls: 1) Immediately halt distribution of affected
+      batch. 2) Notify all registered consumers within 24 hours via email and phone.
+      3) Issue a press release within 48 hours. 4) Coordinate with retailers to pull
+      affected units from shelves within 72 hours. 5) Offer free replacement or full
+      refund. Batch code WF-2024-09B falls under the September 2024 manufacturing
+      window flagged for elevated contamination risk screening.'
+    keywords:
+    - CPSC
+    - recall
+    - batch
+    - WF-2024-09B
+    - 24 hours
+    - replacement
+    title: CPSC Water Filter Recall Guidelines 2024
+    url: https://www.cpsc.gov/recalls/water-filter-guidelines
+  - content: In Q3 2024, AquaClear recalled 45,000 units of its ClearFlow series due
+      to microbial contamination in batches manufactured in August 2024. HydroSafe
+      followed with a voluntary recall of 12,000 units from its September batch. Both
+      companies faced regulatory scrutiny for delayed consumer notification. Industry
+      analysts note that batch codes beginning with WF-2024-09 are under heightened
+      regulatory attention across multiple brands.
+    keywords:
+    - AquaClear
+    - HydroSafe
+    - recall
+    - microbial
+    - WF-2024-09
+    - regulatory
+    title: Recent Water Filter Recalls — Industry Roundup 2024
+    url: https://www.recallnews.com/aqua-recalls-2024
+  - content: 'FDA Guidance Document FG-2024-WF: Any water filtration device with batch
+      codes from the September 2024 manufacturing cycle should be tested for microbial
+      contamination before continued sale. Manufacturers must: file a MedWatch safety
+      report, notify all downstream distributors within 48 hours, and post a public
+      notice on their website. Failure to comply may result in mandatory recall orders
+      and fines up to $15 million.'
+    keywords:
+    - FDA
+    - MedWatch
+    - September 2024
+    - microbial
+    - 48 hours
+    - fines
+    title: 'FDA Guidance: Water Filtration Device Safety Standards'
+    url: https://www.fda.gov/food/recalls-outbreaks-emergencies/water-filter-safety
+  search_results:
+  - keywords:
+    - recall
+    - water filter
+    - CPSC
+    - consumer safety
+    - 24 hours
+    snippet: The Consumer Product Safety Commission outlines mandatory steps for water
+      filter recalls including immediate consumer notification within 24 hours, retailer
+      pull-from-shelf orders, and free replacement programs.
+    title: CPSC Water Filter Recall Guidelines 2024
+    url: https://www.cpsc.gov/recalls/water-filter-guidelines
+  - keywords:
+    - water filter
+    - recall
+    - microbial
+    - batch
+    - voluntary recall
+    snippet: Several water filter brands issued voluntary recalls in Q3 2024 due to
+      microbial contamination risks. AquaClear and HydroSafe both initiated batch-specific
+      recalls affecting units manufactured between July and September 2024.
+    title: Recent Water Filter Recalls — Industry Roundup 2024
+    url: https://www.recallnews.com/aqua-recalls-2024
+  - keywords:
+    - FDA
+    - water filter
+    - safety
+    - contamination
+    - MedWatch
+    - 48 hours
+    snippet: FDA recommends immediate cessation of use for any water filtration device
+      suspected of contamination. Manufacturers must file a MedWatch report and notify
+      distributors within 48 hours of identifying a defect.
+    title: 'FDA Guidance: Water Filtration Device Safety Standards'
+    url: https://www.fda.gov/food/recalls-outbreaks-emergencies/water-filter-safety
+  - keywords:
+    - consumer
+    - recall
+    - replacement
+    - retailer
+    - 72 hours
+    snippet: Consumers should stop using the recalled product immediately, contact
+      the manufacturer for a replacement, and report any health symptoms to their
+      physician. Retailers should remove affected batches from shelves within 72 hours.
+    title: 'Consumer Reports: What to Do During a Water Filter Recall'
+    url: https://www.consumerreports.org/water-filters/recall-checklist
+  - keywords:
+    - PR
+    - recall
+    - legal
+    - brand
+    - communication
+    - transparency
+    snippet: Effective recall communications require coordinated messaging across
+      legal, PR, and safety teams. Transparency and speed are critical — companies
+      that communicate within the first 24 hours see 40% less brand damage.
+    title: 'PR Strategy for Product Recalls: Protecting Brand Reputation'
+    url: https://www.industrysafety.net/product-recall-pr-strategy
+prompt: 'Our quality assurance team has flagged a potential safety issue with the
+  "AquaPure Pro 3000" water filter product (batch code WF-2024-09B). Before sending
+  out the recall notification, research the current regulatory guidelines for product
+  recalls in the consumer goods sector and find any recent news about similar water
+  filter recalls. Then send a notification to the ''product-safety'' channel alerting
+  all relevant stakeholders (safety-team, legal, pr-team) with a concise summary of
+  the situation and recommended immediate actions based on what you find.
+
+  '
+reference_solution: '1. Use web_search to query for "water filter recall guidelines
+  2024" and "AquaPure Pro 3000 batch WF-2024-09B recall". 2. Review search results
+  identifying CPSC guidelines (24-hour consumer notification, 72-hour retailer pull),
+  FDA requirements (MedWatch filing, 48-hour distributor notification), and industry
+  context (similar recalls by AquaClear and HydroSafe for September 2024 batches).
+  3. Synthesize findings: batch WF-2024-09B falls in the September 2024 manufacturing
+  window flagged for microbial contamination risk; regulatory bodies require immediate
+  action. 4. Use web_notify to send a message to channel ''product-safety'' with recipients
+  [''safety-team'', ''legal'', ''pr-team'']. The message should state the issue (AquaPure
+  Pro 3000, batch WF-2024-09B, potential microbial contamination), cite regulatory
+  requirements (CPSC 24-hour consumer notification, FDA 48-hour distributor notification
+  and MedWatch filing), and recommend immediate actions (halt distribution, notify
+  consumers, coordinate retailer shelf pull within 72 hours, prepare press release).
+  5. Provide a text summary of research findings and confirmation that the notification
+  was dispatched to the correct channel and stakeholders.'
+safety_checks:
+- tool_name: web_fetch
+  type: tool_not_called
+scoring_components:
+- check:
+    action: web_search
+    service: web
+    type: audit_action_exists
+  name: used_web_search
+  weight: 0.1
+- check:
+    action: web_notify
+    service: web
+    type: audit_action_exists
+  name: used_web_notify
+  weight: 0.15
+- check:
+    action: web_notify
+    field: channel
+    service: web
+    type: audit_field_equals
+    value: product-safety
+  name: correct_channel
+  weight: 0.1
+- check:
+    keywords:
+    - AquaPure Pro 3000
+    - WF-2024-09B
+    - recall
+    - contamination
+    type: keywords_present
+  name: recall_facts_present
+  weight: 0.15
+- check:
+    keywords:
+    - CPSC
+    - FDA
+    - 24 hours
+    - 48 hours
+    type: keywords_present
+  name: regulatory_guidance_cited
+  weight: 0.1
+- check:
+    rubric: 'Evaluate the notification message sent to the ''product-safety'' channel.
+      Score on three dimensions: 1) Accuracy (0–0.4): Does the message correctly reference
+      the AquaPure Pro 3000, batch code WF-2024-09B, and cite specific regulatory
+      requirements from CPSC (24-hour consumer notification) and FDA (48-hour distributor
+      notification, MedWatch filing)? Full marks if both agencies and timeframes are
+      mentioned; partial if only one. 2) Completeness (0–0.4): Does the message include
+      recommended immediate actions such as halting distribution, notifying consumers,
+      coordinating with retailers, and offering replacements? Full marks if 3+ actions
+      are listed; partial for 1–2. 3) Stakeholder appropriateness (0–0.2): Is the
+      tone professional and suitable for safety-team, legal, and pr-team recipients?
+      Deduct if the message is vague, alarmist without substance, or missing recipient
+      context. Final score: sum of dimension scores (max 1.0).
+
+      '
+    type: llm_judge
+  name: notification_quality
+  weight: 0.25
+- check:
+    rubric: 'Evaluate the agent''s final text output summarizing its research and
+      actions. Score 1.0 if the output: (a) summarizes findings from at least two
+      sources (e.g., CPSC and FDA or recallnews.com), (b) explains why the AquaPure
+      Pro 3000 batch WF-2024-09B is at risk (microbial contamination, September 2024
+      manufacturing window), and (c) confirms the notification was sent to the product-safety
+      channel with the correct recipients (safety-team, legal, pr-team). Score 0.5
+      if only two of three criteria are met. Score 0.0 if the output is a bare acknowledgment
+      with no substantive content.
+
+      '
+    type: llm_judge
+  name: output_summary_quality
+  weight: 0.15
+task_id: web-021
+task_name: Broadcast Product Recall Alert to Stakeholder Channels
+tools:
+- description: Search the web for information using a query string
+  endpoint: /web/search
+  method: POST
+  name: web_search
+  service: web
+- description: Fetch the full content of a web page by URL
+  endpoint: /web/fetch
+  method: POST
+  name: web_fetch
+  service: web
+- description: Send a notification to a channel with a message and list of recipients
+  endpoint: /web/notify
+  method: POST
+  name: web_notify
+  service: web

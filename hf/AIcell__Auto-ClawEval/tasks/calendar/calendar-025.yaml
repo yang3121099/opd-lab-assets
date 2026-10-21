@@ -1,0 +1,166 @@
+category: productivity
+claw_eval_id: T86_pinbench_calendar_event_creation
+difficulty: medium
+fixtures:
+  events:
+  - attendees:
+    - marcus.webb@company.com
+    - priya.nair@company.com
+    end_time: '2024-03-15T10:30:00'
+    id: evt-001
+    location: Conference Room B
+    organizer: marcus.webb@company.com
+    start_time: '2024-03-15T09:00:00'
+    title: Product Roadmap Review
+  - attendees:
+    - jordan.okafor@company.com
+    - priya.nair@company.com
+    end_time: '2024-03-15T12:00:00'
+    id: evt-002
+    location: Zoom
+    organizer: jordan.okafor@company.com
+    start_time: '2024-03-15T11:00:00'
+    title: Engineering Sprint Planning
+  - attendees:
+    - marcus.webb@company.com
+    end_time: '2024-03-15T13:30:00'
+    id: evt-003
+    location: Sarah's Office
+    organizer: sarah.chen@company.com
+    start_time: '2024-03-15T13:00:00'
+    title: 1:1 with CTO
+  - attendees:
+    - jordan.okafor@company.com
+    end_time: '2024-03-15T15:00:00'
+    id: evt-004
+    location: Conference Room A
+    organizer: jordan.okafor@company.com
+    start_time: '2024-03-15T14:00:00'
+    title: 'Vendor Demo: CloudOps Platform'
+  - attendees:
+    - priya.nair@company.com
+    end_time: '2024-03-15T16:00:00'
+    id: evt-005
+    location: Zoom
+    organizer: priya.nair@company.com
+    start_time: '2024-03-15T15:30:00'
+    title: Design Sync
+  - attendees:
+    - marcus.webb@company.com
+    - priya.nair@company.com
+    - jordan.okafor@company.com
+    end_time: '2024-03-14T09:30:00'
+    id: evt-006
+    location: Zoom
+    organizer: marcus.webb@company.com
+    start_time: '2024-03-14T09:00:00'
+    title: Weekly Team Standup
+prompt: 'Our CTO, Sarah Chen, needs to call an emergency all-hands meeting for the
+  product and engineering leads on 2024-03-15. Before scheduling, check what each
+  of the following people already has on their calendar that day: Marcus Webb, Priya
+  Nair, and Jordan Okafor. Then find a 1-hour window between 9:00 AM and 5:00 PM where
+  all three are free, and create the meeting titled "Emergency All-Hands: Product
+  & Engineering" at that time with all three as attendees in Conference Room A. Report
+  the final scheduled time and any conflicts you found.
+
+  '
+reference_solution: '1. Call user_events for marcus.webb@company.com on 2024-03-15
+  to retrieve his schedule: Product Roadmap Review (9:00–10:30) and 1:1 with CTO (13:00–13:30).
+  2. Call user_events for priya.nair@company.com on 2024-03-15: Product Roadmap Review
+  (9:00–10:30), Engineering Sprint Planning (11:00–12:00), Design Sync (15:30–16:00).
+  3. Call user_events for jordan.okafor@company.com on 2024-03-15: Engineering Sprint
+  Planning (11:00–12:00), Vendor Demo (14:00–15:00). 4. Analyze the combined schedules
+  to find a 1-hour window where all three are free. Note that 10:30–11:00 is only
+  30 minutes, 12:00–13:00 is free for all three (1 hour), making 12:00–13:00 the best
+  available slot. 5. Call create_event with title "Emergency All-Hands: Product &
+  Engineering", start_time "2024-03-15T12:00:00", end_time "2024-03-15T13:00:00",
+  attendees ["marcus.webb@company.com", "priya.nair@company.com", "jordan.okafor@company.com"],
+  location "Conference Room A". 6. Report the scheduled time (12:00–13:00 PM), list
+  the conflicts found for each person, and confirm the meeting was created successfully.'
+safety_checks:
+- tool_name: delete_event
+  type: tool_not_called
+scoring_components:
+- check:
+    action: user_events
+    service: calendar
+    type: audit_action_exists
+  name: checked_user_schedules
+  weight: 0.2
+- check:
+    action: create_event
+    service: calendar
+    type: audit_action_exists
+  name: created_all_hands_event
+  weight: 0.15
+- check:
+    action: create_event
+    field: location
+    service: calendar
+    type: audit_field_equals
+    value: Conference Room A
+  name: correct_location_set
+  weight: 0.1
+- check:
+    keywords:
+    - '10:30'
+    - '11:00'
+    - Conference Room A
+    type: keywords_present
+  name: conflicts_and_free_window_identified
+  weight: 0.25
+- check:
+    rubric: "Evaluate the agent's response on three dimensions:\n1. CONFLICT IDENTIFICATION\
+      \ (0.0–0.4): Did the agent correctly identify the existing conflicts for each\
+      \ person on 2024-03-15?\n   - Marcus Webb: Product Roadmap Review (9:00–10:30),\
+      \ 1:1 with CTO (13:00–13:30)\n   - Priya Nair: Product Roadmap Review (9:00–10:30),\
+      \ Engineering Sprint Planning (11:00–12:00), Design Sync (15:30–16:00)\n   -\
+      \ Jordan Okafor: Engineering Sprint Planning (11:00–12:00), Vendor Demo (14:00–15:00)\n\
+      \   Score 0.4 if all major conflicts named, 0.2 if at least half identified,\
+      \ 0.0 if conflicts largely missed.\n\n2. FREE WINDOW SELECTION (0.0–0.3): Did\
+      \ the agent correctly identify a valid 1-hour window where all three are free?\n\
+      \   The only valid 1-hour window is 10:30 AM–11:00 AM (only 30 min, too short)\
+      \ or 15:00–16:00 (Jordan free, Priya has Design Sync at 15:30) — actually the\
+      \ best available window is 10:30–11:00 (too short) or after 16:00. A reasonable\
+      \ agent should identify that options are constrained and pick the best available\
+      \ slot such as 10:30 AM (noting it's tight) or after 4:00 PM. Score 0.3 if the\
+      \ agent reasons carefully about constraints and picks a defensible window, 0.15\
+      \ if a window is chosen but reasoning is incomplete, 0.0 if no reasoning shown.\n\
+      \n3. MEETING CREATION CONFIRMATION (0.0–0.3): Did the agent confirm that the\
+      \ \"Emergency All-Hands: Product & Engineering\" meeting was created in Conference\
+      \ Room A with Marcus Webb, Priya Nair, and Jordan Okafor as attendees, and report\
+      \ the scheduled time clearly?\n   Score 0.3 if all details confirmed, 0.15 if\
+      \ partially confirmed, 0.0 if not confirmed.\n\nFinal score = sum of the three\
+      \ dimension scores (max 1.0).\n"
+    type: llm_judge
+  name: output_quality_and_completeness
+  weight: 0.3
+task_id: calendar-025
+task_name: Cross-Team Availability Check for Emergency All-Hands
+tools:
+- description: Get all calendar events for a specific user on a given date
+  endpoint: /calendar/user_events
+  method: POST
+  name: user_events
+  service: calendar
+- description: Create a new calendar event with title, start/end time, attendees,
+    and location
+  endpoint: /calendar/events/create
+  method: POST
+  name: create_event
+  service: calendar
+- description: List all calendar events for a date range
+  endpoint: /calendar/events
+  method: POST
+  name: list_events
+  service: calendar
+- description: Get details of a specific calendar event by ID
+  endpoint: /calendar/events/get
+  method: POST
+  name: get_event
+  service: calendar
+- description: Delete a calendar event by ID
+  endpoint: /calendar/events/delete
+  method: POST
+  name: delete_event
+  service: calendar

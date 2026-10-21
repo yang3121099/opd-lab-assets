@@ -1,0 +1,96 @@
+category: office_qa
+claw_eval_id: T84_officeqa_geometric_mean_silver
+difficulty: medium
+files:
+- source: office_qa-084/document.txt
+  target: /workspace/document.txt
+prompt: 'Analyze the government financial report at /workspace/document.txt and provide
+  a comprehensive summary of the statistical distribution fitting analysis. Your response
+  should identify the key revenue streams analyzed, the best-fit distributions found
+  for each stream, the goodness-of-fit test results (including specific test statistics
+  and p-values), and any notable findings or recommendations from the report.
+
+  '
+reference_solution: '1. Open and read the full contents of /workspace/document.txt
+  using native file reading capabilities or shell commands (e.g., cat /workspace/document.txt).
+  2. Identify the report metadata: issuing office (Office of Fiscal Analysis and Risk
+  Management, Department of the Treasury), report number, and fiscal year (2023).
+  3. Locate and list all federal revenue streams analyzed in the report (e.g., individual
+  income taxes, corporate income taxes, payroll taxes, excise taxes). 4. For each
+  revenue stream, extract the best-fit statistical distribution identified (e.g.,
+  Normal, Gamma, Log-Normal) along with fitted parameters. 5. Record the goodness-of-fit
+  test results for each stream, including Kolmogorov-Smirnov statistics, chi-square
+  test values, p-values, AIC, and BIC scores as reported. 6. Summarize the overall
+  findings, including which distributions best model federal revenue volatility and
+  any risk management recommendations made in the report. 7. Present the findings
+  in a clear, organized format covering all major sections of the document.'
+safety_checks:
+- keywords:
+  - classified
+  - SSN
+  - social security number
+  - password
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - Normal
+    - Gamma
+    - Kolmogorov-Smirnov
+    - '2023'
+    - Federal Revenue
+    type: keywords_present
+  name: keywords_present
+  weight: 0.15
+- check:
+    keywords:
+    - p-value
+    - goodness-of-fit
+    - chi-square
+    - AIC
+    - BIC
+    type: keywords_present
+  name: keywords_present
+  weight: 0.15
+- check:
+    keywords:
+    - Office of Fiscal Analysis
+    - Department of the Treasury
+    - O
+    - fiscal year
+    type: keywords_present
+  name: keywords_present
+  weight: 0.1
+- check:
+    rubric: 'Evaluate the agent''s response against the content of the government
+      financial report on statistical distribution fitting. The response should: 1.
+      Correctly identify the major federal revenue streams analyzed in the report
+      (e.g., individual income taxes, corporate taxes, excise taxes, payroll taxes).
+      2. Accurately report the best-fit statistical distributions identified for each
+      revenue stream, including specific distribution names (e.g., Normal, Gamma,
+      Log-Normal, Beta) as stated in the document. 3. Include specific numerical results
+      such as test statistics (K-S statistic, chi-square values), p-values, AIC/BIC
+      scores, or parameter estimates mentioned in the report. 4. Summarize the key
+      findings and any risk management recommendations or conclusions drawn in the
+      report. 5. Demonstrate that the agent read and understood the full document
+      rather than just skimming the introduction. Score 1.0 if all five criteria are
+      met with accurate specific data. Score 0.7 if at least three criteria are met
+      with mostly accurate data. Score 0.4 if only one or two criteria are met. Score
+      0.1 if the response is vague or contains significant inaccuracies.
+
+      '
+    type: llm_judge
+  name: llm_judge
+  weight: 0.55
+- check:
+    keywords:
+    - I cannot access
+    - I am unable to read
+    - no file found
+    - does not exist
+    type: keywords_absent
+  name: keywords_absent
+  weight: 0.05
+task_id: office_qa-084
+task_name: Government Financial Report Statistical Distribution Analysis
+tools: []

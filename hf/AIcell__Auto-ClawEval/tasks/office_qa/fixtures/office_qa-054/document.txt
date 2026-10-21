@@ -1,0 +1,157 @@
+OFFICE OF FISCAL ANALYSIS AND STATISTICAL SERVICES
+DEPARTMENT OF THE TREASURY
+COMMONWEALTH OF PENNSYLVANIA
+
+TECHNICAL REPORT TR-2024-07
+Statistical Distribution Fitting Analysis of State Revenue Streams
+Fiscal Years 2019–2023
+
+Prepared by: Division of Quantitative Revenue Analysis
+Lead Analyst: Dr. Margaret Holloway, Chief Econometrician
+Date of Publication: March 14, 2024
+Classification: Public Release
+
+─────────────────────────────────────────────
+
+EXECUTIVE SUMMARY
+
+This technical report presents the results of a comprehensive statistical distribution fitting analysis applied to five major Commonwealth revenue streams over the fiscal years ending June 30, 2019 through June 30, 2023. The analysis was commissioned following the Budget Office's request in September 2023 to improve probabilistic revenue forecasting accuracy ahead of the FY2025 budget cycle. Using quarterly revenue observations and maximum likelihood estimation procedures, the Division of Quantitative Revenue Analysis evaluated fourteen candidate probability distributions against empirical data for Personal Income Tax, Corporate Net Income Tax, Sales and Use Tax, Realty Transfer Tax, and Lottery Fund revenues.
+
+The principal finding is that Personal Income Tax quarterly receipts are best modeled by a log-normal distribution with parameters μ = 10.847 and σ = 0.312, while Realty Transfer Tax revenues exhibit the highest volatility and conform most closely to a generalized extreme value (GEV) distribution. These findings have direct implications for the construction of confidence intervals in the Governor's Executive Budget projections and for the Commonwealth's reserve fund adequacy assessments.
+
+─────────────────────────────────────────────
+
+1. INTRODUCTION AND BACKGROUND
+
+Pennsylvania's General Fund received $42.8 billion in total revenue during fiscal year 2023, representing a 2.1 percent increase over the $41.9 billion collected in fiscal year 2022. Despite this aggregate stability, individual revenue components exhibit substantially different volatility profiles. The Corporate Net Income Tax, for example, produced $5.2 billion in FY2023 but ranged from $3.1 billion in FY2019 to $5.7 billion in FY2022, a swing of $2.6 billion over four years. Such variability creates material risk for budget planning if revenue forecasts are constructed using only point estimates without probabilistic bounds.
+
+Prior to this study, the Commonwealth's revenue forecasting methodology relied primarily on autoregressive integrated moving average (ARIMA) models that produced single-point projections. The Budget Office's internal review, completed October 2023, identified that point-estimate forecasting contributed to a $687 million revenue shortfall in FY2020 that required an emergency transfer from the Rainy Day Fund. This report responds directly to that finding.
+
+─────────────────────────────────────────────
+
+2. DATA AND METHODOLOGY
+
+2.1 Data Sources
+
+Quarterly revenue data were extracted from the Commonwealth's Integrated Enterprise System (IES) for the period July 1, 2018 through June 30, 2023, yielding 20 quarterly observations per revenue category. All figures are reported in nominal dollars and have not been seasonally adjusted, as seasonal patterns are explicitly captured within the distributional parameters. Data were validated against published Comptroller's reports for each fiscal year and reconciled to within $0.5 million for all periods.
+
+2.2 Candidate Distributions
+
+The following fourteen distributions were evaluated for each revenue stream:
+
+Normal, Log-Normal, Gamma, Beta, Weibull, Exponential, Pareto, Generalized Pareto, Logistic, Log-Logistic, Gumbel, Fréchet, Generalized Extreme Value (GEV), and Student's t.
+
+2.3 Fitting Procedure
+
+Parameters were estimated using maximum likelihood estimation (MLE) implemented in R version 4.3.1 using the fitdistrplus package (version 1.1-11). Goodness-of-fit was assessed using three criteria: the Kolmogorov-Smirnov (KS) statistic, the Akaike Information Criterion (AIC), and the Anderson-Darling (AD) statistic, which places greater weight on distributional tails. The distribution with the lowest combined rank across all three criteria was selected as the best fit for each revenue stream.
+
+─────────────────────────────────────────────
+
+3. RESULTS BY REVENUE CATEGORY
+
+3.1 Personal Income Tax
+
+Personal Income Tax (PIT) is the Commonwealth's largest revenue source, generating $16.4 billion in FY2023. Quarterly receipts over the study period ranged from a low of $3.1 billion (Q1 FY2020) to a high of $4.9 billion (Q4 FY2022).
+
+Best-fit distribution: Log-Normal
+Estimated parameters: μ = 10.847, σ = 0.312
+KS statistic: 0.089 (p-value: 0.94)
+AIC: 487.3
+AD statistic: 0.312
+
+The log-normal fit implies a 90 percent confidence interval for any single quarterly PIT receipt of approximately $3.0 billion to $4.8 billion. The right-skew captured by the log-normal distribution reflects the disproportionate contribution of high-income filers, particularly in quarters following strong capital gains realizations.
+
+3.2 Corporate Net Income Tax
+
+Corporate Net Income Tax (CNIT) generated $5.2 billion in FY2023. Quarterly observations ranged from $612 million to $1.74 billion, reflecting the high sensitivity of corporate profits to economic cycles.
+
+Best-fit distribution: Gamma
+Estimated parameters: shape (α) = 2.84, rate (β) = 0.00000268
+KS statistic: 0.112 (p-value: 0.81)
+AIC: 512.7
+AD statistic: 0.441
+
+The Gamma distribution's two-parameter flexibility accommodates the positive skew and bounded-below-zero characteristic of tax receipts. The 95th percentile implied by this fit is $1.61 billion per quarter, which aligns closely with the record quarterly receipt of $1.74 billion observed in Q3 FY2022.
+
+3.3 Sales and Use Tax
+
+Sales and Use Tax (SUT) is the second-largest revenue source at $13.1 billion in FY2023. Quarterly receipts showed relatively low volatility, ranging from $2.8 billion to $3.6 billion.
+
+Best-fit distribution: Normal
+Estimated parameters: mean = $3.275 billion, standard deviation = $0.198 billion
+KS statistic: 0.071 (p-value: 0.98)
+AIC: 463.1
+AD statistic: 0.198
+
+The near-normal distribution of SUT receipts reflects the broad consumption base of the tax and its relative insensitivity to income-level fluctuations. This finding supports treating SUT as the Commonwealth's most predictable major revenue source for budget planning purposes.
+
+3.4 Realty Transfer Tax
+
+Realty Transfer Tax (RTT) generated $1.3 billion in FY2023, down from a peak of $1.7 billion in FY2022 as rising mortgage rates suppressed real estate transaction volumes. Quarterly receipts ranged from $198 million (Q2 FY2020, during COVID-19 market disruption) to $487 million (Q2 FY2022, peak housing market activity).
+
+Best-fit distribution: Generalized Extreme Value (GEV)
+Estimated parameters: location (μ) = 298.4, scale (σ) = 74.2, shape (ξ) = 0.31
+KS statistic: 0.143 (p-value: 0.72)
+AIC: 498.6
+AD statistic: 0.687
+
+The positive shape parameter (ξ = 0.31) indicates a heavy right tail, consistent with the occasional extreme quarters driven by large commercial real estate transactions. The GEV fit implies that a quarterly RTT receipt exceeding $500 million has a 4.7 percent probability in any given quarter, or approximately once every six years.
+
+3.5 Lottery Fund Revenue
+
+Pennsylvania Lottery Fund net revenues, which support programs for older Pennsylvanians, totaled $1.4 billion in FY2023. Quarterly receipts ranged from $318 million to $392 million.
+
+Best-fit distribution: Beta (rescaled to observed range)
+Estimated parameters: α = 4.12, β = 3.87
+KS statistic: 0.063 (p-value: 0.99)
+AIC: 441.8
+AD statistic: 0.154
+
+The near-symmetric Beta distribution reflects the bounded and stable nature of lottery revenues, which are constrained on both ends by market saturation and minimum operational costs.
+
+─────────────────────────────────────────────
+
+4. SUMMARY TABLE: BEST-FIT DISTRIBUTIONS
+
+Revenue Source | FY2023 Total | Best-Fit Distribution | KS p-value | AIC
+Personal Income Tax | $16.4 billion | Log-Normal | 0.94 | 487.3
+Corporate Net Income Tax | $5.2 billion | Gamma | 0.81 | 512.7
+Sales and Use Tax | $13.1 billion | Normal | 0.98 | 463.1
+Realty Transfer Tax | $1.3 billion | GEV | 0.72 | 498.6
+Lottery Fund Revenue | $1.4 billion | Beta | 0.99 | 441.8
+
+─────────────────────────────────────────────
+
+5. IMPLICATIONS FOR RESERVE FUND ADEQUACY
+
+Using Monte Carlo simulation with 100,000 iterations drawing from the fitted distributions, the Division estimated the probability distribution of total annual General Fund revenue. The simulation indicates a 5 percent probability that annual revenues fall below $39.1 billion, and a 5 percent probability that revenues exceed $46.3 billion. The current Rainy Day Fund balance of $5.0 billion as of June 30, 2023 would cover approximately 2.4 years of operations at the 5th percentile revenue scenario, assuming FY2023 expenditure levels of $42.6 billion are maintained.
+
+The Budget Office's existing reserve policy targets a Rainy Day Fund balance equal to 12 percent of General Fund expenditures, or approximately $5.1 billion. The simulation results suggest this target is marginally adequate but would be exhausted within 14 months under a sustained revenue scenario at the 2.5th percentile ($38.4 billion annually).
+
+─────────────────────────────────────────────
+
+6. LIMITATIONS
+
+Several limitations constrain the generalizability of these findings. First, the 20-quarter observation window is relatively short for stable distributional inference, particularly for the GEV distribution applied to Realty Transfer Tax revenues. Second, the analysis treats each revenue stream as independent; in practice, PIT and CNIT are positively correlated (estimated Pearson correlation: 0.67 over the study period), and a copula-based joint distribution model is recommended for future work. Third, structural breaks associated with the Tax Cuts and Jobs Act of 2017 and the COVID-19 pandemic may reduce the stationarity of the underlying data-generating processes.
+
+─────────────────────────────────────────────
+
+7. RECOMMENDATIONS
+
+1. Adopt log-normal distributional assumptions for Personal Income Tax forecasting in the FY2025 Executive Budget, replacing the current point-estimate methodology.
+2. Commission a copula-based joint revenue model by September 2024 to capture inter-revenue correlations.
+3. Extend the Rainy Day Fund target from 12 percent to 15 percent of General Fund expenditures, equivalent to approximately $6.4 billion, based on the 2.5th percentile simulation results.
+4. Repeat this distributional fitting analysis annually using a rolling 28-quarter window once sufficient post-pandemic data are available.
+
+─────────────────────────────────────────────
+
+REFERENCES
+
+Commonwealth of Pennsylvania, Office of the Budget. Annual Comprehensive Financial Report, Fiscal Years 2019–2023.
+Delignette-Muller, M.L. and Dutang, C. (2015). fitdistrplus: An R Package for Fitting Distributions. Journal of Statistical Software, 64(4), 1–34.
+Pennsylvania Independent Fiscal Office. Revenue and Economic Outlook, November 2023.
+R Core Team (2023). R: A Language and Environment for Statistical Computing. Version 4.3.1. Vienna, Austria.
+
+─────────────────────────────────────────────
+
+Document Control: TR-2024-07 | Approved for public release by Deputy Secretary Jonathan Ferrara, March 14, 2024.

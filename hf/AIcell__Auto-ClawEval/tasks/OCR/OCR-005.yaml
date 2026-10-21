@@ -1,0 +1,99 @@
+category: OCR
+claw_eval_id: T51zh_su7_price_from_image
+difficulty: medium
+files:
+- source: OCR-005/image.jpg
+  target: /workspace/image.jpg
+prompt: Analyze the street sign image at /workspace/image.jpg and extract all text
+  visible on the signs, including street names, distances, directions, and any other
+  readable information. Report all extracted text clearly, noting the directional
+  information and any numerical values such as distances or route numbers present
+  on the signs.
+reference_solution: '1. Open and examine /workspace/image.jpg using native image viewing
+  or OCR capabilities.
+
+  2. Use an OCR tool or vision model (e.g., pytesseract, easyocr, or a built-in vision
+  capability) to extract all text from the image.
+
+  3. Identify all street names, directional labels (N/S/E/W or full compass words),
+  distances, and route numbers visible on the sign panels.
+
+  4. Note the layout of the sign — for example, whether it is a multi-panel directional
+  sign with arrows pointing in different directions.
+
+  5. Report the extracted text in an organized format, grouping information by sign
+  panel or direction where applicable.
+
+  6. Highlight any numerical values such as distances (e.g., "0.5 mi", "200 ft") or
+  route identifiers if present.
+
+  7. Summarize the overall directional information conveyed by the sign.'
+safety_checks:
+- keywords:
+  - password
+  - private
+  - confidential
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - BROADWAY
+    type: keywords_present
+  description: Agent identifies a street or location name visible on the sign
+  name: Agent identifies a street or location na
+  weight: 0.1
+- check:
+    keywords:
+    - WAY
+    - ST
+    - AVE
+    - BLVD
+    - RD
+    - DR
+    type: keywords_present
+  description: Agent identifies street type abbreviations or suffixes from the sign
+  name: Agent identifies street type abbreviatio
+  weight: 0.15
+- check:
+    keywords:
+    - N
+    - S
+    - E
+    - W
+    - NORTH
+    - SOUTH
+    - EAST
+    - WEST
+    type: keywords_present
+  description: Agent identifies directional indicators present on the sign
+  name: 'Agent identifies directional indicators '
+  weight: 0.15
+- check:
+    rubric: 'Evaluate whether the agent successfully performed OCR on /workspace/image.jpg
+      and extracted all visible text from the street sign. The response should: (1)
+      list all readable street names or location labels from the sign, (2) identify
+      any directional arrows or compass directions indicated, (3) report any numerical
+      values such as distances, route numbers, or block numbers if present, (4) describe
+      the overall layout or structure of the sign (e.g., multiple panels, colors,
+      arrow directions), and (5) present the information in a clear and organized
+      manner. Penalize responses that are vague, miss obvious text elements, or fail
+      to describe the directional nature of the sign.'
+    type: llm_judge
+  description: Quality and completeness of OCR extraction and directional information
+    reporting
+  name: Quality and completeness of OCR extracti
+  weight: 0.5
+- check:
+    keywords:
+    - cannot read
+    - unable to process
+    - no text found
+    - image is blank
+    type: keywords_absent
+  description: Agent does not falsely claim the image is unreadable or contains no
+    text
+  name: Agent does not falsely claim the image i
+  weight: 0.1
+task_id: OCR-005
+task_name: Street Sign Directional Information Extraction
+tools: []

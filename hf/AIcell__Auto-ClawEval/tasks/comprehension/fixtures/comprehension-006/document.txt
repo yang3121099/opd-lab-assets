@@ -1,0 +1,140 @@
+SOFTWARE PLATFORM ANALYSIS REPORT
+Use Cases and Gap Assessment
+Prepared by: Enterprise Technology Advisory Group
+Date: September 14, 2023
+Version: 2.1 — Final
+
+─────────────────────────────────────────────
+EXECUTIVE SUMMARY
+─────────────────────────────────────────────
+
+This report evaluates the current software platform landscape deployed across Meridian Financial Services, a mid-sized regional financial institution headquartered in Columbus, Ohio, with approximately 1,840 full-time employees across 23 branch locations. The assessment was conducted between June 5 and August 31, 2023, encompassing interviews with 74 stakeholders, analysis of 6 core platforms, and review of 18 months of helpdesk ticket data totaling 14,207 support requests.
+
+The primary objective is to identify active use cases, underutilized capabilities, and functional gaps that are driving shadow IT adoption, manual workarounds, and operational inefficiency. Key findings indicate that 34% of current platform licenses are underutilized, three critical workflow gaps exist that are costing an estimated $1.2 million annually in staff time, and two platforms have overlapping functionality that creates confusion and duplication.
+
+─────────────────────────────────────────────
+1. PLATFORMS UNDER REVIEW
+─────────────────────────────────────────────
+
+The following six platforms were included in the scope of this assessment:
+
+Platform | Vendor | Contract Renewal | Annual License Cost | Active Users
+Salesforce Sales Cloud | Salesforce Inc. | March 2024 | $312,000 | 418
+ServiceNow ITSM | ServiceNow Inc. | November 2023 | $187,500 | 203
+Microsoft 365 E3 | Microsoft Corp. | January 2025 | $441,600 | 1,840
+Workday HCM | Workday Inc. | July 2024 | $228,000 | 1,840
+Tableau Desktop/Server | Salesforce/Tableau | April 2024 | $96,000 | 87
+Confluence + Jira | Atlassian | October 2023 | $54,000 | 312
+
+Total annual platform spend: $1,319,100
+
+─────────────────────────────────────────────
+2. USE CASE INVENTORY
+─────────────────────────────────────────────
+
+2.1 Salesforce Sales Cloud
+
+Salesforce was deployed in February 2021 primarily to support the retail banking sales team and mortgage origination pipeline. Current confirmed use cases include:
+
+- Lead tracking for personal checking and savings account acquisition
+- Mortgage pipeline management across 23 branches
+- Activity logging for relationship managers covering commercial accounts above $500,000
+- Integration with Equifax credit pull API for pre-qualification workflows
+
+Notably, the platform's Service Cloud module, included in the current contract at no additional cost, has not been activated. This module could replace a significant portion of the manual complaint tracking currently handled via shared Excel spreadsheets maintained by the Customer Experience team. Helpdesk data shows 1,104 tickets in the past 18 months related to "complaint log access" or "complaint status update," representing 7.8% of total ticket volume.
+
+2.2 Microsoft 365 E3
+
+Microsoft 365 is the most broadly deployed platform and serves as the productivity backbone. However, adoption of advanced features is uneven:
+
+- Teams Phone System: Licensed for 1,840 users, actively used by approximately 620 (33.7%)
+- Power Automate: 14 active flows in production; estimated capacity for 200+ based on identified manual processes
+- SharePoint Intranet: Deployed in 2019, last governance review conducted in 2020; 41% of intranet pages have not been updated in over 24 months
+- Power BI: Available to all E3 users but only 22 individuals have published reports; Tableau licenses are maintained separately at $96,000 annually despite significant functional overlap
+
+2.3 Workday HCM
+
+Workday was implemented in October 2019 and covers core HR functions including payroll, benefits administration, and performance management. The platform is broadly adopted for transactional HR tasks, but the following modules remain unused despite being included in the current contract:
+
+- Workday Learning (LMS): Not activated; the organization currently pays $31,200 annually to a third-party LMS vendor, Cornerstone OnDemand, for a separate learning management system
+- Workday Recruiting: Partially activated; only 40% of open requisitions are managed within Workday, with the remainder tracked in a combination of email threads and a legacy ATS (iCIMS) that costs $28,800 per year
+
+2.4 ServiceNow ITSM
+
+ServiceNow is used exclusively by the 31-person IT department for incident, problem, and change management. The platform's HR Service Delivery and Facilities modules are licensed but inactive. The HR team currently uses a shared Outlook inbox (hr.requests@meridianfs.com) to manage employee inquiries, resulting in an average response time of 3.2 business days based on a sample of 200 tickets reviewed during this assessment. Industry benchmark for HR service response via a structured portal is 0.8 business days.
+
+2.5 Tableau
+
+Tableau Desktop licenses (29 seats) and Tableau Server (58 published user licenses) are maintained primarily by the Finance and Risk departments. The platform is used for regulatory reporting dashboards, credit risk visualization, and branch performance scorecards. However, 19 of the 87 licensed users (21.8%) have not logged into Tableau Server in the past 90 days. Given that Power BI is available to all 1,840 Microsoft 365 E3 users, a consolidation analysis is warranted prior to the April 2024 renewal.
+
+2.6 Confluence and Jira
+
+Atlassian tools are used by the Technology and Digital Banking teams. Jira manages 847 active project tickets as of August 31, 2023. Confluence has 1,203 active pages but a content audit revealed that 38% were last edited before January 2022. No formal governance process exists for content archival.
+
+─────────────────────────────────────────────
+3. GAP ASSESSMENT
+─────────────────────────────────────────────
+
+3.1 Critical Gaps
+
+Gap 1: Absence of a Unified Customer Complaint Management Workflow
+Current state: Complaints are logged in 14 separate Excel files maintained by branch managers and the central Customer Experience team. There is no single system of record, no SLA tracking, and no escalation automation.
+Impact: Estimated 2.1 FTE hours per day spent on complaint log reconciliation across the organization. At an average fully-loaded cost of $58,000 per year per FTE, this represents approximately $121,800 in annual labor waste. Additionally, the organization received a regulatory finding from the CFPB in March 2023 citing inadequate complaint tracking documentation.
+Recommended resolution: Activate Salesforce Service Cloud (already licensed) and configure a complaint management workflow. Estimated implementation cost: $45,000 in professional services over 10 weeks.
+
+Gap 2: Fragmented Learning and Development Infrastructure
+Current state: Three separate systems are used for employee training — Cornerstone OnDemand ($31,200/year), a SharePoint-based compliance training library (manually updated), and an external vendor portal for mandatory AML/BSA training (cost: $18,400/year).
+Impact: Employees report an average of 47 minutes per month navigating between systems to complete required training, based on a survey of 120 employees conducted in July 2023. Completion tracking is manual and error-prone; the compliance team identified 34 employees in Q2 2023 who were marked compliant but had not completed required modules.
+Recommended resolution: Activate Workday Learning, migrate content from Cornerstone and SharePoint, and consolidate AML/BSA training delivery. Estimated annual savings: $49,600 in eliminated vendor contracts. Implementation timeline: 14 weeks.
+
+Gap 3: HR Service Delivery Lacks Structured Intake and SLA Management
+Current state: The shared Outlook inbox model results in a 3.2-day average response time versus the 0.8-day industry benchmark. No ticket categorization, routing, or escalation logic exists.
+Impact: Employee satisfaction with HR services scored 3.1 out of 5.0 in the May 2023 internal engagement survey, the lowest-rated category. Estimated 1.4 FTE hours per day are spent by HR staff triaging and manually routing email requests.
+Recommended resolution: Activate ServiceNow HR Service Delivery module (already licensed). Estimated implementation cost: $28,000. Projected response time improvement to 1.1 days within 60 days of go-live.
+
+3.2 Redundancy Findings
+
+Redundancy 1: Tableau vs. Power BI
+Maintaining both Tableau ($96,000/year) and Power BI (included in Microsoft 365 E3) creates a $96,000 annual redundancy risk. A capability comparison conducted during this assessment found that 91% of current Tableau dashboards could be replicated in Power BI without loss of functionality. Recommendation: Do not renew Tableau at the April 2024 renewal date. Migrate dashboards between January and March 2024. Estimated migration effort: 320 hours.
+
+Redundancy 2: iCIMS vs. Workday Recruiting
+Maintaining iCIMS at $28,800/year while Workday Recruiting is already licensed and partially deployed represents a clear consolidation opportunity. Full activation of Workday Recruiting is estimated to require 6 weeks of configuration effort.
+
+─────────────────────────────────────────────
+4. FINANCIAL SUMMARY OF RECOMMENDATIONS
+─────────────────────────────────────────────
+
+Recommendation | One-Time Cost | Annual Savings | Payback Period
+Activate Salesforce Service Cloud | $45,000 | $121,800 | 4.4 months
+Activate Workday Learning | $22,000 | $49,600 | 5.3 months
+Activate ServiceNow HR Service Delivery | $28,000 | $81,200* | 4.1 months
+Retire Tableau (migrate to Power BI) | $32,000 | $96,000 | 4.0 months
+Retire iCIMS (activate Workday Recruiting) | $14,000 | $28,800 | 5.8 months
+
+*Includes estimated labor savings from reduced manual triage
+
+Total one-time investment: $141,000
+Total projected annual savings: $377,400
+Blended payback period: 4.5 months
+
+─────────────────────────────────────────────
+5. PRIORITIZATION AND TIMELINE
+─────────────────────────────────────────────
+
+Priority 1 (Q4 2023): ServiceNow HR Service Delivery activation; Atlassian contract renewal with governance policy attached; Cornerstone contract non-renewal notice (due October 15, 2023)
+
+Priority 2 (Q1 2024): Salesforce Service Cloud complaint management go-live; Tableau migration initiation; iCIMS contract non-renewal notice (due December 1, 2023)
+
+Priority 3 (Q2 2024): Workday Learning full deployment; Power BI migration completion; Workday Recruiting full activation
+
+─────────────────────────────────────────────
+6. METHODOLOGY NOTE
+─────────────────────────────────────────────
+
+This assessment was conducted using a combination of platform usage analytics (API-based extraction where available), structured stakeholder interviews (74 participants across 11 departments), helpdesk ticket analysis (14,207 tickets from January 2022 through June 2023), and a 120-person employee survey administered July 10–21, 2023. Platform capability comparisons were benchmarked against Gartner Magic Quadrant reports published in 2022 and 2023 for relevant categories.
+
+─────────────────────────────────────────────
+Prepared by: Rachel Okonkwo, Senior Technology Advisor; Daniel Ferris, Platform Analyst
+Reviewed by: CTO Office, Meridian Financial Services
+Distribution: Executive Leadership Team, IT Steering Committee
+─────────────────────────────────────────────

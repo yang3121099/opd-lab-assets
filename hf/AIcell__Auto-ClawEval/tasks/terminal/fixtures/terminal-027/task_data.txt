@@ -1,0 +1,116 @@
+```yaml
+id: sql-schema-migration
+title: SQL Schema Migration Between Database Versions
+description: |
+  You are a database engineer responsible for migrating a production database schema
+  from version 1 (legacy) to version 2 (modern). The legacy database has structural
+  issues, denormalized data, and outdated conventions. Your job is to write and execute
+  SQL migration scripts that transform the schema while preserving all data integrity.
+
+category: database
+difficulty: hard
+time_limit: 3600
+
+environment:
+  image: postgres:15-alpine
+  setup_commands:
+    - |
+      psql -U postgres -c "CREATE DATABASE legacy_db;"
+      psql -U postgres -c "CREATE DATABASE modern_db;"
+    - |
+      psql -U postgres -d legacy_db << 'EOSQL'
+
+      -- ============================================================
+      -- LEGACY DATABASE SCHEMA (Version 1)
+      -- Problems: denormalized, inconsistent naming, bad data types,
+      -- no foreign keys, mixed concerns, redundant columns
+      -- ============================================================
+
+      CREATE TABLE tbl_USERS (
+          user_id       SERIAL PRIMARY KEY,
+          full_name     VARCHAR(200),
+          EMAIL_ADDR    VARCHAR(200),
+          passwd_hash   VARCHAR(64),
+          usr_phone     VARCHAR(50),
+          usr_address   TEXT,
+          usr_city      VARCHAR(100),
+          usr_state     VARCHAR(100),
+          usr_zip       VARCHAR(20),
+          usr_country   VARCHAR(100),
+          date_created  VARCHAR(50),
+          last_login    VARCHAR(50),
+          is_active     CHAR(1) DEFAULT 'Y',
+          user_type     VARCHAR(20),
+          credit_limit  VARCHAR(20),
+          notes         TEXT
+      );
+
+      CREATE TABLE tbl_PRODUCTS (
+          prod_id       SERIAL PRIMARY KEY,
+          prod_name     VARCHAR(500),
+          prod_desc     TEXT,
+          category      VARCHAR(100),
+          sub_category  VARCHAR(100),
+          price         VARCHAR(20),
+          sale_price    VARCHAR(20),
+          cost_price    VARCHAR(20),
+          stock_qty     VARCHAR(10),
+          sku_code      VARCHAR(100),
+          supplier_name VARCHAR(200),
+          supplier_email VARCHAR(200),
+          supplier_phone VARCHAR(50),
+          weight_lbs    VARCHAR(20),
+          is_available  CHAR(1) DEFAULT 'Y',
+          date_added    VARCHAR(50),
+          last_updated  VARCHAR(50)
+      );
+
+      CREATE TABLE tbl_ORDERS (
+          order_id      SERIAL PRIMARY KEY,
+          order_ref     VARCHAR(50),
+          cust_id       INTEGER,
+          cust_name     VARCHAR(200),
+          cust_email    VARCHAR(200),
+          order_date    VARCHAR(50),
+          ship_date     VARCHAR(50),
+          status        VARCHAR(50),
+          total_amt     VARCHAR(20),
+          tax_amt       VARCHAR(20),
+          ship_amt      VARCHAR(20),
+          discount_amt  VARCHAR(20),
+          payment_type  VARCHAR(50),
+          payment_ref   VARCHAR(100),
+          ship_address  TEXT,
+          ship_city     VARCHAR(100),
+          ship_state    VARCHAR(100),
+          ship_zip      VARCHAR(20),
+          ship_country  VARCHAR(100),
+          notes         TEXT
+      );
+
+      CREATE TABLE tbl_ORDER_ITEMS (
+          item_id       SERIAL PRIMARY KEY,
+          order_id      INTEGER,
+          prod_id       INTEGER,
+          prod_name     VARCHAR(500),
+          qty           VARCHAR(10),
+          unit_price    VARCHAR(20),
+          discount_pct  VARCHAR(10),
+          line_total    VARCHAR(20)
+      );
+
+      CREATE TABLE tbl_CATEGORIES (
+          cat_id        SERIAL PRIMARY KEY,
+          cat_name      VARCHAR(100),
+          parent_cat    VARCHAR(100),
+          description   TEXT,
+          sort_order    VARCHAR(10)
+      );
+
+      CREATE TABLE tbl_REVIEWS (
+          review_id     SERIAL PRIMARY KEY,
+          prod_id       INTEGER,
+          user_id       INTEGER,
+          reviewer_name VARCHAR(200),
+          rating        VARCHAR(5),
+          review_text   TEXT,

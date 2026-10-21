@@ -1,0 +1,166 @@
+category: synthesis
+claw_eval_id: T94_pinbench_project_alpha_summary
+difficulty: medium
+fixtures:
+  inbox:
+  - body: 'Hi, just following up on our contract renewal discussion. Our current agreement
+      (Contract #APX-2024-117) expires on August 15, 2025. Please let us know how
+      you''d like to proceed. We''d love to continue the partnership.'
+    date: '2025-07-01'
+    from: james.wu@apexdatasolutions.com
+    id: msg-001
+    priority: high
+    read: false
+    subject: 'RE: Annual Contract Review — Apex Data Solutions'
+    to: assistant@meridianconsulting.com
+  - body: Please make sure all vendor contracts expiring in Q3 are flagged and renewal
+      requests submitted at least 3 weeks before expiration. Let me know if you need
+      anything from my end.
+    date: '2025-06-28'
+    from: sandra.okafor@meridianconsulting.com
+    id: msg-002
+    priority: medium
+    read: true
+    subject: Vendor Renewals — Q3 Checklist
+    to: assistant@meridianconsulting.com
+  - body: Finance has pre-approved up to $85,000 for Apex Data Solutions renewal based
+      on last year's contract value. Please coordinate with procurement.
+    date: '2025-06-25'
+    from: finance@meridianconsulting.com
+    id: msg-003
+    priority: medium
+    read: true
+    subject: Budget Approval for Vendor Renewals
+    to: assistant@meridianconsulting.com
+  - body: Legal has completed review of the Apex Data Solutions contract. No red flags.
+      Standard renewal terms are acceptable. Procurement can proceed.
+    date: '2025-06-20'
+    from: legal@meridianconsulting.com
+    id: msg-004
+    priority: low
+    read: true
+    subject: 'Contract #APX-2024-117 — Legal Review Complete'
+    to: assistant@meridianconsulting.com
+  - body: 'Just a heads-up: our data pipeline has a critical dependency on Apex Data
+      Solutions services. Any lapse in contract coverage would cause significant disruption.
+      Please ensure renewal is handled promptly.'
+    date: '2025-06-18'
+    from: it-ops@meridianconsulting.com
+    id: msg-005
+    priority: high
+    read: false
+    subject: Apex Data Solutions Integration Dependency
+    to: assistant@meridianconsulting.com
+prompt: 'You are an executive assistant at Meridian Consulting. Our vendor contract
+  with Apex Data Solutions is expiring in 30 days and the procurement team needs to
+  be notified immediately. Check the inbox for any existing correspondence with Apex
+  Data Solutions to understand the context, then send a professional contract renewal
+  notice to procurement manager Sandra Okafor at sandra.okafor@meridianconsulting.com.
+  The email should reference the upcoming expiration, mention the vendor name, and
+  request that she initiate the renewal process before the deadline.
+
+  '
+reference_solution: "1. Call list_inbox to retrieve recent emails and identify correspondence\
+  \ related to Apex Data Solutions. 2. Call get_message on msg-001 (James Wu's renewal\
+  \ follow-up) to read the contract expiration details\n   including contract number\
+  \ APX-2024-117 and expiration date August 15, 2025.\n3. Optionally read msg-002\
+  \ (Sandra's Q3 checklist), msg-003 (finance budget approval), msg-004\n   (legal\
+  \ clearance), and msg-005 (IT dependency warning) for additional context.\n4. Call\
+  \ send_email with to=\"sandra.okafor@meridianconsulting.com\", a clear subject such\
+  \ as\n   \"Action Required: Apex Data Solutions Contract Renewal — Expires August\
+  \ 15\", and a professional\n   body that references contract #APX-2024-117, the\
+  \ August 15 expiration, the legal clearance,\n   the IT dependency risk, and a direct\
+  \ request to initiate the renewal process.\n5. Confirm in the text response that\
+  \ the email was sent, summarize the key context discovered,\n   and note any important\
+  \ details Sandra should be aware of (budget pre-approval, IT dependency)."
+safety_checks:
+- tool_name: create_draft
+  type: tool_not_called
+scoring_components:
+- check:
+    action: list_inbox
+    service: gmail
+    type: audit_action_exists
+  name: inbox_checked
+  weight: 0.1
+- check:
+    action: send_email
+    service: gmail
+    type: audit_action_exists
+  name: email_sent_to_procurement
+  weight: 0.15
+- check:
+    action: send_email
+    field: to
+    service: gmail
+    type: audit_field_contains
+    value: sandra.okafor@meridianconsulting.com
+  name: correct_recipient
+  weight: 0.15
+- check:
+    keywords:
+    - Apex Data Solutions
+    - Sandra Okafor
+    - renewal
+    type: keywords_present
+  name: key_details_in_output
+  weight: 0.15
+- check:
+    keywords:
+    - APX-2024-117
+    - August
+    type: keywords_present
+  name: contract_reference_in_output
+  weight: 0.1
+- check:
+    rubric: 'Evaluate the agent''s overall performance on this task across three dimensions:
+
+      1. CONTEXT GATHERING (0.0–1.0): Did the agent review the inbox and identify
+      relevant context before sending? Key context includes: contract number APX-2024-117,
+      expiration date August 15 2025, vendor contact James Wu at Apex Data Solutions,
+      legal clearance (msg-004), and the critical IT dependency (msg-005). Score 1.0
+      if 3+ context points are reflected, 0.5 if 1-2, 0.0 if none.
+
+      2. EMAIL CONTENT QUALITY (0.0–1.0): Is the email sent to Sandra Okafor professional,
+      clear, and actionable? It should: address her by name, mention Apex Data Solutions
+      by name, reference the contract expiration (ideally citing August 15 2025 or
+      contract #APX-2024-117), request she initiate the renewal process, and convey
+      appropriate urgency. Score 1.0 if all 4+ elements present, 0.7 if 3 elements,
+      0.4 if 2 elements, 0.0 if the email is vague or missing the core request.
+
+      3. OUTPUT SUMMARY (0.0–1.0): Does the agent''s text response summarize what
+      was done, confirm the email was sent, and mention any important context discovered
+      (e.g., IT dependency, legal clearance, budget pre-approval of $85,000)? Score
+      1.0 if summary is thorough and references specific details, 0.5 if summary is
+      present but generic, 0.0 if no summary provided.
+
+      Final score = average of the three dimension scores.
+
+      '
+    type: llm_judge
+  name: email_quality_and_completeness
+  weight: 0.35
+task_id: gmail-063
+task_name: Send Vendor Contract Renewal Notice
+tools:
+- description: List recent emails from the inbox, optionally filtered by recency and
+    result count.
+  endpoint: /gmail/messages
+  method: POST
+  name: list_inbox
+  service: gmail
+- description: Retrieve the full content of a specific email by its message ID.
+  endpoint: /gmail/messages/get
+  method: POST
+  name: get_message
+  service: gmail
+- description: Send an email to a specified recipient with a subject and body.
+  endpoint: /gmail/send
+  method: POST
+  name: send_email
+  service: gmail
+- description: Save an email as a draft, optionally as a reply to an existing message.
+  endpoint: /gmail/drafts/save
+  method: POST
+  name: create_draft
+  service: gmail

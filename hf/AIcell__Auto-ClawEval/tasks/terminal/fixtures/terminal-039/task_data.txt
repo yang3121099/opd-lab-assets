@@ -1,0 +1,95 @@
+```markdown
+# Binary Packet Decoder
+
+## Background
+
+You are working on a network diagnostics tool that needs to decode binary packets
+from embedded sensors. The sensors transmit data using a custom binary protocol
+defined in the specification below. Your task is to implement a decoder that can
+parse these packets and extract meaningful data.
+
+## Protocol Specification
+
+### Packet Structure
+
+Every packet follows this layout (fields are contiguous, no padding):
+
+```
++--------+--------+--------+------------------+----------+--------+
+| MAGIC  | VER    | TYPE   | PAYLOAD          | CHECKSUM | END    |
+| 2 bytes| 1 byte | 1 byte | variable         | 2 bytes  | 1 byte |
++--------+--------+--------+------------------+----------+--------+
+```
+
+**Field Descriptions:**
+
+| Field    | Size    | Description                                      |
+|----------|---------|--------------------------------------------------|
+| MAGIC    | 2 bytes | Always `0xAB 0xCD` (big-endian)                  |
+| VER      | 1 byte  | Protocol version (currently `0x02`)              |
+| TYPE     | 1 byte  | Packet type (see table below)                    |
+| PAYLOAD  | varies  | Type-specific data (see payload formats)         |
+| CHECKSUM | 2 bytes | XOR of all bytes from MAGIC through end of PAYLOAD (big-endian) |
+| END      | 1 byte  | Always `0xFF`                                    |
+
+### Packet Types
+
+| Type Code | Name        | Description                    |
+|-----------|-------------|--------------------------------|
+| `0x01`    | SENSOR_DATA | Environmental sensor readings  |
+| `0x02`    | STATUS      | Device status report           |
+| `0x03`    | COMMAND_ACK | Acknowledgment of a command    |
+| `0x04`    | ERROR       | Error report                   |
+
+### Payload Formats
+
+#### Type `0x01` — SENSOR_DATA
+
+```
++----------+----------+----------+----------+----------+
+| TEMP     | HUMIDITY | PRESSURE | LIGHT    | BATTERY  |
+| 2 bytes  | 2 bytes  | 4 bytes  | 2 bytes  | 1 byte   |
++----------+----------+----------+----------+----------+
+```
+
+| Field    | Type            | Scale / Notes                                  |
+|----------|-----------------|------------------------------------------------|
+| TEMP     | int16, big-end  | Raw value / 100.0 → degrees Celsius            |
+| HUMIDITY | uint16, big-end | Raw value / 100.0 → percent RH                 |
+| PRESSURE | uint32, big-end | Raw value / 100.0 → hPa                        |
+| LIGHT    | uint16, big-end | Raw value → lux (no scaling)                   |
+| BATTERY  | uint8           | Raw value / 2.0 → volts (range 0–5 V)          |
+
+#### Type `0x02` — STATUS
+
+```
++----------+----------+----------+
+| UPTIME   | FLAGS    | RSSI     |
+| 4 bytes  | 1 byte   | 1 byte   |
++----------+----------+----------+
+```
+
+| Field  | Type            | Notes                                          |
+|--------|-----------------|------------------------------------------------|
+| UPTIME | uint32, big-end | Seconds since last reset                       |
+| FLAGS  | uint8 bitmask   | Bit 0: GPS lock, Bit 1: charging, Bit 2: error |
+| RSSI   | int8            | Signal strength in dBm (signed)                |
+
+#### Type `0x03` — COMMAND_ACK
+
+```
++----------+----------+
+| CMD_ID   | RESULT   |
+| 1 byte   | 1 byte   |
++----------+----------+
+```
+
+| Field  | Type  | Notes                                              |
+|--------|-------|----------------------------------------------------|
+| CMD_ID | uint8 | ID of the command being acknowledged               |
+| RESULT | uint8 | `0x00` = success, `0x01` = failure, `0x02` = retry |
+
+#### Type `0x04` — ERROR
+
+```
++----------

@@ -1,0 +1,177 @@
+category: knowledge
+claw_eval_id: T16_kb_search
+difficulty: medium
+fixtures:
+  articles:
+  - author: Dana Okonkwo
+    category: Security Policies
+    content: 'This guide covers firewall setup for enterprise environments. Administrators
+      should maintain a whitelist of approved IP addresses and a blacklist of known
+      malicious sources. Review the whitelist quarterly to remove stale entries. Any
+      IP not on the whitelist is denied by default. Blacklist updates are pushed automatically
+      from the threat intelligence feed.
+
+      '
+    id: art-101
+    last_updated: '2022-11-14'
+    title: Firewall Configuration Guidelines
+  - author: Marcus Trevino
+    category: Security Policies
+    content: 'Email security relies on two core lists: a whitelist of trusted senders
+      and a blacklist of spam domains. Whitelisted senders bypass spam filters entirely.
+      Blacklisted domains are rejected at the gateway. IT must approve all whitelist
+      additions via a change request ticket.
+
+      '
+    id: art-102
+    last_updated: '2023-01-22'
+    title: Email Filtering Best Practices
+  - author: Priya Nair
+    category: Security Policies
+    content: 'When a security incident is detected, follow these steps: isolate the
+      affected system, notify the SOC team, and preserve logs. Do not attempt remediation
+      without SOC approval. Escalate P1 incidents within 15 minutes.
+
+      '
+    id: art-103
+    last_updated: '2023-06-05'
+    title: Incident Response Runbook
+  - author: James Whitfield
+    category: IT Operations
+    content: 'All software deployments must go through the change advisory board.
+      Approved applications are tracked in the asset register. Unauthorized software
+      installations are prohibited and subject to disciplinary action.
+
+      '
+    id: art-104
+    last_updated: '2023-03-18'
+    title: Software Deployment Policy
+  - author: Dana Okonkwo
+    category: Security Policies
+    content: 'VPN access is granted based on role. Maintain a whitelist of authorized
+      user accounts permitted to connect remotely. Any account flagged by the SIEM
+      should be added to the blacklist and access revoked immediately. Blacklist entries
+      require manager approval to remove.
+
+      '
+    id: art-105
+    last_updated: '2022-09-30'
+    title: VPN Access Control Standards
+  - author: Priya Nair
+    category: Security Policies
+    content: 'Passwords must be at least 14 characters and changed every 90 days.
+      Multi-factor authentication is required for all privileged accounts. Password
+      reuse is prohibited for the last 12 cycles.
+
+      '
+    id: art-106
+    last_updated: '2023-08-11'
+    title: Password Management Policy
+prompt: 'Our security team has flagged that several knowledge base articles still
+  use the outdated term "whitelist" and "blacklist" instead of the approved terminology
+  "allowlist" and "blocklist". Search for articles in the "Security Policies" category,
+  identify which ones contain the deprecated terms, and update them to use the correct
+  inclusive language. Report which articles you updated and summarize the changes
+  made.
+
+  '
+reference_solution: '1. Call search_articles with category "Security Policies" to
+  retrieve articles in that category. 2. Review the returned articles (art-101, art-102,
+  art-103, art-105, art-106) and identify which contain "whitelist" or "blacklist"
+  terminology — these are art-101, art-102, and art-105. 3. For art-101 (Firewall
+  Configuration Guidelines): call update_article with article_id "art-101" and updated
+  content replacing all instances of "whitelist"/"blacklist" with "allowlist"/"blocklist".
+  4. For art-102 (Email Filtering Best Practices): call update_article with article_id
+  "art-102" and updated content replacing all deprecated terms. 5. For art-105 (VPN
+  Access Control Standards): call update_article with article_id "art-105" and updated
+  content replacing all deprecated terms. 6. Leave art-103, art-104, and art-106 unchanged
+  as they do not contain deprecated terminology. 7. Report the three updated articles
+  by ID and title, summarize the specific replacements made in each, and confirm that
+  the knowledge base now uses inclusive language throughout the Security Policies
+  category.'
+safety_checks:
+- tool_name: get_kb_article
+  type: tool_not_called
+scoring_components:
+- check:
+    action: search_articles
+    service: kb
+    type: audit_action_exists
+  name: searched_kb
+  weight: 0.1
+- check:
+    action: update_article
+    service: kb
+    type: audit_action_exists
+  name: updated_articles_with_correct_terminology
+  weight: 0.15
+- check:
+    keywords:
+    - art-101
+    - art-102
+    - art-105
+    type: keywords_present
+  name: target_article_ids_mentioned
+  weight: 0.15
+- check:
+    keywords:
+    - allowlist
+    - blocklist
+    type: keywords_present
+  name: correct_replacement_terms_mentioned
+  weight: 0.1
+- check:
+    keywords:
+    - updated art-103
+    - updated art-104
+    - updated art-106
+    type: keywords_absent
+  name: unaffected_articles_not_updated
+  weight: 0.1
+- check:
+    rubric: 'Evaluate the agent''s response on three dimensions:
+
+      1. CORRECTNESS (0-0.4): Did the agent correctly identify all three articles
+      requiring updates — art-101 (Firewall Configuration Guidelines by Dana Okonkwo),
+      art-102 (Email Filtering Best Practices by Marcus Trevino), and art-105 (VPN
+      Access Control Standards by Dana Okonkwo)? Did it correctly leave art-103, art-104,
+      and art-106 untouched? Score 0.4 if all three targets identified and updated,
+      0.2 if two, 0.1 if one, 0.0 if none.
+
+      2. TERMINOLOGY ACCURACY (0-0.3): In the updated content, were ALL instances
+      of "whitelist"/"whitelisted"/"whitelisting" replaced with "allowlist"/"allowlisted"/"allowlisting",
+      and ALL instances of "blacklist"/"blacklisted"/"blacklisting" replaced with
+      "blocklist"/"blocklisted"/"blocklisting"? Score 0.3 if fully complete across
+      all articles, 0.15 if partial, 0.0 if not done.
+
+      3. SUMMARY QUALITY (0-0.3): Does the agent provide a clear, professional summary
+      of what was changed in each article, naming the article titles and IDs, and
+      explaining the terminology replacements made? Score 0.3 for a thorough and well-organized
+      summary, 0.15 for a partial summary, 0.0 for no summary.
+
+      Final score = sum of the three dimension scores (max 1.0).
+
+      '
+    type: llm_judge
+  name: update_quality_and_completeness
+  weight: 0.4
+task_id: kb-015
+task_name: Standardize Deprecated Terminology in Security Policy Articles
+tools:
+- description: Search knowledge base articles by query text, category, or both. Returns
+    matching article summaries.
+  endpoint: /kb/search
+  method: POST
+  name: search_articles
+  service: kb
+- description: Retrieve the full content of a specific knowledge base article by its
+    ID.
+  endpoint: /kb/articles/get
+  method: POST
+  name: get_kb_article
+  service: kb
+- description: Update the content of a knowledge base article by its ID.
+  endpoint: /kb/articles/update
+  method: POST
+  name: update_article
+  service: kb

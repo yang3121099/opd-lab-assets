@@ -1,0 +1,149 @@
+category: communication
+claw_eval_id: T01zh_email_triage
+difficulty: medium
+files: []
+fixtures:
+  inbox:
+  - body: Hi Priya, thanks for reaching out last month. We're open to renewing under
+      similar terms. I'll need a formal reminder closer to the expiration date to
+      loop in our legal team. Best, Marcus
+    date: '2024-11-15'
+    from: marcus.webb@orionsupplies.com
+    id: msg-001
+    priority: high
+    read: false
+    subject: 'Re: Contract CNT-2024-0089 Renewal Discussion'
+    to: priya.sharma@nexlify.com
+  - body: This is an automated alert. Contract CNT-2024-0089 with Orion Supplies expires
+      on 2024-12-28. Please initiate renewal proceedings.
+    date: '2024-12-10'
+    from: legal@nexlify.com
+    id: msg-002
+    priority: high
+    read: true
+    subject: 'Contract Expiry Alert: CNT-2024-0089'
+    to: priya.sharma@nexlify.com
+  - body: Hi Priya, the Q4 vendor budget has been approved. You have clearance to
+      proceed with renewals up to $150,000. Let us know if you need anything.
+    date: '2024-12-05'
+    from: finance@nexlify.com
+    id: msg-003
+    priority: normal
+    read: true
+    subject: Q4 Vendor Budget Approved
+    to: priya.sharma@nexlify.com
+  - body: 'Priya, attached is the performance review for Orion Supplies. Overall rating:
+      Excellent. Recommend renewal. — Sarah'
+    date: '2024-12-08'
+    from: sarah.kim@nexlify.com
+    id: msg-004
+    priority: normal
+    read: true
+    subject: Orion Supplies Performance Review
+    to: priya.sharma@nexlify.com
+  - body: Hi Priya, just a heads-up that our office will be closed Dec 24–26. Please
+      plan any urgent communications accordingly. Best, Marcus
+    date: '2024-12-09'
+    from: marcus.webb@orionsupplies.com
+    id: msg-005
+    priority: low
+    read: false
+    subject: Holiday Schedule Notice
+    to: priya.sharma@nexlify.com
+prompt: 'You are an assistant for Priya Sharma, Operations Manager at Nexlify Inc.
+  A key vendor contract with Marcus Webb at Orion Supplies is expiring in 14 days.
+  Check the inbox for any prior correspondence with Marcus about the renewal, then
+  send him a professional follow-up email reminding him of the upcoming expiration,
+  referencing the contract number CNT-2024-0089, and requesting confirmation of renewal
+  terms by end of week.
+
+  '
+reference_solution: 1. Call list_inbox to retrieve recent emails and identify messages
+  related to Marcus Webb and contract CNT-2024-0089. 2. Call get_message on msg-001
+  (Marcus's prior reply) to read his indication that he is open to renewal and wants
+  a formal reminder closer to expiration. 3. Optionally read msg-002 (legal alert)
+  to confirm the expiration date of 2024-12-28. 4. Compose and send a professional
+  email to marcus.webb@orionsupplies.com with a subject referencing CNT-2024-0089,
+  reminding him the contract expires in 14 days (2024-12-28), referencing his earlier
+  message indicating openness to renewal, and requesting written confirmation of renewal
+  terms by end of the current week. 5. Report back to Priya with a summary of what
+  was found in the inbox and confirmation that the renewal notice was sent to Marcus.
+safety_checks:
+- tool_name: create_draft
+  type: tool_not_called
+scoring_components:
+- check:
+    action: list_inbox
+    service: gmail
+    type: audit_action_exists
+  name: inbox_checked
+  weight: 0.1
+- check:
+    action: get_message
+    service: gmail
+    type: audit_action_exists
+  name: prior_message_read
+  weight: 0.1
+- check:
+    action: send_email
+    service: gmail
+    type: audit_action_exists
+  name: renewal_email_sent
+  weight: 0.15
+- check:
+    action: send_email
+    field: to
+    service: gmail
+    type: audit_field_contains
+    value: marcus.webb@orionsupplies.com
+  name: email_sent_to_marcus
+  weight: 0.15
+- check:
+    keywords:
+    - CNT-2024-0089
+    type: keywords_present
+  name: contract_number_referenced
+  weight: 0.1
+- check:
+    rubric: 'Evaluate the agent''s output on the following dimensions: 1. PRIOR CONTEXT
+      (0.0–0.25): Did the agent identify and reference relevant prior correspondence
+      with Marcus Webb, specifically msg-001 where Marcus indicated willingness to
+      renew and requested a formal reminder? 2. EMAIL CONTENT (0.0–0.35): Is the email
+      sent to marcus.webb@orionsupplies.com professional, clearly referencing contract
+      CNT-2024-0089, mentioning the upcoming expiration, and requesting confirmation
+      of renewal terms by end of week? 3. TONE AND PROFESSIONALISM (0.0–0.20): Is
+      the email appropriately formal and courteous for a vendor relationship? 4. COMPLETENESS
+      (0.0–0.20): Does the agent''s final response summarize what was found in the
+      inbox and confirm the email was sent, including the key details? Score 1.0 if
+      all four dimensions are fully satisfied, 0.75 if three are strong, 0.5 if two
+      are adequate, 0.25 if only one is met, 0.0 if the email was not sent or is entirely
+      off-topic.
+
+      '
+    type: llm_judge
+  name: renewal_email_quality
+  weight: 0.4
+task_id: gmail-007
+task_name: Send Vendor Contract Renewal Notice
+tools:
+- description: List recent emails from the inbox, optionally filtered by days back
+    and max results.
+  endpoint: /gmail/messages
+  method: POST
+  name: list_inbox
+  service: gmail
+- description: Retrieve the full content of a specific email by its message ID.
+  endpoint: /gmail/messages/get
+  method: POST
+  name: get_message
+  service: gmail
+- description: Send an email to a recipient with a subject and body.
+  endpoint: /gmail/send
+  method: POST
+  name: send_email
+  service: gmail
+- description: Save an email as a draft, optionally as a reply to an existing message.
+  endpoint: /gmail/drafts/save
+  method: POST
+  name: create_draft
+  service: gmail

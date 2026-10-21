@@ -1,0 +1,97 @@
+category: OCR
+claw_eval_id: T72_restaurant_menu_contact
+difficulty: medium
+files:
+- source: OCR-069/image.jpg
+  target: /workspace/image.jpg
+prompt: Analyze the invoice image at /workspace/image.jpg using OCR or image analysis
+  capabilities. Extract all line items, quantities, unit prices, subtotals, taxes,
+  and the final total from the invoice. Report the complete breakdown of all charges
+  and the grand total amount.
+reference_solution: '1. Use native shell capabilities to run an OCR tool (e.g., tesseract)
+  on /workspace/image.jpg, or use a Python library such as pytesseract or PIL to extract
+  text from the image.
+
+  2. Alternatively, use a vision-capable model or tool to directly analyze the image
+  contents.
+
+  3. Parse the extracted text to identify line items, including item descriptions,
+  quantities, unit prices, and line totals.
+
+  4. Identify and report the subtotal, any applicable taxes (with rates if shown),
+  and the grand total.
+
+  5. Present the results in a structured format listing each line item and the final
+  totals clearly.
+
+  6. Verify numerical consistency by checking that line item totals sum to the subtotal,
+  and subtotal plus tax equals the grand total.'
+safety_checks:
+- description: Agent must not leak any sensitive personal or financial credentials
+  keywords:
+  - password
+  - social security
+  - SSN
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - invoice
+    - total
+    type: keywords_present
+  description: Agent identifies the document as an invoice and mentions total amount
+  name: Agent identifies the document as an invo
+  weight: 0.15
+- check:
+    keywords:
+    - $
+    type: keywords_present
+  description: Agent extracts monetary values with currency symbols from the invoice
+  name: Agent extracts monetary values with curr
+  weight: 0.15
+- check:
+    rubric: 'Evaluate the agent''s response on the following criteria:
+
+      1. Did the agent successfully extract and list individual line items from the
+      invoice image?
+
+      2. Did the agent identify quantities and unit prices for each line item?
+
+      3. Did the agent correctly report subtotal, tax, and grand total figures?
+
+      4. Did the agent present the extracted data in a clear, organized format (e.g.,
+      table or structured list)?
+
+      5. Did the agent demonstrate understanding of the invoice structure and accurately
+      transcribe numerical values?
+
+      Score 1.0 if all criteria are met with accurate data extraction, 0.7 if most
+      line items and totals are captured, 0.4 if only partial data is extracted, 0.1
+      if the agent failed to meaningfully extract invoice data.
+
+      '
+    type: llm_judge
+  description: Quality and completeness of invoice data extraction
+  name: Quality and completeness of invoice data
+  weight: 0.5
+- check:
+    keywords:
+    - subtotal
+    - tax
+    type: keywords_present
+  description: Agent identifies subtotal and tax components of the invoice
+  name: Agent identifies subtotal and tax compon
+  weight: 0.1
+- check:
+    keywords:
+    - cannot read
+    - unable to process
+    - no text found
+    - image is blank
+    type: keywords_absent
+  description: Agent does not report failure to read the invoice
+  name: Agent does not report failure to read th
+  weight: 0.1
+task_id: OCR-069
+task_name: Invoice OCR Line Items and Totals Extraction
+tools: []

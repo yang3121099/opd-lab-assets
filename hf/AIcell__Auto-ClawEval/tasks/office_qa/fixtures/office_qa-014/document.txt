@@ -1,0 +1,169 @@
+OFFICE OF FISCAL ANALYSIS AND RISK MANAGEMENT
+DEPARTMENT OF THE TREASURY
+STATISTICAL DISTRIBUTION FITTING REPORT: FEDERAL REVENUE AND EXPENDITURE MODELING
+Fiscal Year 2023 Annual Technical Supplement
+Published: March 14, 2024
+Prepared by: Division of Quantitative Methods, Dr. Sandra Kowalczyk, Chief Statistician
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EXECUTIVE SUMMARY
+
+This technical supplement presents the results of statistical distribution fitting analyses applied to federal revenue streams, mandatory expenditure programs, and discretionary spending categories for Fiscal Year 2023 (October 1, 2022 through September 30, 2023). The analyses support probabilistic forecasting models used by the Office of Management and Budget and the Congressional Budget Office in their joint revenue estimation framework. Total federal revenue for FY2023 reached $4.44 trillion, while total outlays were $6.13 trillion, producing a deficit of $1.70 trillion. Distribution fitting was applied to 47 distinct revenue and expenditure categories to characterize uncertainty ranges and support Monte Carlo simulation of fiscal outcomes.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 1: METHODOLOGY
+
+1.1 Data Sources and Sample Period
+
+Historical data spanning fiscal years 1993 through 2023 (31 annual observations) were supplemented with quarterly data from Q1 FY2000 through Q4 FY2023 (96 quarterly observations) for higher-frequency analyses. Primary data sources included the Monthly Treasury Statement, the Bureau of Economic Analysis National Income and Product Accounts, and the Internal Revenue Service Statistics of Income database. All dollar figures are expressed in nominal terms unless otherwise noted.
+
+1.2 Candidate Distributions
+
+For each revenue and expenditure category, the following seven candidate distributions were evaluated:
+
+- Normal distribution
+- Log-normal distribution
+- Gamma distribution
+- Weibull distribution
+- Beta distribution (applied to growth rate series bounded between -1 and +1)
+- Generalized Extreme Value (GEV) distribution
+- Student's t-distribution with estimated degrees of freedom
+
+1.3 Fitting Criteria
+
+Distribution selection followed a three-criterion approach:
+
+1. Akaike Information Criterion (AIC): Primary selection criterion
+2. Kolmogorov-Smirnov (KS) test statistic: Goodness-of-fit verification at the 5% significance level
+3. Anderson-Darling (AD) test: Tail behavior assessment, weighted toward distributional tails
+
+Parameters were estimated using maximum likelihood estimation (MLE) implemented in R version 4.3.1 using the fitdistrplus package (version 1.1-11). All analyses were conducted on workstations running Windows Server 2022 within the Treasury Department's secure computing environment.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 2: INDIVIDUAL INCOME TAX REVENUE ANALYSIS
+
+Individual income taxes constituted the largest single revenue source in FY2023, totaling $2.18 trillion, representing 49.1% of total federal revenues. This figure represents a decline of 9.3% from the FY2022 level of $2.40 trillion, primarily attributable to reduced capital gains realizations following equity market corrections in calendar year 2022.
+
+2.1 Distribution Fitting Results: Annual Revenue Levels
+
+The annual individual income tax revenue series (FY1993-FY2023) was best characterized by a log-normal distribution with the following estimated parameters:
+
+  Fitted Distribution: Log-Normal
+  Location parameter (μ): 14.287
+  Scale parameter (σ): 0.412
+  AIC: 487.3
+  KS test statistic: 0.094 (p-value: 0.912, fail to reject at 5% level)
+  Anderson-Darling statistic: 0.381
+
+The log-normal fit was preferred over the normal distribution (AIC: 491.7) and the gamma distribution (AIC: 489.1). The positive skewness of the log-normal distribution (skewness coefficient: 1.28) appropriately captures the asymmetric upside risk associated with capital gains windfalls in strong equity market years, as observed in FY2021 when individual income tax receipts reached $2.04 trillion, a 27.5% year-over-year increase.
+
+2.2 Year-over-Year Growth Rate Analysis
+
+Annual growth rates in individual income tax revenue were modeled separately using a Student's t-distribution:
+
+  Fitted Distribution: Student's t
+  Location (μ): 0.067 (6.7% mean annual growth)
+  Scale (s): 0.089
+  Degrees of freedom (ν): 4.3
+  AIC: -38.7
+  KS test statistic: 0.112 (p-value: 0.831)
+
+The heavy-tailed t-distribution with 4.3 degrees of freedom outperformed the normal distribution (AIC: -35.2), reflecting the presence of extreme growth observations including the 27.5% surge in FY2021 and the 31.1% decline observed in FY2009 during the financial crisis.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 3: PAYROLL TAX REVENUE ANALYSIS
+
+Payroll taxes generated $1.61 trillion in FY2023, representing 36.2% of total federal revenues and a 7.3% increase from the FY2022 level of $1.50 trillion. The growth reflects continued labor market strength, with nonfarm payroll employment averaging 155.8 million jobs during FY2023.
+
+3.1 Distribution Fitting Results
+
+  Fitted Distribution: Gamma
+  Shape parameter (α): 8.74
+  Rate parameter (β): 0.0000000000062 (scale: 1.61 × 10¹¹)
+  AIC: 492.1
+  KS test statistic: 0.087 (p-value: 0.943)
+
+The gamma distribution was selected over the log-normal (AIC: 494.3) due to superior fit in the lower tail, which is relevant for recession-scenario stress testing. The coefficient of variation for payroll tax revenues is 0.34, substantially lower than the 0.61 coefficient of variation observed for individual income taxes, confirming the relative stability of payroll tax receipts across economic cycles.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 4: MANDATORY EXPENDITURE ANALYSIS
+
+4.1 Social Security Outlays
+
+Social Security outlays totaled $1.35 trillion in FY2023, an increase of 8.7% from $1.24 trillion in FY2022. The increase reflects both the 8.7% cost-of-living adjustment (COLA) effective January 2023 and continued growth in the beneficiary population, which reached 67.1 million recipients as of September 2023.
+
+  Fitted Distribution: Log-Normal
+  Location parameter (μ): 27.631
+  Scale parameter (σ): 0.187
+  AIC: 501.4
+  KS test statistic: 0.076 (p-value: 0.971)
+
+The relatively low scale parameter (σ = 0.187) reflects the high predictability of Social Security outlays compared to revenue categories. The 90th percentile of the fitted distribution corresponds to $1.61 trillion, while the 10th percentile corresponds to $1.13 trillion, yielding a 90-10 interquartile range of $480 billion.
+
+4.2 Medicare Outlays
+
+Net Medicare outlays reached $848 billion in FY2023, representing a 5.9% increase from $801 billion in FY2022. Medicare outlays exhibited the highest degree of tail risk among mandatory programs, with the GEV distribution providing the best fit:
+
+  Fitted Distribution: Generalized Extreme Value (GEV)
+  Location (μ): 612.4 billion
+  Scale (σ): 89.3 billion
+  Shape (ξ): 0.23
+  AIC: 488.9
+  KS test statistic: 0.103 (p-value: 0.877)
+
+The positive shape parameter (ξ = 0.23) indicates a heavy upper tail, consistent with the potential for large unexpected expenditure spikes associated with pandemic-related utilization surges, as observed in FY2020 when Medicare outlays increased by 14.2% in a single fiscal year.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 5: SUMMARY OF DISTRIBUTION SELECTIONS
+
+The following table summarizes the best-fitting distributions across all major fiscal categories analyzed:
+
+Category               | FY2023 Amount | Best-Fit Distribution | AIC    | KS p-value
+-----------------------|---------------|----------------------|--------|------------
+Individual Income Tax  | $2.18 trillion| Log-Normal           | 487.3  | 0.912
+Payroll Taxes          | $1.61 trillion| Gamma                | 492.1  | 0.943
+Corporate Income Tax   | $0.47 trillion| Weibull              | 479.6  | 0.887
+Excise Taxes           | $0.09 trillion| Normal               | 461.2  | 0.934
+Social Security Outlays| $1.35 trillion| Log-Normal           | 501.4  | 0.971
+Medicare Outlays       | $0.85 trillion| GEV                  | 488.9  | 0.877
+Medicaid Outlays       | $0.62 trillion| Gamma                | 483.7  | 0.901
+Defense Discretionary  | $0.86 trillion| Normal               | 476.3  | 0.956
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 6: MONTE CARLO SIMULATION RESULTS
+
+Using the fitted distributions described above, 100,000 Monte Carlo simulations of the FY2024 federal deficit were conducted. Correlations between revenue and expenditure categories were modeled using a Gaussian copula with correlation parameters estimated from the historical data. The simulation incorporated 14 pairwise correlation coefficients, with the strongest positive correlation observed between individual income tax revenues and corporate income tax revenues (ρ = 0.74).
+
+Simulation Results for FY2024 Projected Deficit:
+
+- Mean projected deficit: $1.84 trillion
+- Median projected deficit: $1.79 trillion
+- 10th percentile (optimistic scenario): $1.31 trillion
+- 90th percentile (adverse scenario): $2.47 trillion
+- 95th percentile (severe stress scenario): $2.81 trillion
+- Probability of deficit exceeding $2.0 trillion: 31.4%
+- Probability of deficit exceeding $2.5 trillion: 8.7%
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 7: LIMITATIONS AND FUTURE WORK
+
+The 31-year annual sample period limits the precision of tail parameter estimates, particularly for the GEV distribution applied to Medicare outlays. The Division of Quantitative Methods recommends expanding the quarterly dataset back to Q1 FY1985 when data quality permits, which would increase the quarterly sample to 156 observations and improve tail estimation reliability. Additionally, structural breaks associated with the Affordable Care Act (enacted March 23, 2010) and the Tax Cuts and Jobs Act (enacted December 22, 2017) were addressed through indicator variables in preliminary regressions but were not formally incorporated into the distribution fitting framework. Future editions of this report will explore regime-switching models to address these structural discontinuities.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+CONTACT INFORMATION
+
+Dr. Sandra Kowalczyk, Chief Statistician
+Division of Quantitative Methods
+Office of Fiscal Analysis and Risk Management
+U.S. Department of the Treasury
+1500 Pennsylvania Avenue NW, Washington, DC 20220
+sandra.kowalczyk@treasury.gov | (202) 622-4180

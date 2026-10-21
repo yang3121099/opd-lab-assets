@@ -1,0 +1,121 @@
+DEPARTMENT OF THE TREASURY
+INTERNAL REVENUE SERVICE
+FISCAL YEAR 2023 TAX REVENUE ANALYSIS REPORT
+Published: February 14, 2024
+
+Prepared by the Office of Revenue Analysis, Statistics of Income Division
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EXECUTIVE SUMMARY
+
+The United States federal government collected $4.44 trillion in total tax revenue during Fiscal Year 2023 (October 1, 2022 through September 30, 2023), representing a decline of 9.3 percent from the record $4.90 trillion collected in Fiscal Year 2022. This report, prepared under the direction of IRS Commissioner Daniel Werfel, provides a comprehensive breakdown of revenue sources, year-over-year comparisons, and contributing economic factors. The decline reflects the normalization of capital gains realizations following the 2021 market peak, reduced corporate profits in key sectors, and the expiration of several pandemic-era tax provisions.
+
+Despite the overall decline, individual income tax receipts remained the dominant revenue source, and payroll tax collections reached a new record high, reflecting continued labor market strength. Total federal outlays for FY2023 stood at $6.13 trillion, producing a deficit of $1.70 trillion, an increase of $320 billion from the FY2022 deficit of $1.38 trillion.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 1: TOTAL REVENUE BY SOURCE
+
+Table 1.1 — Federal Tax Revenue by Category, FY2023 vs. FY2022
+
+Revenue Source | FY2023 ($ Billions) | FY2022 ($ Billions) | Change (%)
+Individual Income Taxes | $2,176.5 | $2,632.1 | -17.3%
+Payroll Taxes | $1,613.8 | $1,483.6 | +8.8%
+Corporate Income Taxes | $419.7 | $424.9 | -1.2%
+Excise Taxes | $78.9 | $89.2 | -11.5%
+Estate and Gift Taxes | $34.1 | $38.8 | -12.1%
+Customs Duties | $80.0 | $99.8 | -19.8%
+Miscellaneous Receipts | $37.0 | $131.6 | -71.9%
+TOTAL | $4,440.0 | $4,900.0 | -9.3%
+
+Individual income taxes, at $2.18 trillion, accounted for 49.0 percent of all federal revenue in FY2023, down from 53.7 percent in FY2022. Payroll taxes represented 36.3 percent of total collections, their highest share since FY2010. Corporate income taxes contributed 9.5 percent of total revenue.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 2: INDIVIDUAL INCOME TAX ANALYSIS
+
+The $455.6 billion decline in individual income tax receipts was the largest single-year dollar decrease in the category since records began in 1934. The primary driver was a 62.4 percent reduction in capital gains realizations, from approximately $1.7 trillion in calendar year 2021 to an estimated $640 billion in calendar year 2022 — the tax effects of which flowed primarily into FY2023 collections through April 2023 filing season payments.
+
+Key findings within individual income tax collections:
+
+- Wage and salary withholding increased by $112.3 billion (+5.8%), reaching $2.05 trillion, consistent with average hourly earnings growth of 4.3 percent reported by the Bureau of Labor Statistics for calendar year 2022.
+
+- Estimated tax payments fell by $387.4 billion (-38.2%), from $1.014 trillion in FY2022 to $626.6 billion in FY2023, driven almost entirely by reduced investment income among high-income filers.
+
+- Final payments submitted with returns during the April 15, 2023 filing deadline totaled $189.4 billion, compared to $311.2 billion in April 2022, a decrease of 39.1 percent.
+
+- Refunds issued in FY2023 totaled $659.4 billion, compared to $736.2 billion in FY2022. The average individual refund was $2,812, down from $3,176 in the prior year.
+
+- Filers in the top 1 percent of adjusted gross income (those earning above approximately $548,000) accounted for an estimated 40.1 percent of all individual income tax liability in tax year 2021, the most recent year for which complete data is available.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 3: PAYROLL TAX COLLECTIONS
+
+Payroll taxes — comprising Social Security (OASDI) taxes, Medicare (HI) taxes, and the net Railroad Retirement Tax — reached a record $1.614 trillion in FY2023, surpassing the previous record of $1.484 trillion set in FY2022.
+
+Table 3.1 — Payroll Tax Breakdown, FY2023
+
+Component | Collections ($ Billions) | Share of Payroll Total
+OASDI (Social Security) | $1,103.4 | 68.4%
+Medicare HI | $387.2 | 24.0%
+Additional Medicare Tax (0.9%) | $19.6 | 1.2%
+Railroad Retirement | $6.4 | 0.4%
+Unemployment Insurance (FUTA) | $7.2 | 0.4%
+Other | $90.0 | 5.6%
+TOTAL | $1,613.8 | 100.0%
+
+The Social Security wage base increased from $147,000 in 2022 to $160,200 in 2023, contributing an estimated $28.7 billion in additional OASDI collections. Total employment covered by Social Security reached 182.4 million workers during calendar year 2022, the highest level on record. The unemployment rate averaged 3.6 percent during FY2023, supporting robust payroll tax inflows throughout the fiscal year.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 4: CORPORATE INCOME TAX ANALYSIS
+
+Corporate income tax receipts declined modestly by $5.2 billion (-1.2%) to $419.7 billion in FY2023. This relative stability masked significant divergence across sectors. The Inflation Reduction Act of 2022, signed into law on August 16, 2022, introduced a 15 percent Corporate Alternative Minimum Tax (CAMT) on adjusted financial statement income for corporations with average annual adjusted financial statement income exceeding $1 billion. The CAMT generated an estimated $4.8 billion in additional revenue during its first partial year of implementation in FY2023.
+
+Sector-level observations:
+
+- Financial sector corporations reported aggregate taxable income declines of approximately 18.3 percent, reflecting mark-to-market losses on bond portfolios as the Federal Reserve raised the federal funds rate from 0.25 percent to 5.25 percent between March 2022 and May 2023.
+
+- Energy sector corporations, particularly those in oil and gas extraction, reported taxable income growth of approximately 31.7 percent, driven by elevated commodity prices through early 2023.
+
+- Technology sector corporations reported taxable income declines of approximately 22.4 percent, reflecting reduced advertising revenue, increased operating costs, and significant workforce restructuring charges.
+
+- The effective corporate tax rate across all C-corporations was estimated at 18.6 percent for tax year 2022, compared to 19.1 percent in tax year 2021.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 5: EXCISE TAXES AND OTHER REVENUE
+
+Excise tax collections fell to $78.9 billion in FY2023, a decline of $10.3 billion from FY2022. The largest components were:
+
+- Highway Trust Fund excise taxes (motor fuels): $37.4 billion
+- Tobacco taxes: $12.1 billion
+- Alcohol taxes: $10.3 billion
+- Air transportation taxes: $16.2 billion
+- Other excise taxes: $2.9 billion
+
+Customs duties declined by $19.8 billion (-19.8%) to $80.0 billion, reflecting lower import volumes and commodity prices compared to the supply-chain-disrupted environment of FY2022. Estate and gift tax receipts of $34.1 billion reflected the elevated unified credit exemption of $12.92 million per individual in 2023, up from $12.06 million in 2022.
+
+The dramatic 71.9 percent decline in miscellaneous receipts — from $131.6 billion to $37.0 billion — was primarily attributable to the wind-down of Federal Reserve remittances to the Treasury. In FY2022, the Fed remitted $76.0 billion; in FY2023, rising interest rates caused the Fed to operate at a net loss, resulting in zero remittances and the accumulation of a deferred asset on the Fed's balance sheet.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 6: COMPLIANCE AND ENFORCEMENT
+
+The IRS processed 271.5 million tax returns in FY2023, including 162.0 million individual returns. The electronic filing rate for individual returns reached 93.4 percent, up from 91.8 percent in FY2022. The IRS audit rate for individual returns was 0.44 percent in FY2023, compared to 0.38 percent in FY2022, reflecting initial deployment of the $80 billion in supplemental funding authorized under the Inflation Reduction Act.
+
+Enforcement revenue — collections attributable to audits, levies, liens, and other compliance activities — totaled $63.6 billion in FY2023, an increase of $8.2 billion from $55.4 billion in FY2022. The IRS Criminal Investigation division initiated 2,676 criminal investigations during FY2023 and obtained 1,582 convictions, with a conviction rate of 90.3 percent among cases that went to trial.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 7: OUTLOOK FOR FISCAL YEAR 2024
+
+The Congressional Budget Office projects total federal revenues of $4.66 trillion for FY2024, representing a recovery of approximately 5.0 percent from FY2023 levels. Individual income tax receipts are projected to rebound to $2.31 trillion as capital gains realizations partially recover. Payroll taxes are projected to grow to $1.68 trillion, supported by continued employment growth and the Social Security wage base increase to $168,600 effective January 1, 2024.
+
+The full-year implementation of the Corporate Alternative Minimum Tax is projected to generate approximately $19.0 billion in FY2024, compared to the partial-year $4.8 billion in FY2023. The expiration of the 100 percent bonus depreciation provision — which phases down to 60 percent for property placed in service in 2024 — is expected to increase corporate tax liability by an estimated $12.4 billion.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+This report was prepared by the Statistics of Income Division, Office of Revenue Analysis. Primary authors: Dr. Janet Holbrook, Chief Revenue Analyst; Marcus Tran, Senior Economist; and Priya Subramaniam, Statistical Research Analyst. Data sources include IRS Master File extracts, Treasury Financial Management Service daily statements, Bureau of Labor Statistics Current Employment Statistics, and Congressional Budget Office baseline projections. Questions regarding this report may be directed to the Statistics of Income Division at soi.feedback@irs.gov.

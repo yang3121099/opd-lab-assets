@@ -1,0 +1,96 @@
+```yaml
+id: sql-schema-migration
+namespace: database.migrations
+
+title: SQL Schema Migration Between Database Versions
+description: |
+  Migrate a PostgreSQL database schema from version 1.0 to version 2.0.
+  This task covers adding new columns, renaming existing ones, creating indexes,
+  migrating data, and validating the final schema state.
+
+tasks:
+  - id: check_current_schema_version
+    type: io.kestra.plugin.jdbc.postgresql.Query
+    description: Check the current schema version before migration
+    url: jdbc:postgresql://localhost:5432/ecommerce_db
+    username: "{{ secret('DB_USERNAME') }}"
+    password: "{{ secret('DB_PASSWORD') }}"
+    sql: |
+      SELECT version_number, applied_at, description
+      FROM schema_migrations
+      ORDER BY applied_at DESC
+      LIMIT 1;
+    fetchType: FETCH_ONE
+
+  - id: validate_prerequisites
+    type: io.kestra.plugin.core.flow.If
+    description: Ensure we are on version 1.0 before proceeding
+    condition: "{{ outputs.check_current_schema_version.row.version_number == '1.0.0' }}"
+    then:
+      - id: log_validation_success
+        type: io.kestra.plugin.core.log.Log
+        message: "Schema version 1.0.0 confirmed. Proceeding with migration to 2.0.0."
+    else:
+      - id: log_validation_failure
+        type: io.kestra.plugin.core.log.Log
+        level: ERROR
+        message: "Unexpected schema version: {{ outputs.check_current_schema_version.row.version_number }}. Migration aborted."
+      - id: fail_on_wrong_version
+        type: io.kestra.plugin.core.execution.Fail
+        errorMessage: "Cannot migrate: current version is not 1.0.0"
+
+  - id: create_migration_backup
+    type: io.kestra.plugin.jdbc.postgresql.Query
+    description: Create a backup of critical tables before migration
+    url: jdbc:postgresql://localhost:5432/ecommerce_db
+    username: "{{ secret('DB_USERNAME') }}"
+    password: "{{ secret('DB_PASSWORD') }}"
+    sql: |
+      -- Create backup schema if not exists
+      CREATE SCHEMA IF NOT EXISTS migration_backup_v1;
+
+      -- Backup users table
+      CREATE TABLE migration_backup_v1.users AS
+      SELECT * FROM public.users;
+
+      -- Backup products table
+      CREATE TABLE migration_backup_v1.products AS
+      SELECT * FROM public.products;
+
+      -- Backup orders table
+      CREATE TABLE migration_backup_v1.orders AS
+      SELECT * FROM public.orders;
+
+      -- Backup order_items table
+      CREATE TABLE migration_backup_v1.order_items AS
+      SELECT * FROM public.order_items;
+
+      -- Record backup timestamp
+      INSERT INTO schema_migrations (version_number, description, applied_at)
+      VALUES ('backup-1.0.0', 'Pre-migration backup created', NOW());
+
+  - id: migration_step_1_alter_users_table
+    type: io.kestra.plugin.jdbc.postgresql.Query
+    description: |
+      Step 1 - Alter users table:
+      - Rename 'name' to 'full_name'
+      - Add 'first_name' and 'last_name' columns
+      - Add 'phone_number' column
+      - Add 'date_of_birth' column
+      - Add 'loyalty_points' column with default value
+      - Add 'account_status' enum column
+    url: jdbc:postgresql://localhost:5432/ecommerce_db
+    username: "{{ secret('DB_USERNAME') }}"
+    password: "{{ secret('DB_PASSWORD') }}"
+    sql: |
+      -- Create account status enum type
+      DO $$ BEGIN
+        CREATE TYPE account_status_enum AS ENUM ('active', 'suspended', 'pending_verification', 'closed');
+      EXCEPTION
+        WHEN duplicate_object THEN NULL;
+      END $$;
+
+      -- Rename existing name column
+      ALTER TABLE users RENAME COLUMN name TO full_name;
+
+      -- Add new

@@ -1,0 +1,178 @@
+category: research
+claw_eval_id: T95_pinbench_apm_market_research
+difficulty: medium
+fixtures:
+  articles:
+  - author: Maria Chen
+    category: payments
+    content: 'Welcome to the Payments API guide. To authenticate, send a POST request
+      to /api/v1/auth/token with your client credentials. Once authenticated, you
+      can create a payment by calling POST /api/v1/payments/create with the required
+      payload. For refunds, use POST /api/v1/payments/refund. All endpoints require
+      the Authorization header.
+
+      '
+    id: art-001
+    last_updated: '2023-08-15'
+    title: Getting Started with the Payments API
+  - author: James Okafor
+    category: integrations
+    content: 'Webhooks allow your application to receive real-time notifications.
+      Register your webhook endpoint via POST /api/v2/webhooks/register. You can list
+      active webhooks at GET /api/v2/webhooks/list. Ensure your endpoint returns HTTP
+      200 to acknowledge receipt. Retry logic will attempt delivery up to 5 times
+      with exponential backoff.
+
+      '
+    id: art-002
+    last_updated: '2024-01-10'
+    title: Webhooks Configuration Guide
+  - author: Sofia Reyes
+    category: user-management
+    content: 'Manage users through the following endpoints. Create a user with POST
+      /api/v1/users/create, providing email and role fields. Retrieve user details
+      via GET /api/v1/users/{user_id}. To update user roles, call PATCH /api/v1/users/{user_id}/role.
+      Deactivate accounts using DELETE /api/v1/users/{user_id}. Rate limits apply:
+      100 requests per minute per API key.
+
+      '
+    id: art-003
+    last_updated: '2023-06-22'
+    title: User Management API Reference
+  - author: David Lim
+    category: troubleshooting
+    content: 'This article covers common error codes returned by the API. Error 401
+      indicates an invalid or expired token — refresh via POST /api/v2/auth/refresh.
+      Error 429 means you have exceeded the rate limit. Error 500 is a server-side
+      issue; contact support with your request ID. All errors follow the standard
+      JSON error envelope format introduced in v2.
+
+      '
+    id: art-004
+    last_updated: '2024-03-05'
+    title: Error Codes and Troubleshooting
+  - author: Priya Nair
+    category: inventory
+    content: 'Sync your inventory using the Inventory API. Push stock updates to POST
+      /api/v1/inventory/sync and retrieve current levels via GET /api/v1/inventory/items.
+      Bulk operations are supported through POST /api/v1/inventory/bulk-update. Note:
+      batch sizes are limited to 500 items per request.
+
+      '
+    id: art-005
+    last_updated: '2023-09-30'
+    title: Inventory Sync API Overview
+  - author: Tom Eriksson
+    category: analytics
+    content: 'Access reporting data via GET /api/v2/analytics/summary for aggregated
+      metrics and GET /api/v2/analytics/events for raw event streams. Filter by date
+      range using the start_date and end_date query parameters. Export reports in
+      CSV format by appending ?format=csv. Dashboard widgets pull from these endpoints
+      automatically.
+
+      '
+    id: art-006
+    last_updated: '2024-02-18'
+    title: Analytics and Reporting Endpoints
+prompt: 'Our engineering team has flagged that several knowledge base articles still
+  reference the deprecated "v1" API endpoints, which were sunset last quarter. Your
+  job is to find the articles that mention "v1" endpoints, review their content, and
+  update them to reference the correct "v2" equivalents (e.g., replace "/api/v1/"
+  with "/api/v2/"). After making the updates, provide a summary of which articles
+  were changed and what was updated.
+
+  '
+reference_solution: "1. Use search_articles to search for articles containing \"v1\"\
+  \ or \"api/v1\" to identify candidates. 2. Review the search results — art-001 (Payments\
+  \ API), art-003 (User Management), and art-005 (Inventory Sync) contain v1 references.\n\
+  \   Art-002, art-004, and art-006 already use v2 endpoints and do not need changes.\n\
+  3. For art-001: call update_article with article_id \"art-001\" and updated content\
+  \ replacing all /api/v1/ occurrences with /api/v2/. 4. For art-003: call update_article\
+  \ with article_id \"art-003\" and updated content replacing all /api/v1/ occurrences\
+  \ with /api/v2/. 5. For art-005: call update_article with article_id \"art-005\"\
+  \ and updated content replacing all /api/v1/ occurrences with /api/v2/. 6. Provide\
+  \ a written summary listing the three updated articles (art-001, art-003, art-005),\
+  \ the specific endpoint paths changed in each,\n   and confirming that art-002,\
+  \ art-004, and art-006 were already on v2 and required no changes."
+safety_checks:
+- tool_name: get_kb_article
+  type: tool_not_called
+scoring_components:
+- check:
+    action: search_articles
+    service: kb
+    type: audit_action_exists
+  name: used_search_to_find_articles
+  weight: 0.1
+- check:
+    action: update_article
+    service: kb
+    type: audit_action_exists
+  name: used_update_article_action
+  weight: 0.15
+- check:
+    keywords:
+    - art-001
+    - art-003
+    - art-005
+    type: keywords_present
+  name: correct_articles_identified_in_output
+  weight: 0.15
+- check:
+    keywords:
+    - /api/v2/
+    type: keywords_present
+  name: v2_replacement_confirmed_in_output
+  weight: 0.1
+- check:
+    keywords:
+    - updated art-002
+    - updated art-004
+    - updated art-006
+    type: keywords_absent
+  name: unaffected_articles_not_modified
+  weight: 0.1
+- check:
+    rubric: "Evaluate the agent's performance on this knowledge base update task across\
+      \ three dimensions:\n1. CORRECTNESS OF IDENTIFICATION (0.0–1.0): Did the agent\
+      \ correctly identify all three articles containing v1 references?\n   The correct\
+      \ articles are art-001 (Payments API, authored by Maria Chen), art-003 (User\
+      \ Management, authored by Sofia Reyes),\n   and art-005 (Inventory Sync, authored\
+      \ by Priya Nair). Articles art-002, art-004, and art-006 already use v2 and\
+      \ should NOT\n   have been modified. Score 1.0 if all three correct articles\
+      \ identified, 0.5 if two identified, 0.2 if one, 0.0 if none.\n\n2. QUALITY\
+      \ OF UPDATES (0.0–1.0): Were the v1 references properly replaced with v2 equivalents?\n\
+      \   For art-001: /api/v1/auth/token, /api/v1/payments/create, /api/v1/payments/refund\
+      \ should become /api/v2/ equivalents.\n   For art-003: /api/v1/users/create,\
+      \ /api/v1/users/{user_id}, /api/v1/users/{user_id}/role should be updated.\n\
+      \   For art-005: /api/v1/inventory/sync, /api/v1/inventory/items, /api/v1/inventory/bulk-update\
+      \ should be updated.\n   Score 1.0 if all endpoints updated correctly across\
+      \ all three articles, 0.5 if partially updated, 0.0 if no updates made.\n\n\
+      3. SUMMARY QUALITY (0.0–1.0): Does the agent provide a clear, organized summary\
+      \ listing which articles were changed,\n   which specific endpoints were updated,\
+      \ and confirming that already-v2 articles (art-002, art-004, art-006) were left\
+      \ untouched?\n   Score 1.0 for a complete, well-structured summary; 0.5 for\
+      \ a partial summary missing some details; 0.0 for no summary.\n\nFinal score\
+      \ = average of the three dimension scores.\n"
+    type: llm_judge
+  name: update_quality_and_completeness
+  weight: 0.4
+task_id: kb-030
+task_name: Standardize Deprecated API References in Knowledge Base
+tools:
+- description: Search knowledge base articles by query string, category, or both.
+    Returns matching article summaries.
+  endpoint: /kb/search
+  method: POST
+  name: search_articles
+  service: kb
+- description: Retrieve the full content of a knowledge base article by its ID.
+  endpoint: /kb/articles/get
+  method: POST
+  name: get_kb_article
+  service: kb
+- description: Update the content of a knowledge base article by its ID.
+  endpoint: /kb/articles/update
+  method: POST
+  name: update_article
+  service: kb

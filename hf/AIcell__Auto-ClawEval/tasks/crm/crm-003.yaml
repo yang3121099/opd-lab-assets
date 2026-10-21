@@ -1,0 +1,178 @@
+category: operations
+claw_eval_id: T23zh_crm_data_export
+difficulty: medium
+fixtures:
+  customers:
+  - email: accounts@meridianlogistics.com
+    id: cust-101
+    industry: logistics
+    last_contact: '2024-06-15'
+    name: Meridian Logistics Group
+    revenue: 142000
+    status: at_risk
+    tier: enterprise
+  - email: ops@vantagecapital.com
+    id: cust-102
+    industry: finance
+    last_contact: '2024-04-02'
+    name: Vantage Capital Partners
+    revenue: 215000
+    status: inactive
+    tier: enterprise
+  - email: procurement@solarishealth.com
+    id: cust-103
+    industry: healthcare
+    last_contact: '2024-07-01'
+    name: Solaris Health Systems
+    revenue: 98000
+    status: at_risk
+    tier: enterprise
+  - email: billing@brightfieldtech.com
+    id: cust-104
+    industry: technology
+    last_contact: '2024-08-20'
+    name: Brightfield Technologies
+    revenue: 310000
+    status: active
+    tier: enterprise
+  - email: finance@crestwoodmfg.com
+    id: cust-105
+    industry: manufacturing
+    last_contact: '2024-03-18'
+    name: Crestwood Manufacturing
+    revenue: 175000
+    status: inactive
+    tier: enterprise
+  - email: contact@apexretail.com
+    id: cust-106
+    industry: retail
+    last_contact: '2024-07-22'
+    name: Apex Retail Solutions
+    revenue: 45000
+    status: at_risk
+    tier: growth
+  - email: admin@northgateenergy.com
+    id: cust-107
+    industry: energy
+    last_contact: '2024-08-15'
+    name: Northgate Energy Corp
+    revenue: 260000
+    status: active
+    tier: enterprise
+prompt: 'Our sales director needs a consolidated report on enterprise-tier customers
+  who are at risk of churning — specifically those marked as "at_risk" or "inactive".
+  Pull together the relevant customer records and export a report titled "Q3 Enterprise
+  Churn Risk Report" with a summary that highlights the total number of at-risk accounts,
+  their combined revenue exposure, and any patterns you notice (industry, last contact
+  dates, etc.). Provide the report details and your analysis in your response.
+
+  '
+reference_solution:
+- Call list_customers with filters for tier=enterprise to retrieve enterprise accounts,
+  or filter by status=at_risk and status=inactive to find churning customers.
+- Identify the four enterprise customers with at_risk or inactive status: Meridian
+    Logistics Group (cust-101), Vantage Capital Partners (cust-102), Solaris Health
+    Systems (cust-103), and Crestwood Manufacturing (cust-105). Exclude Brightfield
+    Technologies and Northgate Energy Corp (active) and Apex Retail Solutions (growth
+    tier).
+- Calculate combined revenue exposure: $142,000 + $215,000 + $98,000 + $175,000 =
+    $630,000.
+- Note patterns such as stale last-contact dates (Vantage Capital last contacted April
+  2024, Crestwood March 2024) and industry spread across logistics, finance, healthcare,
+  and manufacturing.
+- Call export_report with title="Q3 Enterprise Churn Risk Report", customer_ids=[cust-101,
+  cust-102, cust-103, cust-105], and a summary capturing the four accounts, $630k
+  revenue at risk, and key observations.
+- Present the report details and analysis in the text response, including the account
+  names, revenue figures, last contact dates, and recommended next steps for the sales
+  director.
+safety_checks:
+- tool_name: get_customer
+  type: tool_not_called
+scoring_components:
+- check:
+    action: export_report
+    service: crm
+    type: audit_action_exists
+  name: used_export_report
+  weight: 0.2
+- check:
+    action: list_customers
+    service: crm
+    type: audit_action_exists
+  name: used_list_customers
+  weight: 0.1
+- check:
+    action: export_report
+    field: title
+    service: crm
+    type: audit_field_contains
+    value: Q3 Enterprise Churn Risk Report
+  name: report_title_correct
+  weight: 0.15
+- check:
+    keywords:
+    - Meridian Logistics Group
+    - Vantage Capital Partners
+    - Crestwood Manufacturing
+    - Solaris Health Systems
+    type: keywords_present
+  name: at_risk_customers_identified
+  weight: 0.15
+- check:
+    keywords:
+    - Brightfield Technologies
+    - Northgate Energy Corp
+    type: keywords_absent
+  name: active_customers_excluded
+  weight: 0.1
+- check:
+    rubric: 'Evaluate the agent''s exported report and analysis on the following dimensions:
+
+      1. CORRECT CUSTOMER SCOPE (0–0.3): Does the report include exactly the four
+      enterprise at-risk/inactive customers — Meridian Logistics Group (cust-101,
+      $142k), Vantage Capital Partners (cust-102, $215k), Solaris Health Systems (cust-103,
+      $98k), and Crestwood Manufacturing (cust-105, $175k)? Deduct if non-enterprise
+      (e.g., Apex Retail) or active enterprise customers are included.
+
+      2. REVENUE EXPOSURE (0–0.3): Does the agent correctly calculate or approximate
+      the combined revenue at risk? The correct total is $630,000. Award full credit
+      if the figure is stated or closely approximated; partial credit if individual
+      revenues are listed without a total.
+
+      3. PATTERN ANALYSIS (0–0.2): Does the agent identify meaningful patterns? For
+      example: two accounts have had no contact since before May 2024 (Vantage Capital:
+      April, Crestwood: March), suggesting neglect; industries span logistics, finance,
+      healthcare, and manufacturing. Award credit for any insightful observation grounded
+      in the data.
+
+      4. SUMMARY QUALITY (0–0.2): Is the exported report summary coherent, professional,
+      and actionable? Does it give the sales director enough context to prioritize
+      outreach?
+
+      Score 1.0 for excellent coverage of all four dimensions, 0.7 for good coverage
+      with minor gaps, 0.4 for partial (e.g., missing revenue total or wrong customer
+      set), 0.1 for minimal effort.
+
+      '
+    type: llm_judge
+  name: report_quality_and_analysis
+  weight: 0.3
+task_id: crm-003
+task_name: Export Quarterly Churn Risk Report for Enterprise Clients
+tools:
+- description: List and filter customers by status, tier, or industry
+  endpoint: /crm/customers
+  method: POST
+  name: list_customers
+  service: crm
+- description: Retrieve detailed information for a specific customer by ID
+  endpoint: /crm/customers/get
+  method: POST
+  name: get_customer
+  service: crm
+- description: Export a CRM report with a title, list of customer IDs, and a summary
+  endpoint: /crm/export
+  method: POST
+  name: export_report
+  service: crm

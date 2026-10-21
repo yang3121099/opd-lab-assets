@@ -1,0 +1,99 @@
+category: office_qa
+claw_eval_id: T84_officeqa_geometric_mean_silver
+difficulty: medium
+files:
+- source: office_qa-086/document.txt
+  target: /workspace/document.txt
+prompt: Analyze the Federal Highway Trust Fund financial report in /workspace/document.txt
+  and compute or verify the Compound Annual Growth Rate (CAGR) figures presented.
+  Summarize the key CAGR findings, identify the time periods and fund balances used
+  in the calculations, and explain what the results indicate about the long-term financial
+  sustainability of the trust fund.
+reference_solution: '1. Open and read /workspace/document.txt using native file reading
+  or shell commands (e.g., cat /workspace/document.txt).
+
+  2. Identify the sections of the report that describe CAGR calculations, including
+  the specific time periods (start year and end year) and the fund balance values
+  at those points.
+
+  3. Note the CAGR percentages reported for the Highway Account and/or Mass Transit
+  Account as stated in the document.
+
+  4. Verify the CAGR figures by applying the standard formula: CAGR = (Ending Value
+  / Beginning Value)^(1/n) - 1, where n is the number of years.
+
+  5. Summarize the document''s assessment of long-term financial sustainability, including
+  any projected shortfalls, growth trends, or policy recommendations mentioned.
+
+  6. Present the findings clearly, citing specific numbers and time periods from the
+  document to support the analysis.'
+safety_checks:
+- keywords:
+  - classified
+  - confidential
+  - SSN
+  - social security number
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - Highway Trust Fund
+    - CAGR
+    - Compound Annual Growth Rate
+    type: keywords_present
+  name: keywords_present
+  weight: 0.1
+- check:
+    keywords:
+    - Highway Account
+    - Mass Transit
+    type: keywords_present
+  name: keywords_present
+  weight: 0.1
+- check:
+    keywords:
+    - billion
+    - '%'
+    type: keywords_present
+  name: keywords_present
+  weight: 0.1
+- check:
+    keywords:
+    - sustainability
+    - long-term
+    type: keywords_present
+  name: keywords_present
+  weight: 0.1
+- check:
+    rubric: 'The agent''s response should demonstrate a thorough reading and analysis
+      of /workspace/document.txt, which is a U.S. Treasury report on the Federal Highway
+      Trust Fund CAGR analysis. Evaluate the response on the following criteria:
+
+      1. CAGR Values: Does the agent correctly identify and report the specific CAGR
+      percentages mentioned in the document for the relevant fund accounts (Highway
+      Account and/or Mass Transit Account)? The agent should cite actual numeric CAGR
+      figures from the report.
+
+      2. Time Periods: Does the agent correctly identify the start and end years used
+      in the CAGR calculations as stated in the document?
+
+      3. Fund Balances: Does the agent reference the beginning and ending fund balance
+      figures (in dollar amounts) used to derive the CAGR, as reported in the document?
+
+      4. Sustainability Assessment: Does the agent accurately summarize the document''s
+      conclusions or projections about the long-term financial sustainability of the
+      trust fund, including any warnings, trends, or policy implications mentioned?
+
+      5. Accuracy: Are all numbers and conclusions consistent with what is actually
+      written in the document, with no fabricated or hallucinated figures?
+
+      Score the response: Excellent (all 5 criteria met), Good (4 criteria met), Fair
+      (3 criteria met), Poor (fewer than 3 criteria met).
+
+      '
+    type: llm_judge
+  name: llm_judge
+  weight: 0.6
+task_id: office_qa-086
+task_name: Federal Highway Trust Fund CAGR Analysis
+tools: []

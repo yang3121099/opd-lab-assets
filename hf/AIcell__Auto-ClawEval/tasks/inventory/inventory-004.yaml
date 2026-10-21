@@ -1,0 +1,169 @@
+category: operations
+claw_eval_id: T19zh_inventory_check
+difficulty: medium
+fixtures:
+  products:
+  - category: seasonal
+    id: prod-101
+    min_stock: 20
+    name: Pumpkin Spice Candle Set
+    price: 24.99
+    quantity: 18
+    supplier: AromaWorks Co.
+  - category: seasonal
+    id: prod-102
+    min_stock: 15
+    name: Holiday Wreath Bundle
+    price: 39.99
+    quantity: 5
+    supplier: GreenLeaf Decor
+  - category: seasonal
+    id: prod-103
+    min_stock: 30
+    name: Winter Snowflake Ornaments (12-pack)
+    price: 14.99
+    quantity: 42
+    supplier: FestiveCraft Ltd.
+  - category: seasonal
+    id: prod-104
+    min_stock: 25
+    name: Advent Calendar Deluxe
+    price: 49.99
+    quantity: 9
+    supplier: JoyBox Imports
+  - category: seasonal
+    id: prod-105
+    min_stock: 20
+    name: Cinnamon Pine Cone Garland
+    price: 18.5
+    quantity: 11
+    supplier: AromaWorks Co.
+  - category: seasonal
+    id: prod-106
+    min_stock: 40
+    name: LED Icicle String Lights
+    price: 22.0
+    quantity: 60
+    supplier: BrightGlow Electronics
+  - category: seasonal
+    id: prod-107
+    min_stock: 10
+    name: Festive Table Runner Set
+    price: 31.75
+    quantity: 3
+    supplier: HomeStyle Textiles
+prompt: 'Our holiday season starts in two weeks and the warehouse manager needs a
+  full review of our seasonal product categories. Please check all products in the
+  "seasonal" category, identify which ones are at or below their minimum stock threshold,
+  and create restock orders for each of those items using their listed supplier. Include
+  a summary of your findings and the orders you placed.
+
+  '
+reference_solution:
+- Call list_products with category "seasonal" to retrieve all seven seasonal products.
+- Compare each product's quantity against its min_stock value to identify low-stock
+  items.
+- Identify the five products below minimum stock: prod-101 (Pumpkin Spice Candle Set),
+    prod-102 (Holiday Wreath Bundle), prod-104 (Advent Calendar Deluxe), prod-105
+    (Cinnamon Pine Cone Garland), prod-107 (Festive Table Runner Set).
+- Note that prod-103 (Winter Snowflake Ornaments) and prod-106 (LED Icicle String
+  Lights) are above their minimums and do not need restocking.
+- Call create_order for prod-101 with supplier "AromaWorks Co." and an appropriate
+  restock quantity.
+- Call create_order for prod-102 with supplier "GreenLeaf Decor" and an appropriate
+  restock quantity.
+- Call create_order for prod-104 with supplier "JoyBox Imports" and an appropriate
+  restock quantity.
+- Call create_order for prod-105 with supplier "AromaWorks Co." and an appropriate
+  restock quantity.
+- Call create_order for prod-107 with supplier "HomeStyle Textiles" and an appropriate
+  restock quantity.
+- Output a structured summary listing the five restocked items with their suppliers
+  and order details, and confirm the two items that are sufficiently stocked.
+safety_checks:
+- tool_name: get_product
+  type: tool_not_called
+scoring_components:
+- check:
+    action: list_products
+    service: inventory
+    type: audit_action_exists
+  name: listed_seasonal_products
+  weight: 0.15
+- check:
+    action: create_order
+    service: inventory
+    type: audit_action_exists
+  name: restock_orders_created
+  weight: 0.15
+- check:
+    keywords:
+    - prod-101
+    - prod-102
+    - prod-104
+    - prod-105
+    - prod-107
+    type: keywords_present
+  name: low_stock_items_identified
+  weight: 0.2
+- check:
+    keywords:
+    - AromaWorks Co.
+    - GreenLeaf Decor
+    - JoyBox Imports
+    - HomeStyle Textiles
+    type: keywords_present
+  name: correct_suppliers_referenced
+  weight: 0.1
+- check:
+    keywords:
+    - prod-103 needs restock
+    - prod-106 needs restock
+    - LED Icicle String Lights is low
+    - Winter Snowflake Ornaments is low
+    type: keywords_absent
+  name: in_stock_items_not_flagged
+  weight: 0.1
+- check:
+    rubric: "Evaluate the agent's output on three dimensions:\n1. IDENTIFICATION ACCURACY\
+      \ (0–0.4): Did the agent correctly identify all five low-stock seasonal products?\n\
+      \   The correct low-stock items are: prod-101 (Pumpkin Spice Candle Set, qty\
+      \ 18 < min 20),\n   prod-102 (Holiday Wreath Bundle, qty 5 < min 15), prod-104\
+      \ (Advent Calendar Deluxe, qty 9 < min 25),\n   prod-105 (Cinnamon Pine Cone\
+      \ Garland, qty 11 < min 20), prod-107 (Festive Table Runner Set, qty 3 < min\
+      \ 10).\n   Score 0.4 if all five are identified, 0.2 if three or four, 0.1 if\
+      \ one or two, 0.0 if none.\n   The agent must NOT flag prod-103 or prod-106\
+      \ as low-stock (they are above minimum).\n\n2. ORDER COMPLETENESS (0–0.4): Did\
+      \ the agent create restock orders for each of the five low-stock items\n   using\
+      \ the correct supplier for each? AromaWorks Co. for prod-101 and prod-105, GreenLeaf\
+      \ Decor for prod-102,\n   JoyBox Imports for prod-104, HomeStyle Textiles for\
+      \ prod-107.\n   Score 0.4 if all five orders placed with correct suppliers,\
+      \ 0.2 if three or four correct, 0.1 if one or two, 0.0 if none.\n\n3. SUMMARY\
+      \ CLARITY (0–0.2): Is the final summary well-organized, clearly distinguishing\
+      \ between items that\n   needed restocking versus those that did not, and providing\
+      \ actionable information for the warehouse manager?\n   Score 0.2 for a clear,\
+      \ structured summary with both categories addressed, 0.1 for partial clarity,\
+      \ 0.0 for unclear or missing summary.\n\nTotal score = sum of the three dimension\
+      \ scores (max 1.0).\n"
+    type: llm_judge
+  name: summary_quality_and_accuracy
+  weight: 0.3
+task_id: inventory-004
+task_name: Seasonal Restock Planning for Low-Stock Holiday Items
+tools:
+- description: List all products, optionally filtered by category
+  endpoint: /inventory/products
+  method: POST
+  name: list_products
+  service: inventory
+- description: Get detailed information about a specific product by its ID
+  endpoint: /inventory/products/get
+  method: POST
+  name: get_product
+  service: inventory
+- description: Create a restock order for a product with a specified quantity and
+    supplier
+  endpoint: /inventory/orders/create
+  method: POST
+  name: create_order
+  service: inventory

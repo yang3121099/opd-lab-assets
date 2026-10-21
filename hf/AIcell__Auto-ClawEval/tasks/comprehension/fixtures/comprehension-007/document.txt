@@ -1,0 +1,154 @@
+SPARSE MIXTURE-OF-EXPERTS TRANSFORMERS WITH DYNAMIC ROUTING FOR LONG-CONTEXT REASONING
+
+Preprint submitted to arXiv: March 14, 2024
+Authors: Yuki Tanaka, Priya Mehrotra, Aleksei Voronov, Chen Wei, Sarah Okonkwo
+Affiliation: Distributed Intelligence Lab, Carnegie Mellon University; DeepMind Research, London
+
+---
+
+ABSTRACT
+
+We present SparseRoute-7B, a 7.2 billion parameter sparse mixture-of-experts language model designed for extended context reasoning tasks. By combining dynamic expert routing with a novel attention compression mechanism we call Hierarchical Positional Folding (HPF), SparseRoute-7B achieves state-of-the-art performance on long-context benchmarks while activating only 1.4 billion parameters per forward pass. On the SCROLLS benchmark, our model achieves a composite score of 74.3, surpassing Mistral-7B (68.1) and matching Mixtral-8x7B (74.9) at one-eighth the active parameter count. Training was completed on 1.2 trillion tokens over 47 days using 256 H100 GPUs.
+
+---
+
+1. INTRODUCTION
+
+The fundamental tension in large language model design between computational efficiency and representational capacity has motivated substantial research into sparse architectures. Mixture-of-experts (MoE) models address this tension by maintaining a large total parameter count while activating only a subset of parameters for any given input. However, prior MoE implementations suffer from two persistent limitations: load imbalance across experts during training, and degraded performance on sequences exceeding 8,192 tokens.
+
+SparseRoute-7B addresses both limitations through two architectural innovations. First, our Dynamic Confidence Routing (DCR) mechanism replaces the standard top-k gating function with a confidence-threshold approach that reduces expert load variance by 34% compared to the GShard routing used in Switch Transformer (Fedus et al., 2022). Second, Hierarchical Positional Folding compresses positional information across 32,768-token contexts into fixed-length representations without the quadratic attention cost that limits standard transformers.
+
+This paper makes the following contributions:
+- A new routing algorithm (DCR) that reduces training instability in MoE models
+- The HPF attention mechanism enabling 32K context windows at linear computational cost
+- SparseRoute-7B, trained on the Refined Web Plus dataset (1.2T tokens)
+- Comprehensive evaluation across 11 benchmarks demonstrating competitive performance
+
+---
+
+2. MODEL ARCHITECTURE
+
+2.1 Overall Design
+
+SparseRoute-7B follows a decoder-only transformer architecture with 32 layers. Each layer contains either a standard dense attention block or a sparse MoE feed-forward block, alternating in a 1:3 ratio (8 attention layers, 24 MoE layers). The model maintains a hidden dimension of 4,096 and uses 32 attention heads with a head dimension of 128.
+
+Table 1: SparseRoute-7B Architecture Summary
+
+Parameter                    | Value
+-----------------------------|----------
+Total parameters             | 7.2B
+Active parameters per pass   | 1.4B
+Number of experts per layer  | 16
+Experts activated per token  | 2
+Context window               | 32,768 tokens
+Vocabulary size              | 65,536
+Number of layers             | 32
+Hidden dimension             | 4,096
+Attention heads              | 32
+Training tokens              | 1.2T
+
+2.2 Dynamic Confidence Routing
+
+Standard MoE routing selects the top-k experts by softmax score regardless of the absolute confidence of those scores. This creates instability when the router is uncertain, forcing tokens into potentially inappropriate experts. DCR instead computes a confidence threshold τ = μ + 0.5σ, where μ and σ are the mean and standard deviation of the current softmax distribution. Tokens whose top expert score exceeds τ are routed to a single expert; tokens below this threshold are routed to two experts with weighted averaging.
+
+In practice, approximately 61% of tokens during inference are routed to a single expert, reducing average active parameters to 1.4B rather than the 1.8B that would result from always activating two experts. During training on our validation split, DCR reduced the expert load imbalance coefficient from 0.31 (top-2 routing) to 0.21, a 32% improvement.
+
+2.3 Hierarchical Positional Folding
+
+HPF divides the input sequence into segments of 512 tokens. Within each segment, standard rotary positional embeddings (RoPE) are applied. Across segments, a learned compression layer maps each 512-token segment into a 64-dimensional summary vector. These summary vectors are prepended to the current segment's attention computation, allowing each token to attend to compressed representations of all prior context without full quadratic attention.
+
+The total attention cost for a 32,768-token sequence under HPF is O(n · s + s²), where n = 512 (segment length) and s = 64 (number of segments), compared to O(n²) = O(32768²) for standard attention. This reduces attention FLOPs by approximately 97.3% for maximum-length sequences.
+
+---
+
+3. TRAINING DETAILS
+
+3.1 Dataset
+
+We trained on Refined Web Plus, an extension of the Falcon Refined Web corpus (Penedo et al., 2023) augmented with 180 billion tokens of scientific literature from Semantic Scholar, 95 billion tokens of GitHub code, and 40 billion tokens of curated long-form documents selected for sequences exceeding 16,000 tokens. The final dataset composition is 68% web text, 15% scientific literature, 8% code, and 9% books and long documents.
+
+3.2 Training Configuration
+
+Training ran from October 3, 2023 to November 19, 2023 on a cluster of 256 NVIDIA H100 80GB SXM5 GPUs at CMU's Pittsburgh Supercomputing Center. We used the AdamW optimizer with β₁ = 0.9, β₂ = 0.95, and weight decay of 0.1. The learning rate followed a cosine schedule from a peak of 3×10⁻⁴ to a minimum of 3×10⁻⁵ over 1.2 trillion tokens, with a 2,000-step linear warmup. Global batch size was 4 million tokens. Training consumed approximately 2.1 × 10²³ FLOPs total.
+
+We observed one significant training instability at step 187,000 (approximately 748 billion tokens), where loss spiked from 2.31 to 3.47 over 200 steps before recovering. We attribute this to a data pipeline issue that temporarily increased the proportion of low-quality web text. The issue was resolved by restarting from the checkpoint at step 186,500.
+
+---
+
+4. EVALUATION RESULTS
+
+4.1 Long-Context Benchmarks
+
+Table 2: SCROLLS Benchmark Results (Composite Score)
+
+Model                | Score  | Active Params
+---------------------|--------|---------------
+GPT-4 (OpenAI, 2023) | 81.2   | ~unknown
+Mixtral-8x7B         | 74.9   | 12.9B
+SparseRoute-7B (ours)| 74.3   | 1.4B
+Mistral-7B           | 68.1   | 7.1B
+LLaMA-2-13B          | 65.7   | 13.0B
+LLaMA-2-7B           | 61.4   | 7.0B
+
+On the QUALITY multiple-choice reading comprehension task within SCROLLS, SparseRoute-7B achieves 79.1% accuracy, compared to 76.3% for Mixtral-8x7B and 71.8% for Mistral-7B. We attribute this improvement specifically to HPF, which we ablate in Section 4.3.
+
+4.2 Standard Benchmarks
+
+Table 3: Standard NLP Benchmark Results
+
+Benchmark        | SparseRoute-7B | Mistral-7B | Mixtral-8x7B
+-----------------|----------------|------------|-------------
+MMLU (5-shot)    | 63.4%          | 64.2%      | 70.6%
+HellaSwag        | 81.7%          | 81.3%      | 86.5%
+ARC-Challenge    | 59.8%          | 60.4%      | 66.0%
+TruthfulQA       | 47.2%          | 42.2%      | 51.3%
+GSM8K (8-shot)   | 52.1%          | 52.8%      | 60.7%
+HumanEval        | 28.7%          | 30.5%      | 40.2%
+
+SparseRoute-7B performs comparably to Mistral-7B on standard benchmarks despite activating only 20% of its parameters per forward pass. The model underperforms on code generation (HumanEval: 28.7% vs 30.5%), which we attribute to the relatively small proportion of code in our training data (8% vs approximately 15% in Mistral's training mixture).
+
+4.3 Ablation Studies
+
+We conducted ablations on a 1B parameter version of SparseRoute trained on 100 billion tokens to isolate the contribution of each architectural component.
+
+Table 4: Ablation Results on SCROLLS (1B scale)
+
+Configuration                        | SCROLLS Score
+-------------------------------------|---------------
+Full SparseRoute (DCR + HPF)         | 61.3
+DCR only, standard attention (4K ctx)| 54.7
+Top-2 routing + HPF                  | 60.1
+Top-2 routing + standard attention   | 52.9
+Dense baseline (no MoE)              | 55.8
+
+HPF contributes approximately 6.6 points on SCROLLS at 1B scale, while DCR contributes 1.2 points over standard top-2 routing when HPF is held constant. The combination yields 8.4 points over the dense baseline.
+
+---
+
+5. INFERENCE EFFICIENCY
+
+On a single H100 GPU, SparseRoute-7B generates tokens at 47.3 tokens per second for 8,192-token contexts and 31.8 tokens per second for 32,768-token contexts, using bfloat16 precision. Mixtral-8x7B generates 19.4 tokens per second at 8,192-token contexts on equivalent hardware. SparseRoute-7B's peak memory consumption at 32K context is 18.4 GB, fitting within a single 24 GB consumer GPU with 4-bit quantization applied.
+
+---
+
+6. LIMITATIONS AND FUTURE WORK
+
+SparseRoute-7B underperforms on tasks requiring precise numerical reasoning and structured code generation. The HPF compression introduces information loss for very long documents: on the QASPER scientific QA task, performance degrades by 4.1 points when documents exceed 24,000 tokens compared to documents under 8,000 tokens. Future work will explore learned adaptive compression ratios for HPF and scaling SparseRoute to 70B total parameters.
+
+---
+
+7. CONCLUSION
+
+SparseRoute-7B demonstrates that sparse MoE architectures with dynamic routing and hierarchical attention compression can achieve competitive performance with dense models at a fraction of the active parameter count. Our model matches Mixtral-8x7B on SCROLLS (74.3 vs 74.9) while activating 9.2 times fewer parameters per forward pass. Model weights, training code, and evaluation scripts are available at github.com/distributed-intelligence-lab/sparseroute.
+
+---
+
+REFERENCES
+
+Fedus, W., Zoph, B., Shazeer, N. (2022). Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity. JMLR, 23(120), 1-39.
+
+Jiang, A. Q. et al. (2024). Mixtral of Experts. arXiv:2401.04088.
+
+Penedo, G. et al. (2023). The RefinedWeb Dataset for Falcon LLM. NeurIPS 2023 Datasets Track.
+
+Touvron, H. et al. (2023). LLaMA 2: Open Foundation and Fine-Tuned Chat Models. arXiv:2307.09288.

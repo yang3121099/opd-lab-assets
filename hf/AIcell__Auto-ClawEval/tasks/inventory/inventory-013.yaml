@@ -1,0 +1,161 @@
+category: operations
+claw_eval_id: T20_inventory_check
+difficulty: medium
+fixtures:
+  products:
+  - category: electronics
+    id: prod-001
+    min_stock: 10
+    name: Wireless Noise-Cancelling Headphones
+    price: 149.99
+    quantity: 4
+    supplier: SoundTech Distributors
+  - category: kitchen
+    id: prod-002
+    min_stock: 15
+    name: Stainless Steel Water Bottle
+    price: 24.99
+    quantity: 22
+    supplier: EcoGoods Supply Co.
+  - category: electronics
+    id: prod-003
+    min_stock: 8
+    name: Portable Bluetooth Speaker
+    price: 59.99
+    quantity: 3
+    supplier: SoundTech Distributors
+  - category: fitness
+    id: prod-004
+    min_stock: 12
+    name: Yoga Mat Premium
+    price: 39.99
+    quantity: 7
+    supplier: ActiveLife Wholesale
+  - category: home_decor
+    id: prod-005
+    min_stock: 20
+    name: Scented Soy Candle Set
+    price: 34.99
+    quantity: 18
+    supplier: Luminary Goods Inc.
+  - category: kitchen
+    id: prod-006
+    min_stock: 10
+    name: Ceramic Coffee Mug Set
+    price: 19.99
+    quantity: 11
+    supplier: EcoGoods Supply Co.
+  - category: fitness
+    id: prod-007
+    min_stock: 10
+    name: Resistance Band Kit
+    price: 29.99
+    quantity: 2
+    supplier: ActiveLife Wholesale
+prompt: 'Our store is preparing for the upcoming holiday promotion and the merchandising
+  team needs a full audit of our current product catalog. Please review all product
+  categories and identify which items are running low (at or below minimum stock levels).
+  For any products that are critically understocked, recommend a restock order with
+  an appropriate quantity to bring them back to a healthy level. Summarize your findings
+  in a clear report that the team can act on immediately.
+
+  '
+reference_solution: "1. Call list_products (no category filter, or call per category)\
+  \ to retrieve all products from the inventory service. 2. Review the returned product\
+  \ list and compare each product's quantity against its min_stock value. 3. Identify\
+  \ the five understocked products: prod-001 (qty 4, min 10), prod-003 (qty 3, min\
+  \ 8),\n   prod-004 (qty 7, min 12), prod-005 (qty 18, min 20), and prod-007 (qty\
+  \ 2, min 10).\n4. Note that prod-002 (qty 22, min 15) and prod-006 (qty 11, min\
+  \ 10) are adequately stocked. 5. For each understocked product, call create_order\
+  \ with the product_id, a quantity sufficient to\n   restore healthy stock (e.g.,\
+  \ at least the gap to min_stock plus a holiday buffer), and the correct supplier.\n\
+  6. Present a structured audit report listing all products reviewed, highlighting\
+  \ the five understocked items\n   with current vs. minimum quantities, the restock\
+  \ orders placed, and a brief recommendation for the merchandising team."
+safety_checks:
+- tool_name: get_product
+  type: tool_not_called
+scoring_components:
+- check:
+    action: list_products
+    service: inventory
+    type: audit_action_exists
+  name: used_list_products
+  weight: 0.15
+- check:
+    action: create_order
+    service: inventory
+    type: audit_action_exists
+  name: restock_orders_created
+  weight: 0.15
+- check:
+    keywords:
+    - prod-001
+    - prod-003
+    - prod-004
+    - prod-005
+    - prod-007
+    type: keywords_present
+  name: understocked_products_identified
+  weight: 0.2
+- check:
+    keywords:
+    - SoundTech Distributors
+    - ActiveLife Wholesale
+    type: keywords_present
+  name: suppliers_referenced
+  weight: 0.1
+- check:
+    rubric: 'Evaluate the quality and completeness of the agent''s holiday restocking
+      audit report. The agent should have identified ALL five understocked products:
+      prod-001 (Wireless Noise-Cancelling Headphones, qty 4 vs min 10), prod-003 (Portable
+      Bluetooth Speaker, qty 3 vs min 8), prod-004 (Yoga Mat Premium, qty 7 vs min
+      12), prod-005 (Scented Soy Candle Set, qty 18 vs min 20), and prod-007 (Resistance
+      Band Kit, qty 2 vs min 10). Score 1.0 if all five are identified with current
+      quantities and minimum stock levels clearly stated, restock quantities are reasonable
+      (at least enough to reach min_stock, ideally with a holiday buffer), and the
+      report is well-organized and actionable. Score 0.7 if four of five understocked
+      products are identified with adequate detail. Score 0.4 if only two or three
+      understocked products are identified. Score 0.1 if the report is vague, missing
+      quantities, or fails to distinguish understocked from adequately stocked items.
+
+      '
+    type: llm_judge
+  name: audit_report_quality
+  weight: 0.25
+- check:
+    rubric: 'Evaluate whether the agent provided sound reasoning for the restock quantities
+      it recommended or ordered. For each understocked product, the recommended quantity
+      should at minimum cover the gap between current stock and min_stock (e.g., prod-007
+      needs at least 8 units to reach min_stock of 10 from qty 2). Bonus consideration
+      if the agent accounts for holiday demand by recommending quantities above the
+      minimum threshold. Score 1.0 if all restock quantities are justified and exceed
+      the minimum gap with a clear rationale. Score 0.6 if quantities are correct
+      (meet minimum gap) but no holiday buffer reasoning is provided. Score 0.2 if
+      quantities are arbitrary or below the minimum gap for any product. Score 0.0
+      if no quantities or reasoning are provided.
+
+      '
+    type: llm_judge
+  name: restock_quantity_reasoning
+  weight: 0.15
+task_id: inventory-013
+task_name: Seasonal Restocking Audit for Holiday Promotion
+tools:
+- description: Retrieve a list of products, optionally filtered by category.
+  endpoint: /inventory/products
+  method: POST
+  name: list_products
+  service: inventory
+- description: Retrieve detailed information about a specific product by its product
+    ID.
+  endpoint: /inventory/products/get
+  method: POST
+  name: get_product
+  service: inventory
+- description: Create a restock order for a product, specifying product ID, quantity,
+    and supplier.
+  endpoint: /inventory/orders/create
+  method: POST
+  name: create_order
+  service: inventory

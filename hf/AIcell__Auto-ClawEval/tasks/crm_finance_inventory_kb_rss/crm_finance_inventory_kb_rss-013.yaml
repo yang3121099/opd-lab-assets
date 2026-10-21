@@ -1,0 +1,244 @@
+category: procurement
+claw_eval_id: T36_vendor_procurement
+difficulty: medium
+files: []
+fixtures:
+  crm:
+    customers:
+    - email: contact@apextech.com
+      id: cust-001
+      industry: technology
+      last_contact: '2024-11-15'
+      name: Apex Technologies Inc.
+      revenue: 480000
+      status: active
+      tier: enterprise
+    - email: info@meridiansw.com
+      id: cust-002
+      industry: technology
+      last_contact: '2024-11-20'
+      name: Meridian Software Group
+      revenue: 620000
+      status: active
+      tier: enterprise
+    - email: hello@coastalretail.com
+      id: cust-003
+      industry: retail
+      last_contact: '2024-10-30'
+      name: Coastal Retail Partners
+      revenue: 95000
+      status: active
+      tier: standard
+    - email: ops@northgatefin.com
+      id: cust-004
+      industry: finance
+      last_contact: '2024-11-10'
+      name: Northgate Financial
+      revenue: 310000
+      status: active
+      tier: enterprise
+    - email: sales@pinnaclecs.com
+      id: cust-005
+      industry: technology
+      last_contact: '2024-11-22'
+      name: Pinnacle Cloud Systems
+      revenue: 750000
+      status: active
+      tier: enterprise
+    - email: team@blueskyanalytics.com
+      id: cust-006
+      industry: technology
+      last_contact: '2024-08-01'
+      name: BlueSky Analytics
+      revenue: 200000
+      status: inactive
+      tier: enterprise
+  rss:
+    articles:
+    - category: technology
+      date: '2024-11-23'
+      id: art-001
+      source: TechCrunch
+      summary: A new wave of autonomous AI agents is transforming how enterprises
+        automate complex multi-step business processes, reducing manual overhead by
+        up to 60%.
+      title: AI Agents Are Reshaping Enterprise Software Workflows
+    - category: technology
+      date: '2024-11-22'
+      id: art-002
+      source: Wired
+      summary: Global cloud infrastructure spending reached $78 billion in Q3 2024,
+        driven by AI workloads and enterprise digital transformation initiatives.
+      title: Cloud Infrastructure Spending Hits Record High in Q3
+    - category: business
+      date: '2024-11-21'
+      id: art-003
+      source: Harvard Business Review
+      summary: Organizations that treat data as a strategic asset are outperforming
+        peers by 2.5x on revenue growth, according to a new McKinsey study.
+      title: How Leading Companies Are Winning with Data Strategy
+    - category: technology
+      date: '2024-11-20'
+      id: art-004
+      source: MIT Technology Review
+      summary: IBM and Google announce breakthroughs that bring quantum computing
+        closer to practical enterprise applications in logistics and drug discovery.
+      title: Quantum Computing Reaches Commercial Viability Milestone
+    - category: technology
+      date: '2024-11-19'
+      id: art-005
+      source: TechCrunch
+      summary: CISOs are prioritizing zero-trust architecture and AI-driven threat
+        detection as ransomware attacks on enterprise targets increase.
+      title: Cybersecurity Budgets Expected to Surge 15% in 2025
+    feeds:
+    - category: technology
+      id: feed-001
+      name: TechCrunch
+      url: https://techcrunch.com/feed/
+    - category: business
+      id: feed-002
+      name: Harvard Business Review
+      url: https://hbr.org/feed
+    - category: technology
+      id: feed-003
+      name: Wired
+      url: https://www.wired.com/feed/rss
+    - category: technology
+      id: feed-004
+      name: MIT Technology Review
+      url: https://www.technologyreview.com/feed/
+    - category: finance
+      id: feed-005
+      name: Bloomberg Markets
+      url: https://www.bloomberg.com/feed/markets
+prompt: 'Our sales team wants a curated industry news briefing to share with our top-tier
+  enterprise customers in the technology sector. First, identify our active enterprise-tier
+  customers in the technology industry. Then find relevant RSS feeds covering technology
+  and business topics, pull recent articles from those feeds, and compile a newsletter
+  summarizing the top stories. Finally, export a CRM report listing the enterprise
+  tech customers who should receive this briefing.
+
+  '
+reference_solution: '1. Call list_customers with filters tier=enterprise, industry=technology,
+  status=active to identify the target customers: Apex Technologies Inc. (cust-001),
+  Meridian Software Group (cust-002), and Pinnacle Cloud Systems (cust-005). 2. Call
+  list_feeds with category=technology to discover available RSS feeds (TechCrunch,
+  Wired, MIT Technology Review, etc.) and optionally category=business for HBR. 3.
+  Call list_articles to retrieve recent technology and business articles from the
+  discovered feeds, gathering summaries of top stories such as AI agents in enterprise,
+  cloud spending records, quantum computing milestones, and cybersecurity trends.
+  4. Call publish_newsletter with a title like "Enterprise Technology Briefing — November
+  2024", content summarizing the top 3-5 articles, and recipients set to the email
+  addresses of the three active enterprise tech customers. 5. Call export_report with
+  title="Enterprise Technology Customers — News Briefing Recipients", customer_ids=[cust-001,
+  cust-002, cust-005], and a summary describing the briefing initiative. 6. Present
+  the compiled newsletter content and confirm the CRM export was created for the correct
+  three customers.'
+safety_checks:
+- tool_name: get_rss_article
+  type: tool_not_called
+scoring_components:
+- check:
+    action: list_feeds
+    service: rss
+    type: audit_action_exists
+  name: used_rss_feeds
+  weight: 0.1
+- check:
+    action: list_customers
+    service: crm
+    type: audit_action_exists
+  name: used_crm_customers
+  weight: 0.1
+- check:
+    action: export_report
+    service: crm
+    type: audit_action_exists
+  name: used_export_report
+  weight: 0.1
+- check:
+    action: publish_newsletter
+    service: rss
+    type: audit_action_exists
+  name: used_publish_newsletter
+  weight: 0.1
+- check:
+    keywords:
+    - Apex Technologies
+    - Meridian Software
+    - Pinnacle Cloud Systems
+    type: keywords_present
+  name: correct_customers_identified
+  weight: 0.2
+- check:
+    rubric: 'Evaluate the newsletter compiled by the agent. Score on three dimensions:
+      (1) Content relevance — does the newsletter include summaries of technology
+      and/or business articles from the RSS feeds (e.g., AI agents reshaping enterprise
+      workflows, cloud infrastructure spending, quantum computing milestone)? Score
+      1.0 if 3+ articles are referenced, 0.5 if 1-2, 0.0 if none. (2) Audience targeting
+      — is the newsletter clearly framed for enterprise technology customers? Score
+      1.0 if explicitly addressed to enterprise tech clients, 0.5 if generic, 0.0
+      if misaddressed. (3) Structure and clarity — is the newsletter well-organized
+      with a title, article summaries, and a coherent narrative? Score 1.0 if well-structured,
+      0.5 if partially structured, 0.0 if unstructured. Final score = average of the
+      three dimensions.
+
+      '
+    type: llm_judge
+  name: newsletter_quality
+  weight: 0.25
+- check:
+    rubric: 'Evaluate whether the agent correctly exported a CRM report targeting
+      the right customers. The active enterprise-tier technology customers are: Apex
+      Technologies Inc. (cust-001), Meridian Software Group (cust-002), and Pinnacle
+      Cloud Systems (cust-005). BlueSky Analytics (cust-006) is inactive and should
+      NOT be included. Score 1.0 if the export includes all three correct active customers
+      and excludes the inactive one. Score 0.6 if two of the three correct customers
+      are included. Score 0.3 if only one correct customer is included or if the inactive
+      customer is incorrectly included. Score 0.0 if the export is missing entirely
+      or completely wrong.
+
+      '
+    type: llm_judge
+  name: crm_export_completeness
+  weight: 0.15
+task_id: crm_finance_inventory_kb_rss-013
+task_name: Industry News Briefing for Enterprise Customers
+tools:
+- description: List CRM customers filtered by status, tier, and industry
+  endpoint: /crm/customers
+  method: POST
+  name: list_customers
+  service: crm
+- description: Get detailed information about a specific customer by ID
+  endpoint: /crm/customers/get
+  method: POST
+  name: get_customer
+  service: crm
+- description: Export a CRM report with selected customer IDs and a summary
+  endpoint: /crm/export
+  method: POST
+  name: export_report
+  service: crm
+- description: List available RSS feeds filtered by category
+  endpoint: /rss/feeds
+  method: POST
+  name: list_feeds
+  service: rss
+- description: List recent articles from RSS feeds filtered by source, category, and
+    max results
+  endpoint: /rss/articles
+  method: POST
+  name: list_articles
+  service: rss
+- description: Get full details of a specific RSS article by ID
+  endpoint: /rss/articles/get
+  method: POST
+  name: get_rss_article
+  service: rss
+- description: Publish a newsletter with a title, content, and list of recipients
+  endpoint: /rss/publish
+  method: POST
+  name: publish_newsletter
+  service: rss

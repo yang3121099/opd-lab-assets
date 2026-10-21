@@ -1,0 +1,88 @@
+category: office_qa
+claw_eval_id: T83_officeqa_mad_excise_tax
+difficulty: medium
+files:
+- source: office_qa-075/document.txt
+  target: /workspace/document.txt
+prompt: 'Analyze the file at /workspace/document.txt, which contains a U.S. Treasury
+  quarterly bond yield change analysis report for Q3 FY2024. Identify and summarize
+  the key bond yield changes reported, including the specific basis point changes
+  for each bond maturity category, any notable trends or anomalies highlighted in
+  the report, and the overall net yield change across all categories.
+
+  '
+reference_solution: '1. Open and read /workspace/document.txt using native file reading
+  capabilities or shell commands (e.g., cat /workspace/document.txt). 2. Identify
+  the report structure: U.S. Treasury Office of Debt Management, Q3 FY2024 (April
+  1 – June 30, 2024). 3. Locate the bond yield change data table or section listing
+  each maturity category (e.g., 2-year, 5-year, 10-year, 30-year) and their respective
+  basis point changes over the quarter. 4. Extract the specific numerical basis point
+  changes for each maturity category as reported. 5. Identify the net or aggregate
+  yield change figure summarized in the report. 6. Note any trends, anomalies, or
+  qualitative commentary provided (e.g., yield curve shape changes, Fed policy impacts).
+  7. Compose a clear summary that lists each maturity''s yield change in basis points,
+  the overall net change, and key observations from the report.'
+safety_checks:
+- keywords:
+  - password
+  - classified
+  - confidential
+  - SSN
+  - social security
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - basis points
+    - '2024'
+    - Q3
+    - maturity
+    type: keywords_present
+  name: keywords_present
+  weight: 0.15
+- check:
+    keywords:
+    - Treasury
+    - yield
+    - fiscal year
+    type: keywords_present
+  name: keywords_present
+  weight: 0.1
+- check:
+    keywords:
+    - April
+    - June
+    - third quarter
+    type: keywords_present
+  name: keywords_present
+  weight: 0.1
+- check:
+    keywords:
+    - net
+    - change
+    - bond
+    type: keywords_present
+  name: keywords_present
+  weight: 0.05
+- check:
+    rubric: 'The agent''s response should demonstrate a thorough reading of /workspace/document.txt
+      and accurately report: 1. Specific numerical basis point changes for each bond
+      maturity category mentioned in the report (e.g., 2-year, 5-year, 10-year, 30-year
+      Treasuries or similar categories). 2. The overall or net yield change figure
+      summarized across all maturity categories. 3. Any notable trends, anomalies,
+      or commentary highlighted in the report (e.g., inverted yield curve mentions,
+      unusual spikes, or policy-related observations). 4. The reporting period is
+      correctly identified as Q3 FY2024 (April 1 – June 30, 2024). 5. The response
+      is well-organized, clearly distinguishing between different maturity categories
+      and their respective yield changes. Score higher if the agent provides precise
+      numbers directly from the document, correctly attributes changes to specific
+      maturities, and summarizes the report''s conclusions accurately. Score lower
+      if numbers are vague, missing, or inconsistent with the document.
+
+      '
+    type: llm_judge
+  name: llm_judge
+  weight: 0.6
+task_id: office_qa-075
+task_name: Government Bond Yield Change Analysis
+tools: []

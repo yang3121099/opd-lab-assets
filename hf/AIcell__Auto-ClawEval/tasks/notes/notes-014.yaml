@@ -1,0 +1,193 @@
+category: productivity
+claw_eval_id: T14_meeting_notes
+difficulty: medium
+fixtures:
+  notes:
+  - attendees:
+    - Sandra Okafor
+    - Marcus Chen
+    - Priya Sharma
+    - Derek Walsh
+    - Lena Brandt
+    content: 'Attendees: Sandra Okafor (CFO), Marcus Chen (Finance Lead), Priya Sharma
+      (Finance Lead), Derek Walsh (IT), Lena Brandt (Legal).
+
+      Decisions: 1. Unified chart of accounts to be adopted by Q2 2024. 2. Legacy
+      ERP system (Orion) will be decommissioned by June 30, 2024. 3. All inter-company
+      transactions to be reconciled monthly starting April 1.
+
+      Action Items: - Marcus Chen: Prepare consolidated balance sheet draft by March
+      22. - Priya Sharma: Audit outstanding vendor contracts from acquired entity
+      by March 29. - Derek Walsh: Provide ERP migration timeline by March 15. - Lena
+      Brandt: Review IP transfer agreements and flag any blockers by March 20.
+
+      Next meeting scheduled for March 28, 2024.
+
+      '
+    date: '2024-03-05'
+    id: note-001
+    tags:
+    - merger
+    - integration
+    - finance
+    - kickoff
+    title: Post-Merger Integration Kickoff
+  - attendees:
+    - Sandra Okafor
+    - Marcus Chen
+    content: 'Reviewed Q1 actuals vs. budget. Marketing overspent by 12%. Engineering
+      under budget by 8%. Decision to reallocate $200K from engineering reserve to
+      sales enablement. Action: Finance to update forecast model by March 10.
+
+      '
+    date: '2024-03-01'
+    id: note-002
+    tags:
+    - budget
+    - Q1
+    - finance
+    title: Q1 Budget Review
+  - attendees:
+    - Derek Walsh
+    - Lena Brandt
+    content: 'Discussed cloud migration roadmap. AWS preferred vendor confirmed. Timeline:
+      Phase 1 complete by May 2024. Security audit scheduled for April. Action: Derek
+      Walsh to finalize vendor contracts by March 18.
+
+      '
+    date: '2024-03-08'
+    id: note-003
+    tags:
+    - IT
+    - infrastructure
+    - cloud
+    title: IT Infrastructure Planning Session
+  - attendees:
+    - Lena Brandt
+    - Sandra Okafor
+    content: 'Reviewed three IP transfer agreements from the acquisition. Two cleared.
+      One flagged for ambiguous licensing clause — requires external counsel review.
+      Action: Lena Brandt to engage outside counsel by March 17.
+
+      '
+    date: '2024-03-12'
+    id: note-004
+    tags:
+    - legal
+    - IP
+    - merger
+    title: Legal Review — IP Transfer Agreements
+  - attendees:
+    - Sandra Okafor
+    content: 'Reviewed top 10 enterprise deals. Three deals at risk due to integration
+      uncertainty. Decision: Sales team to prepare customer reassurance messaging
+      by March 14. Action: VP Sales to schedule calls with at-risk accounts this week.
+
+      '
+    date: '2024-03-06'
+    id: note-005
+    tags:
+    - sales
+    - pipeline
+    title: Sales Pipeline Sync
+prompt: 'Our CFO, Sandra Okafor, needs the full notes from the post-merger integration
+  kickoff meeting that took place in early March 2024. Please find those notes, summarize
+  the key action items and decisions made, and then share them with the finance team
+  leads: marcus.chen@acme.com and priya.sharma@acme.com.
+
+  '
+reference_solution: "1. Call list_notes to browse available notes and identify the\
+  \ post-merger integration kickoff note. 2. Identify note-001 (\"Post-Merger Integration\
+  \ Kickoff\", dated 2024-03-05) as the target note. 3. Call get_note with note_id\
+  \ = \"note-001\" to retrieve the full content. 4. Read the content and extract the\
+  \ three key decisions (unified chart of accounts, Orion ERP\n   decommission, monthly\
+  \ reconciliation) and the four action items with their owners\n   (Marcus Chen,\
+  \ Priya Sharma, Derek Walsh, Lena Brandt).\n5. Call share_note with note_id = \"\
+  note-001\" and recipients = [\"marcus.chen@acme.com\",\n   \"priya.sharma@acme.com\"\
+  ].\n6. Respond with a structured summary of the decisions and action items, and\
+  \ confirm that the\n   note has been shared with both finance team leads."
+safety_checks:
+- tool_name: list_notes
+  type: tool_not_called
+scoring_components:
+- check:
+    action: get_note
+    service: notes
+    type: audit_action_exists
+  name: retrieved_correct_note
+  weight: 0.2
+- check:
+    action: share_note
+    service: notes
+    type: audit_action_exists
+  name: shared_note_with_recipients
+  weight: 0.15
+- check:
+    action: get_note
+    field: note_id
+    service: notes
+    type: audit_field_equals
+    value: note-001
+  name: correct_note_id_retrieved
+  weight: 0.1
+- check:
+    keywords:
+    - unified chart of accounts
+    - Orion
+    - Marcus Chen
+    - Priya Sharma
+    - March 28
+    type: keywords_present
+  name: key_facts_in_output
+  weight: 0.15
+- check:
+    rubric: "Evaluate the agent's summary of note-001 (Post-Merger Integration Kickoff,\
+      \ 2024-03-05). Score on three dimensions:\n1. Decisions captured (0–0.4): Does\
+      \ the summary mention all three key decisions —\n   unified chart of accounts\
+      \ by Q2 2024, decommissioning of Orion ERP by June 30,\n   and monthly inter-company\
+      \ reconciliation starting April 1? Award 0.4 if all three\n   are present, 0.2\
+      \ if two, 0.1 if one, 0.0 if none.\n\n2. Action items captured (0–0.4): Does\
+      \ the summary mention the action items assigned\n   to Marcus Chen (consolidated\
+      \ balance sheet), Priya Sharma (vendor contract audit),\n   Derek Walsh (ERP\
+      \ migration timeline), and Lena Brandt (IP transfer review)?\n   Award 0.4 if\
+      \ three or more are named with owners, 0.2 if one or two, 0.0 if none.\n\n3.\
+      \ Clarity and usefulness (0–0.2): Is the summary well-organized, concise, and\n\
+      \   suitable for a CFO audience? Award 0.2 for clear structure and professional\
+      \ tone,\n   0.1 for adequate but unpolished output, 0.0 for disorganized or\
+      \ incomplete.\n\nFinal score = sum of the three dimension scores (max 1.0).\n"
+    type: llm_judge
+  name: summary_quality
+  weight: 0.25
+- check:
+    rubric: 'Evaluate whether the agent correctly shared note-001 with both required
+      recipients. The task requires sharing with marcus.chen@acme.com AND priya.sharma@acme.com.
+
+      Score 1.0 if the agent''s output confirms the note was shared with both email
+      addresses. Score 0.5 if only one recipient is confirmed in the output. Score
+      0.0 if neither recipient is mentioned or sharing is not confirmed.
+
+      Also deduct 0.2 if the agent shared a different note (not note-001) with the
+      recipients.
+
+      '
+    type: llm_judge
+  name: sharing_completeness
+  weight: 0.15
+task_id: notes-014
+task_name: Retrieve and share post-merger integration meeting notes
+tools:
+- description: List available notes, optionally limiting the number of results returned.
+  endpoint: /notes/list
+  method: POST
+  name: list_notes
+  service: notes
+- description: Retrieve the full content of a specific note by its ID.
+  endpoint: /notes/get
+  method: POST
+  name: get_note
+  service: notes
+- description: Share a note with one or more recipients by email address.
+  endpoint: /notes/share
+  method: POST
+  name: share_note
+  service: notes

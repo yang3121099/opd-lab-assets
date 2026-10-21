@@ -1,0 +1,113 @@
+```python
+#!/usr/bin/env python3
+"""
+XSS Filter Testing with HTML Sanitization
+Terminal Task: Security Testing Module
+"""
+
+import re
+import html
+import json
+from typing import Optional
+
+
+# ============================================================
+# HTML SANITIZER IMPLEMENTATION
+# ============================================================
+
+class HTMLSanitizer:
+    """
+    A basic HTML sanitizer that attempts to prevent XSS attacks.
+    This implementation has intentional vulnerabilities for testing purposes.
+    """
+
+    ALLOWED_TAGS = ['p', 'b', 'i', 'em', 'strong', 'a', 'ul', 'ol', 'li', 'br', 'span', 'div']
+    ALLOWED_ATTRS = {'a': ['href', 'title'], 'span': ['class'], 'div': ['class']}
+
+    def __init__(self, strict_mode: bool = False):
+        self.strict_mode = strict_mode
+        self.blocked_patterns = [
+            r'<script[^>]*>.*?</script>',
+            r'javascript:',
+            r'on\w+\s*=',
+            r'<iframe[^>]*>',
+            r'<object[^>]*>',
+            r'<embed[^>]*>',
+        ]
+
+    def sanitize(self, input_html: str) -> str:
+        """
+        Sanitize HTML input to remove potentially dangerous content.
+        WARNING: This is a simplified implementation with known bypasses.
+        """
+        if not input_html:
+            return ""
+
+        result = input_html
+
+        # Apply blocked pattern filters
+        for pattern in self.blocked_patterns:
+            result = re.sub(pattern, '', result, flags=re.IGNORECASE | re.DOTALL)
+
+        if self.strict_mode:
+            result = self._strip_all_tags(result)
+
+        return result
+
+    def _strip_all_tags(self, text: str) -> str:
+        """Remove all HTML tags from input."""
+        return re.sub(r'<[^>]+>', '', text)
+
+    def encode_output(self, text: str) -> str:
+        """HTML encode special characters for safe output."""
+        return html.escape(text, quote=True)
+
+    def validate_url(self, url: str) -> bool:
+        """Validate that a URL is safe (no javascript: protocol)."""
+        if not url:
+            return False
+        url_lower = url.lower().strip()
+        dangerous_protocols = ['javascript:', 'data:', 'vbscript:', 'file:']
+        for protocol in dangerous_protocols:
+            if url_lower.startswith(protocol):
+                return False
+        return True
+
+
+# ============================================================
+# TEST DATA - XSS PAYLOADS
+# ============================================================
+
+XSS_TEST_PAYLOADS = {
+    "basic_script": {
+        "payload": "<script>alert('XSS')</script>",
+        "description": "Basic script tag injection",
+        "expected_blocked": True,
+        "category": "script_injection"
+    },
+    "img_onerror": {
+        "payload": "<img src=x onerror=alert('XSS')>",
+        "description": "Image tag with onerror event handler",
+        "expected_blocked": True,
+        "category": "event_handler"
+    },
+    "svg_onload": {
+        "payload": "<svg onload=alert('XSS')>",
+        "description": "SVG element with onload event",
+        "expected_blocked": True,
+        "category": "event_handler"
+    },
+    "javascript_href": {
+        "payload": "<a href='javascript:alert(1)'>Click me</a>",
+        "description": "Anchor tag with javascript: protocol",
+        "expected_blocked": True,
+        "category": "javascript_protocol"
+    },
+    "encoded_script": {
+        "payload": "<script>alert(String.fromCharCode(88,83,83))</script>",
+        "description": "Script with character encoding bypass attempt",
+        "expected_blocked": True,
+        "category": "encoding_bypass"
+    },
+    "html_entities_bypass": {
+        "payload": "&lt

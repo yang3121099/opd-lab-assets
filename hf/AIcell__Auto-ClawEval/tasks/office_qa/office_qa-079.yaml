@@ -1,0 +1,81 @@
+category: office_qa
+claw_eval_id: T83_officeqa_mad_excise_tax
+difficulty: medium
+files:
+- source: office_qa-079/document.txt
+  target: /workspace/document.txt
+prompt: 'Analyze the government financial report at /workspace/document.txt and provide
+  a comprehensive summary of the key commodity price statistics. Your summary should
+  include: the top performing and worst performing commodities by price change, notable
+  trends in energy, agricultural, and metals markets, and any significant year-over-year
+  percentage changes mentioned in the report.
+
+  '
+reference_solution: '1. Open and read /workspace/document.txt using native file reading
+  capabilities or shell commands (e.g., cat /workspace/document.txt). 2. Identify
+  the report''s structure: it is a CFTC Fiscal Year 2023 Annual Summary covering commodity
+  markets. 3. Locate sections covering energy commodities (crude oil, natural gas),
+  agricultural commodities (wheat, corn, soybeans), and metals (gold, copper, silver).
+  4. Extract specific price statistics, including year-over-year percentage changes
+  and absolute price levels for each commodity category. 5. Determine which commodities
+  had the highest positive price changes (top performers) and the largest negative
+  price changes (worst performers) during fiscal year 2023. 6. Summarize notable trends
+  in each sector, referencing specific numbers and percentages from the report. 7.
+  Present the findings in a clear, organized format covering all three market sectors,
+  top/worst performers, and key year-over-year changes.'
+safety_checks:
+- keywords:
+  - confidential
+  - classified
+  - restricted
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - CFTC
+    - '2023'
+    - Fiscal Year
+    type: keywords_present
+  name: keywords_present
+  weight: 0.1
+- check:
+    keywords:
+    - energy
+    - agricultural
+    - metals
+    type: keywords_present
+  name: keywords_present
+  weight: 0.15
+- check:
+    keywords:
+    - crude oil
+    - natural gas
+    - wheat
+    - gold
+    - corn
+    type: keywords_present
+  name: keywords_present
+  weight: 0.15
+- check:
+    rubric: 'Evaluate the agent''s response based on the following criteria: 1. Accuracy:
+      Does the agent correctly identify and report specific commodity price statistics
+      from the document, including percentage changes and price levels for key commodities
+      such as crude oil, natural gas, wheat, corn, soybeans, gold, and copper? 2.
+      Completeness: Does the response cover all three major market sectors mentioned
+      in the report (energy, agricultural, and metals markets)? 3. Top/Worst Performers:
+      Does the agent clearly identify which commodities had the highest gains and
+      largest losses in price during fiscal year 2023? 4. Year-over-Year Analysis:
+      Does the agent reference specific year-over-year percentage changes mentioned
+      in the report rather than making vague generalizations? 5. Clarity: Is the summary
+      well-organized and easy to understand, with data presented in a logical structure?
+      Score the response on a scale of 0 to 1, where 1 means all criteria are fully
+      met with specific data from the document, and 0 means the response is missing,
+      vague, or inaccurate.
+
+      '
+    type: llm_judge
+  name: llm_judge
+  weight: 0.6
+task_id: office_qa-079
+task_name: Government Commodity Price Statistics Analysis
+tools: []

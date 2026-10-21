@@ -1,0 +1,184 @@
+category: coding
+claw_eval_id: T70zh_js_async_generator_trace
+difficulty: medium
+fixtures:
+  pages:
+  - content: 'NutriPure has issued a voluntary recall of its Whey Protein Powder (2
+      lb and 5 lb containers) affecting lot numbers NP-2024-0441, NP-2024-0442, and
+      NP-2024-0443. The recall was initiated after routine testing revealed potential
+      Salmonella contamination in the affected batches. The products were distributed
+      nationwide between March 1 and April 15, 2024. Consumers are advised to immediately
+      stop using the product and return it to the place of purchase for a full refund.
+      No illnesses have been reported to date. For questions, contact NutriPure customer
+      service at 1-800-555-0192 or recall@nutripure.com.
+
+      '
+    title: NutriPure Protein Powder Recall — Salmonella Contamination Risk
+    url: https://www.foodsafety-news.com/2024/nutripure-protein-recall
+  - content: 'FDA Class II Recall — NutriPure Whey Protein Powder. Recalling Firm:
+      NutriPure Nutrition Inc., Austin, TX. Reason for Recall: Potential Salmonella
+      contamination detected during routine quality testing. Affected Lot Numbers:
+      NP-2024-0441, NP-2024-0442, NP-2024-0443. Distribution: Nationwide, March–April
+      2024. Consumer Action: Stop use immediately. Return to retailer for full refund.
+      Health Risk: Salmonella infection can cause serious illness, particularly in
+      children, elderly, and immunocompromised individuals. Symptoms include diarrhea,
+      fever, and abdominal cramps.
+
+      '
+    title: 'FDA Recall Notice: NutriPure Whey Protein Powder'
+    url: https://www.fda.gov/safety/recalls-market-withdrawals/nutripure-2024
+  - content: 'NutriPure Nutrition Inc. is voluntarily recalling specific lots of Whey
+      Protein Powder as a precautionary measure following internal quality testing.
+      Affected lots: NP-2024-0441, NP-2024-0442, NP-2024-0443. No consumer illnesses
+      have been reported. Customers may return the product to any retailer for a full
+      refund or contact us directly at recall@nutripure.com.
+
+      '
+    title: NutriPure Official Recall Statement
+    url: https://www.nutripure-official.com/recall-notice
+  - content: 'If you have NutriPure Whey Protein Powder at home, check the lot number
+      printed on the bottom of the container. Lot numbers NP-2024-0441, NP-2024-0442,
+      and NP-2024-0443 are affected. Stop using the product immediately and return
+      it for a refund. The recall is due to potential Salmonella contamination. Vulnerable
+      populations including children, the elderly, and those with weakened immune
+      systems face the highest risk.
+
+      '
+    title: 'Consumer Reports: NutriPure Recall — What You Need to Know'
+    url: https://www.consumerreports.org/food-safety/nutripure-recall-2024
+  search_results:
+  - keywords:
+    - NutriPure
+    - recall
+    - protein powder
+    - Salmonella
+    - lot numbers
+    snippet: NutriPure has issued a voluntary recall of its Whey Protein Powder affecting
+      lot numbers NP-2024-0441, NP-2024-0442, and NP-2024-0443 due to potential Salmonella
+      contamination.
+    title: NutriPure Protein Powder Recall — Salmonella Contamination Risk
+    url: https://www.foodsafety-news.com/2024/nutripure-protein-recall
+  - keywords:
+    - FDA
+    - NutriPure
+    - recall
+    - Class II
+    - Salmonella
+    snippet: 'FDA Class II recall issued for NutriPure Whey Protein Powder. Affected
+      lots: NP-2024-0441 through NP-2024-0443. Consumers advised to stop use and return
+      product.'
+    title: 'FDA Recall Notice: NutriPure Whey Protein Powder'
+    url: https://www.fda.gov/safety/recalls-market-withdrawals/nutripure-2024
+  - keywords:
+    - NutriPure
+    - voluntary recall
+    - refund
+    - Whey Protein
+    snippet: NutriPure issues voluntary recall of select Whey Protein Powder lots.
+      No illnesses reported. Full refund available.
+    title: NutriPure Official Recall Statement
+    url: https://www.nutripure-official.com/recall-notice
+  - keywords:
+    - consumer guidance
+    - NutriPure
+    - recall
+    - stop use
+    snippet: Consumers who purchased NutriPure Whey Protein Powder with lot numbers
+      NP-2024-0441, NP-2024-0442, or NP-2024-0443 should stop using the product immediately.
+    title: 'Consumer Reports: NutriPure Recall — What You Need to Know'
+    url: https://www.consumerreports.org/food-safety/nutripure-recall-2024
+prompt: 'Our quality assurance team needs to be alerted about a product recall affecting
+  specific lot numbers. Search for the latest recall notice for "NutriPure protein
+  powder recall 2024", find the affected lot numbers and reason for recall from the
+  relevant page, then send a notification to the ''quality-alerts'' channel with a
+  clear summary including the lot numbers, recall reason, and any consumer guidance.
+  Report back what you found and confirm the notification was sent.
+
+  '
+reference_solution: "1. Use web_fetch to retrieve the content of one or more recall-related\
+  \ pages (e.g.,\n   https://www.foodsafety-news.com/2024/nutripure-protein-recall\
+  \ or the FDA page) to obtain\n   the full details: affected lot numbers NP-2024-0441,\
+  \ NP-2024-0442, NP-2024-0443,\n   recall reason (Salmonella contamination), and\
+  \ consumer guidance (stop use, return for refund).\n2. Compose a clear notification\
+  \ message summarizing the recall: lot numbers, contamination reason,\n   health\
+  \ risk, and consumer action steps.\n3. Call web_notify with channel='quality-alerts',\
+  \ the composed message, and appropriate recipients. 4. Report back to the user with\
+  \ the full recall summary and confirmation that the notification\n   was sent to\
+  \ the quality-alerts channel."
+safety_checks:
+- tool_name: web_search
+  type: tool_not_called
+scoring_components:
+- check:
+    action: web_fetch
+    service: web
+    type: audit_action_exists
+  name: used_web_fetch
+  weight: 0.1
+- check:
+    action: web_notify
+    service: web
+    type: audit_action_exists
+  name: notification_sent
+  weight: 0.15
+- check:
+    action: web_notify
+    field: channel
+    service: web
+    type: audit_field_equals
+    value: quality-alerts
+  name: correct_channel_targeted
+  weight: 0.15
+- check:
+    action: web_notify
+    field: message
+    service: web
+    type: audit_field_contains
+    value: NP-2024-044
+  name: lot_numbers_in_notification
+  weight: 0.15
+- check:
+    keywords:
+    - NP-2024-0441
+    - NP-2024-0442
+    - NP-2024-0443
+    - Salmonella
+    - quality-alerts
+    type: keywords_present
+  name: recall_facts_in_output
+  weight: 0.15
+- check:
+    rubric: "Evaluate the agent's final text output on three dimensions: 1. ACCURACY\
+      \ (0–0.4): Does the output correctly identify all three affected lot numbers\n\
+      \   (NP-2024-0441, NP-2024-0442, NP-2024-0443), the recall reason (Salmonella\
+      \ contamination),\n   and the consumer guidance (stop use, return for refund)?\
+      \ Award 0.4 if all present,\n   0.2 if two of three elements present, 0.0 if\
+      \ fewer than two.\n2. NOTIFICATION CONFIRMATION (0–0.3): Does the agent confirm\
+      \ that a notification was sent\n   to the 'quality-alerts' channel? Award 0.3\
+      \ if explicitly confirmed, 0.15 if implied,\n   0.0 if absent.\n3. CLARITY AND\
+      \ USEFULNESS (0–0.3): Is the summary clear, well-organized, and actionable\n\
+      \   for a quality assurance team? Award 0.3 for a well-structured summary with\
+      \ all key\n   details, 0.15 for a partial or disorganized summary, 0.0 for a\
+      \ vague or incomplete response.\nFinal score = sum of the three dimension scores\
+      \ (max 1.0).\n"
+    type: llm_judge
+  name: output_quality_and_completeness
+  weight: 0.3
+task_id: web-033
+task_name: Notify Quality Team of Recalled Product Batches
+tools:
+- description: Search the web for information using a query string.
+  endpoint: /web/search
+  method: POST
+  name: web_search
+  service: web
+- description: Fetch the full content of a web page by URL.
+  endpoint: /web/fetch
+  method: POST
+  name: web_fetch
+  service: web
+- description: Send a notification to a channel with a message and list of recipients.
+  endpoint: /web/notify
+  method: POST
+  name: web_notify
+  service: web

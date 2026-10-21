@@ -1,0 +1,153 @@
+UNITED STATES DEPARTMENT OF THE TREASURY
+Office of Debt Management
+
+QUARTERLY BOND YIELD CHANGE ANALYSIS REPORT
+Fiscal Year 2024, Third Quarter (April 1 – June 30, 2024)
+
+Prepared by: Office of Debt Management, Bureau of the Fiscal Service
+Report Date: July 18, 2024
+Classification: Public Release
+
+─────────────────────────────────────────────
+
+EXECUTIVE SUMMARY
+
+This report presents the methodology and findings of the Treasury's quarterly bond yield change calculation for the period ending June 30, 2024. The analysis covers yield movements across the full maturity spectrum of U.S. Treasury securities, with particular focus on the 2-year, 10-year, and 30-year benchmark instruments. During the third quarter of fiscal year 2024, the 10-year Treasury note yield rose by 48 basis points, closing at 4.36 percent on June 28, 2024, compared to an opening yield of 3.88 percent on April 1, 2024. This report documents the calculation methodology, contributing factors, and implications for federal debt service costs.
+
+─────────────────────────────────────────────
+
+SECTION 1: METHODOLOGY FOR YIELD CHANGE CALCULATION
+
+1.1 Data Sources
+
+All yield data referenced in this report is sourced from the Daily Treasury Par Yield Curve Rates published on the TreasuryDirect.gov website. Yields are recorded as of the 3:00 PM Eastern Time close of the secondary market on each business day. The benchmark yields used are the constant maturity Treasury (CMT) rates as compiled by the Federal Reserve Board of Governors under the H.15 statistical release.
+
+1.2 Basis Point Calculation
+
+Yield changes are expressed in basis points (bps), where one basis point equals 0.01 percent (one one-hundredth of one percentage point). The formula applied throughout this report is:
+
+Yield Change (bps) = [Yield (End Date) – Yield (Start Date)] × 100
+
+Example applied to the 10-year CMT for Q3 FY2024:
+Yield Change = (4.36% – 3.88%) × 100 = 48 basis points
+
+1.3 Price-Yield Relationship
+
+For purposes of estimating the market value impact on outstanding Treasury securities, the modified duration formula is applied:
+
+Approximate Price Change (%) = –Modified Duration × Yield Change (decimal)
+
+The average modified duration of the publicly held marketable Treasury debt portfolio as of March 31, 2024, was 6.1 years, as reported in the Treasury's April 2024 Quarterly Refunding Statement.
+
+─────────────────────────────────────────────
+
+SECTION 2: YIELD DATA SUMMARY – Q3 FY2024
+
+Table 1: Treasury Yield Levels and Changes by Maturity
+(April 1, 2024 to June 28, 2024)
+
+Maturity | April 1 Yield | June 28 Yield | Change (bps)
+3-Month | 5.37% | 5.25% | –12
+6-Month | 5.29% | 5.31% | +2
+1-Year | 5.01% | 5.09% | +8
+2-Year | 4.62% | 4.75% | +13
+5-Year | 4.21% | 4.33% | +12
+10-Year | 3.88% | 4.36% | +48
+20-Year | 4.19% | 4.68% | +49
+30-Year | 4.03% | 4.51% | +48
+
+Key observations from Table 1:
+
+- The yield curve steepened modestly during the quarter, with long-end yields rising more sharply than short-end yields.
+- The 3-month T-bill yield declined by 12 basis points, reflecting market anticipation of eventual Federal Reserve rate reductions.
+- The 10-year and 30-year yields both increased by 48 basis points, representing the largest absolute moves across the maturity spectrum.
+- The 2-year to 10-year spread, a widely monitored indicator of curve inversion, narrowed from –74 basis points on April 1 to –39 basis points on June 28, 2024.
+
+─────────────────────────────────────────────
+
+SECTION 3: CONTRIBUTING FACTORS TO YIELD MOVEMENTS
+
+3.1 Federal Reserve Policy Signals
+
+The Federal Open Market Committee (FOMC) held the federal funds target rate unchanged at 5.25–5.50 percent at its May 1, 2024 meeting and again at its June 12, 2024 meeting. The June 12 Summary of Economic Projections (the "dot plot") indicated that the median FOMC participant projected only one rate cut of 25 basis points in calendar year 2024, revised down from three cuts projected in the March 2024 dot plot. This revision contributed significantly to the upward pressure on intermediate and long-term yields during the quarter.
+
+3.2 Inflation Data
+
+The Bureau of Labor Statistics reported that the Consumer Price Index (CPI) for All Urban Consumers rose 3.4 percent year-over-year in April 2024 and 3.3 percent in May 2024. Core CPI, which excludes food and energy, registered 3.6 percent in April and 3.4 percent in May. These readings, while declining from the 2022 peak of 9.1 percent, remained above the Federal Reserve's 2.0 percent target, reinforcing the "higher for longer" interest rate narrative and contributing to the rise in longer-dated Treasury yields.
+
+3.3 Treasury Issuance Volume
+
+The Treasury Department announced at the May 1, 2024 Quarterly Refunding that it would maintain coupon auction sizes at elevated levels. Specifically, the 10-year note auction size was held at $39 billion per monthly cycle, and the 30-year bond auction was maintained at $22 billion. The total net new issuance of marketable Treasury securities during Q3 FY2024 was approximately $547 billion, contributing to supply-side upward pressure on yields.
+
+3.4 Labor Market Conditions
+
+The Bureau of Labor Statistics reported nonfarm payroll additions of 272,000 in May 2024, substantially exceeding the consensus economist forecast of 185,000. The unemployment rate edged up to 4.0 percent in May 2024, the first time it had reached that level since January 2022. The stronger-than-expected employment data reduced market expectations for near-term Federal Reserve rate cuts and contributed to the yield spike observed in the second week of June 2024.
+
+─────────────────────────────────────────────
+
+SECTION 4: IMPACT ON FEDERAL DEBT SERVICE COSTS
+
+4.1 Portfolio Composition
+
+As of June 30, 2024, the total outstanding publicly held marketable Treasury debt was approximately $27.4 trillion. Of this amount:
+
+- Treasury bills (maturities up to 1 year): $6.1 trillion (22.3% of total)
+- Treasury notes (maturities 2–10 years): $14.8 trillion (54.0% of total)
+- Treasury bonds (maturities 11–30 years): $4.3 trillion (15.7% of total)
+- Treasury Inflation-Protected Securities (TIPS): $2.0 trillion (7.3% of total)
+- Floating Rate Notes (FRNs): $0.2 trillion (0.7% of total)
+
+4.2 Estimated Debt Service Impact
+
+The 48-basis-point increase in the 10-year yield, applied to new issuance and refinancing activity during the quarter, is estimated to increase annualized interest expense on the federal debt by approximately $26 billion relative to projections made at the start of the quarter. This estimate is calculated as follows:
+
+New issuance and rollovers of 10-year equivalent securities during Q3 FY2024: approximately $540 billion
+Incremental annual interest cost = $540 billion × 0.48% = $2.592 billion per year from Q3 issuance alone
+
+When extrapolated across all maturities and weighted by the duration-adjusted yield increase, the Office of Management and Budget's Fiscal Year 2025 Mid-Session Review, released July 15, 2024, revised upward the net interest cost projection for FY2025 to $892 billion, compared to the $870 billion projected in the February 2024 President's Budget.
+
+4.3 Mark-to-Market Valuation
+
+Using the modified duration of 6.1 years and the weighted average yield increase of approximately 35 basis points across the portfolio:
+
+Approximate portfolio market value decline = 6.1 × 0.0035 = 2.14 percent
+
+Applied to the $27.4 trillion portfolio, this represents a notional mark-to-market decline of approximately $586 billion. It is important to note that the federal government accounts for Treasury securities on an accrual basis rather than a mark-to-market basis; this figure is presented for analytical purposes only.
+
+─────────────────────────────────────────────
+
+SECTION 5: HISTORICAL COMPARISON
+
+Table 2: 10-Year Treasury Yield Change by Quarter, FY2022–FY2024
+
+Quarter | Start Yield | End Yield | Change (bps)
+Q3 FY2022 (Apr–Jun 2022) | 2.34% | 2.98% | +64
+Q4 FY2022 (Jul–Sep 2022) | 2.98% | 3.83% | +85
+Q1 FY2023 (Oct–Dec 2022) | 3.83% | 3.88% | +5
+Q2 FY2023 (Jan–Mar 2023) | 3.88% | 3.96% | +8
+Q3 FY2023 (Apr–Jun 2023) | 3.96% | 3.84% | –12
+Q4 FY2023 (Jul–Sep 2023) | 3.84% | 4.57% | +73
+Q1 FY2024 (Oct–Dec 2023) | 4.57% | 3.97% | –60
+Q2 FY2024 (Jan–Mar 2024) | 3.97% | 3.88% | –9
+Q3 FY2024 (Apr–Jun 2024) | 3.88% | 4.36% | +48
+
+The Q3 FY2024 increase of 48 basis points represents the largest single-quarter yield increase since Q4 FY2023, when the 10-year yield rose 73 basis points amid concerns about persistent inflation and elevated Treasury supply.
+
+─────────────────────────────────────────────
+
+SECTION 6: CONCLUSIONS AND FORWARD OUTLOOK
+
+The 48-basis-point rise in the 10-year Treasury yield during Q3 FY2024 reflects a convergence of persistent inflation above the Federal Reserve's 2.0 percent target, a reduction in expected rate cuts from three to one for calendar year 2024, robust labor market data, and elevated Treasury issuance volumes. The resulting increase in debt service costs, estimated at $26 billion in additional annualized interest expense from Q3 issuance alone, underscores the sensitivity of the federal budget to interest rate movements.
+
+The Office of Debt Management will continue to monitor yield developments and will publish updated analysis in the Q4 FY2024 report, scheduled for release on October 17, 2024. Questions regarding this report should be directed to the Office of Debt Management at debt.management@fiscal.treasury.gov.
+
+─────────────────────────────────────────────
+
+Prepared by:
+Office of Debt Management
+Bureau of the Fiscal Service
+United States Department of the Treasury
+1500 Pennsylvania Avenue NW, Washington, DC 20220
+
+Report Reference Number: ODM-2024-Q3-YLD-007
+Total Pages: 8

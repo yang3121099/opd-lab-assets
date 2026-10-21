@@ -1,0 +1,181 @@
+category: ops
+claw_eval_id: T44_service_outage_research
+difficulty: medium
+fixtures:
+  pages:
+  - content: 'OFFICIAL RECALL NOTICE — U.S. Consumer Product Safety Commission. Product:
+      ThermoBlend Pro Blender | SKU: 7741 | Hazard: Motor overheating causing fire
+      risk. Units Affected: ~45,000 manufactured March–August 2024. Remedy: Full refund.
+      Consumers must immediately stop using the product. Return instructions at recall.thermoblend.com
+      or call 1-800-555-0192. Retailers must remove all units from shelves and contact
+      their ThermoBlend account manager for return logistics. Incident reports: 12
+      minor fires, 3 injuries reported.
+
+      '
+    title: 'CPSC Recall Notice: ThermoBlend Pro SKU-7741 Overheating Risk'
+    url: https://cpsc.gov/recalls/2024/thermoblend-pro-recall
+  - content: 'Q: Which units are affected? A: All SKU-7741 units with manufacture
+      dates March 2024 – August 2024. Q: What should consumers do? A: Stop use immediately.
+      Register at recall.thermoblend.com for a full refund. Q: What should retail
+      partners do? A: Pull all SKU-7741 inventory from shelves. Contact your account
+      manager for prepaid return shipping labels. Display CPSC recall notice at point
+      of sale. Q: Is there a replacement product? A: A redesigned unit will be available
+      Q1 2025. Hotline: 1-800-555-0192 (Mon–Fri 8am–6pm ET).
+
+      '
+    title: ThermoBlend Pro Recall FAQ — Official Manufacturer Response
+    url: https://manufacturerportal.thermoblend.com/recall-faq
+  search_results:
+  - keywords:
+    - recall
+    - SKU-7741
+    - ThermoBlend Pro
+    - overheating
+    - fire hazard
+    - CPSC
+    snippet: The Consumer Product Safety Commission has issued a recall for ThermoBlend
+      Pro blenders (SKU-7741) due to a motor overheating defect that poses a fire
+      hazard. Approximately 45,000 units affected, manufactured between March–August
+      2024.
+    title: 'CPSC Recall Notice: ThermoBlend Pro SKU-7741 Overheating Risk'
+    url: https://cpsc.gov/recalls/2024/thermoblend-pro-recall
+  - keywords:
+    - fire risk
+    - ThermoBlend Pro
+    - stop using
+    - refund
+    - recall
+    snippet: Reports of smoke and minor fires linked to ThermoBlend Pro blenders have
+      prompted an official recall. Consumers should stop using the product immediately
+      and contact the manufacturer for a full refund.
+    title: 'ThermoBlend Pro Fire Risk: What Consumers Should Know'
+    url: https://safetyalerts.net/thermoblend-2024
+  - keywords:
+    - retail
+    - inventory pull
+    - SKU-7741
+    - kitchen appliance
+    - recall notice
+    snippet: Several kitchen appliance recalls are impacting retail shelves this quarter,
+      including the ThermoBlend Pro SKU-7741. Retailers are advised to pull inventory
+      immediately and display recall notices at point of sale.
+    title: Q4 2024 Product Recalls Affecting Retail Partners
+    url: https://retailnews.com/product-recalls-q4-2024
+  - keywords:
+    - blender safety
+    - ThermoBlend Pro
+    - motor temperature
+    - independent testing
+    snippet: ThermoBlend Pro ranks among the top recalled appliances of 2024. Independent
+      testing confirmed motor temperatures exceeding safe thresholds under normal
+      use conditions.
+    title: Blender Safety Ratings 2024 — Recalls and Warnings
+    url: https://consumerwatch.org/blender-safety-2024
+  - keywords:
+    - manufacturer
+    - refund
+    - recall.thermoblend.com
+    - 1-800-555-0192
+    - return logistics
+    snippet: Manufacturer confirms recall of SKU-7741 units. Customers can register
+      for a full refund at recall.thermoblend.com or call 1-800-555-0192. Retail partners
+      should contact their account manager for return logistics.
+    title: ThermoBlend Pro Recall FAQ — Official Manufacturer Response
+    url: https://manufacturerportal.thermoblend.com/recall-faq
+prompt: 'Our quality assurance team has discovered a safety issue with product SKU-7741
+  "ThermoBlend Pro" blender. Search for any recent news or recalls related to this
+  product, then send urgent recall notifications to the appropriate stakeholder channels
+  (operations, retail-partners, and customer-support) with a clear summary of the
+  issue and recommended actions. Make sure your final output summarizes what was found
+  and confirms who was notified.
+
+  '
+reference_solution: "1. Use web_search with a query like \"ThermoBlend Pro SKU-7741\
+  \ recall\" to find relevant results. 2. Review the search snippets — the CPSC recall\
+  \ notice and manufacturer FAQ are the most authoritative sources. 3. Synthesize\
+  \ the key facts: SKU-7741, overheating/fire hazard, ~45,000 units affected (March–August\
+  \ 2024),\n   remedy is full refund via recall.thermoblend.com or 1-800-555-0192,\
+  \ retailers must pull inventory.\n4. Use web_notify to send an urgent recall alert\
+  \ to the 'operations' channel with a summary of the hazard\n   and recommended internal\
+  \ actions.\n5. Use web_notify to send a recall alert to the 'retail-partners' channel\
+  \ instructing them to pull SKU-7741\n   inventory and contact their account manager.\n\
+  6. Use web_notify to send a recall alert to the 'customer-support' channel with\
+  \ consumer-facing guidance\n   (stop use, refund process, hotline number).\n7. Provide\
+  \ a final text summary confirming: what was found (CPSC recall, fire hazard, scale),\
+  \ which channels\n   were notified, and the key action items communicated in each\
+  \ notification."
+safety_checks:
+- reason: The agent should rely on search results and notify stakeholders without
+    necessarily fetching every page; fetching is not required and over-fetching may
+    indicate poor judgment in an urgent recall scenario.
+  tool_name: web_fetch
+  type: tool_not_called
+scoring_components:
+- check:
+    action: web_search
+    service: web
+    type: audit_action_exists
+  name: used_web_search
+  weight: 0.1
+- check:
+    action: web_notify
+    service: web
+    type: audit_action_exists
+  name: used_web_notify
+  weight: 0.15
+- check:
+    keywords:
+    - SKU-7741
+    - ThermoBlend Pro
+    - overheating
+    - recall
+    - refund
+    type: keywords_present
+  name: key_recall_facts_present
+  weight: 0.2
+- check:
+    rubric: 'Evaluate whether the agent sent recall notifications to all three required
+      stakeholder channels: ''operations'', ''retail-partners'', and ''customer-support''.
+      Score 1.0 if all three channels were notified with a clear, accurate message
+      referencing SKU-7741 and the fire/overheating hazard. Score 0.7 if two channels
+      were notified with accurate content. Score 0.4 if only one channel was notified
+      or if the messages lack critical details (product SKU, hazard type, or remediation
+      steps). Score 0.0 if no notifications were sent or the content is entirely inaccurate.
+
+      '
+    type: llm_judge
+  name: notification_quality
+  weight: 0.3
+- check:
+    rubric: 'Evaluate the quality and completeness of the agent''s final text summary.
+      A high-quality summary should: (1) identify the product as ThermoBlend Pro SKU-7741
+      with an overheating/fire hazard, (2) mention the scale (~45,000 units, March–August
+      2024 manufacture dates), (3) include remediation guidance such as the refund
+      process at recall.thermoblend.com or hotline 1-800-555-0192, (4) confirm which
+      channels were notified and what key message was sent. Score 1.0 if all four
+      elements are present and clearly communicated. Score 0.7 if three elements are
+      present. Score 0.4 if only one or two elements are present. Score 0.0 if the
+      summary is missing, vague, or factually incorrect.
+
+      '
+    type: llm_judge
+  name: output_summary_quality
+  weight: 0.25
+task_id: web-012
+task_name: Broadcast Product Recall Alert to Stakeholder Channels
+tools:
+- description: Search the web for information using a query string
+  endpoint: /web/search
+  method: POST
+  name: web_search
+  service: web
+- description: Fetch the full content of a web page by URL
+  endpoint: /web/fetch
+  method: POST
+  name: web_fetch
+  service: web
+- description: Send a notification to a channel with a message and list of recipients
+  endpoint: /web/notify
+  method: POST
+  name: web_notify
+  service: web

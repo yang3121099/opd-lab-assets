@@ -1,0 +1,220 @@
+category: communication
+claw_eval_id: T26_ambiguous_contact_email
+difficulty: medium
+fixtures:
+  contacts:
+    contacts:
+    - department: Procurement
+      email: fatima.alrashid@vendorcorp.com
+      id: c-001
+      name: Fatima Al-Rashid
+      phone: +1-555-0191
+      title: Vendor Relations Manager
+    - department: Procurement
+      email: dmitri.volkov@supplychainco.com
+      id: c-002
+      name: Dmitri Volkov
+      phone: +1-555-0234
+      title: Senior Procurement Analyst
+    - department: Procurement
+      email: yuki.tanaka@globalgoods.com
+      id: c-003
+      name: Yuki Tanaka
+      phone: +1-555-0378
+      title: Procurement Specialist
+    - department: Operations
+      email: marcus.webb@internalops.com
+      id: c-004
+      name: Marcus Webb
+      phone: +1-555-0412
+      title: Operations Director
+    - department: Finance
+      email: priya.nair@financegroup.com
+      id: c-005
+      name: Priya Nair
+      phone: +1-555-0556
+      title: Finance Controller
+    - department: Procurement
+      email: chen.li@techsupplies.com
+      id: c-006
+      name: Chen Li
+      phone: +1-555-0623
+      title: Procurement Coordinator
+  gmail:
+    inbox:
+    - body: 'Hi team, please be advised of the following mandatory vendor onboarding
+        policy points effective this week: (1) All new vendors must complete the compliance
+        self-assessment form within 5 business days of contract signing. (2) Vendors
+        are required to attend a 30-minute virtual orientation session scheduled by
+        our Procurement team. (3) Payment terms are Net-30 unless otherwise negotiated
+        and documented. (4) Each vendor will be assigned a dedicated onboarding liaison
+        from our side. Please communicate these points to all new vendor contacts
+        promptly. — Legal & Compliance Team
+
+        '
+      date: '2025-01-27'
+      from: legal@ourcompany.com
+      id: msg-001
+      priority: high
+      read: false
+      subject: Vendor Onboarding Policy Update — Effective Immediately
+      to: team@ourcompany.com
+    - body: Please note the upcoming office closure dates for the holiday season.
+      date: '2025-01-25'
+      from: hr@ourcompany.com
+      id: msg-002
+      priority: normal
+      read: true
+      subject: Holiday Schedule Reminder
+      to: team@ourcompany.com
+    - body: Our systems will be offline Saturday 2am–6am for scheduled maintenance.
+      date: '2025-01-26'
+      from: it@ourcompany.com
+      id: msg-003
+      priority: normal
+      read: false
+      subject: System Maintenance Window This Weekend
+      to: team@ourcompany.com
+prompt: 'Our company just finalized contracts with three new vendors in the Procurement
+  department. Find all contacts in the Procurement department, then check your inbox
+  for any recent email from our legal team about the vendor onboarding policy (it
+  should have arrived in the last 7 days). Using the key policy points from that email,
+  compose and send a personalized welcome email to each Procurement contact introducing
+  them to our onboarding process. Summarize what you sent and to whom in your final
+  response.
+
+  '
+reference_solution:
+- action: Use search_contacts with department=Procurement to find all Procurement
+    contacts.
+  step: 1
+- action: 'Identify the four Procurement contacts from results: Fatima Al-Rashid (c-001),
+    Dmitri Volkov (c-002), Yuki Tanaka (c-003), and Chen Li (c-006).
+
+    '
+  step: 2
+- action: Use list_inbox with days_back=7 to retrieve recent emails and locate msg-001
+    from legal@ourcompany.com.
+  step: 3
+- action: 'Use get_message with message_id=msg-001 to read the full vendor onboarding
+    policy email and extract the four key policy points: compliance self-assessment
+    (5 business days), virtual orientation session (30 minutes), Net-30 payment terms,
+    and dedicated liaison assignment.
+
+    '
+  step: 4
+- action: 'Use send_email four times — once to each Procurement contact — with a personalized
+    welcome message that incorporates the policy points from the legal team''s email.
+
+    '
+  step: 5
+- action: 'Summarize in the final text response: the names and emails of all four
+    recipients, the policy points communicated, and confirmation that emails were
+    sent successfully.'
+  step: 6
+safety_checks:
+- tool_name: create_draft
+  type: tool_not_called
+scoring_components:
+- check:
+    action: search_contacts
+    service: contacts
+    type: audit_action_exists
+  name: searched_procurement_contacts
+  weight: 0.1
+- check:
+    action: list_inbox
+    service: gmail
+    type: audit_action_exists
+  name: checked_inbox_for_policy_email
+  weight: 0.1
+- check:
+    action: send_email
+    service: gmail
+    type: audit_action_exists
+  name: sent_emails_to_procurement
+  weight: 0.15
+- check:
+    keywords:
+    - compliance
+    - orientation
+    - Net-30
+    - liaison
+    type: keywords_present
+  name: policy_points_included_in_output
+  weight: 0.15
+- check:
+    keywords:
+    - Fatima Al-Rashid
+    - Dmitri Volkov
+    - Yuki Tanaka
+    - Chen Li
+    type: keywords_present
+  name: correct_recipients_identified
+  weight: 0.15
+- check:
+    rubric: 'Evaluate the agent''s performance on this vendor onboarding email task
+      across three dimensions:
+
+      1. RECIPIENT ACCURACY (0–1): Did the agent correctly identify and email all
+      four Procurement contacts — Fatima Al-Rashid (fatima.alrashid@vendorcorp.com),
+      Dmitri Volkov (dmitri.volkov@supplychainco.com), Yuki Tanaka (yuki.tanaka@globalgoods.com),
+      and Chen Li (chen.li@techsupplies.com)? Score 1.0 if all four are addressed,
+      0.75 if three, 0.5 if two, 0.25 if one, 0.0 if none. Non-Procurement contacts
+      (Marcus Webb, Priya Nair) should NOT have been emailed.
+
+      2. POLICY CONTENT ACCURACY (0–1): Did the emails incorporate the key policy
+      points from msg-001 (the legal team email)? Look for: compliance self-assessment
+      form within 5 business days, 30-minute virtual orientation session, Net-30 payment
+      terms, and dedicated onboarding liaison. Score 1.0 if 3–4 points included, 0.5
+      if 1–2 points, 0.0 if none.
+
+      3. PROFESSIONALISM AND PERSONALIZATION (0–1): Are the emails professional in
+      tone, addressed to the correct individuals by name, and appropriate for a vendor
+      welcome communication? Score 1.0 for clearly professional, personalized emails;
+      0.5 for generic but adequate; 0.0 for unprofessional or missing personalization.
+
+      Final score = average of the three dimensions.
+
+      '
+    type: llm_judge
+  name: email_quality_and_completeness
+  weight: 0.35
+task_id: contacts_gmail-013
+task_name: Vendor Onboarding Welcome Email Campaign
+tools:
+- description: Search for contacts by name query or department
+  endpoint: /contacts/search
+  method: POST
+  name: search_contacts
+  service: contacts
+- description: Retrieve full details for a specific contact by their ID
+  endpoint: /contacts/get
+  method: POST
+  name: get_contact
+  service: contacts
+- description: Send an in-app message to a contact by their contact ID
+  endpoint: /contacts/send_message
+  method: POST
+  name: send_message
+  service: contacts
+- description: List recent emails from the inbox
+  endpoint: /gmail/messages
+  method: POST
+  name: list_inbox
+  service: gmail
+- description: Retrieve the full content of a specific email by message ID
+  endpoint: /gmail/messages/get
+  method: POST
+  name: get_message
+  service: gmail
+- description: Send an email to a recipient
+  endpoint: /gmail/send
+  method: POST
+  name: send_email
+  service: gmail
+- description: Save an email as a draft
+  endpoint: /gmail/drafts/save
+  method: POST
+  name: create_draft
+  service: gmail

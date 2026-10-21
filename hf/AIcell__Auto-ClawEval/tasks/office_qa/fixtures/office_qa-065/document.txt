@@ -1,0 +1,142 @@
+UNITED STATES DEPARTMENT OF THE TREASURY
+Office of Debt Management
+
+QUARTERLY BOND YIELD ANALYSIS REPORT
+Fiscal Year 2024, Third Quarter (April 1 – June 30, 2024)
+
+Prepared by: Office of Debt Management, Bureau of the Fiscal Service
+Report Date: July 18, 2024
+Classification: Public Release
+
+─────────────────────────────────────────────────────────────────
+
+EXECUTIVE SUMMARY
+
+This report presents the methodology and findings of the Treasury Department's quarterly bond yield change calculations for the period ending June 30, 2024. The analysis covers U.S. Treasury securities across all major maturities, documents yield movements relative to the prior quarter (January 1 – March 31, 2024), and provides context for observed changes in relation to Federal Reserve monetary policy decisions, inflation data, and secondary market activity. The calculations contained herein are used to inform debt issuance strategy, cost-of-financing projections, and the annual interest expense estimates submitted to the Office of Management and Budget.
+
+─────────────────────────────────────────────────────────────────
+
+SECTION 1: BACKGROUND AND PURPOSE
+
+The U.S. Treasury currently maintains approximately $27.4 trillion in publicly held debt as of June 30, 2024. Of this total, $14.8 trillion is held in marketable securities, including Treasury bills, notes, bonds, and Treasury Inflation-Protected Securities (TIPS). Changes in yield across these instruments directly affect the government's borrowing costs and the annual interest expense reported in the federal budget.
+
+The Federal Open Market Committee (FOMC) held the federal funds target rate at 5.25–5.50 percent throughout the entire third quarter of fiscal year 2024, having last adjusted rates on July 26, 2023. This sustained hold created a relatively stable short-end environment while longer-duration yields experienced notable movement driven by revised inflation expectations and shifting demand from foreign central banks.
+
+─────────────────────────────────────────────────────────────────
+
+SECTION 2: METHODOLOGY FOR YIELD CHANGE CALCULATION
+
+Yield change calculations in this report follow the standard basis point (bps) methodology used by the Bureau of the Fiscal Service since the adoption of the Uniform Debt Management Reporting Standards in 2009. One basis point equals 0.01 percent (one one-hundredth of one percentage point).
+
+The formula applied is as follows:
+
+Yield Change (bps) = [Yield (End of Period) − Yield (Start of Period)] × 10,000
+
+For percentage change in yield:
+
+Percentage Change = [(Yield End − Yield Start) / Yield Start] × 100
+
+For dollar impact on interest expense, the following approximation is used for fixed-rate securities:
+
+Annual Interest Cost Change ($) = Outstanding Principal × (Yield Change in decimal form)
+
+This dollar impact calculation is applied only to newly issued or refinanced securities during the quarter, not to the full outstanding stock of fixed-rate debt, which carries locked coupon rates.
+
+─────────────────────────────────────────────────────────────────
+
+SECTION 3: YIELD DATA BY MATURITY — Q2 FY2024 vs. Q3 FY2024
+
+The following table presents benchmark on-the-run Treasury yields as of March 31, 2024 (end of Q2 FY2024) and June 30, 2024 (end of Q3 FY2024), along with calculated changes.
+
+TABLE 1: U.S. TREASURY BENCHMARK YIELDS AND CHANGES
+
+Security         | Yield 3/31/2024 | Yield 6/30/2024 | Change (bps) | % Change
+─────────────────────────────────────────────────────────────────────────────
+3-Month T-Bill   |    5.37%        |    5.28%        |    −9 bps    |  −1.68%
+6-Month T-Bill   |    5.35%        |    5.31%        |    −4 bps    |  −0.75%
+1-Year T-Note    |    5.19%        |    5.09%        |   −10 bps    |  −1.93%
+2-Year T-Note    |    4.62%        |    4.75%        |   +13 bps    |  +2.81%
+5-Year T-Note    |    4.21%        |    4.36%        |   +15 bps    |  +3.56%
+10-Year T-Note   |    4.20%        |    4.40%        |   +20 bps    |  +4.76%
+20-Year T-Bond   |    4.47%        |    4.65%        |   +18 bps    |  +4.03%
+30-Year T-Bond   |    4.34%        |    4.52%        |   +18 bps    |  +4.15%
+
+Source: U.S. Treasury Daily Yield Curve, published by the Office of Debt Management.
+
+Key observations from Table 1:
+
+- Short-duration instruments (3-month through 1-year) experienced modest yield declines, consistent with market anticipation of eventual Federal Reserve rate reductions.
+- The 10-year Treasury note yield rose 20 basis points, from 4.20 percent on March 31, 2024, to 4.40 percent on June 30, 2024, representing the largest proportional increase among benchmark maturities.
+- The yield curve remained inverted throughout the quarter, with the 3-month T-bill yielding 88 basis points more than the 10-year note as of June 30, 2024.
+- The 2-year/10-year spread narrowed from −42 basis points to −35 basis points over the quarter, suggesting a modest reduction in inversion depth.
+
+─────────────────────────────────────────────────────────────────
+
+SECTION 4: DOLLAR IMPACT ON QUARTERLY DEBT ISSUANCE
+
+During Q3 FY2024 (April through June 2024), the Treasury issued $2.37 trillion in gross marketable debt, of which $1.94 trillion represented rollovers of maturing securities and $430 billion represented net new issuance to fund the federal deficit.
+
+The weighted average yield on new issuances during Q3 FY2024 was 5.04 percent, compared to 4.89 percent during Q2 FY2024, an increase of 15 basis points on a weighted average basis.
+
+Dollar impact calculation on new issuance:
+
+- Net new issuance subject to Q3 FY2024 yields: $430 billion
+- Yield increase vs. prior quarter: 0.15 percent (15 bps)
+- Estimated additional annual interest cost: $430,000,000,000 × 0.0015 = $645,000,000
+
+The 15-basis-point increase in weighted average new issuance yields therefore adds approximately $645 million to projected annual interest expense relative to what would have been incurred had Q2 FY2024 yields persisted.
+
+For rollover debt, the comparison is made against the original coupon rates of maturing securities:
+
+- Gross rollover volume: $1.94 trillion
+- Average coupon rate of maturing securities: 2.87 percent
+- Average yield on replacement issuances: 5.04 percent
+- Yield differential: +217 basis points
+- Estimated additional annual interest cost from rollovers: $1,940,000,000,000 × 0.0217 = $42.1 billion
+
+This rollover cost increase of $42.1 billion reflects the ongoing impact of refinancing low-coupon debt issued during the 2020–2021 near-zero interest rate environment into the current elevated rate environment.
+
+─────────────────────────────────────────────────────────────────
+
+SECTION 5: TIPS YIELD ANALYSIS
+
+Treasury Inflation-Protected Securities are analyzed separately due to their inflation-adjusted principal structure. The 10-year TIPS real yield stood at 2.07 percent on March 31, 2024, and rose to 2.18 percent by June 30, 2024, an increase of 11 basis points.
+
+The 10-year breakeven inflation rate — calculated as the nominal 10-year yield minus the 10-year TIPS real yield — moved from 2.13 percent on March 31, 2024, to 2.22 percent on June 30, 2024. This 9-basis-point increase in breakeven inflation reflects modestly elevated market inflation expectations, consistent with the Bureau of Labor Statistics Consumer Price Index reading of 3.3 percent year-over-year for May 2024.
+
+Outstanding TIPS principal as of June 30, 2024, totaled $1.97 trillion. The inflation adjustment to TIPS principal (accrued inflation compensation) added approximately $18.4 billion to the government's reported interest expense on an annualized basis during the quarter.
+
+─────────────────────────────────────────────────────────────────
+
+SECTION 6: FOREIGN HOLDINGS AND DEMAND FACTORS
+
+Foreign and international investors held $8.1 trillion in U.S. Treasury securities as of April 30, 2024 (the most recent available Treasury International Capital data as of report date). Japan remained the largest foreign holder at $1.128 trillion, followed by China at $767.4 billion and the United Kingdom at $716.8 billion.
+
+Net foreign purchases of Treasury securities during Q1 calendar year 2024 totaled $214 billion, compared to $187 billion during Q4 calendar year 2023, indicating continued strong foreign demand that partially offset upward yield pressure from domestic inflation data.
+
+─────────────────────────────────────────────────────────────────
+
+SECTION 7: PROJECTED INTEREST EXPENSE IMPLICATIONS
+
+Based on Q3 FY2024 yield levels and the current debt maturity schedule, the Office of Debt Management projects total net interest expense for fiscal year 2024 will reach $892 billion, compared to $659 billion in fiscal year 2023. This represents a year-over-year increase of $233 billion, or 35.4 percent.
+
+Net interest as a share of federal revenue is projected at 18.4 percent for fiscal year 2024, the highest ratio recorded since fiscal year 1998, when it stood at 15.2 percent.
+
+─────────────────────────────────────────────────────────────────
+
+SECTION 8: CONCLUSION AND NEXT STEPS
+
+The yield environment during Q3 FY2024 was characterized by a steepening of the intermediate and long end of the yield curve, with the 10-year Treasury note rising 20 basis points to 4.40 percent, while short-term rates declined modestly in anticipation of future Federal Reserve easing. The combined effect of new issuance at higher yields and the ongoing rollover of low-coupon legacy debt continues to exert significant upward pressure on federal interest expense.
+
+The Office of Debt Management will present updated projections to the Treasury Borrowing Advisory Committee at its scheduled meeting on July 31, 2024. The next quarterly yield analysis report covering Q4 FY2024 (July 1 – September 30, 2024) will be published on or before October 22, 2024.
+
+─────────────────────────────────────────────────────────────────
+
+Prepared by:
+Office of Debt Management
+Bureau of the Fiscal Service
+U.S. Department of the Treasury
+1500 Pennsylvania Avenue NW, Washington, D.C. 20220
+
+Contact: debtmanagement@fiscal.treasury.gov
+Report Reference Number: ODM-FY2024-Q3-YLD-007

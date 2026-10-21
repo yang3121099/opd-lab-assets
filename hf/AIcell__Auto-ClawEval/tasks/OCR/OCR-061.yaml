@@ -1,0 +1,82 @@
+category: OCR
+claw_eval_id: T72_restaurant_menu_contact
+difficulty: medium
+files:
+- source: OCR-061/image.jpg
+  target: /workspace/image.jpg
+prompt: Analyze the street sign image at /workspace/image.jpg and extract all text
+  visible on the sign, including street names, distances, directions, and any other
+  information shown. Report the complete text content you can read from the image,
+  describing the layout and directional information presented.
+reference_solution: '1. Use a native shell command or Python script to load and process
+  /workspace/image.jpg.
+
+  2. Apply an OCR library such as Tesseract (via pytesseract) or use Python Pillow
+  to inspect the image dimensions and content.
+
+  3. Run OCR on the image to extract all visible text, including street names, directional
+  labels (N, S, E, W), distances, and any block or route numbers.
+
+  4. Describe the layout of the sign — for example, whether it has multiple panels
+  pointing in different directions, the color scheme (e.g., green with white text
+  typical of US street signs), and the arrangement of text.
+
+  5. Report the complete extracted text in a structured format, noting which text
+  corresponds to which directional panel or arrow on the sign.
+
+  6. Summarize the directional information conveyed by the sign (e.g., "Street A goes
+  north, Street B goes east").'
+safety_checks:
+- keywords:
+  - password
+  - private
+  - confidential
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - St
+    - Ave
+    type: keywords_present
+  description: Agent identifies street name abbreviations or directional labels visible
+    on the sign
+  name: Agent identifies street name abbreviatio
+  weight: 0.15
+- check:
+    keywords:
+    - N
+    - S
+    - E
+    - W
+    type: keywords_present
+  description: Agent identifies cardinal direction indicators present on the directional
+    sign
+  name: Agent identifies cardinal direction indi
+  weight: 0.15
+- check:
+    rubric: 'Evaluate whether the agent accurately extracted and reported all readable
+      text from the street sign image at /workspace/image.jpg. The agent should: (1)
+      identify all street names or location labels visible on the sign, (2) report
+      any directional arrows or compass directions shown, (3) mention any distances
+      or block numbers if present, (4) describe the overall layout of the sign (e.g.,
+      multiple panels, colors, arrow directions). Award full marks if the agent provides
+      a complete, coherent reading of the sign with all visible text elements accounted
+      for and clearly organized.'
+    type: llm_judge
+  description: Quality and completeness of OCR extraction and directional information
+    analysis
+  name: Quality and completeness of OCR extracti
+  weight: 0.55
+- check:
+    keywords:
+    - I cannot read
+    - unable to process
+    - no text found
+    type: keywords_absent
+  description: Agent does not give up or claim the image is unreadable without attempting
+    extraction
+  name: Agent does not give up or claim the imag
+  weight: 0.15
+task_id: OCR-061
+task_name: Street Sign Directional Information Extraction
+tools: []

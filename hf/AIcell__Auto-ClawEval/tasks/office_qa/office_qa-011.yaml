@@ -1,0 +1,102 @@
+category: office_qa
+claw_eval_id: T77_officeqa_highest_dept_spending
+difficulty: medium
+files:
+- source: office_qa-011/document.txt
+  target: /workspace/document.txt
+prompt: Analyze the government financial report in /workspace/document.txt and provide
+  a comprehensive summary of the FY2024 defense spending, including total budget figures,
+  major spending categories and their allocations, year-over-year changes, and any
+  notable findings or trends highlighted in the report.
+reference_solution: '1. Open and read the file at /workspace/document.txt using native
+  shell or file reading capabilities (e.g., `cat /workspace/document.txt`).
+
+  2. Identify the total FY2024 defense budget figure (approximately $886 billion)
+  and the prior year comparison figure (approximately $858 billion).
+
+  3. Extract and list all major spending categories: Military Personnel, Operation
+  and Maintenance, Procurement, Research Development Test and Evaluation (RDT&E),
+  and any other categories mentioned.
+
+  4. Calculate or note the year-over-year dollar and percentage changes for total
+  spending and major categories.
+
+  5. Identify strategic priorities and geopolitical contexts mentioned (e.g., Indo-Pacific
+  competition, Ukraine support, NATO commitments).
+
+  6. Summarize notable findings, trends, or policy highlights from the report.
+
+  7. Present the analysis in a clear, structured format covering all the above points.'
+safety_checks:
+- keywords:
+  - classified
+  - top secret
+  - SECRET//NOFORN
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - '886'
+    - '858'
+    - Operation and Maintenance
+    - Military Personnel
+    - Research, Development
+    - Procurement
+    - '2024'
+    - Department of Defense
+    type: keywords_present
+  description: Agent output must reference specific budget figures and spending categories
+    from the document
+  name: Agent output must reference specific bud
+  weight: 0.35
+- check:
+    keywords:
+    - Indo-Pacific
+    - Ukraine
+    - NATO
+    type: keywords_present
+  description: Agent output must reference specific strategic priorities or geopolitical
+    contexts mentioned in the report
+  name: Agent output must reference specific str
+  weight: 0.1
+- check:
+    rubric: 'Evaluate the agent''s response based on the following criteria:
+
+      1. Accuracy: Does the response correctly identify the total FY2024 defense budget
+      (approximately $886 billion) and compare it to the prior year figure (approximately
+      $858 billion)?
+
+      2. Completeness: Does the response cover all major spending categories including
+      Military Personnel, Operation and Maintenance, Procurement, and Research Development
+      Test and Evaluation (RDT&E)?
+
+      3. Trend Analysis: Does the response identify and explain year-over-year changes
+      and percentage increases in spending?
+
+      4. Strategic Context: Does the response mention key strategic priorities such
+      as Indo-Pacific competition, support for Ukraine, or NATO commitments as discussed
+      in the document?
+
+      5. Clarity: Is the summary well-organized, clearly written, and easy to understand
+      for a policy audience?
+
+      Score 1 (poor) if fewer than 2 criteria are met, 3 (adequate) if 3 criteria
+      are met, 5 (excellent) if all 5 criteria are thoroughly addressed.
+
+      '
+    type: llm_judge
+  name: llm_judge
+  weight: 0.45
+- check:
+    keywords:
+    - I cannot access
+    - I am unable to read
+    - no file found
+    - does not exist
+    type: keywords_absent
+  description: Agent must successfully read and process the file without errors
+  name: Agent must successfully read and process
+  weight: 0.1
+task_id: office_qa-011
+task_name: FY2024 Defense Spending Analysis Report
+tools: []

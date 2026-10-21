@@ -1,0 +1,114 @@
+DEPARTMENT OF THE TREASURY
+INTERNAL REVENUE SERVICE
+FISCAL YEAR 2023 TAX REVENUE ANALYSIS REPORT
+Published: February 14, 2024
+Report Reference: IRS-FY2023-TRA-0214
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EXECUTIVE SUMMARY
+
+The Internal Revenue Service, in coordination with the Office of Management and Budget and the Bureau of Fiscal Service, presents this comprehensive analysis of federal tax revenue collected during Fiscal Year 2023 (October 1, 2022 through September 30, 2023). Total federal tax revenues reached $4.44 trillion in FY2023, representing a decline of 9.3 percent from the record $4.90 trillion collected in FY2022. This report examines revenue by category, identifies contributing factors to year-over-year changes, and provides comparative analysis against historical benchmarks. The findings presented herein draw upon data compiled by IRS Commissioner Daniel Werfel and the Office of Research, Applied Analytics, and Statistics.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 1: TOTAL REVENUE OVERVIEW
+
+Federal tax receipts for FY2023 totaled $4.44 trillion, down from $4.90 trillion in FY2022. This $460 billion reduction represents the largest single-year nominal decline in federal tax revenue since FY2009, when revenues fell by approximately $420 billion during the height of the financial crisis. Despite the year-over-year decline, FY2023 revenues remained 14.2 percent above the pre-pandemic FY2019 level of $3.89 trillion, indicating that the overall revenue base has expanded meaningfully over the medium term.
+
+As a share of Gross Domestic Product, federal tax revenues equaled approximately 16.5 percent in FY2023, compared to 19.6 percent in FY2022 and a 50-year historical average of approximately 17.4 percent. The FY2023 ratio falls below the long-run average, reflecting both the nominal revenue decline and continued nominal GDP growth, which reached an estimated $26.9 trillion for calendar year 2023.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 2: REVENUE BY MAJOR CATEGORY
+
+TABLE 1: Federal Tax Revenue by Source, FY2022 vs. FY2023
+
+Revenue Source              FY2022 (Billions)    FY2023 (Billions)    Change (%)
+─────────────────────────────────────────────────────────────────────────────────
+Individual Income Taxes         $2,632               $2,176             -17.3%
+Payroll Taxes                   $1,483               $1,614             +8.8%
+Corporate Income Taxes            $425                 $420             -1.2%
+Excise Taxes                       $89                  $79            -11.2%
+Estate and Gift Taxes              $33                  $34             +3.0%
+Customs Duties                     $99                  $80            -19.2%
+Miscellaneous Receipts             $139                  $37            -73.4%
+─────────────────────────────────────────────────────────────────────────────────
+TOTAL                           $4,900               $4,440             -9.4%
+
+Source: Bureau of Fiscal Service, Monthly Treasury Statement; IRS Statistics of Income Division
+
+2.1 Individual Income Taxes
+
+Individual income taxes remain the single largest source of federal revenue, accounting for 49.0 percent of total receipts in FY2023, down from 53.7 percent in FY2022. The $456 billion decline in individual income tax receipts is attributable to several factors:
+
+- Capital gains realizations fell sharply in FY2023 following the significant stock market correction of calendar year 2022. The S&P 500 declined 19.4 percent in 2022, reducing taxable capital gains reported on FY2023 returns.
+- Nonwithheld income tax payments, which include estimated tax payments and payments with returns, declined by approximately $312 billion year-over-year, reflecting reduced investment income and pass-through business income.
+- Withheld income taxes, by contrast, increased by approximately $56 billion, consistent with continued wage growth and low unemployment. The national unemployment rate averaged 3.6 percent during FY2023.
+
+2.2 Payroll Taxes
+
+Payroll taxes, which fund Social Security and Medicare programs, increased by $131 billion or 8.8 percent to reach $1.614 trillion in FY2023. This growth reflects strong labor market conditions, with total nonfarm payroll employment averaging approximately 155.9 million workers during the fiscal year. Average hourly earnings for private-sector workers grew 4.4 percent year-over-year as of September 2023, contributing to higher taxable wage bases. Payroll taxes constituted 36.4 percent of total federal receipts in FY2023, up from 30.3 percent in FY2022, making this the largest share payroll taxes have represented since FY2010.
+
+2.3 Corporate Income Taxes
+
+Corporate income tax receipts declined modestly by $5 billion to $420 billion in FY2023, representing 9.5 percent of total revenues. The relative stability in corporate receipts reflects continued profitability in the financial services and energy sectors, partially offset by margin compression in technology and retail. The effective corporate tax rate under the Tax Cuts and Jobs Act of 2017 remains at 21 percent for the statutory rate, though effective rates vary considerably by industry. The new 15 percent Corporate Alternative Minimum Tax, enacted as part of the Inflation Reduction Act of 2022 and effective for tax years beginning after December 31, 2022, contributed an estimated $5.8 billion in additional receipts during FY2023, its first year of implementation.
+
+2.4 Excise Taxes
+
+Excise tax collections declined by $10 billion to $79 billion in FY2023. Highway-related excise taxes, including the federal gasoline tax of 18.4 cents per gallon and the diesel tax of 24.4 cents per gallon, generated approximately $40 billion. Tobacco excise taxes contributed $12.1 billion, continuing a multi-decade downward trend as smoking rates decline. Alcohol excise taxes totaled $10.3 billion. The Affordable Care Act's excise taxes on health insurers and medical devices contributed a combined $4.2 billion.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 3: HISTORICAL CONTEXT AND TREND ANALYSIS
+
+TABLE 2: Federal Tax Revenue, Five-Year Historical Comparison
+
+Fiscal Year    Total Revenue    % of GDP    YoY Change
+──────────────────────────────────────────────────────
+FY2019         $3,462B          16.3%          +3.1%
+FY2020         $3,420B          16.3%          -1.2%
+FY2021         $4,047B          17.8%         +18.3%
+FY2022         $4,900B          19.6%         +21.1%
+FY2023         $4,440B          16.5%          -9.4%
+
+Source: Congressional Budget Office Historical Budget Data; Office of Management and Budget
+
+The FY2021 and FY2022 revenue surges were driven by pandemic-era fiscal stimulus, elevated asset prices, and accelerated capital gains realizations as investors repositioned portfolios. The FY2023 normalization was anticipated in the Congressional Budget Office's May 2022 Budget and Economic Outlook, which projected FY2023 revenues of $4.6 trillion — the actual outcome came in approximately $160 billion below that projection, primarily due to a steeper-than-expected decline in capital gains realizations.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 4: TAX COMPLIANCE AND ENFORCEMENT
+
+The IRS collected $68.4 billion through enforcement activities in FY2023, including audits, automated underreporter programs, and collection actions. This represents an increase of 8.1 percent from the $63.3 billion collected through enforcement in FY2022. The audit rate for individual returns remained at approximately 0.44 percent in FY2023, though the IRS has committed to increasing audit rates for high-income filers earning more than $400,000 annually, consistent with Treasury Secretary Janet Yellen's directive issued in August 2022.
+
+The IRS processed approximately 271.5 million tax returns and supplemental documents during FY2023. The agency issued $659 billion in refunds to approximately 109 million taxpayers, with the average individual income tax refund totaling $2,753, a decrease of 3.1 percent from the FY2022 average of $2,841.
+
+The estimated gross tax gap — the difference between taxes legally owed and taxes voluntarily and timely paid — was estimated at $688 billion annually based on the most recent IRS Tax Gap study covering tax years 2014 through 2016. The IRS acknowledges this figure likely understates the current gap given economic growth since that study period.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 5: INFLATION REDUCTION ACT FUNDING IMPACT
+
+The Inflation Reduction Act of 2022 appropriated $79.6 billion in supplemental IRS funding over ten years, of which approximately $45.6 billion was designated for enforcement activities. In FY2023, the IRS received and began deploying the first tranche of this funding, hiring approximately 5,000 new employees, including revenue agents, revenue officers, and customer service representatives. The Congressional Budget Office estimated in May 2023 that the full IRS funding package would generate approximately $180.4 billion in additional revenue over the FY2023–FY2032 window, yielding a net deficit reduction of approximately $100.8 billion after accounting for implementation costs.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 6: OUTLOOK FOR FISCAL YEAR 2024
+
+The Congressional Budget Office's February 2024 Budget and Economic Outlook projects federal tax revenues of $4.93 trillion for FY2024, representing a projected increase of 11.0 percent from FY2023 actuals. Key assumptions underlying this projection include:
+
+- Continued labor market strength with unemployment remaining below 4.0 percent through mid-2024
+- Partial recovery in capital gains realizations as equity markets rebounded approximately 24 percent during calendar year 2023
+- Full-year impact of the Corporate Alternative Minimum Tax
+- Increased enforcement receipts from expanded IRS staffing
+
+The projection carries meaningful uncertainty. A recession scenario modeled by the CBO would reduce projected revenues by approximately $400 billion relative to the baseline. Conversely, stronger-than-expected wage growth or asset price appreciation could push revenues above the $5.0 trillion threshold for the first time in history.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 7: CONCLUSIONS
+
+FY2023 federal tax revenues of $4.44 trillion reflect a meaningful but expected normalization following two years of historically elevated collections. The primary driver of the decline was a $456 billion reduction in individual income tax receipts, concentrated in nonwithheld payments tied to capital gains and investment income. Payroll tax growth of 8.8 percent demonstrates the underlying strength of the labor market and provides a stable revenue foundation. Corporate income taxes remained broadly stable at $420 billion. Looking forward, the combination of labor market resilience, recovering asset prices, and enhanced IRS enforcement capacity positions the federal revenue base for recovery toward and potentially beyond the FY2022 record in the near term.
+
+This report was prepared by the IRS Office of Research, Applied Analytics, and Statistics under the direction of IRS Commissioner Daniel Werfel. Data sources include the Monthly Treasury Statement published by the Bureau of Fiscal Service, IRS Statistics of Income publications, and Congressional Budget Office budget projections. Inquiries may be directed to the IRS Media Relations Office at (202) 317-4000.

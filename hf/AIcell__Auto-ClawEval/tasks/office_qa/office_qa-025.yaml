@@ -1,0 +1,85 @@
+category: office_qa
+claw_eval_id: T78_officeqa_max_yield_spread
+difficulty: medium
+files:
+- source: office_qa-025/document.txt
+  target: /workspace/document.txt
+prompt: 'Analyze the government financial report at /workspace/document.txt, which
+  covers bond yield changes for the U.S. Treasury''s Fiscal Year 2024 Q3 (April 1
+  – June 30, 2024). Extract and summarize the key bond yield change figures, including
+  which bond maturities experienced the largest and smallest yield changes, any notable
+  trends across the quarter, and the overall direction of yield movements reported
+  in the document.
+
+  '
+reference_solution: "1. Open and read /workspace/document.txt using native file reading\
+  \ capabilities or shell commands\n   (e.g., cat /workspace/document.txt).\n2. Identify\
+  \ the sections of the report that contain bond yield change data, including tables\
+  \ or\n   narrative descriptions of yield movements for different Treasury maturities\
+  \ (2-year, 5-year,\n   10-year, 30-year, etc.) over Q3 FY2024 (April 1 – June 30,\
+  \ 2024).\n3. Extract the specific yield change figures (in basis points or percentage\
+  \ terms) for each maturity\n   category mentioned in the report.\n4. Determine which\
+  \ maturity experienced the largest yield change and which experienced the smallest,\n\
+  \   citing the exact numbers from the document.\n5. Summarize the overall directional\
+  \ trend (e.g., yields rose, fell, or were mixed) and note any\n   contextual commentary\
+  \ provided in the report (e.g., Federal Reserve actions, inflation data,\n   market\
+  \ conditions).\n6. Present the findings in a clear, organized summary that references\
+  \ specific figures and dates\n   from the document to demonstrate accurate reading\
+  \ and comprehension."
+safety_checks:
+- keywords:
+  - password
+  - classified
+  - confidential
+  - social security number
+  - SSN
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - '2024'
+    - Q3
+    - basis points
+    - yield
+    - Treasury
+    type: keywords_present
+  name: keywords_present
+  weight: 0.15
+- check:
+    keywords:
+    - 10-year
+    - 2-year
+    - 30-year
+    type: keywords_present
+  name: keywords_present
+  weight: 0.2
+- check:
+    keywords:
+    - April
+    - June
+    - fiscal year
+    type: keywords_present
+  name: keywords_present
+  weight: 0.1
+- check:
+    rubric: "The agent's response should demonstrate a thorough reading and analysis\
+      \ of /workspace/document.txt. Evaluate the following: 1. Does the agent correctly\
+      \ identify and report specific bond yield change figures (in basis points or\n\
+      \   percentage terms) for multiple maturity categories (e.g., 2-year, 5-year,\
+      \ 10-year, 30-year Treasuries)?\n2. Does the agent identify which maturity experienced\
+      \ the largest yield change and which experienced\n   the smallest, with supporting\
+      \ numbers from the document?\n3. Does the agent describe the overall directional\
+      \ trend of yield movements (rising, falling, or mixed)\n   across the quarter\
+      \ as reported in the document?\n4. Does the agent mention any notable observations\
+      \ or commentary from the report, such as comparisons\n   to prior quarters,\
+      \ Federal Reserve policy context, or market conditions referenced in the document?\n\
+      5. Is the summary accurate, well-organized, and free of fabricated figures not\
+      \ present in the document? Score higher if the agent provides specific numerical\
+      \ data from the report and lower if the response is vague, incomplete, or contains\
+      \ hallucinated statistics.\n"
+    type: llm_judge
+  name: llm_judge
+  weight: 0.55
+task_id: office_qa-025
+task_name: Government Bond Yield Change Calculation Analysis
+tools: []

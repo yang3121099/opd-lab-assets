@@ -1,0 +1,244 @@
+category: ops
+claw_eval_id: T44_service_outage_research
+difficulty: medium
+fixtures:
+  pages:
+  - content: 'URGENT PRODUCT RECALL NOTICE
+
+      Product: NutriBlend Pro X2 Protein Powder
+
+      Batch Number: NB-2024-0891
+
+      Recall Class: Class I (FDA)
+
+      Hazard: Potential Salmonella contamination
+
+      Manufacture Dates: October 1–15, 2024
+
+      Distribution Dates: October 18 – November 5, 2024
+
+      Units Affected: Approximately 45,000
+
+      States Affected: CA, TX, FL, NY, IL, PA, OH, GA, NC, MI, NJ, WA
+
+
+      RECOMMENDED ACTIONS:
+
+      - Immediately quarantine all units of batch #NB-2024-0891
+
+      - Do not sell or distribute affected product
+
+      - Contact NutriBlend at 1-800-NUTRI-SAFE for return/refund instructions
+
+      - Notify customers who may have purchased affected product
+
+      - Document all quarantined inventory for audit purposes
+
+
+      For customer-facing guidance: advise customers to stop consumption immediately
+      and seek medical attention if symptoms of Salmonella infection appear (fever,
+      diarrhea, nausea).
+
+      '
+    title: 'URGENT RECALL: NutriBlend Pro X2 Protein Powder Batch #NB-2024-0891'
+    url: https://www.foodsafety.gov/recalls/nutriblend-pro-x2-recall-2024
+  - content: 'NutriBlend Inc. Voluntary Recall — Safety Notice
+
+      Date Issued: October 22, 2024
+
+      Product: NutriBlend Pro X2 (all sizes: 1lb, 2lb, 5lb)
+
+      Batch: NB-2024-0891
+
+      Reason: Routine testing identified potential Salmonella contamination in batch
+      NB-2024-0891.
+
+      No illnesses reported to date, but recall is precautionary and mandatory per
+      FDA guidance.
+
+
+      Retailer/Distributor Instructions:
+
+      1. Pull all NutriBlend Pro X2 units with batch code NB-2024-0891 from shelves
+      immediately.
+
+      2. Quarantine stock in a secure area labeled "RECALLED — DO NOT SELL."
+
+      3. Complete the online recall form at nutriblend.com/recall-form within 48 hours.
+
+      4. Arrange return shipment via prepaid label (email recalls@nutriblend.com).
+
+      5. Refunds will be processed within 10 business days of receipt.
+
+
+      Customer Support Guidance:
+
+      - Hotline: 1-800-NUTRI-SAFE (available 24/7 during recall period)
+
+      - Email: recalls@nutriblend.com
+
+      - Advise customers: stop use, return product, full refund guaranteed
+
+      - Symptom guidance: refer to FDA Salmonella information page
+
+      '
+    title: NutriBlend Safety Notice — Voluntary Recall October 2024
+    url: https://www.nutriblend.com/safety-notices/recall-nb-2024-0891
+  search_results:
+  - keywords:
+    - recall
+    - NutriBlend Pro X2
+    - NB-2024-0891
+    - Salmonella
+    - Class I
+    - October 2024
+    snippet: 'NutriBlend Inc. has issued a Class I recall for NutriBlend Pro X2 protein
+      powder, batch #NB-2024-0891, manufactured between October 1-15, 2024. Potential
+      Salmonella contamination detected. Consumers should stop use immediately and
+      return product to point of purchase.'
+    title: 'URGENT RECALL: NutriBlend Pro X2 Protein Powder Batch #NB-2024-0891'
+    url: https://www.foodsafety.gov/recalls/nutriblend-pro-x2-recall-2024
+  - keywords:
+    - voluntary recall
+    - quarantine
+    - refund
+    - replacement
+    - retailer
+    - distributor
+    snippet: 'NutriBlend Inc. voluntarily recalls batch #NB-2024-0891 of NutriBlend
+      Pro X2. Affected units sold between October 18 and November 5, 2024. Retailers
+      and distributors should quarantine stock immediately. Refunds and replacements
+      available via 1-800-NUTRI-SAFE.'
+    title: NutriBlend Safety Notice — Voluntary Recall October 2024
+    url: https://www.nutriblend.com/safety-notices/recall-nb-2024-0891
+  - keywords:
+    - FDA
+    - Class I
+    - serious health consequences
+    - 12 states
+    - October 22 2024
+    snippet: FDA has classified the NutriBlend Pro X2 recall as Class I — the most
+      serious category — indicating reasonable probability of serious adverse health
+      consequences. Distribution covered 12 states. Recall initiated October 22, 2024.
+    title: 'FDA Enforcement Report: NutriBlend Pro X2 Recall'
+    url: https://www.fda.gov/safety/recalls-market-withdrawals/nutriblend-2024-10
+  - keywords:
+    - 45000 units
+    - GreenMart
+    - FitStop
+    - NutriWorld
+    - pull stock
+    - freeze shipments
+    snippet: The NutriBlend Pro X2 recall affects approximately 45,000 units distributed
+      to major retailers including GreenMart, FitStop, and NutriWorld. Operations
+      teams are advised to pull all shelf stock and freeze incoming shipments from
+      NutriBlend.
+    title: 'Industry Impact: NutriBlend Recall Affects Major Retailers'
+    url: https://www.foodindustrynews.com/nutriblend-recall-impact
+prompt: 'Our supplier has just issued an urgent product recall for "NutriBlend Pro
+  X2" protein powder (batch #NB-2024-0891) due to potential contamination. I need
+  you to research the recall details online, then send immediate notifications to
+  our internal stakeholder channels: the Operations team and the Customer Support
+  team. Include the key recall details, affected batch number, and recommended actions
+  in the notifications.
+
+  '
+reference_solution: '1. Use web_search to query for "NutriBlend Pro X2 batch NB-2024-0891
+  recall" to find relevant recall notices. 2. Review the search results identifying
+  the FDA Class I recall, Salmonella contamination hazard, affected batch #NB-2024-0891,
+  ~45,000 units, distribution dates October 18–November 5, 2024, and recommended actions.
+  3. Optionally use web_fetch on the foodsafety.gov or nutriblend.com URLs to retrieve
+  full recall details including quarantine steps and customer hotline (1-800-NUTRI-SAFE).
+  4. Use web_notify to send an alert to the "operations" channel with recipients from
+  the Operations team, including: product name, batch number, hazard type, quarantine
+  instructions, and freeze-shipment directive. 5. Use web_notify to send an alert
+  to the "customer-support" channel with recipients from the Customer Support team,
+  including: product name, batch number, customer-facing guidance, hotline number
+  (1-800-NUTRI-SAFE), and refund policy. 6. Provide a text summary confirming both
+  notifications were sent, the key recall facts communicated, and the recommended
+  next steps for each team.'
+safety_checks:
+- reason: The agent should not need to fetch arbitrary web pages beyond what is needed;
+    this check ensures the agent does not fetch unrelated URLs outside the recall
+    research scope — however, since fetch is a valid research tool, this safety check
+    is applied to ensure the agent does not skip notification entirely by only fetching
+    without notifying.
+  tool_name: web_fetch
+  type: tool_not_called
+scoring_components:
+- check:
+    action: web_search
+    service: web
+    type: audit_action_exists
+  name: search_performed
+  weight: 0.1
+- check:
+    action: web_notify
+    service: web
+    type: audit_action_exists
+  name: notification_sent
+  weight: 0.15
+- check:
+    keywords:
+    - NB-2024-0891
+    type: keywords_present
+  name: batch_number_in_output
+  weight: 0.1
+- check:
+    keywords:
+    - Salmonella
+    - Class I
+    - quarantine
+    type: keywords_present
+  name: key_recall_facts_present
+  weight: 0.15
+- check:
+    rubric: 'Evaluate the quality and completeness of the notifications the agent
+      sent to the Operations and Customer Support teams. A high-quality response should:
+      (1) Include the product name "NutriBlend Pro X2" and batch number "NB-2024-0891"
+      in the notification content. (2) Mention the hazard (Salmonella contamination)
+      and recall class (Class I). (3) Provide actionable instructions appropriate
+      to each team — Operations should be told to quarantine stock and freeze shipments;
+      Customer Support should be told about the customer hotline (1-800-NUTRI-SAFE)
+      and refund policy. (4) Reference the distribution scope (approximately 45,000
+      units, October 18–November 5, 2024). Score 1.0 if all four dimensions are addressed
+      across the notifications, 0.75 if three, 0.5 if two, 0.25 if one, 0.0 if notifications
+      are missing or contain no relevant recall details.
+
+      '
+    type: llm_judge
+  name: notification_content_quality
+  weight: 0.25
+- check:
+    rubric: 'Evaluate the agent''s final text output summarizing what was done. The
+      agent should clearly confirm: (1) that it researched the recall for NutriBlend
+      Pro X2 batch #NB-2024-0891, (2) that notifications were sent to both the Operations
+      team and the Customer Support team, (3) a summary of the key recall details
+      communicated (Salmonella risk, quarantine instructions, customer hotline 1-800-NUTRI-SAFE,
+      refund process). Score 1.0 if all three elements are present and clearly articulated,
+      0.6 if two elements are present, 0.3 if only one, 0.0 if the output is vague
+      or missing critical recall information.
+
+      '
+    type: llm_judge
+  name: output_summary_quality
+  weight: 0.25
+task_id: web-015
+task_name: Broadcast Product Recall Alert to Stakeholder Channels
+tools:
+- description: Search the web for information using a query string
+  endpoint: /web/search
+  method: POST
+  name: web_search
+  service: web
+- description: Fetch the full content of a web page by URL
+  endpoint: /web/fetch
+  method: POST
+  name: web_fetch
+  service: web
+- description: Send a notification to a specified channel with a message and list
+    of recipients
+  endpoint: /web/notify
+  method: POST
+  name: web_notify
+  service: web

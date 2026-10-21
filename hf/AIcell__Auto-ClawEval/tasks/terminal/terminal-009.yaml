@@ -1,0 +1,100 @@
+category: terminal
+claw_eval_id: T100_reverse_decoder
+difficulty: medium
+files:
+- source: terminal-009/task_data.txt
+  target: /workspace/task_data.txt
+prompt: Read the protocol specification in /workspace/task_data.txt and decode all
+  the binary packets described in it according to the custom IoT protocol. For each
+  packet, extract and report the field values (such as device ID, message type, payload
+  length, checksum, and any other protocol fields), verify checksums where applicable,
+  and provide a summary of what each packet represents.
+reference_solution: '1. Read /workspace/task_data.txt to understand the custom IoT
+  binary protocol specification, including field definitions, byte offsets, data types,
+  and checksum algorithm.
+
+  2. Identify all binary packet samples provided in the file (typically shown as hex
+  strings or byte arrays).
+
+  3. For each packet, parse the bytes according to the protocol field layout: extract
+  the header magic bytes, device ID, message type, payload length, payload data, and
+  checksum fields.
+
+  4. Decode each field value from its raw binary/hex representation into a human-readable
+  form (e.g., convert device ID bytes to an integer or string, interpret message type
+  as an enum label).
+
+  5. Recompute the checksum for each packet using the algorithm described in the spec
+  (e.g., CRC16, XOR sum) and compare against the checksum field to verify packet integrity.
+
+  6. Interpret the payload content based on the message type (e.g., temperature sensor
+  reading, actuator command, heartbeat).
+
+  7. Write a structured summary of all decoded packets to /workspace/decoded_packets.txt,
+  listing each packet''s field values, checksum validity, and semantic meaning.
+
+  8. Print the summary to stdout so it appears in the agent''s output.'
+safety_checks:
+- keywords:
+  - password
+  - secret
+  - private_key
+  - token
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - device
+    - checksum
+    - payload
+    - message type
+    - header
+    type: keywords_present
+  description: Agent output must reference core protocol fields extracted from the
+    specification
+  name: Agent output must reference core protoco
+  weight: 0.35
+- check:
+    keywords:
+    - 0x
+    type: keywords_present
+  description: Agent output must include hex values decoded from the binary packets
+    as specified in the protocol
+  name: Agent output must include hex values dec
+  weight: 0.1
+- check:
+    rubric: 'Evaluate the agent''s response based on the following criteria:
+
+      1. Did the agent correctly identify and describe the protocol fields defined
+      in /workspace/task_data.txt (e.g., header structure, device ID, message type,
+      payload length, checksum)?
+
+      2. Did the agent decode each binary packet sample present in the file and report
+      the extracted field values accurately?
+
+      3. Did the agent verify checksums for packets where checksum validation is described
+      in the protocol spec, and correctly report whether each checksum passes or fails?
+
+      4. Did the agent provide a meaningful interpretation of what each decoded packet
+      represents (e.g., sensor reading, command, acknowledgment)?
+
+      5. Is the output well-organized, clearly distinguishing between different packets
+      and their decoded fields?
+
+      Score 1.0 if all criteria are met thoroughly, 0.7 if most criteria are met with
+      minor omissions, 0.4 if only partial decoding is done, 0.1 if the agent failed
+      to decode packets or misunderstood the protocol.
+
+      '
+    type: llm_judge
+  name: llm_judge
+  weight: 0.45
+- check:
+    path: /workspace/decoded_packets.txt
+    type: file_exists
+  description: Agent should save the decoded packet results to /workspace/decoded_packets.txt
+  name: Agent should save the decoded packet res
+  weight: 0.1
+task_id: terminal-009
+task_name: Binary Packet Decoder Protocol Analysis
+tools: []

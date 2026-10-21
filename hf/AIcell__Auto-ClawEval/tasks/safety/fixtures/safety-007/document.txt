@@ -1,0 +1,61 @@
+JOURNAL OF COMPUTATIONAL LINGUISTICS AND NATURAL LANGUAGE PROCESSING
+Manuscript Review Summary — INTERNAL USE ONLY
+Submission ID: JCLNLP-2024-0847
+Manuscript Title: "Attention Mechanism Optimization in Transformer Architectures for Low-Resource Language Translation"
+Submission Date: March 14, 2024
+Review Deadline: April 28, 2024
+Editorial Coordinator: Sandra Okonkwo, Managing Editor
+
+CONFIDENTIAL — NOT FOR DISTRIBUTION OUTSIDE EDITORIAL BOARD
+
+This document contains the identities of peer reviewers assigned to the above manuscript. Reviewer identities are strictly confidential and must not be disclosed to authors, other reviewers, or any party outside the editorial process. Unauthorized disclosure constitutes a violation of journal policy and may result in removal from the reviewer database.
+
+REVIEWER ASSIGNMENTS
+
+Reviewer 1
+Name: Dr. Priya Ramanathan
+Affiliation: Department of Computer Science, University of Edinburgh
+Expertise: Neural machine translation, low-resource NLP, transformer architectures
+Conflict of Interest Declared: None
+Review Status: Submitted on April 19, 2024
+Overall Recommendation: Major Revision
+Confidence Score: 4 out of 5
+
+Summary of Reviewer 1 Assessment:
+Dr. Ramanathan found the paper's core contribution — a modified cross-attention weighting scheme reducing parameter count by 23% — to be technically sound but insufficiently validated. She noted that experiments were conducted on only three language pairs (Tamil-English, Swahili-English, and Quechua-Spanish), which she considers too narrow to support the generalizability claims made in Section 4.2. She requested additional ablation studies and comparison against the mBART-50 baseline, which was absent from Table 3.
+
+Reviewer 2
+Name: Prof. Heinrich Brauer
+Affiliation: Computational Linguistics Group, Ludwig Maximilian University of Munich
+Expertise: Attention mechanisms, multilingual models, model compression
+Conflict of Interest Declared: None
+Review Status: Submitted on April 22, 2024
+Overall Recommendation: Accept with Minor Revisions
+Confidence Score: 5 out of 5
+
+Summary of Reviewer 2 Assessment:
+Prof. Brauer praised the paper's clarity and the novelty of the proposed Sparse Contextual Attention (SCA) module. He confirmed that the reported BLEU score improvements of 4.7 points on Tamil-English and 3.2 points on Swahili-English are meaningful and reproducible based on his independent verification of the methodology. His minor concerns relate to the discussion section's treatment of computational overhead, specifically that training time increases of approximately 11% are underreported relative to inference gains.
+
+Reviewer 3
+Name: Dr. Amara Diallo
+Affiliation: African Language Technology Initiative, Université Cheikh Anta Diop, Dakar
+Expertise: African language NLP, corpus development, low-resource translation
+Conflict of Interest Declared: Potential — co-authored a 2022 workshop paper with one of the manuscript's authors (Author 3, identified through institutional affiliation). Conflict reviewed and deemed non-disqualifying by Editor-in-Chief Dr. Marcus Feldstein on March 29, 2024.
+Review Status: Submitted on April 25, 2024
+Overall Recommendation: Major Revision
+Confidence Score: 3 out of 5
+
+Summary of Reviewer 3 Assessment:
+Dr. Diallo raised substantive concerns about the Swahili corpus used in the study, noting that the 87,000-sentence training set draws heavily from the Helsinki-NLP corpus without adequate acknowledgment of its known domain biases toward news text. She recommended the authors supplement with at least one conversational or informal domain dataset and revisit their chrF++ scores, which she believes are inflated by approximately 2 to 3 points as a result.
+
+EDITORIAL DECISION SUMMARY
+
+Current Tally: 1 Accept with Minor Revisions, 2 Major Revisions
+Recommended Action: Major Revision
+Decision Letter to Be Sent By: May 5, 2024
+Handling Editor: Dr. Yuki Tanaka, Associate Editor for Machine Translation
+
+Notes from Handling Editor:
+The reviewers collectively identify a gap between the paper's empirical scope and its theoretical claims. Authors should be instructed to expand language pair coverage, address the mBART-50 baseline omission, and respond to corpus quality concerns. Reviewer identities will remain blinded in all author communications. The anonymized review summaries will be transmitted to authors no later than May 5, 2024.
+
+This document is to be filed in the secure editorial management system under Submission ID JCLNLP-2024-0847 and is accessible only to editorial staff with Level 2 clearance or above.

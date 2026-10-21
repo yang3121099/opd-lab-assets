@@ -1,0 +1,126 @@
+SOFTWARE PLATFORM ANALYSIS REPORT
+Use Cases and Gap Assessment
+Prepared by: Enterprise Technology Advisory Group
+Date: September 14, 2023
+Version: 2.1 | Confidential — Internal Distribution Only
+
+─────────────────────────────────────────────
+EXECUTIVE SUMMARY
+─────────────────────────────────────────────
+
+This report evaluates the current deployment of Salesforce Sales Cloud (Enterprise Edition, v58.0) across Meridian Financial Partners, a mid-market wealth management firm headquartered in Charlotte, North Carolina, with 847 employees across 12 regional offices. The assessment was conducted between July 10 and August 31, 2023, encompassing 214 individual user interviews, system log analysis covering 18 months of activity data, and benchmarking against four comparable firms in the financial services sector.
+
+The analysis reveals that Meridian is utilizing approximately 61% of available platform functionality, leaving significant capability gaps that contribute to an estimated $2.3 million in annual productivity losses and missed revenue opportunities. Key findings indicate that three core use cases are underserved, and the firm's current licensing expenditure of $1.84 million per year is not generating proportional return on investment.
+
+─────────────────────────────────────────────
+1. PLATFORM OVERVIEW AND CURRENT DEPLOYMENT
+─────────────────────────────────────────────
+
+Meridian Financial Partners licensed Salesforce Sales Cloud Enterprise Edition in March 2021 under a 3-year contract at $150 per user per month, covering 102 named users. An additional 10 licenses were added in November 2022 following the acquisition of Piedmont Wealth Advisors, bringing the total to 112 active licenses.
+
+Current module activation status is as follows:
+
+Module | Status | Adoption Rate
+Opportunity Management | Active | 88%
+Contact and Account Management | Active | 79%
+Reports and Dashboards | Active | 54%
+Email Integration (Outlook) | Active | 47%
+Einstein Activity Capture | Active | 31%
+Salesforce Inbox | Inactive | 0%
+Revenue Intelligence | Inactive | 0%
+Territory Management | Partially Active | 22%
+Forecasting | Active | 41%
+AppExchange Integrations | Partial | 3 of 9 licensed
+
+The platform is integrated with Orion Advisor Tech for portfolio data and DocuSign for contract execution. Integration with the firm's primary data warehouse, Microsoft Azure SQL, was attempted in Q1 2022 but abandoned due to API configuration issues that were never resolved.
+
+─────────────────────────────────────────────
+2. USE CASE ANALYSIS
+─────────────────────────────────────────────
+
+2.1 Supported Use Cases (Functioning as Intended)
+
+The following use cases are operating effectively and represent areas where the platform is delivering measurable value:
+
+Pipeline Management: 88% of advisors in the Charlotte and Atlanta offices log opportunities consistently. Average deal cycle tracking accuracy is 93%, and the sales team closed $47.2 million in new assets under management in Q2 2023, with 71% of those deals traceable through Salesforce records.
+
+Client Onboarding Documentation: DocuSign integration processes an average of 34 new client agreements per month with a 99.1% completion rate, reducing paper-based processing time from 4.7 days to 11 hours per engagement.
+
+Activity Logging: Senior advisors (those with 5+ years at the firm) log an average of 6.2 activities per week, compared to 2.1 activities per week among advisors hired after January 2022, indicating an onboarding and training gap rather than a platform limitation.
+
+2.2 Underserved Use Cases
+
+Three use cases were identified as significantly underperforming relative to platform capability and business need:
+
+USE CASE 1: Automated Lead Nurturing
+Current State: Meridian's marketing team manually sends follow-up communications to 1,200 prospects in their database using a disconnected Mailchimp account. There is no lead scoring, no behavioral tracking, and no handoff workflow between marketing and sales.
+Platform Capability Available: Salesforce supports lead scoring via Einstein Lead Scoring and automated nurture sequences through Marketing Cloud Account Engagement (formerly Pardot), which Meridian has not licensed.
+Business Impact: Industry benchmarks from the 2023 Financial Services CRM Benchmark Report (Nucleus Research) indicate firms using automated lead nurturing convert prospects at 23% higher rates. Applied to Meridian's current 4.1% prospect conversion rate, this represents approximately 28 additional client conversions annually, with an average initial investment of $340,000 per new client.
+Gap Severity: HIGH
+
+USE CASE 2: Advisor Performance Analytics
+Current State: Regional managers receive manually compiled Excel spreadsheets from an administrative assistant every two weeks. The process takes approximately 6 hours per reporting cycle and the data is typically 9–14 days stale by the time it reaches decision-makers.
+Platform Capability Available: Salesforce Reports and Dashboards, combined with Revenue Intelligence (CRM Analytics), could provide real-time visibility. Revenue Intelligence is included in the firm's current Enterprise license at no additional cost but has never been activated.
+Business Impact: The 6-hour biweekly reporting process costs approximately $38,400 annually in administrative labor (calculated at $62/hour fully loaded). More critically, delayed performance data contributed to two advisor underperformance situations in 2022 that went unaddressed for an average of 11 weeks before intervention.
+Gap Severity: HIGH
+
+USE CASE 3: Cross-Office Referral Tracking
+Current State: Meridian's 12 offices generate internal referrals, but there is no standardized process for logging, tracking, or crediting these referrals. In interviews, 67% of advisors reported they had made at least one referral in the past 6 months that was never formally recorded.
+Platform Capability Available: Salesforce's standard Opportunity and Contact relationship model, combined with a custom referral object (estimated 40 hours of development time at $185/hour = $7,400 one-time cost), could fully automate referral attribution.
+Business Impact: Based on advisor self-reporting, an estimated 18–24 referrals per quarter go untracked. At an average deal value of $47,000 in first-year revenue, this represents between $3.4 million and $4.5 million in annual revenue with unclear attribution and no incentive alignment.
+Gap Severity: CRITICAL
+
+─────────────────────────────────────────────
+3. TECHNICAL GAP ASSESSMENT
+─────────────────────────────────────────────
+
+Beyond use case gaps, the following technical deficiencies were identified:
+
+Data Quality Issues: A data audit conducted on August 15, 2023 found that 34% of Contact records are missing at least one required field (phone, email, or mailing address). 1,847 duplicate Account records were identified, representing 22% of the total Account object. Salesforce's native Duplicate Management rules are enabled but set to "Alert Only" rather than "Block," meaning duplicates continue to be created.
+
+Integration Failures: The abandoned Azure SQL integration means that portfolio performance data must be manually re-entered into Salesforce by 6 administrative staff members, consuming an estimated 14 hours per week collectively. Reconnecting this integration using MuleSoft Anypoint Platform (already licensed by Meridian's IT department for other purposes) is estimated to require 80 hours of developer time.
+
+Mobile Adoption: Only 19 of 112 users (17%) have installed the Salesforce Mobile App. Field advisors who conduct 40% of their client meetings outside the office are not logging activities in real time, contributing to the data quality issues noted above.
+
+User Permissions and Governance: The system currently has 7 users with System Administrator profiles who do not require that level of access. This creates audit and compliance risk under SEC Rule 17a-4, which governs electronic record retention for registered investment advisors.
+
+─────────────────────────────────────────────
+4. COMPETITIVE BENCHMARKING
+─────────────────────────────────────────────
+
+Four comparable wealth management firms (anonymized per NDA) were benchmarked against Meridian's platform utilization:
+
+Firm | AUM Range | CRM Platform | Utilization Rate | Annual CRM Cost/User
+Firm A | $2.1B–$2.8B | Salesforce Enterprise | 79% | $148
+Firm B | $1.4B–$1.9B | Microsoft Dynamics 365 | 71% | $112
+Firm C | $3.0B–$3.5B | Salesforce Unlimited | 84% | $300
+Firm D | $900M–$1.3B | Redtail CRM | 68% | $65
+Meridian | $1.6B | Salesforce Enterprise | 61% | $150
+
+Meridian's utilization rate of 61% is the lowest among comparable Salesforce users and 18 percentage points below the average for firms of similar size and complexity.
+
+─────────────────────────────────────────────
+5. RECOMMENDATIONS AND PRIORITIZATION
+─────────────────────────────────────────────
+
+Priority 1 (Immediate — Q4 2023): Activate Revenue Intelligence and configure three standard advisor performance dashboards. Estimated effort: 24 hours internal IT, zero additional licensing cost.
+
+Priority 2 (Q4 2023 — Q1 2024): Resolve data quality issues through a structured data cleanse project. Engage Salesforce partner Coastal Cloud (preferred vendor, contract on file) for a 6-week data remediation engagement estimated at $42,000.
+
+Priority 3 (Q1 2024): Develop and deploy the referral tracking object. Budget $7,400 for development plus $3,200 for training materials and rollout.
+
+Priority 4 (Q2 2024): Evaluate Marketing Cloud Account Engagement licensing at $1,250/month (Growth tier) to address the lead nurturing gap. Decision should be preceded by a 60-day pilot using existing Salesforce automation tools.
+
+Priority 5 (Ongoing): Establish a Salesforce governance committee meeting monthly, reduce System Administrator profiles from 7 to 2, and implement a mobile adoption incentive program targeting 60% mobile app installation by March 31, 2024.
+
+─────────────────────────────────────────────
+6. CONCLUSION
+─────────────────────────────────────────────
+
+Meridian Financial Partners has made a substantial investment in Salesforce Sales Cloud but is realizing less than two-thirds of available platform value. The three critical use case gaps — lead nurturing, performance analytics, and referral tracking — represent a combined opportunity cost exceeding $5 million annually. The majority of recommended remediation actions require no additional licensing expenditure and can be executed within the current contract period, which expires March 31, 2024. Contract renewal negotiations should be initiated no later than January 15, 2024, and should include a renegotiation of per-user pricing given the firm's below-benchmark utilization history.
+
+─────────────────────────────────────────────
+Document prepared by: Rachel Okonkwo, Senior Technology Analyst
+Reviewed by: James Thibodeau, VP Enterprise Systems
+Next review date: March 2024
+─────────────────────────────────────────────

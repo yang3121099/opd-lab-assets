@@ -1,0 +1,138 @@
+SOFTWARE PLATFORM ANALYSIS REPORT
+Use Cases and Gap Assessment
+Prepared by: Enterprise Technology Advisory Group
+Date: September 12, 2024
+Version: 2.3 | Confidential — Internal Distribution Only
+
+─────────────────────────────────────────────
+EXECUTIVE SUMMARY
+─────────────────────────────────────────────
+
+This report evaluates the current deployment of Salesforce Sales Cloud (Enterprise Edition, v58.0) across Meridian Financial Partners, a mid-market wealth management firm headquartered in Charlotte, North Carolina, with 847 employees across 14 regional offices. The assessment was conducted between July 8 and August 30, 2024, encompassing interviews with 63 end users, analysis of 18 months of platform usage data, and benchmarking against industry peers.
+
+The findings indicate that Meridian is utilizing approximately 41% of available platform functionality, with critical gaps in workflow automation, reporting integration, and client lifecycle management. Annual licensing costs total $612,400, yielding an estimated cost-per-utilized-feature ratio that is 2.4 times higher than the industry median for comparable firms.
+
+─────────────────────────────────────────────
+1. PLATFORM OVERVIEW AND DEPLOYMENT CONTEXT
+─────────────────────────────────────────────
+
+Meridian Financial Partners adopted Salesforce Sales Cloud in March 2021 following a competitive evaluation that also included Microsoft Dynamics 365 and HubSpot CRM. The initial deployment covered 210 licensed users across the firm's advisory and operations teams. As of August 2024, the platform supports 388 active users, representing a 84.8% growth in user base over 41 months.
+
+Current license breakdown:
+- Sales Cloud Enterprise: 312 seats at $165/user/month
+- Pardot Growth (Marketing Cloud Account Engagement): 1 tenant license at $1,250/month
+- Salesforce Shield (data encryption and event monitoring): $8,400/month flat rate
+- Einstein Analytics add-on: 45 seats at $50/user/month
+
+Total monthly spend: $68,270
+Total annualized spend: $819,240
+
+Note: The $612,400 figure cited in the executive summary reflects net spend after a 25.3% negotiated discount secured during the January 2024 contract renewal.
+
+─────────────────────────────────────────────
+2. CURRENT USE CASES: ACTIVE FUNCTIONALITY
+─────────────────────────────────────────────
+
+The following table summarizes confirmed active use cases as identified through system logs and user interviews:
+
+USE CASE | ADOPTION RATE | USERS ACTIVE (MONTHLY AVG) | SATISFACTION SCORE (1-5)
+Contact & Account Management | 94% | 365 | 4.1
+Opportunity Pipeline Tracking | 78% | 303 | 3.7
+Task and Activity Logging | 71% | 276 | 3.2
+Email Integration (Outlook Sync) | 66% | 256 | 2.9
+Custom Report Generation | 34% | 132 | 2.4
+Workflow Rules / Process Builder | 18% | 70 | 2.1
+Pardot Campaign Management | 12% | 47 | 2.6
+Einstein Lead Scoring | 9% | 35 | 1.8
+Salesforce Shield Audit Trails | 6% | 23 | 3.0
+AppExchange Integrations | 4% | 16 | 2.2
+
+Key observation: The three highest-adoption features — contact management, pipeline tracking, and activity logging — represent foundational CRM capabilities available in platforms costing 60–70% less than Meridian's current contract. The firm is paying premium pricing for advanced capabilities that remain largely dormant.
+
+─────────────────────────────────────────────
+3. IDENTIFIED GAPS AND UNMET REQUIREMENTS
+─────────────────────────────────────────────
+
+3.1 Workflow Automation Gap
+
+During structured interviews, 47 of 63 users (74.6%) reported performing manual data entry tasks that they believed could be automated. The operations team estimates that advisors spend an average of 6.3 hours per week on CRM-related administrative tasks. At an average advisor fully-loaded cost of $87/hour, this represents approximately $1.42 million in annual productivity loss across the advisory staff of 49 advisors.
+
+Salesforce's native Flow Builder and Process Builder tools could address an estimated 68% of these tasks, yet only 18% of users have any active automation configured. The primary barriers cited were:
+
+- Lack of internal Salesforce administrator expertise (cited by 38 users)
+- No formal onboarding for automation features post-implementation (cited by 29 users)
+- Fear of breaking existing configurations (cited by 22 users)
+
+3.2 Reporting and Analytics Gap
+
+Meridian's compliance team generates 14 recurring regulatory reports monthly, all of which are currently produced outside Salesforce using a combination of Excel (11 reports) and a legacy Cognos instance running on a server last updated in February 2019. Zero of these reports pull data directly from Salesforce, despite the fact that the underlying client interaction data resides there.
+
+Einstein Analytics (now Tableau CRM) licenses are held by 45 users but only 35 have logged in during the past 90 days, and of those, only 8 have created or modified a dashboard. The firm has no dedicated data analyst assigned to the Salesforce environment.
+
+3.3 Client Lifecycle Management Gap
+
+Meridian's client onboarding process involves an average of 23 discrete touchpoints across advisory, compliance, and operations teams. Currently, 17 of these touchpoints are tracked in separate systems: DocuSign (4 steps), a proprietary portfolio management system called Orion Advisor Tech (7 steps), and email threads (6 steps). Only 6 touchpoints are logged in Salesforce.
+
+A fully integrated client lifecycle workflow — achievable through Salesforce's Financial Services Cloud, which Meridian does not currently license — would consolidate these touchpoints. Peer firms using Financial Services Cloud report a 31% reduction in onboarding cycle time, which at Meridian's current average onboarding duration of 18.4 business days would translate to approximately 5.7 days saved per new client. With 214 new clients onboarded in fiscal year 2023, this represents roughly 1,220 advisor-days of potential efficiency gain annually.
+
+3.4 Mobile Adoption Gap
+
+Salesforce Mobile app usage at Meridian stands at 11% of active users (43 individuals), compared to an industry benchmark of 38% for wealth management firms of comparable size, according to the 2024 Salesforce Financial Services Benchmark Report published in June 2024. Advisors who conduct client meetings off-site — estimated at 62% of the advisory team based on calendar data — represent the primary underserved population for mobile functionality.
+
+─────────────────────────────────────────────
+4. COMPETITIVE BENCHMARKING
+─────────────────────────────────────────────
+
+Meridian was benchmarked against three peer firms of similar AUM ($2.1B–$3.8B) and headcount (600–1,100 employees):
+
+METRIC | MERIDIAN | PEER AVERAGE | DELTA
+Platform utilization rate | 41% | 67% | -26 pts
+Cost per active user/month | $176 | $104 | +$72
+Automation rules per user | 0.18 | 1.43 | -1.25
+Avg. report refresh frequency | 14 days | 2.1 days | +11.9 days
+Mobile adoption rate | 11% | 38% | -27 pts
+User satisfaction (NPS equiv.) | 22 | 51 | -29 pts
+
+The peer average utilization rate of 67% was derived from Salesforce's own Customer Success Group data shared under NDA during a Business Review conducted on August 6, 2024, with Salesforce Account Executive Daniel Kowalski.
+
+─────────────────────────────────────────────
+5. ROOT CAUSE ANALYSIS
+─────────────────────────────────────────────
+
+Three structural factors explain the majority of the utilization gap:
+
+1. Implementation approach: The 2021 implementation was led by a boutique consultancy, Apex Consulting Group of Atlanta, under a fixed-fee contract of $94,000. The engagement was scoped for 16 weeks but completed in 11 weeks, with the final three phases of the implementation plan — automation configuration, reporting setup, and user training — compressed into a single two-day workshop attended by only 22 of the eventual 388 users.
+
+2. Absence of a Salesforce Administrator: Meridian has never employed a dedicated Salesforce administrator. Platform management responsibilities are distributed across two IT generalists, neither of whom holds a Salesforce certification. The nearest comparable firm in the benchmark group employs 1.5 FTE Salesforce administrators per 200 licensed users.
+
+3. Change management deficit: No formal change management program accompanied the rollout or any subsequent feature release. Salesforce has released three major platform updates (Spring '23, Winter '24, Spring '24) since Meridian's last internal training event in October 2022.
+
+─────────────────────────────────────────────
+6. RECOMMENDATIONS AND PRIORITY MATRIX
+─────────────────────────────────────────────
+
+Priority 1 (Q4 2024 — Immediate):
+- Hire one certified Salesforce Administrator (Salesforce ADM-201 credential minimum); estimated fully-loaded annual cost: $105,000–$118,000
+- Conduct a 3-day automation workshop targeting the 47 users with identified manual task burdens; estimated cost: $12,500 via Salesforce Professional Services
+
+Priority 2 (Q1 2025):
+- Migrate 14 compliance reports into Salesforce native reporting; estimated implementation effort: 160 hours
+- Integrate DocuSign and Orion Advisor Tech via MuleSoft or native connectors; estimated project cost: $38,000–$52,000
+
+Priority 3 (Q2–Q3 2025):
+- Evaluate upgrade to Salesforce Financial Services Cloud; list price differential is approximately $75/user/month above current Enterprise licensing
+- Launch mobile adoption campaign targeting 62% of off-site advisors with goal of reaching 35% mobile adoption by December 2025
+
+─────────────────────────────────────────────
+7. CONCLUSION
+─────────────────────────────────────────────
+
+Meridian Financial Partners is operating a significantly under-leveraged technology asset. The $612,400 net annual investment in Salesforce is generating returns consistent with a platform costing roughly $250,000–$280,000 based on current utilization patterns. Closing the identified gaps — particularly in automation, reporting, and lifecycle management — is projected to recover $1.1 million to $1.6 million in annual productivity value within 18 months of implementation, yielding a return on remediation investment of approximately 8:1.
+
+This report will be presented to the Technology Steering Committee on September 24, 2024. A follow-up gap reassessment is recommended for March 2025.
+
+─────────────────────────────────────────────
+Prepared by: Rachel Okonkwo, Senior Technology Analyst
+Reviewed by: James Thibodeau, VP of Enterprise Systems
+Contact: r.okonkwo@meridianfp.com | (704) 555-0183
+─────────────────────────────────────────────

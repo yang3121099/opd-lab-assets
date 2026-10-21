@@ -1,0 +1,72 @@
+```yaml
+id: sql-schema-migration
+title: SQL Schema Migration Between Database Versions
+description: |
+  You are working as a database engineer at a growing e-commerce company.
+  The production database is running on an older schema (v1) and needs to be
+  migrated to a new schema (v2) that supports new business requirements.
+
+  Your task is to write and execute SQL migration scripts that transform the
+  existing v1 schema and data into the v2 schema while preserving all existing
+  data integrity.
+
+category: database
+difficulty: intermediate
+time_limit: 3600
+
+environment:
+  image: postgres:15
+  setup_commands:
+    - |
+      psql -U postgres -c "CREATE DATABASE ecommerce_v1;"
+    - |
+      psql -U postgres -d ecommerce_v1 << 'EOF'
+      -- V1 Schema: Original database structure
+
+      CREATE TABLE users (
+          id SERIAL PRIMARY KEY,
+          full_name VARCHAR(200) NOT NULL,
+          email VARCHAR(255) UNIQUE NOT NULL,
+          phone VARCHAR(20),
+          address TEXT,
+          created_at TIMESTAMP DEFAULT NOW()
+      );
+
+      CREATE TABLE products (
+          id SERIAL PRIMARY KEY,
+          name VARCHAR(255) NOT NULL,
+          description TEXT,
+          price DECIMAL(10,2) NOT NULL,
+          stock_quantity INTEGER DEFAULT 0,
+          category VARCHAR(100),
+          created_at TIMESTAMP DEFAULT NOW()
+      );
+
+      CREATE TABLE orders (
+          id SERIAL PRIMARY KEY,
+          user_id INTEGER REFERENCES users(id),
+          product_id INTEGER REFERENCES products(id),
+          quantity INTEGER NOT NULL,
+          unit_price DECIMAL(10,2) NOT NULL,
+          total_price DECIMAL(10,2) NOT NULL,
+          status VARCHAR(50) DEFAULT 'pending',
+          order_date TIMESTAMP DEFAULT NOW(),
+          shipping_address TEXT
+      );
+
+      -- V1 Test Data
+
+      INSERT INTO users (full_name, email, phone, address, created_at) VALUES
+          ('Alice Johnson', 'alice@example.com', '555-0101', '123 Main St, Springfield, IL 62701', '2022-01-15 09:23:00'),
+          ('Bob Martinez', 'bob@example.com', '555-0102', '456 Oak Ave, Chicago, IL 60601', '2022-02-20 14:45:00'),
+          ('Carol White', 'carol@example.com', '555-0103', '789 Pine Rd, Naperville, IL 60540', '2022-03-10 11:30:00'),
+          ('David Kim', 'david@example.com', '555-0104', '321 Elm St, Evanston, IL 60201', '2022-04-05 16:15:00'),
+          ('Emma Davis', 'emma@example.com', '555-0105', '654 Maple Dr, Rockford, IL 61101', '2022-05-18 08:00:00'),
+          ('Frank Wilson', 'frank@example.com', '555-0106', '987 Cedar Ln, Peoria, IL 61602', '2022-06-22 13:20:00'),
+          ('Grace Lee', 'grace@example.com', '555-0107', '147 Birch Blvd, Aurora, IL 60505', '2022-07-30 10:45:00'),
+          ('Henry Brown', 'henry@example.com', '555-0108', '258 Walnut Way, Joliet, IL 60432', '2022-08-14 15:30:00'),
+          ('Iris Taylor', 'iris@example.com', '555-0109', '369 Spruce St, Waukegan, IL 60085', '2022-09-01 09:00:00'),
+          ('Jack Anderson', 'jack@example.com', '555-0110', '741 Ash Ave, Elgin, IL 60120', '2022-10-12 12:00:00');
+
+      INSERT INTO products (name, description, price, stock_quantity, category, created_at) VALUES
+          ('Wireless Headphones', 'Premium noise-cancelling over-ear headphones

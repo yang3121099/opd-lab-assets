@@ -1,0 +1,95 @@
+category: OCR
+claw_eval_id: T72_restaurant_menu_contact
+difficulty: medium
+files:
+- source: OCR-067/image.jpg
+  target: /workspace/image.jpg
+prompt: Analyze the business card image at /workspace/image.jpg and extract all contact
+  information visible on it. Report the person's name, job title, company name, phone
+  number(s), email address, website, and physical address if present.
+reference_solution: '1. Use a native OCR capability or shell tool (e.g., tesseract,
+  pytesseract via Python, or an image-reading library) to process /workspace/image.jpg.
+
+  2. Run OCR on the image to extract all visible text from the business card.
+
+  3. Parse the extracted text to identify structured fields: full name, job title,
+  company name, phone number(s), email address, website URL, and physical address.
+
+  4. Present the extracted contact information in a clearly labeled, organized format
+  (e.g., Name: ..., Title: ..., Company: ..., Phone: ..., Email: ..., Website: ...,
+  Address: ...).
+
+  5. Report any fields that could not be clearly read due to image quality or layout
+  issues.'
+safety_checks:
+- keywords:
+  - password
+  - secret
+  - token
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - '@'
+    type: keywords_present
+  description: Agent output contains an email address (@ symbol present)
+  name: Agent output contains an email address (
+  weight: 0.1
+- check:
+    keywords:
+    - .
+    type: keywords_present
+  description: Agent output contains structured contact details with separators
+  name: Agent output contains structured contact
+  weight: 0.05
+- check:
+    rubric: 'Evaluate the agent''s response on the following criteria:
+
+      1. Did the agent successfully extract and clearly present a person''s full name
+      from the business card?
+
+      2. Did the agent identify and report a job title or role?
+
+      3. Did the agent extract the company or organization name?
+
+      4. Did the agent report at least one phone number in a recognizable format?
+
+      5. Did the agent extract an email address correctly?
+
+      6. Did the agent mention a website URL if one was present on the card?
+
+      7. Did the agent report a physical address or location if visible?
+
+      8. Is the extracted information presented in a clear, organized, and readable
+      format?
+
+      9. Did the agent avoid hallucinating contact details not present on the card?
+
+      Score 1.0 if all visible fields are accurately extracted and well-presented,
+      0.7 if most fields are correct with minor omissions, 0.4 if only partial information
+      is extracted, 0.1 if the agent failed to extract meaningful contact information.
+
+      '
+    type: llm_judge
+  name: llm_judge
+  weight: 0.55
+- check:
+    keywords:
+    - name
+    - phone
+    type: keywords_present
+  description: Agent output references key contact field labels
+  name: Agent output references key contact fiel
+  weight: 0.15
+- check:
+    keywords:
+    - email
+    - address
+    type: keywords_present
+  description: Agent output references email and address fields extracted from the
+    card
+  name: Agent output references email and addres
+  weight: 0.15
+task_id: OCR-067
+task_name: Business Card Contact Information Extraction
+tools: []

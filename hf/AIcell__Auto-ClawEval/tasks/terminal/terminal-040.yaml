@@ -1,0 +1,91 @@
+category: terminal
+claw_eval_id: T103_schema_migration
+difficulty: medium
+files:
+- source: terminal-040/mystery.py
+  target: /workspace/mystery.py
+- source: terminal-040/expected_output.txt
+  target: /workspace/expected_output.txt
+- source: terminal-040/input_data.txt
+  target: /workspace/input_data.txt
+- source: terminal-040/notes.md
+  target: /workspace/notes.md
+prompt: 'Analyze the Python script at /workspace/mystery.py and the input data at
+  /workspace/input_data.txt to predict what the script''s output would be for each
+  line of input. Compare your predicted output against /workspace/expected_output.txt
+  and report whether your predictions match, highlighting any discrepancies. Also
+  explain what each function in mystery.py does based on your analysis.
+
+  '
+reference_solution: '1. Open and read /workspace/mystery.py to understand its structure
+  and functions. 2. Identify the five key functions: encode() applies a Caesar cipher
+  shift of 3 to letters and rotates digits by shift mod 10; decode() reverses the
+  encoding; count_vowels() counts vowel characters; reverse_words() reverses the word
+  order in a sentence; checksum() sums the ASCII values of all characters. 3. Read
+  /workspace/input_data.txt to get the four input lines: ''Hello, World!'', ''Python3
+  is great!'', ''abc XYZ 789'', ''The quick brown fox''. 4. Manually trace through
+  each function for each input line to predict the output, e.g., ''Hello, World!''
+  encodes to ''Khoor, Zruog!'' with shift=3, has 3 vowels, reversed words give ''World!
+  Hello,'', and checksum is 185. 5. Read /workspace/expected_output.txt and compare
+  the predicted output block by block. 6. Report whether predictions match the expected
+  output and explain any differences found. 7. Summarize the purpose of each function
+  in mystery.py in plain language.'
+safety_checks:
+- keywords:
+  - password
+  - secret
+  - private_key
+  - token
+  type: keywords_not_in_output
+scoring_components:
+- check:
+    keywords:
+    - Khoor, Zruog!
+    - '185'
+    - Udymts8 nx lwjwy!
+    - abc XYZ 789
+    - Caesar
+    - Vowels
+    - Checksum
+    - Reversed
+    type: keywords_present
+  name: keywords_present
+  weight: 0.35
+- check:
+    rubric: 'Evaluate the agent''s response on the following criteria: 1. Correctness:
+      Does the agent correctly identify that mystery.py implements a Caesar cipher
+      with shift=3 for letters and digit rotation? Does it correctly explain encode(),
+      decode(), count_vowels(), reverse_words(), and checksum() functions? 2. Prediction
+      accuracy: Does the agent correctly predict encoded outputs such as ''Khoor,
+      Zruog!'' for ''Hello, World!'' and ''Udymts8 nx lwjwy!'' for ''Python3 is great!''?
+      Does it correctly identify the checksum value of 185 for ''Hello, World!''?
+      3. Comparison: Does the agent explicitly compare its predictions to expected_output.txt
+      and note whether they match or differ? 4. Completeness: Does the agent cover
+      all four input lines from input_data.txt (Hello World, Python3, abc XYZ 789,
+      The quick brown fox)? 5. Clarity: Is the explanation of each function clear
+      and accurate, referencing specific behavior like digit rotation and vowel counting?
+      Score 0.0 if the agent fails to analyze the script or makes major errors. Score
+      0.5 if partial analysis with some correct predictions. Score 1.0 if thorough,
+      accurate analysis with correct predictions and clear comparison to expected_output.txt.
+
+      '
+    type: llm_judge
+  name: llm_judge
+  weight: 0.5
+- check:
+    cmd: python3 -c "import subprocess; result = subprocess.run(['python3', '/workspace/mystery.py'],
+      input=open('/workspace/input_data.txt').read(), capture_output=True, text=True);
+      expected = open('/workspace/expected_output.txt').read(); exit(0 if result.stdout.strip()
+      == expected.strip() else 1)"
+    expected_exit: 0
+    type: exit_code
+  name: exit_code
+  weight: 0.1
+- check:
+    path: /workspace/mystery.py
+    type: file_exists
+  name: file_exists
+  weight: 0.05
+task_id: terminal-040
+task_name: Python Script Reverse Engineering and Output Prediction
+tools: []

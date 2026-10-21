@@ -1,0 +1,132 @@
+OFFICE OF FISCAL ANALYSIS AND STATISTICAL SERVICES
+DEPARTMENT OF THE TREASURY
+COMMONWEALTH OF PENNSYLVANIA
+
+TECHNICAL REPORT TR-2024-07
+Statistical Distribution Fitting Analysis of Revenue Streams and Expenditure Patterns
+Fiscal Year 2023–2024
+
+Prepared by: Division of Quantitative Methods
+Lead Analyst: Dr. Margaret Holloway, FSA
+Date of Publication: September 12, 2024
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+EXECUTIVE SUMMARY
+
+This technical report presents the findings of a comprehensive statistical distribution fitting analysis conducted on Pennsylvania's primary revenue streams and major expenditure categories for fiscal year 2023–2024 (July 1, 2023 through June 30, 2024). The analysis was commissioned following the Budget Office's directive of February 8, 2024, which identified persistent forecasting errors exceeding 4.2% in quarterly revenue projections. By identifying the underlying probability distributions governing fiscal data, the Commonwealth aims to reduce projection error margins to below 1.8% and improve reserve fund allocation decisions.
+
+Total general fund revenues for FY 2023–2024 reached $42.7 billion, representing a 3.1% increase over the prior fiscal year's $41.4 billion. Total expenditures reached $44.2 billion, producing a structural deficit of $1.5 billion that was addressed through $900 million in reserve fund drawdowns and $600 million in short-term borrowing instruments.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 1: METHODOLOGY
+
+1.1 Data Collection and Preparation
+
+Monthly revenue and expenditure data were extracted from the Commonwealth's Integrated Enterprise System (IES) covering a 15-year historical period from July 2009 through June 2024, yielding 180 monthly observations per revenue category. Data were adjusted for inflation using the Bureau of Labor Statistics CPI-U index (base year 2015 = 100) to enable meaningful cross-period comparisons.
+
+Seven primary revenue categories were analyzed:
+- Personal Income Tax (PIT)
+- Sales and Use Tax (SUT)
+- Corporate Net Income Tax (CNIT)
+- Inheritance and Estate Tax
+- Realty Transfer Tax
+- Motor License Fund revenues
+- Lottery Fund revenues
+
+Expenditure categories analyzed included Education (K-12 and higher education combined), Human Services, Corrections, Debt Service, and General Government Operations.
+
+1.2 Distribution Fitting Procedure
+
+The analysis employed maximum likelihood estimation (MLE) to fit candidate distributions to each data series. Candidate distributions tested included Normal, Log-Normal, Gamma, Weibull, Beta, Generalized Extreme Value (GEV), and Negative Binomial distributions. Goodness-of-fit was assessed using three complementary tests:
+
+- Kolmogorov-Smirnov (K-S) test at the 5% significance level
+- Anderson-Darling (A-D) test, which weights tail behavior more heavily
+- Akaike Information Criterion (AIC) for model selection penalizing parameter complexity
+
+All computations were performed using SAS 9.4 and R version 4.3.1, with the fitdistrplus package (version 1.1-11) providing primary distribution fitting routines. Results were cross-validated using a 70/30 training-test split applied to the historical dataset.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 2: REVENUE DISTRIBUTION FINDINGS
+
+2.1 Personal Income Tax
+
+PIT constitutes the Commonwealth's single largest revenue source, generating $16.8 billion in FY 2023–2024, representing 39.3% of total general fund revenues. Monthly PIT collections exhibited strong right skewness (skewness coefficient = 1.47) driven by April filing season spikes and quarterly estimated payment concentrations.
+
+The Log-Normal distribution provided the best fit for monthly PIT collections, with fitted parameters μ = 20.94 and σ = 0.38. The K-S test statistic was 0.071, well below the critical value of 0.101 at the 5% significance level (p = 0.312). The A-D statistic of 0.614 also indicated acceptable fit. The Normal distribution was rejected (K-S p = 0.018), confirming that symmetric distribution assumptions embedded in prior forecasting models were inappropriate.
+
+2.2 Sales and Use Tax
+
+SUT revenues totaled $12.3 billion in FY 2023–2024, a 2.7% increase from $11.98 billion in FY 2022–2023. Monthly SUT collections demonstrated moderate right skewness (skewness = 0.89) with pronounced December seasonality, where collections averaged $1.41 billion compared to the annual monthly mean of $1.025 billion.
+
+The Gamma distribution with shape parameter α = 7.82 and rate parameter β = 0.0076 provided the best fit (AIC = 2,847.3 versus 2,891.6 for the Normal distribution). The K-S test p-value was 0.441, indicating strong fit. Seasonal decomposition revealed that December collections consistently exceeded the annual monthly mean by 37.6%, a figure that had been underestimated by 8.3 percentage points in prior budget models.
+
+2.3 Corporate Net Income Tax
+
+CNIT revenues showed the highest volatility of all major revenue categories, with a coefficient of variation of 0.31 over the study period. FY 2023–2024 CNIT collections totaled $5.9 billion, down 6.3% from the prior year's $6.3 billion, reflecting reduced corporate profitability in the manufacturing and financial services sectors.
+
+The Generalized Extreme Value distribution provided the best fit for CNIT monthly data, with location parameter μ = 421.7 million, scale parameter σ = 98.4 million, and shape parameter ξ = 0.22. The positive shape parameter confirms heavy-tailed behavior, meaning extreme monthly collections—both high and low—occur more frequently than a Normal distribution would predict. This finding has significant implications for reserve fund sizing.
+
+2.4 Summary of Best-Fit Distributions by Revenue Category
+
+Revenue Category | FY 2023-24 Total | Best-Fit Distribution | K-S p-value | AIC
+Personal Income Tax | $16.8 billion | Log-Normal | 0.312 | 2,614.7
+Sales and Use Tax | $12.3 billion | Gamma | 0.441 | 2,847.3
+Corporate Net Income Tax | $5.9 billion | GEV | 0.287 | 1,983.2
+Inheritance and Estate Tax | $1.4 billion | Weibull | 0.198 | 1,247.8
+Realty Transfer Tax | $1.1 billion | Log-Normal | 0.356 | 1,189.4
+Motor License Fund | $2.8 billion | Normal | 0.503 | 1,876.1
+Lottery Fund | $2.4 billion | Gamma | 0.422 | 1,654.9
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 3: EXPENDITURE DISTRIBUTION FINDINGS
+
+3.1 Education Expenditures
+
+Combined K-12 and higher education expenditures totaled $18.6 billion in FY 2023–2024, representing 42.1% of total general fund spending. Monthly education expenditures followed a Normal distribution (K-S p = 0.614, AIC = 2,901.4) with mean μ = $1.55 billion and standard deviation σ = $187 million. The regularity of education spending reflects statutory payment schedules and formula-driven allocations, producing the most predictable expenditure pattern among all categories analyzed.
+
+3.2 Human Services
+
+Human Services expenditures reached $14.1 billion, driven primarily by Medicaid, which alone accounted for $10.8 billion or 76.6% of the category total. Monthly Medicaid expenditures exhibited a Gamma distribution fit (α = 12.4, β = 0.0014, K-S p = 0.389), with right-skewed behavior attributable to periodic large supplemental payments and enrollment surges. The 95th percentile monthly Medicaid expenditure was estimated at $1.02 billion, compared to the mean of $900 million.
+
+3.3 Corrections
+
+Department of Corrections expenditures totaled $3.2 billion for FY 2023–2024, a 4.9% increase from $3.05 billion in the prior year. Monthly corrections spending followed a Normal distribution (K-S p = 0.558) with mean $266.7 million and standard deviation $14.2 million, reflecting the relatively fixed cost structure of prison operations.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 4: FORECASTING IMPLICATIONS AND RESERVE FUND RECOMMENDATIONS
+
+4.1 Reduction in Forecast Error
+
+Replacing Normal distribution assumptions with the fitted distributions identified in this analysis reduced out-of-sample forecast errors substantially in cross-validation testing. Mean Absolute Percentage Error (MAPE) for total general fund revenues fell from 4.7% under the prior Normal-assumption model to 1.6% under the distribution-fitted model, exceeding the Budget Office's target of 1.8%.
+
+4.2 Reserve Fund Sizing
+
+Using Monte Carlo simulation with 100,000 iterations drawing from the fitted distributions for all revenue and expenditure categories, the analysis estimates that a reserve fund of $2.31 billion (5.4% of general fund revenues) would be sufficient to cover revenue shortfalls in 95% of simulated fiscal years. The current Budget Stabilization Reserve Fund balance as of June 30, 2024 stood at $1.87 billion, representing a gap of $440 million relative to the recommended level.
+
+4.3 Key Risk Factors
+
+The heavy-tailed GEV distribution fitted to CNIT revenues represents the single largest source of fiscal uncertainty. A one-standard-deviation downside shock to CNIT collections would reduce revenues by approximately $98.4 million in a single month. Over a fiscal year, a sustained CNIT underperformance scenario at the 5th percentile of the fitted distribution would reduce annual CNIT revenues to approximately $4.1 billion, $1.8 billion below the FY 2023–2024 actual, requiring either reserve drawdowns or emergency borrowing.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SECTION 5: CONCLUSIONS AND NEXT STEPS
+
+This analysis demonstrates that Pennsylvania's revenue streams are governed by distinct probability distributions, none of which are uniformly Normal. The adoption of distribution-appropriate forecasting models is expected to reduce annual forecast errors by approximately 3.1 percentage points and improve reserve fund adequacy assessments.
+
+The Division of Quantitative Methods recommends the following actions:
+
+1. Immediate integration of Log-Normal and Gamma distribution parameters into the IES revenue forecasting module, targeted for completion by December 31, 2024.
+2. Quarterly re-estimation of GEV parameters for CNIT revenues given their sensitivity to macroeconomic conditions.
+3. Legislative submission of a proposal to increase the Budget Stabilization Reserve Fund cap from the current statutory limit of 6% of general fund revenues to 8%, which would accommodate the recommended $2.31 billion target.
+4. Commissioning of a follow-up study examining joint distribution dependencies between PIT and SUT revenues, which exhibited a Pearson correlation coefficient of 0.73 over the study period.
+
+This report was reviewed by Deputy Secretary for Budget James R. Callahan and Chief Economist Dr. Patricia Nguyen prior to publication. Questions regarding methodology should be directed to the Division of Quantitative Methods at (717) 787-4340.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+END OF REPORT TR-2024-07

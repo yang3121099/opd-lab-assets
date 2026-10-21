@@ -1,0 +1,133 @@
+SPARSE MIXTURE-OF-EXPERTS TRANSFORMERS WITH DYNAMIC ROUTING FOR EFFICIENT LONG-CONTEXT REASONING
+
+Preprint submitted to arXiv: March 14, 2024
+Authors: Yuki Tanaka, Priya Mehrotra, Aleksandr Volkov, Chen Wei, Fatima Al-Rashid
+Affiliation: Institute for Advanced Computation, University of Toronto; DeepMind Collaboratory
+
+Abstract
+
+We introduce SparseRoute-7B, a 7.2 billion parameter sparse mixture-of-experts language model that achieves state-of-the-art performance on long-context reasoning benchmarks while reducing inference-time FLOPs by 43% compared to dense models of equivalent parameter count. Our dynamic routing mechanism, which we term Conditional Expert Activation with Temperature Scaling (CEATS), selectively activates 2 of 16 expert subnetworks per token during forward passes, maintaining a 12.5% expert utilization rate. SparseRoute-7B achieves 81.4% accuracy on the SCROLLS benchmark, 76.8% on LongBench, and surpasses GPT-3.5-Turbo on 7 of 9 evaluated tasks despite requiring 61% fewer active parameters during inference.
+
+1. Introduction
+
+The scaling of dense transformer architectures has produced remarkable capabilities but at substantial computational cost. GPT-4, estimated at approximately 1.8 trillion parameters, requires significant infrastructure for both training and deployment. Mixture-of-experts (MoE) architectures offer a compelling alternative: by routing tokens to specialized subnetworks, models can maintain large total parameter counts while activating only a fraction during any given forward pass.
+
+Previous MoE implementations, including Switch Transformer (Fedus et al., 2022) and Mixtral 8x7B (Mistral AI, January 2024), demonstrated the viability of sparse activation but suffered from load imbalance across experts and degraded performance on tasks requiring sustained multi-step reasoning over long documents. Our work addresses both limitations through three primary contributions:
+
+1. The CEATS routing mechanism, which incorporates a learned temperature parameter per expert that adapts during training to prevent expert collapse
+2. A sliding window attention variant with 4,096-token local windows and 512-token global attention spans, enabling effective 32,768-token context processing
+3. A two-phase training curriculum: 1.4 trillion tokens of general pretraining followed by 180 billion tokens of long-context specialized data
+
+2. Model Architecture
+
+2.1 Core Transformer Configuration
+
+SparseRoute-7B is built on a standard transformer backbone with the following specifications:
+
+- Total parameters: 7.24 billion
+- Active parameters per forward pass: 2.1 billion (28.9% of total)
+- Number of layers: 32
+- Hidden dimension: 4,096
+- Attention heads: 32
+- Key-value heads: 8 (grouped-query attention)
+- Feed-forward dimension: 14,336 per expert
+- Number of experts per MoE layer: 16
+- Experts activated per token: 2
+- MoE layers: every other layer (16 total MoE layers, 16 dense layers)
+- Maximum context length: 32,768 tokens
+- Vocabulary size: 65,536 tokens (BPE tokenizer)
+
+2.2 CEATS Routing Mechanism
+
+Standard top-k routing assigns each token to the k experts with highest router logit scores. This approach suffers from a well-documented collapse problem where a small subset of experts receives disproportionate token assignments. In our analysis of a baseline MoE model trained without load balancing, the top 3 of 16 experts received 71.3% of all token assignments by epoch 4 of training.
+
+CEATS addresses this through per-expert temperature parameters τ_i initialized at 1.0 and updated via a secondary gradient signal derived from expert utilization statistics computed over rolling windows of 8,192 tokens. Experts receiving fewer than 5% of expected tokens in a window have their temperature decreased by a factor of 0.97, making their logits relatively sharper and increasing selection probability. Experts exceeding 15% utilization have temperature increased by 1.03.
+
+This mechanism achieves a Gini coefficient of 0.08 across expert utilization at convergence, compared to 0.34 for standard top-2 routing with auxiliary load balancing loss (as used in Mixtral 8x7B).
+
+2.3 Attention Architecture
+
+We implement a hybrid local-global attention scheme. Each attention layer processes tokens within a 4,096-token sliding window using standard scaled dot-product attention. Additionally, 512 tokens are designated as global tokens using a learned selection mechanism that identifies tokens with highest aggregate attention weight in the previous layer. Global tokens attend to and are attended by all positions in the sequence.
+
+This design reduces the quadratic attention complexity from O(n²) to approximately O(n × 4,608) for sequences longer than 4,096 tokens, enabling practical 32,768-token context processing on a single A100 80GB GPU during inference.
+
+3. Training Details
+
+3.1 Data and Compute
+
+Pretraining Phase 1 (general): 1.4 trillion tokens drawn from a filtered web corpus (67%), GitHub code (15%), academic papers via Semantic Scholar (11%), and books (7%). Training ran for 62 days on 512 H100 SXM5 GPUs using a batch size of 4 million tokens. Peak learning rate: 3×10⁻⁴ with cosine decay to 3×10⁻⁵.
+
+Pretraining Phase 2 (long-context): 180 billion tokens from documents exceeding 8,192 tokens, including legal filings, scientific literature, and long-form narrative text. Training ran for 11 days on the same hardware. Learning rate: 1×10⁻⁴ with linear decay.
+
+Total training compute: approximately 4.7×10²³ FLOPs, estimated at $2.1 million USD using H100 spot pricing at $2.80/GPU-hour.
+
+3.2 Optimization
+
+We used AdamW with β₁=0.9, β₂=0.95, ε=10⁻⁸, and weight decay of 0.1. Gradient clipping at 1.0. Mixed precision training with bfloat16 activations and float32 master weights. Expert parameters were updated with a 0.5× learning rate multiplier relative to attention parameters, a modification we found reduced expert specialization instability during early training.
+
+4. Evaluation Results
+
+4.1 Long-Context Benchmarks
+
+Table 1: Performance on Long-Context Benchmarks
+
+Benchmark | SparseRoute-7B | Mixtral 8x7B | GPT-3.5-Turbo | Llama-2-70B
+SCROLLS (avg) | 81.4% | 74.2% | 79.1% | 71.8%
+LongBench (avg) | 76.8% | 69.5% | 74.3% | 65.2%
+QASPER | 48.3 F1 | 41.7 F1 | 46.2 F1 | 38.9 F1
+QuALITY | 72.1% | 63.4% | 68.7% | 59.3%
+NarrativeQA | 29.4 ROUGE-L | 24.8 | 27.6 | 22.1
+MultiFieldQA-en | 53.7% | 47.2% | 51.9% | 43.8%
+
+4.2 Standard Benchmarks
+
+To verify that long-context specialization did not degrade general capabilities:
+
+- MMLU (5-shot): 71.3% (Mixtral 8x7B: 70.6%, Llama-2-70B: 69.8%)
+- HumanEval (pass@1): 43.2% (Mixtral 8x7B: 40.2%, GPT-3.5-Turbo: 48.1%)
+- GSM8K (8-shot): 67.4% (Mixtral 8x7B: 65.7%, Llama-2-70B: 56.8%)
+- HellaSwag: 84.7% (Mixtral 8x7B: 86.5%)
+- ARC-Challenge: 66.2% (Mixtral 8x7B: 65.7%)
+
+SparseRoute-7B underperforms Mixtral 8x7B on HellaSwag by 1.8 percentage points, which we attribute to the reduced proportion of commonsense-heavy data in our Phase 2 curriculum.
+
+4.3 Efficiency Analysis
+
+At inference time with a batch size of 1 and sequence length of 8,192 tokens on a single A100 80GB GPU:
+
+- SparseRoute-7B throughput: 847 tokens/second
+- Mixtral 8x7B throughput: 312 tokens/second
+- Llama-2-70B throughput: 89 tokens/second
+- Memory footprint (bfloat16): 14.8 GB
+
+The 2.7× throughput advantage over Mixtral 8x7B stems from our lower active parameter count (2.1B vs. approximately 13B active parameters in Mixtral's top-2 routing over 8 experts of 7B total).
+
+5. Ablation Studies
+
+We conducted ablations on a 1.2B parameter version of SparseRoute to isolate contributions of individual components, training each variant for 100 billion tokens:
+
+- Full model: 76.3% on LongBench subset
+- Without CEATS (standard top-2 routing): 71.8% (−4.5%)
+- Without Phase 2 long-context training: 68.4% (−7.9%)
+- Without global attention tokens: 69.1% (−7.2%)
+- With 4 experts activated instead of 2: 77.1% (+0.8%, but 2.1× FLOPs increase)
+
+The ablation results confirm that long-context pretraining data provides the largest single contribution to benchmark performance, followed by the global attention mechanism.
+
+6. Limitations and Future Work
+
+SparseRoute-7B underperforms on tasks requiring precise numerical reasoning, achieving only 41.3% on MATH benchmark compared to GPT-4's reported 87.1%. Expert routing decisions are not interpretable in the current implementation; future work will examine whether individual experts develop domain specialization. We plan to release model weights under an Apache 2.0 license by May 2024, pending internal safety evaluation.
+
+7. Conclusion
+
+SparseRoute-7B demonstrates that sparse MoE architectures with carefully designed routing mechanisms can achieve competitive performance with significantly larger dense models on long-context tasks. The 43% reduction in inference FLOPs relative to a dense 7B model, combined with 81.4% accuracy on SCROLLS and 76.8% on LongBench, establishes a new efficiency frontier for open-weight language models in the 7B parameter class.
+
+References
+
+Fedus, W., Zoph, B., Shazeer, N. (2022). Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity. JMLR 23(120):1-39.
+
+Jiang, A. et al. (2024). Mixtral of Experts. arXiv:2401.04088.
+
+Touvron, H. et al. (2023). Llama 2: Open Foundation and Fine-Tuned Chat Models. arXiv:2307.09288.
+
+Guo, D. et al. (2024). DeepSeek-MoE: Towards Ultimate Expert Specialization in Mixture-of-Experts Language Models. arXiv:2401.06066.
