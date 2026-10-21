@@ -33,7 +33,7 @@ fixtures:
       notes: Recently rotated — compliant
       secret: SF_SECRET_REDACTED
       status: active
-    - api_key: AKIAIOSFODNN7REDACTED
+    - api_key: AKIAFAKE_0003_xxxxxxx
       endpoint: https://s3.amazonaws.com
       id: int-005
       name: AWS S3 Backup

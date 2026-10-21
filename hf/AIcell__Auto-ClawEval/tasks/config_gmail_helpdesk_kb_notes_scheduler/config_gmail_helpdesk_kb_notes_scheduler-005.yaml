@@ -76,7 +76,7 @@ fixtures:
       subject: GitHub Actions workflow completed
       to: dev-ops@acme.internal
     - body: 'Hi security team — I noticed that the Slack webhook URL for integration
-        INT-203 (https://hooks.slack.com/services/T00/B00/XXXX_SLACK_SECRET) was accidentally
+        INT-203 (https://hooks.slack.com/services/FAKE.0001.xxxxxx.xxxxxx.x) was accidentally
         included in a public-facing Notion page. I''ve removed it from Notion but
         the integration may need to be rotated. — Alice
 
